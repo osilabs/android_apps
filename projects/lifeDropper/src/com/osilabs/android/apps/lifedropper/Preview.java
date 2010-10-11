@@ -36,6 +36,17 @@ class Preview extends SurfaceView implements SurfaceHolder.Callback { // <1>
       camera.setPreviewCallback(new PreviewCallback() { // <10>
         // Called for each frame previewed
         public void onPreviewFrame(byte[] data, Camera camera) {  // <11>
+        	// processing the byte array:
+        	// http://code.google.com/p/android/issues/detail?id=823
+        	//
+        	/* I think your onPreviewFrame() may get re-entered faster than your decoder can decode
+your preview images, so things start to pile up. It is better to arraycopy your data_
+from within onPreviewFrame() to some fixed array that is then to be decoded in a
+separate thread, dropping frames as needed. Also do your pixel getting/setting in
+that separate thread. In that way you minimize the load inside the onPreviewFrame()
+callback. In my experience and that of others, strange things happen if you spend too
+much time in onPreviewFrame().
+        	 */
           Log.d(TAG, "onPreviewFrame called at: " + System.currentTimeMillis());
           Preview.this.invalidate();  // <12>
         }
