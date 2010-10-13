@@ -18,8 +18,8 @@ import android.widget.FrameLayout;
 
 public class LifeDropper extends Activity {
   private static final String TAG = "CameraDemo";
-  Preview preview; // <1>
-  Button buttonClick; // <2>
+  Preview preview;
+  Button buttonClick;
 
   /** Called when the activity is first created. */
   @Override
@@ -27,12 +27,12 @@ public class LifeDropper extends Activity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main);
 
-    preview = new Preview(this); // <3>
-    ((FrameLayout) findViewById(R.id.preview)).addView(preview); // <4>
+    preview = new Preview(this);
+    ((FrameLayout) findViewById(R.id.preview)).addView(preview);
 
     buttonClick = (Button) findViewById(R.id.buttonClick);
     buttonClick.setOnClickListener(new OnClickListener() {
-      public void onClick(View v) { // <5>
+      public void onClick(View v) {
         preview.camera.takePicture(shutterCallback, rawCallback, jpegCallback);
       }
     });
@@ -48,24 +48,24 @@ public class LifeDropper extends Activity {
   };
 
   // Handles data for raw picture
-  PictureCallback rawCallback = new PictureCallback() { // <7>
+  PictureCallback rawCallback = new PictureCallback() {
     public void onPictureTaken(byte[] data, Camera camera) {
       Log.d(TAG, "onPictureTaken - raw");
     }
   };
 
   // Handles data for jpeg picture
-  PictureCallback jpegCallback = new PictureCallback() { // <8>
+  PictureCallback jpegCallback = new PictureCallback() {
     public void onPictureTaken(byte[] data, Camera camera) {
       FileOutputStream outStream = null;
       try {
         // Write to SD Card
         outStream = new FileOutputStream(String.format("/sdcard/%d.jpg",
-            System.currentTimeMillis())); // <9>
+            System.currentTimeMillis()));
         outStream.write(data);
         outStream.close();
         Log.d(TAG, "onPictureTaken - wrote bytes: " + data.length);
-      } catch (FileNotFoundException e) { // <10>
+      } catch (FileNotFoundException e) {
         e.printStackTrace();
       } catch (IOException e) {
         e.printStackTrace();
@@ -76,3 +76,10 @@ public class LifeDropper extends Activity {
   };
 
 }
+
+//
+//
+// For handling stopping and starting the activity properly and orientation changes
+// See http://www.screaming-penguin.com/node/7746
+//
+//
