@@ -1,0 +1,13 @@
+// Ideas
+* On incident map, have a setting that says what one tap of an incident icon does. 1. to incident description or 2. Nearest camera. Long press offers either.
+
+* add a button for my saved default camera shot
+
+
+// todo
+
+* create quick menu control under webview somehow
+
+* fix zoom problem 
+
+* in onstart or oncreate throw up a toast saying shit is loading.
