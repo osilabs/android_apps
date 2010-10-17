@@ -11,3 +11,37 @@
 * fix zoom problem 
 
 * in onstart or oncreate throw up a toast saying shit is loading.
+
+* Google tracking
+
+* Info web content screen, talks about each version, help sections, donate. Use red OSILABS stars and look and feel. Drive to other apps. Get here by clicking Menu -> Help
+
+* Quick Views bar at bottom.
+
+* Save settings: Default quick view, choose and save default camera shot for quick view
+
+* Build a route: All boils down to telling you if you should avoid the route this morning or not.
+
+* Add menu button icons
+
+* When orientation vert, spinner at bottom, when horriz, spinner goes to right of ad at top.
+
+
+
+
+// Micro grant site ideas
+
+* each child
+	> Just listed by first name
+	> birthdate
+	> Years to expected college date
+	> colorgraph bar showing progress
+	> short bio
+	> link to long bio
+	> Link to request an application/letter to justify why grant is wanted and needed.
+
+* Use google checkout to collect payments
+* Track amounts from each grantor
+* Hidden grantor name and display name.  Display name may be 'Anonymous'.
+* Grantor can seed money, let interest accumulate, then request original amount back. If interest is not made and value becomes less than original value, only original value can be returned. Value is paid back to the credit card used in google checkout to assure money is going back to orininator.
+* Use EAV for settings/metadata about each child and grantor.
