@@ -6,8 +6,6 @@
 
 // todo
 
-* create quick menu control under webview somehow
-
 * fix zoom problem 
 
 * in onstart or oncreate throw up a toast saying shit is loading.
@@ -15,8 +13,6 @@
 * Google tracking
 
 * Info web content screen, talks about each version, help sections, donate. Use red OSILABS stars and look and feel. Drive to other apps. Get here by clicking Menu -> Help
-
-* Quick Views bar at bottom.
 
 * Save settings: Default quick view, choose and save default camera shot for quick view
 
@@ -26,6 +22,7 @@
 
 * When orientation vert, spinner at bottom, when horriz, spinner goes to right of ad at top.
 
+* Shake phone to refresh maps (settings to set sensitivity of this or disable)
 
 
 

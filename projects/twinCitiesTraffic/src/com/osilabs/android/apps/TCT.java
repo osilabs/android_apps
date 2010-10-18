@@ -17,6 +17,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -43,27 +44,42 @@ public class TCT extends Activity {
 	//
 	// Consts
 	//
+	// VIEW_INDEX's
+	// 0 = traffic
+	// 1 = incidents
+	// 2 = alerts
+	// 3 = camera
+	//
 	protected static final String MNDOT_MOBILE_URL = "http://www.dot.state.mn.us/tmc/trafficinfo/mobile/freeways.html";
 	protected static final String TRAFFIC_MAP_URL = "http://osilabs.com/m/mobilecontent/tctraffic/trafficmap.php";
-	protected static final String ALERTS_IMAGE = "http://www.511mn.org/primary/images/all/TC_Metro.gif";
 	protected static final String INCIDENT_FEED = "http://www.dot.state.mn.us/tmc/trafficinfo/incidents.xml";
+
+	protected static final String[] VIEW_URLS = {	TRAFFIC_MAP_URL,
+											        TRAFFIC_MAP_URL,
+											        TRAFFIC_MAP_URL,
+											        MNDOT_MOBILE_URL };
 	
 	private static final String LOG_TAG = "<*^*^*^*^*^*^*^*^*^*> ";
 	
 	private static final int MENU_TRAFFIC               = 0;
 	private static final int MENU_INCIDENTS             = 1;
 	private static final int MENU_ALERTS                = 2;
-	private static final int MENU_REFRESH               = 3;
-	private static final int MENU_QUIT                  = 4;
-	private static final int MENU_MNDOT_MOBILE_FREEWAYS = 5;
-	private static final int MENU_PREFS                 = 6;
+	private static final int MENU_REFRESH               = 100;
+	private static final int MENU_QUIT                  = 101;
+	private static final int MENU_MNDOT_MOBILE_FREEWAYS = 102;
+	private static final int MENU_PREFS                 = 103;
+
+	private static final int INDEX_TRAFFIC              = 0;
+	private static final int INDEX_INCIDENTS            = 1;
+	private static final int INDEX_ALERTS               = 2;
 
 	//
 	// Defs
 	//
 	protected static String CURRENT_WEBVIEW_URL = TRAFFIC_MAP_URL;
 	protected static String CURRENT_TARGET = "traffic";
-	
+	protected static int CURRENT_VIEW_INDEX = INDEX_TRAFFIC;
+
 	Spinner spViewChoices;
 	WebView wvMain;
 
@@ -71,6 +87,14 @@ public class TCT extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        // Get the default view to display
+        SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+        CURRENT_VIEW_INDEX = prefs.getInt("pref_selected", INDEX_TRAFFIC);
+        CURRENT_WEBVIEW_URL = VIEW_URLS[CURRENT_VIEW_INDEX];
+        Toast.makeText(this, "cur idx " + Integer.toString(CURRENT_VIEW_INDEX), Toast.LENGTH_SHORT).show();
+        // debug
+        CURRENT_VIEW_INDEX  = 2;
         
         //
 		// Quick View Spinner
@@ -81,6 +105,8 @@ public class TCT extends Activity {
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spViewChoices.setOnItemSelectedListener(new QuickViewOnItemSelectedListener());
 		spViewChoices.setAdapter(adapter);
+		spViewChoices.setHapticFeedbackEnabled(true); // fixme - doesn't seem to work
+		spViewChoices.setSelection(CURRENT_VIEW_INDEX);
 
 		//
 		// Web View
@@ -92,7 +118,7 @@ public class TCT extends Activity {
         webSettings.setSupportZoom(true);
         webSettings.setDefaultFontSize(23);
         webSettings.setJavaScriptEnabled(true);
-
+        
         wvMain.setWebViewClient(new MyWebViewClient(this));
         wvMain.setWebChromeClient(new WebChromeClient());
         wvMain.loadUrl(CURRENT_WEBVIEW_URL);

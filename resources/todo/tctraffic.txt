@@ -1,28 +1,29 @@
+// Release 0.3
+-- Current problems: settings not saving. Need ot pass the 'jumpTo' params to default webview so it shows the default map.
+* Google tracking
+
+* Info web content screen, talks about each version, help sections, donate. Use red OSILABS stars and look and feel. Drive to other apps. Get here by clicking Menu -> Help
+
+* Save settings: Default quick view, choose and save default camera shot for quick view
+
+* Add menu button icons
+
+
+
+
+
 // Ideas
 * On incident map, have a setting that says what one tap of an incident icon does. 1. to incident description or 2. Nearest camera. Long press offers either.
 
 * add a button for my saved default camera shot
 
-
 // todo
-
-* create quick menu control under webview somehow
 
 * fix zoom problem 
 
 * in onstart or oncreate throw up a toast saying shit is loading.
 
-* Google tracking
-
-* Info web content screen, talks about each version, help sections, donate. Use red OSILABS stars and look and feel. Drive to other apps. Get here by clicking Menu -> Help
-
-* Quick Views bar at bottom.
-
-* Save settings: Default quick view, choose and save default camera shot for quick view
-
 * Build a route: All boils down to telling you if you should avoid the route this morning or not.
-
-* Add menu button icons
 
 * When orientation vert, spinner at bottom, when horriz, spinner goes to right of ad at top.
 

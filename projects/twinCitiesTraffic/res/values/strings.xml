@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Twin Cities Traffic</string>
-    <!-- <string name="prefs_app_name">Preferences</string> -->
-    
+    <string name="quick_view_label">Quick View</string>
+
+    <!-- Preferences strings -->
+    <string name="prefs_app_name">Preferences</string>
+    <string name="pref_qview">QView z</string>
     <string name="pref_title">Preferences</string>
     <string name="pref_default">0</string>
     <string name="pref_summary">Summary z</string>
     <string name="pref_list_title">Home View</string>
     <string name="pref_list_summary">Set initial view</string>
     <string name="pref_dialog_title">Choose Initial View</string>
-
-    <!--  <string name="pref_qview">QView z</string>
-    <string name="quick_view_label">Quick View</string> -->
-    <string name="pref_selected">traffic</string>
+    <string name="pref_selected">pref_selected</string>
     
     <string-array name="view_choices">
         <item>Traffic</item>
