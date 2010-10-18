@@ -1,7 +1,6 @@
-/**
- * TCT.java
- */
+
 package com.osilabs.android.apps;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,10 +11,12 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import com.osilabs.android.apps.R;
+//import com.osilabs.android.apps.R;
+//import android.R;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -55,6 +56,7 @@ public class TCT extends Activity {
 	private static final int MENU_REFRESH               = 3;
 	private static final int MENU_QUIT                  = 4;
 	private static final int MENU_MNDOT_MOBILE_FREEWAYS = 5;
+	private static final int MENU_PREFS                 = 6;
 
 	//
 	// Defs
@@ -188,6 +190,7 @@ public class TCT extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 	    menu.add(0, MENU_REFRESH, 0, "Refresh");
 	    menu.add(0, MENU_MNDOT_MOBILE_FREEWAYS, 0, "Cameras");
+	    menu.add(0, MENU_PREFS, 0, "Preferences");
 	    menu.add(0, MENU_QUIT, 0, "Quit");
 	    
 	    return true;
@@ -206,7 +209,14 @@ public class TCT extends Activity {
 		    	CURRENT_WEBVIEW_URL = MNDOT_MOBILE_URL;
 		    	wvMain.loadUrl(CURRENT_WEBVIEW_URL);
 	    		return true;
-	    		
+		        
+		    case MENU_PREFS:
+		    	//Toast.makeText(getApplicationContext(), "Prefs", Toast.LENGTH_SHORT).show();
+		    	Intent intent = new Intent()
+		    		.setClass(this, com.osilabs.android.apps.Prefs.class);
+		    	this.startActivityForResult(intent, 0);
+		    	return true;
+
 		    case MENU_QUIT:
 		        finish();
 		        return true;
