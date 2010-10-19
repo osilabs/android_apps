@@ -1,18 +1,24 @@
 // Release 0.3
--- Current problems: settings not saving. Need ot pass the 'jumpTo' params to default webview so it shows the default map.
+
+
+-- Current problems: 
+
 * Google tracking
 
 * Info web content screen, talks about each version, help sections, donate. Use red OSILABS stars and look and feel. Drive to other apps. Get here by clicking Menu -> Help
 
-* Save settings: Default quick view, choose and save default camera shot for quick view
-
 * Add menu button icons
 
+* Fix icon?
 
 
 
 
 // Ideas
+* Tilt screen to switch view.  configure what view you get when vert and horriz. Default is 'traffic' for vert, camera for horriz.
+
+* Save settings: choose and save default camera shot for quick view
+
 * On incident map, have a setting that says what one tap of an incident icon does. 1. to incident description or 2. Nearest camera. Long press offers either.
 
 * add a button for my saved default camera shot

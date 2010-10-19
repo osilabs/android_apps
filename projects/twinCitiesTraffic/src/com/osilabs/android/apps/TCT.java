@@ -15,11 +15,18 @@ import org.apache.http.impl.client.DefaultHttpClient;
 //import android.R;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
@@ -64,21 +71,24 @@ public class TCT extends Activity {
 	private static final int MENU_TRAFFIC               = 0;
 	private static final int MENU_INCIDENTS             = 1;
 	private static final int MENU_ALERTS                = 2;
+	private static final int MENU_CAMERAS               = 3;
 	private static final int MENU_REFRESH               = 100;
 	private static final int MENU_QUIT                  = 101;
 	private static final int MENU_MNDOT_MOBILE_FREEWAYS = 102;
 	private static final int MENU_PREFS                 = 103;
+	private static final int MENU_ABOUT                 = 104;
 
 	private static final int INDEX_TRAFFIC              = 0;
 	private static final int INDEX_INCIDENTS            = 1;
 	private static final int INDEX_ALERTS               = 2;
+	private static final int INDEX_CAMERAS              = 3;
 
 	//
 	// Defs
 	//
 	protected static String CURRENT_WEBVIEW_URL = TRAFFIC_MAP_URL;
-	protected static String CURRENT_TARGET = "traffic";
 	protected static int CURRENT_VIEW_INDEX = INDEX_TRAFFIC;
+	//protected static String CURRENT_TARGET = "traffic";
 
 	Spinner spViewChoices;
 	WebView wvMain;
@@ -88,13 +98,11 @@ public class TCT extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        // Get the default view to display
-        SharedPreferences prefs = getPreferences(MODE_PRIVATE);
-        CURRENT_VIEW_INDEX = prefs.getInt("pref_selected", INDEX_TRAFFIC);
+        // Restore view
+        SharedPreferences mySharedPreferences = getSharedPreferences(
+                "com.osilabs.android.apps", Activity.MODE_PRIVATE);
+        CURRENT_VIEW_INDEX = mySharedPreferences.getInt("pref_current_view", 2);
         CURRENT_WEBVIEW_URL = VIEW_URLS[CURRENT_VIEW_INDEX];
-        Toast.makeText(this, "cur idx " + Integer.toString(CURRENT_VIEW_INDEX), Toast.LENGTH_SHORT).show();
-        // debug
-        CURRENT_VIEW_INDEX  = 2;
         
         //
 		// Quick View Spinner
@@ -121,13 +129,19 @@ public class TCT extends Activity {
         
         wvMain.setWebViewClient(new MyWebViewClient(this));
         wvMain.setWebChromeClient(new WebChromeClient());
-        wvMain.loadUrl(CURRENT_WEBVIEW_URL);
-    }
 
+    	// It's going to take a second to load
+		Toast.makeText(this, "Loading...", Toast.LENGTH_LONG).show();
+		
+		// Load the webview
+		wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_VIEW_INDEX);
+    }
 
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-
+        
+        Toast.makeText(this, "FLIPPED", Toast.LENGTH_SHORT).show();
+        
         // Checks the orientation of the screen
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
@@ -142,43 +156,37 @@ public class TCT extends Activity {
 	public class QuickViewOnItemSelectedListener implements OnItemSelectedListener {
 	
 		public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-			// Toast.makeText(	parent.getContext(), 
-			//				"Loading: " + parent.getItemAtPosition(pos).toString(), 
-			//				Toast.LENGTH_LONG).show();
-			switch (pos) {
-		    case MENU_TRAFFIC:
-		    	// Toast.makeText(parent.getContext(), "Loading traffic", Toast.LENGTH_SHORT).show();
-		    	CURRENT_TARGET = "traffic";
-		    	if( CURRENT_WEBVIEW_URL == TRAFFIC_MAP_URL) {
-		    		wvMain.loadUrl("javascript: jumpTo('"+CURRENT_TARGET+"')");
-		    	} else {
-		    		CURRENT_WEBVIEW_URL = TRAFFIC_MAP_URL;
-		    		wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_TARGET);
-		    	}
-		    	break;
-	    		
-		    case MENU_INCIDENTS:
-		    	// Toast.makeText(parent.getContext(), "Loading incidents", Toast.LENGTH_SHORT).show();
-		    	CURRENT_TARGET = "incidents";
-		    	if( CURRENT_WEBVIEW_URL == TRAFFIC_MAP_URL) {
-		    		wvMain.loadUrl("javascript: jumpTo('"+CURRENT_TARGET+"')");
-		    	} else {
-		    		CURRENT_WEBVIEW_URL = TRAFFIC_MAP_URL;
-		    		wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_TARGET);
-		    	}
-		    	break;
-		        
-		    case MENU_ALERTS:
-		    	// Toast.makeText(parent.getContext(), "Loading alerts", Toast.LENGTH_SHORT).show();
-		    	CURRENT_TARGET = "alerts";
-		    	if( CURRENT_WEBVIEW_URL == TRAFFIC_MAP_URL) {
-		    		wvMain.loadUrl("javascript: jumpTo('"+CURRENT_TARGET+"')");
-		    	} else {
-		    		CURRENT_WEBVIEW_URL = TRAFFIC_MAP_URL;
-		    		wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_TARGET);
-		    	}
-		    	break;
+			CURRENT_VIEW_INDEX = pos;
+			setCurrentView(CURRENT_VIEW_INDEX);
+			switch (CURRENT_VIEW_INDEX) {
+			    case MENU_TRAFFIC:
+			        CURRENT_VIEW_INDEX = INDEX_TRAFFIC;
+			    	break;
+			    case MENU_INCIDENTS:
+			        CURRENT_VIEW_INDEX = INDEX_INCIDENTS;
+			    	break;		        
+			    case MENU_ALERTS:
+			        CURRENT_VIEW_INDEX = INDEX_ALERTS;
+			    	break;
+			    case MENU_CAMERAS:
+			        CURRENT_VIEW_INDEX = INDEX_CAMERAS;
 			}
+
+	    	if (CURRENT_WEBVIEW_URL != VIEW_URLS[CURRENT_VIEW_INDEX]) {
+	    		// Set the new CU
+		    	CURRENT_WEBVIEW_URL = VIEW_URLS[CURRENT_VIEW_INDEX];
+
+		    	// It's going to take a second to reload a new webview,
+		    	//  state the obvious
+				Toast.makeText(	parent.getContext(), 
+								"Loading...", Toast.LENGTH_LONG).show();
+
+		    	// Load the other URL into the webview
+	    		wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_VIEW_INDEX);
+	    	} else {
+		    	// Just switch div
+	    		wvMain.loadUrl("javascript: jumpTo('"+CURRENT_VIEW_INDEX+"')");
+	    	}
 		}
 	
 		public void onNothingSelected(AdapterView parent) {
@@ -208,15 +216,16 @@ public class TCT extends Activity {
         }
         // Javascript in webview can call colsole.log('the message') to log messages.
 		public void onConsoleMessage(String message, int lineNumber, String sourceID) {
-			Log.d("iMedNetMobile application", message + " -- From line " + lineNumber + " of " + sourceID);
+			Log.d("tct application", message + " -- From line " + lineNumber + " of " + sourceID);
 		}
 	}
     
 	/* Creates the menu items */
 	public boolean onCreateOptionsMenu(Menu menu) {
 	    menu.add(0, MENU_REFRESH, 0, "Refresh");
-	    menu.add(0, MENU_MNDOT_MOBILE_FREEWAYS, 0, "Cameras");
-	    menu.add(0, MENU_PREFS, 0, "Preferences");
+	    //menu.add(0, MENU_MNDOT_MOBILE_FREEWAYS, 0, "Cameras");
+	    // menu.add(0, MENU_PREFS, 0, "Preferences");
+	    menu.add(0, MENU_ABOUT, 0, "About");
 	    menu.add(0, MENU_QUIT, 0, "Quit");
 	    
 	    return true;
@@ -227,20 +236,43 @@ public class TCT extends Activity {
 	    switch (item.getItemId()) {
 		    case MENU_REFRESH:
 		    	Toast.makeText(getApplicationContext(), "Refreshing", Toast.LENGTH_SHORT).show();
-		    	wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_TARGET);
+		    	wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_VIEW_INDEX);
 		        return true;
 		        
-		    case MENU_MNDOT_MOBILE_FREEWAYS:
-		    	Toast.makeText(getApplicationContext(), "Loading cameras", Toast.LENGTH_SHORT).show();
-		    	CURRENT_WEBVIEW_URL = MNDOT_MOBILE_URL;
-		    	wvMain.loadUrl(CURRENT_WEBVIEW_URL);
-	    		return true;
-		        
-		    case MENU_PREFS:
-		    	//Toast.makeText(getApplicationContext(), "Prefs", Toast.LENGTH_SHORT).show();
-		    	Intent intent = new Intent()
-		    		.setClass(this, com.osilabs.android.apps.Prefs.class);
-		    	this.startActivityForResult(intent, 0);
+//		    case MENU_MNDOT_MOBILE_FREEWAYS:
+//		    	setCurrentView(INDEX_CAMERAS);
+//		    	// CURRENT_WEBVIEW_URL = MNDOT_MOBILE_URL;
+//		    	// CURRENT_VIEW_INDEX  = INDEX_CAMERAS;
+//		    	wvMain.loadUrl(VIEW_URLS[INDEX_CAMERAS]);
+//	    		return true;
+//		        
+//		    case MENU_PREFS:
+//		    	//Toast.makeText(getApplicationContext(), "Prefs", Toast.LENGTH_SHORT).show();
+//		    	Intent intent = new Intent()
+//		    		.setClass(this, com.osilabs.android.apps.Prefs.class);
+//		    	this.startActivityForResult(intent, 0);
+//		    	return true;
+
+			    case MENU_ABOUT:
+		        PackageInfo pInfo = null;
+		        try {
+		            pInfo = getPackageManager().getPackageInfo("com.osilabs.android.apps",
+		            		PackageManager.GET_META_DATA);
+		        } catch (NameNotFoundException e) {
+		        	e.printStackTrace();
+		        }
+		        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+		        alertDialog.setTitle("Twin Cities Traffic");
+		        alertDialog.setMessage("You are running v" + pInfo.versionName);
+		        alertDialog.setButton("More...", new DialogInterface.OnClickListener() {
+		        	public void onClick(DialogInterface dialog, int which) {
+		        		Intent mIntent = new Intent(Intent.ACTION_VIEW, 
+		        				Uri.parse("http://osilabs.com/m/mobilecontent/tctraffic/about.php#0.2")); 
+        				startActivity(mIntent); 
+		            } 
+		        });
+		        alertDialog.setIcon(R.drawable.ic_launcher_main);
+		        alertDialog.show();
 		    	return true;
 
 		    case MENU_QUIT:
@@ -248,5 +280,15 @@ public class TCT extends Activity {
 		        return true;
 	    }
 	    return false;
+	}
+	
+	public boolean setCurrentView(int viewIndex) {
+        //Toast.makeText(getApplicationContext(), "set cur view: " + viewIndex, Toast.LENGTH_SHORT).show();
+    	SharedPreferences prefs 
+			= getSharedPreferences("com.osilabs.android.apps", Activity.MODE_PRIVATE);
+	    SharedPreferences.Editor editor = prefs.edit();
+	    editor.putInt("pref_current_view", viewIndex);
+	    editor.commit();
+	    return true;
 	}
 }
