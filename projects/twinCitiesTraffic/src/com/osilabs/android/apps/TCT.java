@@ -1,22 +1,22 @@
 
 package com.osilabs.android.apps;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URI;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
+//import java.io.BufferedReader;
+//import java.io.IOException;
+//import java.io.InputStreamReader;
+//import java.net.URI;
+//
+//import org.apache.http.HttpResponse;
+//import org.apache.http.client.HttpClient;
+//import org.apache.http.client.methods.HttpGet;
+//import org.apache.http.impl.client.DefaultHttpClient;
 
 //import com.osilabs.android.apps.R;
 //import android.R;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
+//import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -26,8 +26,8 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.util.DisplayMetrics;
+//import android.preference.PreferenceManager;
+//import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -74,8 +74,8 @@ public class TCT extends Activity {
 	private static final int MENU_CAMERAS               = 3;
 	private static final int MENU_REFRESH               = 100;
 	private static final int MENU_QUIT                  = 101;
-	private static final int MENU_MNDOT_MOBILE_FREEWAYS = 102;
-	private static final int MENU_PREFS                 = 103;
+	//private static final int MENU_MNDOT_MOBILE_FREEWAYS = 102;
+	//private static final int MENU_PREFS                 = 103;
 	private static final int MENU_ABOUT                 = 104;
 
 	private static final int INDEX_TRAFFIC              = 0;
@@ -88,18 +88,32 @@ public class TCT extends Activity {
 	//
 	protected static String CURRENT_WEBVIEW_URL = TRAFFIC_MAP_URL;
 	protected static int CURRENT_VIEW_INDEX = INDEX_TRAFFIC;
-	//protected static String CURRENT_TARGET = "traffic";
-
+	protected static String version = "0.1"; // The default, later overwritten w actual 
+	
 	Spinner spViewChoices;
 	WebView wvMain;
-
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        // Restore view
-        SharedPreferences mySharedPreferences = getSharedPreferences(
+        //
+        // Set locals with manifest variables
+        //
+        PackageInfo pInfo = null;
+		try {
+			pInfo = getPackageManager().getPackageInfo("com.osilabs.android.apps",
+					PackageManager.GET_META_DATA);
+			version = pInfo.versionName;
+		} catch (NameNotFoundException e) {
+			e.printStackTrace();
+		}
+      
+        //
+		// Restore view
+        //
+		SharedPreferences mySharedPreferences = getSharedPreferences(
                 "com.osilabs.android.apps", Activity.MODE_PRIVATE);
         CURRENT_VIEW_INDEX = mySharedPreferences.getInt("pref_current_view", 2);
         CURRENT_WEBVIEW_URL = VIEW_URLS[CURRENT_VIEW_INDEX];
@@ -126,29 +140,26 @@ public class TCT extends Activity {
         webSettings.setSupportZoom(true);
         webSettings.setDefaultFontSize(23);
         webSettings.setJavaScriptEnabled(true);
-        
         wvMain.setWebViewClient(new MyWebViewClient(this));
         wvMain.setWebChromeClient(new WebChromeClient());
-
     	// It's going to take a second to load
 		Toast.makeText(this, "Loading...", Toast.LENGTH_LONG).show();
-		
 		// Load the webview
 		wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_VIEW_INDEX);
     }
 
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        
-        Toast.makeText(this, "FLIPPED", Toast.LENGTH_SHORT).show();
-        
-        // Checks the orientation of the screen
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-            Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
-        }
-    }
+//    public void onConfigurationChanged(Configuration newConfig) {
+//        super.onConfigurationChanged(newConfig);
+//        
+//        Toast.makeText(this, "FLIPPED", Toast.LENGTH_SHORT).show();
+//        
+//        // Checks the orientation of the screen
+//        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+//            Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
+//        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+//            Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
+//        }
+//    }
     
     //
 	// Quick View Spinner
@@ -173,7 +184,7 @@ public class TCT extends Activity {
 			}
 
 	    	if (CURRENT_WEBVIEW_URL != VIEW_URLS[CURRENT_VIEW_INDEX]) {
-	    		// Set the new CU
+	    		// Set the new Current URL
 		    	CURRENT_WEBVIEW_URL = VIEW_URLS[CURRENT_VIEW_INDEX];
 
 		    	// It's going to take a second to reload a new webview,
@@ -223,7 +234,7 @@ public class TCT extends Activity {
 	/* Creates the menu items */
 	public boolean onCreateOptionsMenu(Menu menu) {
 	    menu.add(0, MENU_REFRESH, 0, "Refresh");
-	    //menu.add(0, MENU_MNDOT_MOBILE_FREEWAYS, 0, "Cameras");
+	    // menu.add(0, MENU_MNDOT_MOBILE_FREEWAYS, 0, "Cameras");
 	    // menu.add(0, MENU_PREFS, 0, "Preferences");
 	    menu.add(0, MENU_ABOUT, 0, "About");
 	    menu.add(0, MENU_QUIT, 0, "Quit");
@@ -253,21 +264,14 @@ public class TCT extends Activity {
 //		    	this.startActivityForResult(intent, 0);
 //		    	return true;
 
-			    case MENU_ABOUT:
-		        PackageInfo pInfo = null;
-		        try {
-		            pInfo = getPackageManager().getPackageInfo("com.osilabs.android.apps",
-		            		PackageManager.GET_META_DATA);
-		        } catch (NameNotFoundException e) {
-		        	e.printStackTrace();
-		        }
+			case MENU_ABOUT:
 		        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 		        alertDialog.setTitle("Twin Cities Traffic");
-		        alertDialog.setMessage("You are running v" + pInfo.versionName);
+		        alertDialog.setMessage("You are running version " + version);
 		        alertDialog.setButton("More...", new DialogInterface.OnClickListener() {
 		        	public void onClick(DialogInterface dialog, int which) {
 		        		Intent mIntent = new Intent(Intent.ACTION_VIEW, 
-		        				Uri.parse("http://osilabs.com/m/mobilecontent/tctraffic/about.php#0.2")); 
+		        				Uri.parse("http://osilabs.com/m/mobilecontent/tctraffic/about.php#" + version)); 
         				startActivity(mIntent); 
 		            } 
 		        });

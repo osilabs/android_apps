@@ -1,16 +1,10 @@
-// Release 0.3
-
-
--- Current problems: 
-
-* Google tracking
-
-* Info web content screen, talks about each version, help sections, donate. Use red OSILABS stars and look and feel. Drive to other apps. Get here by clicking Menu -> Help
+// Release 0.4
 
 * Add menu button icons
 
 * Fix icon?
 
+* choose region (west, northwest,...) then maps center onload to your area
 
 
 

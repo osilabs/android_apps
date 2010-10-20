@@ -1,0 +1,8 @@
+
+>> Release checklist <<
+1. update versions in manifest
+2. Update screenshots
+3. Update osilabs/m/mobilecontent/about.php
+3. Update osilabs/m/apps site
+4. Commit and push git. Tag with -m"TCT v0.3 - RELEASE 20101019"
+
