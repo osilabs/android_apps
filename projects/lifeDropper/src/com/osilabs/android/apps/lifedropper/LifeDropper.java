@@ -7,6 +7,7 @@ import java.io.IOException;
 //import com.osilabs.android.apps.R;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 import android.hardware.Camera.PreviewCallback;
@@ -23,7 +24,10 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 public class LifeDropper extends Activity {
-  private static final String TAG = "CameraDemo";
+	private static int BUSY = 0;
+	private static int AVAILABLE = 1;
+	private static int FRAMEBUFFER_IS = AVAILABLE;
+  private static final String TAG = "**** x14d **** ";
   Preview preview;
   Button buttonClick;
 
@@ -44,7 +48,12 @@ public class LifeDropper extends Activity {
 
     Log.d(TAG, "onCreate'd");
   }
-
+  
+  @Override
+  public void onPause() {
+	  
+  }
+  
   // Called when shutter is opened
   ShutterCallback shutterCallback = new ShutterCallback() { 
     public void onShutter() {
@@ -81,7 +90,7 @@ public class LifeDropper extends Activity {
   };
   
   private class Preview extends SurfaceView implements SurfaceHolder.Callback {
-	  private static final String TAG = "Preview";
+	  private static final String TAG = "** x14d ** ";
 
 	  SurfaceHolder mHolder;
 	  public Camera camera;
@@ -110,10 +119,14 @@ public class LifeDropper extends Activity {
 	        	// processing the byte array:
 	        	// http://code.google.com/p/android/issues/detail?id=823
 	        	//
-
-	        	new HandleFrameTask().execute(data);
-
 	        	Log.d(TAG, "onPreviewFrame called at: " + System.currentTimeMillis());
+	        	// Discard frames until processing completes from the last
+	        	//  processed frame
+	        	if (FRAMEBUFFER_IS == AVAILABLE) {
+	        		new HandleFrameTask().execute(data);
+	        	}
+	        	
+	        	//Log.d(TAG, "onPreviewFrame called at: " + System.currentTimeMillis());
 	        	Preview.this.invalidate();
 	        }
 	      });
@@ -124,7 +137,11 @@ public class LifeDropper extends Activity {
 
 	  // Called when the holder is destroyed
 	  public void surfaceDestroyed(SurfaceHolder holder) {
+        // Surface will be destroyed when we return, so stop the preview.
+        // Because the CameraDevice object is not a shared resource, it's very
+        // important to release it when the activity is paused.
 	    camera.stopPreview();
+	    camera.release();
 	    camera = null;
 	  }
 
@@ -137,7 +154,8 @@ public class LifeDropper extends Activity {
 
 
 
-	private class HandleFrameTask extends AsyncTask<byte[], Void, byte[]> {
+	//private class HandleFrameTask extends AsyncTask<byte[], Void, byte[]> {
+	private class HandleFrameTask extends AsyncTask<byte[], Void, int[]> {
 		//TextView tv = (TextView) findViewById(R.id.preview_text);
 		
 		
@@ -146,14 +164,23 @@ public class LifeDropper extends Activity {
 		protected void onPreExecute() {
 			//this.dialog.setMessage("Selecting data...");
 			//this.dialog.show();
+
+			FRAMEBUFFER_IS = BUSY;
 		}
 		
 		@Override
-		protected byte[] doInBackground(byte[]... yuvs) {
+		//protected byte[] doInBackground(byte[]... yuvs) {
+		protected int[] doInBackground(byte[]... yuvs) {
 			// automatically done on worker thread (separate from UI thread).
 			// ** don't use UI thread here **
-		      
-			Log.d(TAG, "Processing the frame *****************************");
+			
+			//byte[] rgbs = null;
+		    //if(1==1)return rgbs;
+
+			int[] aRGB = {0,0,0};
+		    
+			//int logCtr = 1;
+			//Log.d(TAG, "Processing the frame ***************************** " + Integer.toString(logCtr++));
 		      
 			// FIXME
 			int width = 176;
@@ -166,18 +193,16 @@ public class LifeDropper extends Activity {
 			//tv.setText ((char) data[0]);
 			  //the end of the luminance data
 		    final int lumEnd = width * height;
-		    //points to the next luminance value pair
+			//points to the next luminance value pair
 		    int lumPtr = 0;
 		    //points to the next chromiance value pair
 		    int chrPtr = lumEnd;
-		    //points to the next byte output pair of RGB565 value
+			//points to the next byte output pair of RGB565 value
 		    int outPtr = 0;
 		    //the end of the current luminance scanline
 		    int lineEnd = width;
 		    
-		    byte[] rgbs = null;
-		    
-		    while (true) {
+			while (true) {
 
 		        //skip back to the start of the chromiance values when necessary
 		        if (lumPtr == lineEnd) {
@@ -202,8 +227,9 @@ public class LifeDropper extends Activity {
 		        R = Y1 + ((359 * Cr) >> 8); 
 		        if(R < 0) R = 0; else if(R > 255) R = 255; 
 		        //NOTE: this assume little-endian encoding
-		        rgbs[outPtr++]  = (byte) (((G & 0x3c) << 3) | (B >> 3));
-		        rgbs[outPtr++]  = (byte) ((R & 0xf8) | (G >> 5));
+		        //rgbs[outPtr++]  = (byte) (((G & 0x3c) << 3) | (B >> 3));
+				//Log.d(TAG, "WHILE *********** " + Integer.toString(logCtr++));
+		        //rgbs[outPtr++]  = (byte) ((R & 0xf8) | (G >> 5));
 
 		        //generate second RGB components
 		        B = Y2 + ((454 * Cb) >> 8);
@@ -213,31 +239,43 @@ public class LifeDropper extends Activity {
 		        R = Y2 + ((359 * Cr) >> 8); 
 		        if(R < 0) R = 0; else if(R > 255) R = 255; 
 		        //NOTE: this assume little-endian encoding
-		        rgbs[outPtr++]  = (byte) (((G & 0x3c) << 3) | (B >> 3));
-		        rgbs[outPtr++]  = (byte) ((R & 0xf8) | (G >> 5));
+		        //rgbs[outPtr++]  = (byte) (((G & 0x3c) << 3) | (B >> 3));
+		        //rgbs[outPtr++]  = (byte) ((R & 0xf8) | (G >> 5));
+				//Log.d(TAG, "WHILE *********** " + Integer.toString(logCtr++));
 		        
 		        // Not safe to access UI thread in here
+		        aRGB[0] = R; aRGB[1] = G; aRGB[2] = B;
+		        
+				//Log.d(TAG, "*** G " + Integer.toString(G));
+		        //break;
 		    }
-			return rgbs;
-		}
-		
-		public int unsignedByteToInt(byte b) {
-			return (int) b & 0xFF;
-		}
-		
-		public String byteToHex(byte b){
-			int i = b & 0xFF;
-			return Integer.toHexString(i);
+			Log.d(TAG, "WHILE END *********** ");
+			//return rgbs;
+			return aRGB;
 		}
 		
 		// can use UI thread here
-		protected void onPostExecute(final byte[] rgb_result) {
+		//protected void onPostExecute(final byte[] rgb_result) {
+		protected void onPostExecute(final int[] rgb_result) {
+			
+			Log.d(TAG, "onPostExecute:");
+						
+			TextView tv = (TextView) findViewById(R.id.preview_text);
+			tv.setText(
+					" R:" + Integer.toString(rgb_result[0]) +
+					"  G:" + Integer.toString(rgb_result[1]) +
+					"  B:" + Integer.toString(rgb_result[2]));
+			tv.setBackgroundColor(Color.rgb(
+					rgb_result[0], 
+					rgb_result[1], 
+					rgb_result[2]));
+			
+			FRAMEBUFFER_IS = AVAILABLE;
+			
 			
 			//int r = unsignedByteToInt(rgb_result[0]);
-			  //final TextView tv = (TextView) findViewById(R.id.preview_text);
+			//final TextView tv = (TextView) findViewById(R.id.preview_text);
 
-			TextView tv = (TextView) findViewById(R.id.preview_text);
-			tv.setBackgroundColor(rgb_result[0]);
 			
 			//TextView et = new TextView(activity);
 			//et.setText("350");
@@ -256,6 +294,15 @@ public class LifeDropper extends Activity {
 	    protected void onPostExecute(Long result) {
 	        //showDialog("Downloaded " + result + " bytes");
 	    }
+		
+		public int unsignedByteToInt(byte b) {
+			return (int) b & 0xFF;
+		}
+		
+		public String byteToHex(byte b){
+			int i = b & 0xFF;
+			return Integer.toHexString(i);
+		}
 	}
 
 }
