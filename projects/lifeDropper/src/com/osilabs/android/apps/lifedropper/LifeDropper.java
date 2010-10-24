@@ -35,7 +35,11 @@ public class LifeDropper extends Activity {
 
 	// This is the array we pass back from each frame processed.
 	private static final int RGB_ELEMENTS = 6;
-	private static int[] aRGB = new int[RGB_ELEMENTS];
+	private static int[] RGBs = new int[RGB_ELEMENTS];
+
+	// View properties
+	protected int view_w = 0;
+	protected int view_h = 0;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -80,14 +84,19 @@ public class LifeDropper extends Activity {
 
 		@Override
 		protected void onDraw(Canvas canvas) {
+			//
+			// FIXME - this is redrawing the decorations with every frame,
+			//  should only redraw after a framebuffer has been processed.
+			//
 			Log.d(TAG, "onDraw'd");
 			
-			int center_x = 200;
-			int center_y = 200;
 			int line_len = 30;
 			int corner_padding = 20;
-			int w = 400;
-			int h = 400;
+
+			int w = preview.getWidth();
+			int h = preview.getHeight();
+			int center_x = (int) w / 2;
+			int center_y = (int) h / 2;
 			
 			// Text
 			//Paint paint = new Paint();
@@ -119,6 +128,10 @@ public class LifeDropper extends Activity {
 		}
 	}
   
+	//
+	// Camer shutter
+ 	//
+	
 	// Called when shutter is opened
 	ShutterCallback shutterCallback = new ShutterCallback() { 
 		public void onShutter() {
@@ -154,6 +167,9 @@ public class LifeDropper extends Activity {
 		}
 	};
 
+	//
+	// Frame previewer
+	//
 	private class Preview extends SurfaceView implements SurfaceHolder.Callback {
 
 		SurfaceHolder mHolder;
@@ -167,10 +183,12 @@ public class LifeDropper extends Activity {
 			mHolder = getHolder();
 			mHolder.addCallback(this);
 			mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+			
 		}
 
 		// Called once the holder is ready
 		public void surfaceCreated(SurfaceHolder holder) {
+			
 			// The Surface has been created, acquire the camera and tell it
 			// where
 			// to draw.
@@ -184,8 +202,10 @@ public class LifeDropper extends Activity {
 						// processing the byte array:
 						// http://code.google.com/p/android/issues/detail?id=823
 						//
-						Log.d(TAG, "onPreviewFrame called at: "
-								+ System.currentTimeMillis());
+						
+						//Log.d(TAG, "onPreviewFrame called at: "
+						//		+ System.currentTimeMillis());
+						
 						// Discard frames until processing completes from the
 						// last
 						// processed frame
@@ -225,6 +245,7 @@ public class LifeDropper extends Activity {
 			
 		}
 		
+		
 // THIS MAY WORK		
 //		@Override
 //		public void draw(Canvas canvas) {
@@ -246,6 +267,10 @@ public class LifeDropper extends Activity {
 			// this.dialog.setMessage("Selecting data...");
 			// this.dialog.show();
 
+			// Set view dimensions
+			view_w = preview.getWidth();
+			view_h = preview.getHeight();
+			
 			FRAMEBUFFER_IS = BUSY;
 		}
 
@@ -254,30 +279,52 @@ public class LifeDropper extends Activity {
 		protected int[] doInBackground(byte[]... yuvs) {
 			// automatically done on worker thread (separate from UI thread).
 			// ** don't use UI thread here **
-
-			// byte[] rgbs = null;
-			// if(1==1)return rgbs;
-
-			// initialize RGB
-			for (int i = 0; i < RGB_ELEMENTS; i++) {
-				aRGB[i] = 0;
-			}
-
-			// aRGB = {0,0,0,0,0,0};
-
-			// int logCtr = 1;
-			// Log.d(TAG, "Processing the frame ***************************** "
-			// + Integer.toString(logCtr++));
+			Log.d(TAG, "INIT RGB ARRAY...");
+			initRGBArray();
 
 			// FIXME
-			int width = 400;
-			int height = 400;
+			int width = view_w;
+			int height = view_h;
 
-			// for(int iByte = 0; iByte < data.length; iByte++)
-			// (char)data[iByte];
+			Log.d(TAG, "yuv conversion ...");
+			YUV2RGB1(yuvs, width, height);
+			//return averageRGB();
+			int[] ia = {200,200,200};
+			return ia;
+		}
+		
+		private int[] averageRGB() {
+			// fixme
+			int[] aRGB = new int[3];
+			
+			// Take all rgb tripplets and average the three values
+			//  for each color.
+			int rSum = 0; int gSum = 0; int bSum = 0;
+			int valCt = 0;
+			for(int i=0; i<RGB_ELEMENTS; i+=3) {
+				rSum += RGBs[i  ];
+				gSum += RGBs[i+1];
+				bSum += RGBs[i+2];
+				valCt++;
+			}
+			
+			aRGB[0] = (int)(rSum/valCt);
+			aRGB[1] = (int)(gSum/valCt);
+			aRGB[2] = (int)(bSum/valCt);
+			
+			return aRGB;
+		}
 
-			// TextView tv = (TextView) findViewById(R.id.preview_text);
-			// tv.setText ((char) data[0]);
+		private void initRGBArray() {
+			Log.d(TAG, "InitRGBArray");
+			// initialize RGB
+			for (int i = 0; i < RGB_ELEMENTS; i++) {
+				RGBs[i] = 0;
+			}
+		}
+		
+		protected void YUV2RGB1(final byte[][] yuvs, int width, int height) {
+			
 			// the end of the luminance data
 			final int lumEnd = width * height;
 			// points to the next luminance value pair
@@ -290,8 +337,9 @@ public class LifeDropper extends Activity {
 			int lineEnd = width;
 
 			// get just the center pixel
-			lumPtr = width/2;
+			//lumPtr = width/2;
 			
+			Log.d(TAG, "yuv BEGIN LOOP...");
 			while (true) {
 
 				// skip back to the start of the chromiance values when
@@ -304,6 +352,7 @@ public class LifeDropper extends Activity {
 					chrPtr = lumEnd + ((lumPtr >> 1) / width) * width;
 					lineEnd += width;
 				}
+				
 
 				// read the luminance and chromiance values
 				final int Y1 = yuvs[0][lumPtr++] & 0xff;
@@ -343,9 +392,9 @@ public class LifeDropper extends Activity {
 				// Integer.toString(logCtr++));
 				// rgbs[outPtr++] = (byte) ((R & 0xf8) | (G >> 5));
 
-				aRGB[0] = R;
-				aRGB[1] = G;
-				aRGB[2] = B;
+				RGBs[0] = R;
+				RGBs[1] = G;
+				RGBs[2] = B;
 
 				// generate second RGB components
 				B = Y2 + ((454 * Cb) >> 8);
@@ -378,18 +427,22 @@ public class LifeDropper extends Activity {
 				// Log.d(TAG, "WHILE *********** " +
 				// Integer.toString(logCtr++));
 
-				aRGB[3] = R;
-				aRGB[4] = G;
-				aRGB[5] = B;
+				RGBs[3] = R;
+				RGBs[4] = G;
+				RGBs[5] = B;
 
 				// Not safe to access UI thread in here
-
+				
 				// Log.d(TAG, "*** G " + Integer.toString(G));
+				
+				// Force a bailout after one pixel
+				//lumPtr = lumEnd;
 				break;
 			}
-			Log.d(TAG, "WHILE END *********** ");
+			Log.d(TAG, "yuv END LOOP...");
 			// return rgbs;
-			return aRGB;
+			//return RGBs;
+			
 		}
 
 		// can use UI thread here
@@ -400,11 +453,9 @@ public class LifeDropper extends Activity {
 
 			TextView tv = (TextView) findViewById(R.id.preview_text);
 			tv.setText(" R:" + Integer.toString(rgb_result[0]) + ","
-					+ Integer.toString(rgb_result[3]) + "  G:"
-					+ Integer.toString(rgb_result[1]) + ","
-					+ Integer.toString(rgb_result[4]) + "  B:"
-					+ Integer.toString(rgb_result[2]) + ","
-					+ Integer.toString(rgb_result[5]));
+					+  " G:" + Integer.toString(rgb_result[1]) + "," 
+					+ "  B:" + Integer.toString(rgb_result[2]));
+			
 			tv.setBackgroundColor(Color.rgb(rgb_result[0], rgb_result[1],
 					rgb_result[2]));
 
@@ -423,6 +474,7 @@ public class LifeDropper extends Activity {
 		protected void onPostExecute(Long result) {
 			// showDialog("Downloaded " + result + " bytes");
 		}
+
 
 		public int unsignedByteToInt(byte b) {
 			return (int) b & 0xFF;
