@@ -1,0 +1,16 @@
+// ** live dropper todo
+
+// For working on colors
+* Get dimensions of viewpane
+* make adapters for the yuv to rgb algorithms
+** fix algorithm to get a color that is actually correct
+* average last n number of frames color and use as the current color
+* 
+* 
+
+
+* Draw shapes (ring)
+
+* avtivity onPause() - release camera, and onResume() bring it back.
+
+* Get the website on GIT
