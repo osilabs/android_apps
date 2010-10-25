@@ -29,7 +29,7 @@ public class LifeDropper extends Activity {
 	private static final int BUSY = 0;
 	private static final int AVAILABLE = 1;
 	private static int FRAMEBUFFER_IS = AVAILABLE;
-	private static final String TAG = "**** x14d **** ";
+	private static final String TAG = "**** x14d **** >>>>>>>>>>>>>>>>>>>>>>>>>>> ";
 	Preview preview;
 	Button buttonClick;
 
@@ -40,7 +40,9 @@ public class LifeDropper extends Activity {
 	// View properties
 	protected int view_w = 0;
 	protected int view_h = 0;
-
+	
+	protected static int[] decodeBuf;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -93,8 +95,8 @@ public class LifeDropper extends Activity {
 			int line_len = 30;
 			int corner_padding = 20;
 
-			int w = preview.getWidth();
-			int h = preview.getHeight();
+			int w = view_w;
+			int h = view_h;
 			int center_x = (int) w / 2;
 			int center_y = (int) h / 2;
 			
@@ -105,7 +107,7 @@ public class LifeDropper extends Activity {
 			//canvas.drawText("osilabs", 10, 10, paint);
 			
 			Paint paint = new Paint();
-			paint.setColor(Color.YELLOW);
+			paint.setColor(Color.RED);
 			canvas.drawCircle(center_x, center_y, 5, paint);
 
 			// crosshairs
@@ -196,6 +198,10 @@ public class LifeDropper extends Activity {
 			try {
 				camera.setPreviewDisplay(holder);
 
+				view_w = this.getWidth();
+				view_h = this.getHeight();
+				decodeBuf = new int[(view_w*view_h)];				
+				
 				camera.setPreviewCallback(new PreviewCallback() {
 					// Called for each frame previewed
 					public void onPreviewFrame(byte[] data, Camera camera) {
@@ -264,13 +270,6 @@ public class LifeDropper extends Activity {
 
 		// can use UI thread here
 		protected void onPreExecute() {
-			// this.dialog.setMessage("Selecting data...");
-			// this.dialog.show();
-
-			// Set view dimensions
-			view_w = preview.getWidth();
-			view_h = preview.getHeight();
-			
 			FRAMEBUFFER_IS = BUSY;
 		}
 
@@ -279,192 +278,149 @@ public class LifeDropper extends Activity {
 		protected int[] doInBackground(byte[]... yuvs) {
 			// automatically done on worker thread (separate from UI thread).
 			// ** don't use UI thread here **
-			Log.d(TAG, "INIT RGB ARRAY...");
-			initRGBArray();
-
-			// FIXME
-			int width = view_w;
-			int height = view_h;
-
-			Log.d(TAG, "yuv conversion ...");
-			YUV2RGB1(yuvs, width, height);
-			//return averageRGB();
-			int[] ia = {200,200,200};
-			return ia;
-		}
-		
-		private int[] averageRGB() {
-			// fixme
-			int[] aRGB = new int[3];
+			//initRGBArray();
 			
-			// Take all rgb tripplets and average the three values
-			//  for each color.
-			int rSum = 0; int gSum = 0; int bSum = 0;
-			int valCt = 0;
-			for(int i=0; i<RGB_ELEMENTS; i+=3) {
-				rSum += RGBs[i  ];
-				gSum += RGBs[i+1];
-				bSum += RGBs[i+2];
-				valCt++;
+			try {
+				decodeYUV(decodeBuf, yuvs[0], view_w, view_h);
+			}
+			catch(Exception e) {
+				Log.d("EEEEEEEEEEEEEEE ", "Error with decodeYUV");
 			}
 			
-			aRGB[0] = (int)(rSum/valCt);
-			aRGB[1] = (int)(gSum/valCt);
-			aRGB[2] = (int)(bSum/valCt);
+			Log.d("****************", "Average");
+			int[] iii = {0};
+			iii[0] = averageRGB(getSampleRegion());
+			return iii;
+		}
+
+		private int[] getSampleRegion() {
+			// Use a 9 pixel square in the middle of the screen for now
+			int center = (int)(view_w*view_h)/2;
 			
-			return aRGB;
+			int[] region = {
+					9, // number elements
+					center-view_w-1, center-view_w, center-view_w+1,
+					center-1,        center,        center+1,
+					center+view_w-1, center+view_w, center+view_w+1
+			};
+			
+			return region;
+		}
+		
+		private int averageRGB(int[] region) {
+			int RED = 0; int GRN = 0; int BLU = 0;
+			int items = 0;
+
+			for(int i=1; i<=region[0]; i++) {
+				RED += decodeBuf[ region[i] ] & 255;
+				GRN += (decodeBuf[ region[i] ] >> 8) & 255;
+				BLU += (decodeBuf[ region[i] ] >> 16) & 255;
+				items++;
+			}
+
+			if (items > 0) {
+				return 0xff000000	+ (((int)BLU/items) << 16) 
+									+ (((int)GRN/items) << 8) 
+									+ ((int)RED/items);
+			} else {
+				return -16777216; // r=0, g=0, b=0
+			}
 		}
 
 		private void initRGBArray() {
-			Log.d(TAG, "InitRGBArray");
+			//Log.d(TAG, "InitRGBArray");
 			// initialize RGB
 			for (int i = 0; i < RGB_ELEMENTS; i++) {
 				RGBs[i] = 0;
 			}
 		}
-		
-		protected void YUV2RGB1(final byte[][] yuvs, int width, int height) {
-			
-			// the end of the luminance data
-			final int lumEnd = width * height;
-			// points to the next luminance value pair
-			int lumPtr = 0;
-			// points to the next chromiance value pair
-			int chrPtr = lumEnd;
-			// points to the next byte output pair of RGB565 value
-			int outPtr = 0;
-			// the end of the current luminance scanline
-			int lineEnd = width;
 
-			// get just the center pixel
-			//lumPtr = width/2;
-			
-			Log.d(TAG, "yuv BEGIN LOOP...");
-			while (true) {
+		// decode Y, U, and V values on the YUV 420 buffer described as YCbCr_422_SP 
+		// by Android David Manpearl 081201 
+		protected void decodeYUV(int[] out, byte[] fg, int width, int height)
+		        throws NullPointerException, IllegalArgumentException {
 
-				// skip back to the start of the chromiance values when
-				// necessary
-				if (lumPtr == lineEnd) {
-					if (lumPtr == lumEnd)
-						break; // we've reached the end
-					// division here is a bit expensive, but's only done once
-					// per scanline
-					chrPtr = lumEnd + ((lumPtr >> 1) / width) * width;
-					lineEnd += width;
-				}
-				
+			int sz = width * height;
+		    
+		    if (out == null)
+		        throw new NullPointerException("buffer out is null");
+		    
+		    if (out.length < sz)
+		        throw new IllegalArgumentException("buf out size "+out.length+" < minimum "+ sz);
 
-				// read the luminance and chromiance values
-				final int Y1 = yuvs[0][lumPtr++] & 0xff;
-				final int Y2 = yuvs[0][lumPtr++] & 0xff;
-				final int Cr = (yuvs[0][chrPtr++] & 0xff) - 128;
-				final int Cb = (yuvs[0][chrPtr++] & 0xff) - 128;
-				int R, G, B;
-
-				// generate first RGB components
-				B = Y1 + ((454 * Cb) >> 8);
-				// ///if(B < 0) B = 0; else if(B > 255) B = 255;
-				if (B < 0)
-					B += 255;
-				else if (B > 255)
-					B = 255;
-				if (B < 0)
-					B = 0;
-				G = Y1 - ((88 * Cb + 183 * Cr) >> 8);
-				// //if(G < 0) G = 0; else if(G > 255) G = 255;
-				if (G < 0)
-					G += 255;
-				else if (G > 255)
-					G = 255;
-				if (G < 0)
-					G = 0;
-				R = Y1 + ((359 * Cr) >> 8);
-				// //if(R < 0) R = 0; else if(R > 255) R = 255;
-				if (R < 0)
-					R += 255;
-				else if (R > 255)
-					R = 255;
-				if (R < 0)
-					R = 0;
-				// NOTE: this assume little-endian encoding
-				// rgbs[outPtr++] = (byte) (((G & 0x3c) << 3) | (B >> 3));
-				// Log.d(TAG, "WHILE *********** " +
-				// Integer.toString(logCtr++));
-				// rgbs[outPtr++] = (byte) ((R & 0xf8) | (G >> 5));
-
-				RGBs[0] = R;
-				RGBs[1] = G;
-				RGBs[2] = B;
-
-				// generate second RGB components
-				B = Y2 + ((454 * Cb) >> 8);
-				// //if(B < 0) B = 0; else if(B > 255) B = 255;
-				if (B < 0)
-					B += 255;
-				else if (B > 255)
-					B = 255;
-				if (B < 0)
-					B = 0;
-				G = Y2 - ((88 * Cb + 183 * Cr) >> 8);
-				// //if(G < 0) G = 0; else if(G > 255) G = 255;
-				if (G < 0)
-					G += 255;
-				else if (G > 255)
-					G = 255;
-				if (G < 0)
-					G = 0;
-				R = Y2 + ((359 * Cr) >> 8);
-				// //if(R < 0) R = 0; else if(R > 255) R = 255;
-				if (R < 0)
-					R += 255;
-				else if (R > 255)
-					R = 255;
-				if (R < 0)
-					R = 0;
-				// NOTE: this assume little-endian encoding
-				// rgbs[outPtr++] = (byte) (((G & 0x3c) << 3) | (B >> 3));
-				// rgbs[outPtr++] = (byte) ((R & 0xf8) | (G >> 5));
-				// Log.d(TAG, "WHILE *********** " +
-				// Integer.toString(logCtr++));
-
-				RGBs[3] = R;
-				RGBs[4] = G;
-				RGBs[5] = B;
-
-				// Not safe to access UI thread in here
-				
-				// Log.d(TAG, "*** G " + Integer.toString(G));
-				
-				// Force a bailout after one pixel
-				//lumPtr = lumEnd;
-				break;
-			}
-			Log.d(TAG, "yuv END LOOP...");
-			// return rgbs;
-			//return RGBs;
-			
+		    if (fg == null)
+		        throw new NullPointerException("buffer 'fg' is null");
+		    
+		    if (fg.length < sz)
+		        throw new IllegalArgumentException("buffer fg size " + fg.length
+		                + " < minimum " + sz * 3 / 2);
+		    int i, j;
+		    int Y, Cr = 0, Cb = 0;
+		    for (j = 0; j < height; j++) {
+		        int pixPtr = j * width;
+		        final int jDiv2 = j >> 1;
+		        for (i = 0; i < width; i++) {
+		            Y = fg[pixPtr];
+		            if (Y < 0)
+		                Y += 255;
+		            if ((i & 0x1) != 1) {
+		                final int cOff = sz + jDiv2 * width + (i >> 1) * 2;
+		                Cb = fg[cOff];
+		                if (Cb < 0)
+		                    Cb += 127;
+		                else
+		                    Cb -= 128;
+		                Cr = fg[cOff + 1];
+		                if (Cr < 0)
+		                    Cr += 127;
+		                else
+		                    Cr -= 128;
+		            }
+		            int R = Y + Cr + (Cr >> 2) + (Cr >> 3) + (Cr >> 5);
+		            if (R < 0)
+		                R = 0;
+		            else if (R > 255)
+		                R = 255;
+		            int G = Y - (Cb >> 2) + (Cb >> 4) + (Cb >> 5) - (Cr >> 1)
+		                    + (Cr >> 3) + (Cr >> 4) + (Cr >> 5);
+		            if (G < 0)
+		                G = 0;
+		            else if (G > 255)
+		                G = 255;
+		            int B = Y + Cb + (Cb >> 1) + (Cb >> 2) + (Cb >> 6);
+		            if (B < 0)
+		                B = 0;
+		            else if (B > 255)
+		                B = 255;
+		            out[pixPtr++] = 0xff000000 + (B << 16) + (G << 8) + R;
+		        }
+		    }
 		}
 
 		// can use UI thread here
 		// protected void onPostExecute(final byte[] rgb_result) {
-		protected void onPostExecute(final int[] rgb_result) {
+		protected void onPostExecute(int[] rgb_result) {
 
-			Log.d(TAG, "onPostExecute:");
+			int pos = (int)(view_w * view_h) / 2;
+
+			//int iRGB = rgb_result[pos+1];
+			int iRGB = rgb_result[0];
+			int RED = iRGB & 255;
+			int GRN = (iRGB >> 8) & 255;
+			int BLU = (iRGB >> 16) & 255;
+			
+			String msg = "rgb(" + RED + "," + GRN + "," + BLU + ")";
 
 			TextView tv = (TextView) findViewById(R.id.preview_text);
-			tv.setText(" R:" + Integer.toString(rgb_result[0]) + ","
-					+  " G:" + Integer.toString(rgb_result[1]) + "," 
-					+ "  B:" + Integer.toString(rgb_result[2]));
-			
-			tv.setBackgroundColor(Color.rgb(rgb_result[0], rgb_result[1],
-					rgb_result[2]));
+			tv.setText(msg);
+			tv.setBackgroundColor(Color.rgb(RED,GRN,BLU));
+
+			TextView bl_tv = (TextView) findViewById(R.id.bl_display);
+			bl_tv.setText("#" + Integer.toHexString(rgb_result[0]).substring(2).toUpperCase());
+
+			Log.d(TAG, "onPostExecute: " + msg);
 
 			FRAMEBUFFER_IS = AVAILABLE;
-
-			// if (this.dialog.isShowing()) {
-			// this.dialog.dismiss();
-			// }
-			// Main.this.output.setText(result);
 		}
 
 		protected void onProgressUpdate(Integer... progress) {

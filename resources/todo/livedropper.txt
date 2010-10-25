@@ -1,16 +1,14 @@
 // ** live dropper todo
 
-// For working on colors
-* Get dimensions of viewpane
-* make adapters for the yuv to rgb algorithms
-** fix algorithm to get a color that is actually correct
-* average last n number of frames color and use as the current color
-* 
-* 
+* Click capture, adjust hues, read value, return to camera
 
+* Find out why there is so much green in the colors I am getting.
 
-* Draw shapes (ring)
+* avtivity onPause() - Crashes.
 
-* avtivity onPause() - release camera, and onResume() bring it back.
+* onDraw()is redrawing the decorations with every frame, should only do once.
+
+// Can come later
 
 * Get the website on GIT
+
