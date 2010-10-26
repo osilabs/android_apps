@@ -1,14 +1,21 @@
 package com.osilabs.android.apps.lifedropper;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ImageFormat;
 import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.YuvImage;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 import android.hardware.Camera.PreviewCallback;
@@ -90,7 +97,7 @@ public class LifeDropper extends Activity {
 			// FIXME - this is redrawing the decorations with every frame,
 			//  should only redraw after a framebuffer has been processed.
 			//
-			Log.d(TAG, "onDraw'd");
+			////////Log.d(TAG, "onDraw'd");
 			
 			int line_len = 30;
 			int corner_padding = 20;
@@ -276,20 +283,59 @@ public class LifeDropper extends Activity {
 		@Override
 		// protected byte[] doInBackground(byte[]... yuvs) {
 		protected int[] doInBackground(byte[]... yuvs) {
-			// automatically done on worker thread (separate from UI thread).
-			// ** don't use UI thread here **
-			//initRGBArray();
+//			// automatically done on worker thread (separate from UI thread).
+//			// ** don't use UI thread here **
+//			//initRGBArray();
+//			
+//			try {
+//				decodeYUV(decodeBuf, yuvs[0], view_w, view_h);
+//			}
+//			catch(Exception e) {
+//				Log.d("EEEEEEEEEEEEEEE ", "Error with decodeYUV");
+//			}
+//			
+//			Log.d("****************", "Average");
+//			int[] iii = {0};
+//			iii[0] = averageRGB(getSampleRegion());
+//			return iii;
 			
+			int center = (int)(view_w*view_h)/2;
+			int[] iii = {0};
+			//Log.d(TAG, "1");
 			try {
-				decodeYUV(decodeBuf, yuvs[0], view_w, view_h);
+				//Log.d(TAG, "2");
+				YuvImage yi = new YuvImage(yuvs[0], ImageFormat.NV21, view_w, view_h, null);
+				//Log.d(TAG, "3");
+	
+				///Rect r = new Rect(center-2,center+2, center+2,center-2);
+				Rect r = new Rect(100,100, 120,120);
+				//Log.d(TAG, "4");
+	
+				//ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+				ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+				//Log.d(TAG, "5");
+	
+				yi.compressToJpeg(r, 75, outStream);
+				//Log.d(TAG, "6");
+				
+				ByteArrayInputStream is = new ByteArrayInputStream(outStream.toByteArray());
+				//Log.d(TAG, "7");
+			
+				Bitmap bit = BitmapFactory.decodeStream(is);
+				//Log.d(TAG, "8");
+				// This is probably a better way. Figure out how to determine stride.
+				//bit.getPixels(decodeBuf, 0, stride, x, y, width, height)
+				iii[0] = bit.getPixel(10,11);
+				//Log.d(TAG, "9");
+				//Log.d(TAG, Integer.toHexString(bit.getPixel(center,center)));
+				//Log.d(TAG, Integer.toHexString(bit.getPixel(10,10)));
+				
+				///////Bitmap facePic = Bitmap.createBitmap(bit, 0, 0, 50, 50);				
 			}
 			catch(Exception e) {
-				Log.d("EEEEEEEEEEEEEEE ", "Error with decodeYUV");
+				e.printStackTrace();
 			}
-			
-			Log.d("****************", "Average");
-			int[] iii = {0};
-			iii[0] = averageRGB(getSampleRegion());
+
 			return iii;
 		}
 
@@ -408,6 +454,11 @@ public class LifeDropper extends Activity {
 			int RED = iRGB & 255;
 			int GRN = (iRGB >> 8) & 255;
 			int BLU = (iRGB >> 16) & 255;
+			int ALP = (iRGB >> 24) & 255;
+			
+			
+			//GRN -= 128;
+			//if(GRN<0) GRN=0;
 			
 			String msg = "rgb(" + RED + "," + GRN + "," + BLU + ")";
 
@@ -415,8 +466,8 @@ public class LifeDropper extends Activity {
 			tv.setText(msg);
 			tv.setBackgroundColor(Color.rgb(RED,GRN,BLU));
 
-			TextView bl_tv = (TextView) findViewById(R.id.bl_display);
-			bl_tv.setText("#" + Integer.toHexString(rgb_result[0]).substring(2).toUpperCase());
+			////////////TextView bl_tv = (TextView) findViewById(R.id.bl_display);
+			////////////bl_tv.setText("#" + Integer.toHexString(rgb_result[0]).substring(2).toUpperCase());
 
 			Log.d(TAG, "onPostExecute: " + msg);
 
