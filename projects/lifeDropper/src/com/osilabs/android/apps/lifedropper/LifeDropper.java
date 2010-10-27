@@ -5,6 +5,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
@@ -36,7 +38,7 @@ public class LifeDropper extends Activity {
 	private static final int BUSY = 0;
 	private static final int AVAILABLE = 1;
 	private static int FRAMEBUFFER_IS = AVAILABLE;
-	private static final String TAG = "**** x14d **** >>>>>>>>>>>>>>>>>>>>>>>>>>> ";
+	private static final String TAG = "**** x14d **** >>>>>>>> ";
 	Preview preview;
 	Button buttonClick;
 
@@ -102,8 +104,8 @@ public class LifeDropper extends Activity {
 			int line_len = 30;
 			int corner_padding = 20;
 
-			int w = view_w;
-			int h = view_h;
+			int w = 400;
+			int h = 400;
 			int center_x = (int) w / 2;
 			int center_y = (int) h / 2;
 			
@@ -204,10 +206,8 @@ public class LifeDropper extends Activity {
 			camera = Camera.open();
 			try {
 				camera.setPreviewDisplay(holder);
-
-				view_w = this.getWidth();
-				view_h = this.getHeight();
-				decodeBuf = new int[(view_w*view_h)];				
+				
+	
 				
 				camera.setPreviewCallback(new PreviewCallback() {
 					// Called for each frame previewed
@@ -250,6 +250,31 @@ public class LifeDropper extends Activity {
 		// Called when holder has changed
 		public void surfaceChanged(SurfaceHolder holder, int format, int w,
 				int h) {
+			Camera.Parameters p = camera.getParameters();
+			Camera.Size s = p.getPreviewSize();
+			Log.d(TAG, "fmt:" + Integer.toString(p.getPreviewFormat()));
+			p.setPictureFormat(ImageFormat.RGB_565);
+			//p.setPictureSize(200,200);
+			//p.setPreviewSize(200, 200);
+			camera.setParameters(p);
+			//view_w = this.getWidth();
+			//view_h = this.getHeight();
+			view_w = s.width;
+			view_h = s.height;
+			decodeBuf = new int[(view_w*view_h)];			
+			
+			List<Camera.Size> ls = p.getSupportedPreviewSizes();
+			for (Iterator it = ls.iterator(); it.hasNext(); ) {
+				   Camera.Size sz = (Camera.Size)it.next();
+				   Log.d(TAG, "prv sz:" + Integer.toString(sz.width) + "," + Integer.toString(sz.height));
+			}
+			
+			ls = p.getSupportedPictureSizes();
+			for (Iterator it = ls.iterator(); it.hasNext(); ) {
+				   Camera.Size sz = (Camera.Size)it.next();
+				   Log.d(TAG, "pic sz:" + Integer.toString(sz.width) + "," + Integer.toString(sz.height));
+			}
+
 			camera.startPreview();
 		}
 		
@@ -294,28 +319,31 @@ public class LifeDropper extends Activity {
 //				Log.d("EEEEEEEEEEEEEEE ", "Error with decodeYUV");
 //			}
 //			
-//			Log.d("****************", "Average");
+			
+			Log.d(TAG, "**************** len " + Integer.toString(yuvs[0].length));
+			Log.d(TAG, "**************** w " + Integer.toString(view_w));
+			Log.d(TAG, "**************** h " + Integer.toString(view_h));
 //			int[] iii = {0};
 //			iii[0] = averageRGB(getSampleRegion());
 //			return iii;
 			
 			int center = (int)(view_w*view_h)/2;
+			int ctr=0;
 			int[] iii = {0};
 			//Log.d(TAG, "1");
 			try {
 				//Log.d(TAG, "2");
 				YuvImage yi = new YuvImage(yuvs[0], ImageFormat.NV21, view_w, view_h, null);
-				//Log.d(TAG, "3");
 	
 				///Rect r = new Rect(center-2,center+2, center+2,center-2);
-				Rect r = new Rect(100,100, 120,120);
+				Rect r = new Rect(0,0,view_w-1,view_h-1);
 				//Log.d(TAG, "4");
 	
 				//ByteArrayOutputStream outStream = new ByteArrayOutputStream();
 				ByteArrayOutputStream outStream = new ByteArrayOutputStream();
 				//Log.d(TAG, "5");
 	
-				yi.compressToJpeg(r, 75, outStream);
+				yi.compressToJpeg(r, 80, outStream);
 				//Log.d(TAG, "6");
 				
 				ByteArrayInputStream is = new ByteArrayInputStream(outStream.toByteArray());
@@ -325,18 +353,27 @@ public class LifeDropper extends Activity {
 				//Log.d(TAG, "8");
 				// This is probably a better way. Figure out how to determine stride.
 				//bit.getPixels(decodeBuf, 0, stride, x, y, width, height)
-				iii[0] = bit.getPixel(10,11);
+				
+				iii[0] = bit.getPixel(view_w/2,view_h/2);
+				
+				//for(int j=0; j<view_w; j++) {
+				//	Log.d(TAG, Integer.toString(j) + "=" + Integer.toString(bit.getPixel(j,view_h/2)));
+				//}
+				
 				//Log.d(TAG, "9");
 				//Log.d(TAG, Integer.toHexString(bit.getPixel(center,center)));
 				//Log.d(TAG, Integer.toHexString(bit.getPixel(10,10)));
 				
-				///////Bitmap facePic = Bitmap.createBitmap(bit, 0, 0, 50, 50);				
+				///////Bitmap facePic = Bitmap.createBitmap(bit, 0, 0, 50, 50);
+				
 			}
 			catch(Exception e) {
+				Log.d(TAG, "YUV err:" + e.getMessage());
 				e.printStackTrace();
 			}
 
 			return iii;
+			//return decodeBuf;
 		}
 
 		private int[] getSampleRegion() {
@@ -447,10 +484,14 @@ public class LifeDropper extends Activity {
 		// protected void onPostExecute(final byte[] rgb_result) {
 		protected void onPostExecute(int[] rgb_result) {
 
-			int pos = (int)(view_w * view_h) / 2;
+			//int pos = (int)(view_w * view_h) / 2;
 
 			//int iRGB = rgb_result[pos+1];
 			int iRGB = rgb_result[0];
+			//int RED = iRGB & 255;
+			//int GRN = (iRGB >> 8) & 255;
+			//int BLU = (iRGB >> 16) & 255;
+			//int ALP = (iRGB >> 24) & 255;
 			int RED = iRGB & 255;
 			int GRN = (iRGB >> 8) & 255;
 			int BLU = (iRGB >> 16) & 255;
