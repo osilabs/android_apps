@@ -12,9 +12,9 @@
 
 * Try and benchmark the three methods, take fastest algorithm
 
-* 
+* Can't use hardcoded viewfinder dimensions. Must query from the camera
 
-* 
+* Rename the class to LiveDropper
 
 * 
 

@@ -37,14 +37,20 @@ import android.widget.TextView;
 public class LifeDropper extends Activity {
 	private static final int BUSY = 0;
 	private static final int AVAILABLE = 1;
+	private static final int _RED = 0;
+	private static final int _GRN = 1;
+	private static final int _BLU = 2;
+	private static final int _ALP = 3; // alpha
+
 	private static int FRAMEBUFFER_IS = AVAILABLE;
 	private static final String TAG = "**** x14d **** >>>>>>>> ";
-	Preview preview;
-	Button buttonClick;
 
 	// This is the array we pass back from each frame processed.
-	private static final int RGB_ELEMENTS = 6;
+	private static final int RGB_ELEMENTS = 4;
 	private static int[] RGBs = new int[RGB_ELEMENTS];
+	
+	private static boolean REDRAW_DECOR = false;
+	protected static int[] decodeBuf;
 
 	// View properties
 	protected int view_w = 0;
@@ -52,18 +58,22 @@ public class LifeDropper extends Activity {
 	protected int yuv_w = 864;
 	protected int yuv_h = 576;
 	
-	protected static int[] decodeBuf;
+	Preview preview;
+	Button buttonClick;
+	DrawOnTop mDraw;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		DrawOnTop mDraw = new DrawOnTop(this);
+		// Default to black
+		RGBs[_RED] = 0; RGBs[_GRN] = 0; RGBs[_BLU] = 0; RGBs[_ALP] = 0; 
+
+		mDraw = new DrawOnTop(this);
 
 		setContentView(R.layout.main);
 
-		addContentView(mDraw, new LayoutParams(LayoutParams.WRAP_CONTENT,
-				LayoutParams.WRAP_CONTENT));
+		addContentView(mDraw, new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
 
 		preview = new Preview(this);
 		((FrameLayout) findViewById(R.id.preview)).addView(preview);
@@ -101,24 +111,29 @@ public class LifeDropper extends Activity {
 			// FIXME - this is redrawing the decorations with every frame,
 			//  should only redraw after a framebuffer has been processed.
 			//
-			////////Log.d(TAG, "onDraw'd");
 			
+			// FIXME - this isnt used anymore
+			REDRAW_DECOR = false;
+
 			int line_len = 30;
 			int corner_padding = 20;
 
+			// FIXME !!! The view dimensions must be dynamically determined
 			int w = 400;
 			int h = 400;
 			int center_x = (int) w / 2;
 			int center_y = (int) h / 2;
 			
 			// Text
-			//Paint paint = new Paint();
-			//paint.setStyle(Paint.Style.FILL);
-			//paint.setColor(Color.RED);
-			//canvas.drawText("osilabs", 10, 10, paint);
-			
 			Paint paint = new Paint();
+			paint.setStyle(Paint.Style.FILL);
 			paint.setColor(Color.RED);
+			canvas.drawText("osilabs", 10, h-8, paint);
+			
+			//Paint paint = new Paint();
+			
+			// FIXME - make a function to convert all these rgbs to and fro
+			paint.setColor(Color.rgb(255-RGBs[_RED],255-RGBs[_GRN],255-RGBs[_BLU]));
 			canvas.drawCircle(center_x, center_y, 5, paint);
 
 			// crosshairs
@@ -136,13 +151,155 @@ public class LifeDropper extends Activity {
 			canvas.drawLine(w-corner_padding, h-corner_padding, w-corner_padding-line_len, h-corner_padding, paint); // bottom-left
 			canvas.drawLine(0+corner_padding, h-corner_padding, 0+corner_padding+line_len, h-corner_padding, paint); // bottom-right
 			canvas.drawLine(0+corner_padding, h-corner_padding, 0+corner_padding, h-corner_padding-line_len, paint); // bottom-right
+
+			Log.d(TAG, "onDraw'd");
 			
 			super.onDraw(canvas);
 		}
 	}
-  
+	
+	public int calculateRGBCompliment() {
+		float var_r = (RGBs[_RED]) / 255;
+		float var_g = (RGBs[_GRN]) / 255;
+		float var_b = (RGBs[_BLU]) / 255;
+
+		// Now plug these values into the rgb2hsl routine. Below is my PHP
+		// version of EasyRGB.com's generic code for that conversion:
+
+		// Input is var_r, var_g and var_b from above
+		// Output is HSL equivalent as h, s and l — these are again expressed as
+		// fractions of 1, like the input values
+
+		float var_min = Math.min(var_r, Math.min(var_g, var_b));
+		float var_max = Math.max(var_r, Math.max(var_g, var_b));
+		float del_max = var_max - var_min;
+
+		float l = (var_max + var_min) / 2;
+
+		float h = 0;
+		float s = 0;
+
+		if (del_max == 0) {
+			h = 0;
+			s = 0;
+		}else{
+			if (l < 0.5) {
+				s = del_max / (var_max + var_min);
+			} else {
+				s = del_max / (2 - var_max - var_min);
+			}
+			
+
+			float del_r = (((var_max - var_r) / 6) + (del_max / 2)) / del_max;
+			float del_g = (((var_max - var_g) / 6) + (del_max / 2)) / del_max;
+			float del_b = (((var_max - var_b) / 6) + (del_max / 2)) / del_max;
+
+			if (var_r == var_max) {
+				h = del_b - del_g;
+			} else if (var_g == var_max) {
+				h = (1 / 3) + del_r - del_b;
+			} else if (var_b == var_max) {
+				h = (2 / 3) + del_g - del_r;
+			}
+
+			if (h < 0) {
+				h += 1;
+			}
+
+			if (h > 1) {
+				h -= 1;
+			}
+			
+		}
+
+		// So now we have the colour as an HSL value, in the variables h, s and
+		// l. These three output variables are again held as fractions of 1 at
+		// this stage, rather than as degrees and percentages. So e.g., cyan
+		// (180° 100% 50%) would come out as h = 0.5, s = 1, and l = 0.5.
+		// Next find the value of the opposite Hue, i.e., the one that's 180°,
+		// or 0.5, away (I'm sure the mathematicians have a more elegant way of
+		// doing this, but):
+		// Calculate the opposite hue, h2
+
+		float h2 = (float) (h + 0.5);
+
+		if (h2 > 1) {
+			h2 -= 1;
+		}
+		
+
+		// The HSL value of the complementary colour is now in h2, s, l. So
+		// we're ready to convert this back to RGB (again, my PHP version of the
+		// EasyRGB.com formula). Note the input and output formats are different
+		// this time, see my comments at the top of the code:
+		// Input is HSL value of complementary colour, held in h2, s, l as
+		// fractions of 1
+		// Output is RGB in normal 255 255 255 format, held in r_opposite,
+		// g_opposite, b_opposite
+		// Hue is converted using function hue_2_rgb, shown at the end of this
+		// code
+
+		float r_opposite = 0;
+		float g_opposite = 0;
+		float b_opposite = 0;
+
+		if (s == 0) {
+			r_opposite = l * 255;
+			g_opposite = l * 255;
+			b_opposite = l * 255;
+
+		}else{
+			float var_2 = 0;
+			if (l < 0.5) {
+				var_2 = l * (1 + s);
+			} else {
+				var_2 = (l + s) - (s * l);
+			}
+			
+			float var_1 = 2 * l - var_2;
+
+			r_opposite = 255 * hue_2_rgb(var_1, var_2, h2 + (1 / 3));
+			g_opposite = 255 * hue_2_rgb(var_1, var_2, h2);
+			b_opposite = 255 * hue_2_rgb(var_1, var_2, h2 - (1 / 3));
+		}
+		
+
+		// Function to convert hue to RGB, called from above
+		return 0xff000000 + ((int)b_opposite << 16) + ((int)g_opposite << 8) + (int)r_opposite;
+
+	}
+
+	public float hue_2_rgb(float v1, float v2, float vh) {
+		if (vh < 0) {
+			vh += 1;
+		}
+		
+
+		if (vh > 1) {
+			vh -= 1;
+		}
+		
+
+		if ((6 * vh) < 1) {
+			return (float) (v1 + (v2 - v1) * 6 * vh);
+		}
+		
+
+		if ((2 * vh) < 1) {
+			return (v2);
+		}
+		
+
+		if ((3 * vh) < 2) {
+			return (float) (v1 + (v2 - v1) * ((2 / 3 - vh) * 6));
+		}
+		
+
+		return (v1);
+	}
+
 	//
-	// Camer shutter
+	// Camera shutter
  	//
 	
 	// Called when shutter is opened
@@ -180,6 +337,10 @@ public class LifeDropper extends Activity {
 		}
 	};
 
+	
+	
+	
+	
 	//
 	// Frame previewer
 	//
@@ -208,9 +369,6 @@ public class LifeDropper extends Activity {
 			camera = Camera.open();
 			try {
 				camera.setPreviewDisplay(holder);
-				
-	
-				
 				camera.setPreviewCallback(new PreviewCallback() {
 					// Called for each frame previewed
 					public void onPreviewFrame(byte[] data, Camera camera) {
@@ -282,7 +440,7 @@ public class LifeDropper extends Activity {
 		
 		public void onPause() {
 			camera.release();
-			
+			Log.d(TAG, "Preview onPause'd:");
 		}
 		
 		
@@ -337,7 +495,7 @@ public class LifeDropper extends Activity {
 				//Log.d(TAG, "2");
 				YuvImage yi = new YuvImage(yuvs[0], ImageFormat.NV21, view_w, view_h, null);
 	
-				///Rect r = new Rect(center-2,center+2, center+2,center-2);
+				//Rect r = new Rect((int)(view_w/2)-2,(int)(view_h/2)+2, (int)(view_w/2)+2,(int)(view_h/2)-2);
 				Rect r = new Rect(0,0,view_w-1,view_h-1);
 				//Log.d(TAG, "4");
 	
@@ -356,6 +514,7 @@ public class LifeDropper extends Activity {
 				// This is probably a better way. Figure out how to determine stride.
 				//bit.getPixels(decodeBuf, 0, stride, x, y, width, height)
 				
+				//iii[0] = bit.getPixel(1,1);
 				iii[0] = bit.getPixel(view_w/2,view_h/2);
 				
 				//for(int j=0; j<view_w; j++) {
@@ -393,32 +552,32 @@ public class LifeDropper extends Activity {
 		}
 		
 		private int averageRGB(int[] region) {
-			int RED = 0; int GRN = 0; int BLU = 0;
+			int xRED = 0; int xGRN = 0; int xBLU = 0;
 			int items = 0;
 
 			for(int i=1; i<=region[0]; i++) {
-				RED += decodeBuf[ region[i] ] & 255;
-				GRN += (decodeBuf[ region[i] ] >> 8) & 255;
-				BLU += (decodeBuf[ region[i] ] >> 16) & 255;
+				xRED += decodeBuf[ region[i] ] & 255;
+				xGRN += (decodeBuf[ region[i] ] >> 8) & 255;
+				xBLU += (decodeBuf[ region[i] ] >> 16) & 255;
 				items++;
 			}
 
 			if (items > 0) {
-				return 0xff000000	+ (((int)BLU/items) << 16) 
-									+ (((int)GRN/items) << 8) 
-									+ ((int)RED/items);
+				return 0xff000000	+ (((int)xBLU/items) << 16) 
+									+ (((int)xGRN/items) << 8) 
+									+ ((int)xRED/items);
 			} else {
 				return -16777216; // r=0, g=0, b=0
 			}
 		}
 
-		private void initRGBArray() {
-			//Log.d(TAG, "InitRGBArray");
-			// initialize RGB
-			for (int i = 0; i < RGB_ELEMENTS; i++) {
-				RGBs[i] = 0;
-			}
-		}
+//		private void initRGBArray() {
+//			//Log.d(TAG, "InitRGBArray");
+//			// initialize RGB
+//			for (int i = 0; i < RGB_ELEMENTS; i++) {
+//				RGBs[i] = 0;
+//			}
+//		}
 
 		// decode Y, U, and V values on the YUV 420 buffer described as YCbCr_422_SP 
 		// by Android David Manpearl 081201 
@@ -484,37 +643,31 @@ public class LifeDropper extends Activity {
 
 		// can use UI thread here
 		// protected void onPostExecute(final byte[] rgb_result) {
-		protected void onPostExecute(int[] rgb_result) {
-
-			//int pos = (int)(view_w * view_h) / 2;
-
-			//int iRGB = rgb_result[pos+1];
-			int iRGB = rgb_result[0];
-			//int RED = iRGB & 255;
-			//int GRN = (iRGB >> 8) & 255;
-			//int BLU = (iRGB >> 16) & 255;
-			//int ALP = (iRGB >> 24) & 255;
-			int BLU = iRGB & 255;
-			int GRN = (iRGB >> 8) & 255;
-			int RED = (iRGB >> 16) & 255;
-			int ALP = (iRGB >> 24) & 255;
+		protected void onPostExecute(int[] iRGB) {
 			
+			RGBs[_ALP] = (iRGB[0] >> 24) & 255;
+			RGBs[_RED] = (iRGB[0] >> 16) & 255;
+			RGBs[_GRN] = (iRGB[0] >> 8) & 255;
+			RGBs[_BLU] =  iRGB[0] & 255;
 			
-			//GRN -= 128;
-			//if(GRN<0) GRN=0;
+//			int BLU = iRGB & 255;
+//			int GRN = (iRGB >> 8) & 255;
+//			int RED = (iRGB >> 16) & 255;
+//			int ALP = (iRGB >> 24) & 255;
 			
-			String msg = "rgb(" + RED + "," + GRN + "," + BLU + ")";
+			String msg = "rgb(" + RGBs[_RED] + "," + RGBs[_GRN] + "," + RGBs[_BLU] + ")";
 
 			TextView tv = (TextView) findViewById(R.id.preview_text);
 			tv.setText(msg);
-			tv.setBackgroundColor(Color.rgb(RED,GRN,BLU));
+			tv.setBackgroundColor(Color.rgb(RGBs[_RED], RGBs[_GRN], RGBs[_BLU]));
 
-			////////////TextView bl_tv = (TextView) findViewById(R.id.bl_display);
-			////////////bl_tv.setText("#" + Integer.toHexString(rgb_result[0]).substring(2).toUpperCase());
+			TextView bl_tv = (TextView) findViewById(R.id.bl_display);
+			bl_tv.setText("#" + Integer.toHexString(iRGB[0]).substring(2).toUpperCase());
 
 			Log.d(TAG, "onPostExecute: " + msg);
 
 			FRAMEBUFFER_IS = AVAILABLE;
+			REDRAW_DECOR = true;
 		}
 
 		protected void onProgressUpdate(Integer... progress) {
