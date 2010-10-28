@@ -49,6 +49,8 @@ public class LifeDropper extends Activity {
 	// View properties
 	protected int view_w = 0;
 	protected int view_h = 0;
+	protected int yuv_w = 864;
+	protected int yuv_h = 576;
 	
 	protected static int[] decodeBuf;
 	
@@ -261,7 +263,7 @@ public class LifeDropper extends Activity {
 			//view_h = this.getHeight();
 			view_w = s.width;
 			view_h = s.height;
-			decodeBuf = new int[(view_w*view_h)];			
+			decodeBuf = new int[(yuv_w * yuv_h)];			
 			
 			List<Camera.Size> ls = p.getSupportedPreviewSizes();
 			for (Iterator it = ls.iterator(); it.hasNext(); ) {
@@ -492,9 +494,9 @@ public class LifeDropper extends Activity {
 			//int GRN = (iRGB >> 8) & 255;
 			//int BLU = (iRGB >> 16) & 255;
 			//int ALP = (iRGB >> 24) & 255;
-			int RED = iRGB & 255;
+			int BLU = iRGB & 255;
 			int GRN = (iRGB >> 8) & 255;
-			int BLU = (iRGB >> 16) & 255;
+			int RED = (iRGB >> 16) & 255;
 			int ALP = (iRGB >> 24) & 255;
 			
 			
