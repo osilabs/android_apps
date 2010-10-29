@@ -9,7 +9,11 @@ import java.util.Iterator;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -22,10 +26,13 @@ import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 import android.hardware.Camera.PreviewCallback;
 import android.hardware.Camera.ShutterCallback;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -33,7 +40,9 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class LifeDropper extends Activity {
@@ -44,7 +53,10 @@ public class LifeDropper extends Activity {
 	private static final int _GRN = 1;
 	private static final int _BLU = 2;
 	private static final int _ALP = 3; // alpha
-
+	private static final int MENU_PREFS = 0;
+	private static final int MENU_ABOUT = 1;
+	private static final int MENU_QUIT = 2;
+	
 	private static int FRAMEBUFFER_IS = AVAILABLE;
 	private static final String TAG = "**** x14d **** >>>>>>>> ";
 
@@ -64,13 +76,11 @@ public class LifeDropper extends Activity {
 	Button buttonClick;
 	DrawOnTop mDraw;
 
-	public int toggle = 0;
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		// Default to black ... sounds like a metallica song
+		// Default to black
 		RGBs[_RED] = 0;
 		RGBs[_GRN] = 0;
 		RGBs[_BLU] = 0;
@@ -85,16 +95,41 @@ public class LifeDropper extends Activity {
 
 		preview = new Preview(this);
 		((FrameLayout) findViewById(R.id.preview)).addView(preview);
-
+		
 		buttonClick = (Button) findViewById(R.id.buttonClick);
 		buttonClick.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				preview.camera.takePicture(shutterCallback, rawCallback,
-						jpegCallback);
+                //set up dialog
+                Dialog dialog = new Dialog(v.getContext());
+                dialog.setContentView(R.layout.drop);
+                dialog.setTitle("This is my custom dialog box");
+                dialog.setCancelable(true);
+
+                //there are a lot of settings, for dialog, check them all out!
+              //set up text
+                TextView drop = (TextView) dialog.findViewById(R.id.drop_textview);
+                drop.setBackgroundColor(Color.rgb(RGBs[_RED], RGBs[_GRN], RGBs[_BLU]));
+                
+                //set up text
+                TextView text = (TextView) dialog.findViewById(R.id.TextView01);
+                text.setText(R.string.drop_color_chosen_message);
+ 
+                //set up image view
+                ImageView img = (ImageView) dialog.findViewById(R.id.ImageView01);
+                img.setImageResource(R.drawable.icon);
+ 
+                //set up button
+                Button button = (Button) dialog.findViewById(R.id.Button01);
+                button.setOnClickListener(new OnClickListener() {
+                @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                });
+                //now that the dialog is set up, it's time to show it    
+                dialog.show();
 			}
 		});
-
-		Log.d(TAG, "onCreate'd");
 	}
 
 	@Override
@@ -103,6 +138,18 @@ public class LifeDropper extends Activity {
 
 	}
 
+
+	
+//
+// Camera shutter
+//
+
+// Called when shutter is opened
+ShutterCallback shutterCallback = new ShutterCallback() { 
+	public void onShutter() {
+		Log.d(TAG, "onShutter'd");
+	}
+};
 	//
 	// Draw on viewer
 	//
@@ -172,45 +219,6 @@ public class LifeDropper extends Activity {
 			super.onDraw(canvas);
 		}
 	}
-
-	//
-	// Camera shutter
-	//
-
-	// Called when shutter is opened
-	ShutterCallback shutterCallback = new ShutterCallback() {
-		public void onShutter() {
-			Log.d(TAG, "onShutter'd");
-		}
-	};
-
-	// Handles data for raw picture
-	PictureCallback rawCallback = new PictureCallback() {
-		public void onPictureTaken(byte[] data, Camera camera) {
-			Log.d(TAG, "onPictureTaken - raw");
-		}
-	};
-
-	// Handles data for jpeg picture
-	PictureCallback jpegCallback = new PictureCallback() {
-		public void onPictureTaken(byte[] data, Camera camera) {
-			FileOutputStream outStream = null;
-			try {
-				// Write to SD Card
-				outStream = new FileOutputStream(String.format(
-						"/sdcard/%d.jpg", System.currentTimeMillis()));
-				outStream.write(data);
-				outStream.close();
-				Log.d(TAG, "onPictureTaken - wrote bytes: " + data.length);
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} finally {
-			}
-			Log.d(TAG, "onPictureTaken - jpeg");
-		}
-	};
 
 	//
 	// Frame previewer
@@ -394,6 +402,54 @@ public class LifeDropper extends Activity {
 			// showDialog("Downloaded " + result + " bytes");
 		}
 	}
+	
+	
+	
+	/* Creates the menu items */
+	public boolean onCreateOptionsMenu(Menu menu) {
+	    menu.add(0, MENU_PREFS, 0, "Preferences");
+	    menu.add(0, MENU_ABOUT, 0, "About");
+	    menu.add(0, MENU_QUIT, 0, "Quit");
+	    
+	    return true;
+	}
+
+	
+	
+	/* Handles item selections */
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    switch (item.getItemId()) {
+		        
+		    case MENU_PREFS:
+		    	Toast.makeText(getApplicationContext(), "Prefs", Toast.LENGTH_SHORT).show();
+		    	//Intent intent = new Intent()
+		    	//	.setClass(this, com.osilabs.android.apps.Prefs.class);
+		    	//this.startActivityForResult(intent, 0);
+		    	return true;
+
+			case MENU_ABOUT:
+		        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+		        alertDialog.setTitle(R.string.sample_title);
+		        alertDialog.setMessage("You are running version " + Build.VERSION.RELEASE);
+		        alertDialog.setButton(this.getString(R.string.sample_button),
+		        		new DialogInterface.OnClickListener() {
+		        	public void onClick(DialogInterface dialog, int which) {
+		        		Intent mIntent = new Intent(Intent.ACTION_VIEW, 
+		        				Uri.parse("http://osilabs.com/m/mobilecontent/livedropper/about.php#" + Build.VERSION.RELEASE)); 
+        				startActivity(mIntent); 
+		            } 
+		        });
+		        //alertDialog.setIcon(R.drawable.ic_launcher_main);
+		        alertDialog.show();
+		    	return true;
+
+		    case MENU_QUIT:
+		        finish();
+		        return true;
+	    }
+	    return false;
+	}
+
 }
 
 //

@@ -2,4 +2,12 @@
 <resources>
     <string name="hello">LiveDropper</string>
     <string name="app_name">LiveDropper</string>
+    <string name="sample_title">Your drop</string>
+    <string name="sample_button">Donate</string>
+    <string name="drop_color_chosen_message">
+    	Your color drop. Hope you like it. Please consider donating
+    	an amount you feel this free tool is worth. Please visit
+    	http://www.osilabs.com/ for more useful android apps.
+    </string>
+    
 </resources>

@@ -25,19 +25,13 @@
                 android:layout_weight="1"
 				android:id="@+id/buttonClick"
 				android:text="Capture" />
-			<Button 
-			    android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center" 
-                android:layout_weight="1"
-				android:text="unCapture" />
 		</LinearLayout>
 
 <!--		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
 <!--			android:orientation="vertical" android:layout_width="fill_parent"-->
 <!--			android:layout_height="fill_parent" android:layout_weight="1" >-->
 
-			<TextView android:text="#ffff00" android:background="#ffff00"
+			<TextView android:text="" android:background="#aaaaff"
 				android:layout_width="fill_parent" android:layout_height="fill_parent"
 				android:layout_weight="1"  android:id="@+id/preview_text"/>
 				

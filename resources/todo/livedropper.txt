@@ -19,11 +19,21 @@
 
 * Add Help and about menus and osilabs website mobilecontent (new activity)
 
+* Create a donation ability
+
+* 
+
+
 TESTING
 
 * Different view port sizes: chk logo, decor positions
 * 
 
+TERMINOLOGY
+* A live color picker.  Augmented Reality color picker. Live Dropper.
+* Live Color Sampler. Camera Dropper. 
+
+Graphic Designers, web designers, forensics, colorblind
 
 //
 // END TODO v0.1
