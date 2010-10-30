@@ -21,8 +21,15 @@
 
 * Create a donation ability
 
-* 
+* Add try catch blocks and throw up toast messages when shit can't happen right.
 
+* Make preview sploch take up more height
+
+* Same drop sample dialog have nicer display of color sample
+
+* Show hex value on sploch
+
+* Get running on g1 and emulator
 
 TESTING
 
