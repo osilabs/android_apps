@@ -61,12 +61,13 @@ public class LifeDropper extends Activity {
 	
 	private static int FRAMEBUFFER_IS = AVAILABLE;
 	private static int IS_PAUSING = NO;
-	private static final String TAG = "**** x14d **** >>>>>>>> ";
+	private static final String TAG = "<<< ** osilabs.com ** >>> ";
 
 	// This is the array we pass back from each frame processed.
 	private static final int RGB_ELEMENTS = 4;
 	private static int[] RGBs = new int[RGB_ELEMENTS];
 	private static int RGBint = 0;
+	private static int BUFALLOCSIZE = 0;
 	private static String HEXVAL = "000000";
 	private static String RGBVAL = "0,0,0";
 	
@@ -75,8 +76,8 @@ public class LifeDropper extends Activity {
 	// View properties
 	protected int view_w = 0;
 	protected int view_h = 0;
-	protected int yuv_w = 864;
-	protected int yuv_h = 576;
+	protected int yuv_w = 0; //864;
+	protected int yuv_h = 0; //576;	
 
 	private Preview preview;
 	//public Camera camera;
@@ -280,9 +281,32 @@ public class LifeDropper extends Activity {
 			try {
 				camera.setPreviewDisplay(holder);
 				camera.setPreviewCallback(new PreviewCallback() {
+					//
+					// FIXME - Take these callbacks out of inline. Read
+					//          somewhere this was an efficiency problem
+					//
 					// Called for each frame previewed
 					public void onPreviewFrame(byte[] data, Camera camera) {
 
+						// Allocate space for processing buffer. Allow it
+						//  to grow if necessary. No max cap.
+						int size = data.length;
+						if (data.length > BUFALLOCSIZE) {
+							// Buffer is not big enough for data
+							// allocate more spacs.
+							Log.v(TAG, "Allocating bufer for size: " + Integer.toString(size));
+							decodeBuf = new int[size];
+							BUFALLOCSIZE = size;
+							
+							// Set the w and h for the yuv image processing. 
+							// Don't need an actual picture dimension because
+							//  I am not doing anything with the converted
+							//  rgb image except grabbing a pixel. Set dims
+							//  to just a single row.
+							yuv_w = size;
+							yuv_h = 1;
+						}
+						
 						// Discard frames until processing completes
 						if (FRAMEBUFFER_IS == AVAILABLE) {
 							new HandleFrameTask().execute(data);
@@ -320,7 +344,7 @@ public class LifeDropper extends Activity {
 				// view_h = this.getHeight();
 				view_w = s.width;
 				view_h = s.height;
-				decodeBuf = new int[(yuv_w * yuv_h)];
+				//decodeBuf = new int[(yuv_w * yuv_h)];
 				
 				// getsupportedpreviewsizes needs v5
 				if (Build.VERSION.SDK_INT >= 5) {
@@ -369,10 +393,10 @@ public class LifeDropper extends Activity {
 
 		@Override
 		protected int[] doInBackground(byte[]... yuvs) {
-			Log.d(TAG, "**************** len "
-					+ Integer.toString(yuvs[0].length));
-			Log.d(TAG, "**************** w " + Integer.toString(view_w));
-			Log.d(TAG, "**************** h " + Integer.toString(view_h));
+//			Log.d(TAG, "**************** len "
+//					+ Integer.toString(yuvs[0].length));
+//			Log.d(TAG, "**************** w " + Integer.toString(view_w));
+//			Log.d(TAG, "**************** h " + Integer.toString(view_h));
 
 			int[] iii = { 0 };
 
