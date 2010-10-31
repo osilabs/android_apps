@@ -30,7 +30,9 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
@@ -46,7 +48,9 @@ import android.widget.Toast;
 
 
 public class LifeDropper extends Activity {
-
+	//
+	// CONSTS
+	//
 	private static final int BUSY = 0;
 	private static final int AVAILABLE = 1;
 	private static final int YES = 0;
@@ -58,36 +62,45 @@ public class LifeDropper extends Activity {
 	private static final int MENU_PREFS = 0;
 	private static final int MENU_ABOUT = 1;
 	private static final int MENU_QUIT = 2;
+	private static final String TAG = "<<< ** osilabs.com ** >>> ";
 	
 	private static int FRAMEBUFFER_IS = AVAILABLE;
 	private static int IS_PAUSING = NO;
-	private static final String TAG = "<<< ** osilabs.com ** >>> ";
 
-	// This is the array we pass back from each frame processed.
+	// RGB values are set as they become available.
 	private static final int RGB_ELEMENTS = 4;
 	private static int[] RGBs = new int[RGB_ELEMENTS];
 	private static int RGBint = 0;
-	private static int BUFALLOCSIZE = 0;
 	private static String HEXVAL = "000000";
 	private static String RGBVAL = "0,0,0";
 	
-	protected static int[] decodeBuf;
-
+	// Will be allocated based on byte[] size, will grow
+	//  if needed.
+	private static int[] decodeBuf;
+	private static int BUFALLOCSIZE = 0;
+	
 	// View properties
-	protected int view_w = 0;
-	protected int view_h = 0;
-	protected int yuv_w = 0; //864;
-	protected int yuv_h = 0; //576;	
+	private int view_w = 0;
+	private int view_h = 0;
+	
+	// In my testing, a good length/width for a byte[]
+	//  size of 497664 is 576x864
+	private int yuv_w = 0; 
+	private int yuv_h = 0;	
 
 	private Preview preview;
-	//public Camera camera;
-	Button buttonClick;
-	DrawOnTop mDraw;
-	
-	@Override
+	private Button captureButton;
+	private DrawOnTop mDraw;
+    private PowerManager.WakeLock wl;  
+
+    @Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		// Prevent screen dimming
+        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);  
+        wl = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");  
+	  
 		// Default to black
 		RGBs[_RED] = 0;
 		RGBs[_GRN] = 0;
@@ -104,8 +117,8 @@ public class LifeDropper extends Activity {
 		preview = new Preview(this);
 		((FrameLayout) findViewById(R.id.preview)).addView(preview);
 		
-		buttonClick = (Button) findViewById(R.id.buttonClick);
-		buttonClick.setOnClickListener(new OnClickListener() {
+		captureButton = (Button) findViewById(R.id.capture_button);
+		captureButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
                 //set up dialog
                 final Dialog dialog = new Dialog(v.getContext());
@@ -118,13 +131,13 @@ public class LifeDropper extends Activity {
                 TextView drop = (TextView) dialog.findViewById(R.id.drop_textview);
                 drop.setBackgroundColor(Color.rgb(RGBs[_RED], RGBs[_GRN], RGBs[_BLU]));
                 
-                //set up text
-                TextView text = (TextView) dialog.findViewById(R.id.TextView01);
-                text.setText(R.string.drop_color_chosen_message);
+//                //set up text
+//                TextView text = (TextView) dialog.findViewById(R.id.TextView01);
+//                text.setText(R.string.drop_color_chosen_message);
  
                 //set up image view
-                ImageView img = (ImageView) dialog.findViewById(R.id.ImageView01);
-                img.setImageResource(R.drawable.icon);
+//                ImageView img = (ImageView) dialog.findViewById(R.id.ImageView01);
+//                img.setImageResource(R.drawable.icon);
  
                 //set up button
                 Button button = (Button) dialog.findViewById(R.id.Button01);
@@ -142,8 +155,9 @@ public class LifeDropper extends Activity {
 
 	//@Override
 	public void onPause() {
-		Log.d(TAG, "onPause'd activity");
+		//Log.d(TAG, "onPause'd activity");
 		super.onPause();
+        wl.release();  
 		preview.onPause();
 		//camera.stopPreview();
 		//camera.release();
@@ -154,6 +168,7 @@ public class LifeDropper extends Activity {
 	public void onResume() {
 		//Log.d(TAG, "onResumed'd");
 		super.onResume();
+		wl.acquire();  
 		//preview.onResume();
 		//camera.open();
 	}
@@ -172,6 +187,7 @@ public class LifeDropper extends Activity {
 			Log.d(TAG, "onShutter'd");
 		}
 	};
+
 	//
 	// Draw on viewer
 	//
@@ -185,15 +201,18 @@ public class LifeDropper extends Activity {
 		protected void onDraw(Canvas canvas) {
 			//
 			// FIXME - this is redrawing the decorations with every frame,
-			// should only redraw after a framebuffer has been processed.
+			//  should only redraw after a framebuffer has been processed.
+			// Er .. May need to recalculate w each frame in case of
+			//  resizing or orientation changes.
 			//
-
-			int line_len = 30;
+			
+			int w = preview.getWidth();
+			int h = preview.getHeight();
+			
+			int line_len = (w/20); //30;
 			int corner_padding = 20;
+			int cirele_radius = 4;
 
-			// FIXME !!! The view dimensions must be dynamically determined
-			int w = 400;
-			int h = 400;
 			int center_x = (int) w / 2;
 			int center_y = (int) h / 2;
 
@@ -203,13 +222,13 @@ public class LifeDropper extends Activity {
 					paint.setStyle(Paint.Style.FILL);
 					paint.setColor(Color.RED);
 					canvas.drawText("osilabs", 10, h - 8, paint);
-		
-					// Paint paint = new Paint();
-		
+
 					// FIXME - make a function to convert all these rgbs to and fro
-					paint.setColor(Color.rgb(255 - RGBs[_RED], 255 - RGBs[_GRN],
-							255 - RGBs[_BLU]));
-					canvas.drawCircle(center_x, center_y, 5, paint);
+					paint.setColor(Color.rgb(
+									255 - RGBs[_RED], 
+									255 - RGBs[_GRN],
+									255 - RGBs[_BLU]));
+					canvas.drawCircle(center_x, center_y, cirele_radius, paint);
 		
 					// crosshairs
 					canvas.drawLine(center_x, center_y, center_x - line_len, center_y,
@@ -446,9 +465,6 @@ public class LifeDropper extends Activity {
 			if (IS_PAUSING == NO) {
 				// Set global int
 				RGBint = iRGB[0];
-				
-				// Set global hexval
-				HEXVAL = Integer.toHexString(iRGB[0]).substring(2).toUpperCase();
 
 				// Set global reg green and blue
 				RGBs[_ALP] = (iRGB[0] >> 24) & 255;
@@ -459,14 +475,23 @@ public class LifeDropper extends Activity {
 				// Set global rgb value for display
 				RGBVAL = RGBs[_RED] + "," + RGBs[_GRN] + "," + RGBs[_BLU];
 
+				// Set global hexval
+				HEXVAL = Integer.toHexString(iRGB[0]).substring(2).toUpperCase();
+
 				// Make display string for previewer
-				String msg = "rgb(" + RGBVAL + ")";
+				String rgbDisplay= "rgb(" + RGBVAL + ")";
 	
+				// Set drop color
 				TextView tv = (TextView) findViewById(R.id.preview_text);
-				tv.setText(msg);
+				tv.setText(rgbDisplay);
 				tv.setBackgroundColor(iRGB[0]);
-	
-				TextView bl_tv = (TextView) findViewById(R.id.bl_display);
+
+				// Set capture button color
+				captureButton = (Button) findViewById(R.id.capture_button);
+				//captureButton.setBackgroundColor(Color.rgb(200,200,230));
+				captureButton.setError("error x14d");
+				captureButton.setHapticFeedbackEnabled(true);
+				TextView bl_tv = (TextView) findViewById(R.id.color_value_display);
 				bl_tv.setText("#" + HEXVAL);
 			}
 		}

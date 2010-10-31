@@ -27,9 +27,9 @@
 
 * Same drop sample dialog have nicer display of color sample
 
-* Show hex value on sploch
-
 * Get running on g1 and emulator
+
+* When eclipse installs and it restarts, it starts out dim. must touch screen to brighten.
 
 TESTING
 

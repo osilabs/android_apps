@@ -1,16 +1,6 @@
 package com.osilabs.android.apps.lifedropper;
 
 public class ImageProcessing {
-//	/**
-//	 * Takes a length and returns 
-//	 * @author dezurik
-//	 *
-//	 */
-//	public static Size convertLenToTwothirdsLW(int len) {
-//		
-//		
-//	}
-
 	// decode Y, U, and V values on the YUV 420 buffer described as YCbCr_422_SP
 	// by Android David Manpearl 081201
 	public static void decodeYUV(int[] out, byte[] fg, int width, int height)
