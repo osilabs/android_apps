@@ -50,6 +50,8 @@ Graphic Designers, web designers, forensics, colorblind
 
 // ** live dropper todo
 
+* Take the multiple colors that define a sample region, be able to provide a drop made up of multiple colors coming together but at different amounts.  For example, instead of an rgb of the pixel of a skin color sample, take a 3x3 region sample of the skin, with 
+
 * Click capture, adjust hues, read value, return to camera
 
 * onDraw()is redrawing the decorations with every frame, should only do once.
@@ -68,3 +70,10 @@ Graphic Designers, web designers, forensics, colorblind
 
 * 
 
+//
+// Related technology ideas
+//
+
+* Forensics buddy: use eye cloudiness color to estimate minutes dead. Use blood color to estimate age.
+
+* Bloodwork tool: Two samples needed. 1. The substrate color then 2. the blood. The color of the substrate will be subtracted from the blood sample to 

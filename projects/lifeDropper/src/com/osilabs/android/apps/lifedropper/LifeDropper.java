@@ -2,11 +2,7 @@ package com.osilabs.android.apps.lifedropper;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -23,7 +19,6 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.YuvImage;
 import android.hardware.Camera;
-import android.hardware.Camera.PictureCallback;
 import android.hardware.Camera.PreviewCallback;
 import android.hardware.Camera.ShutterCallback;
 import android.net.Uri;
@@ -32,7 +27,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.util.Log;
-import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
@@ -42,7 +36,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -142,7 +135,7 @@ public class LifeDropper extends Activity {
                 //set up button
                 Button button = (Button) dialog.findViewById(R.id.Button01);
                 button.setOnClickListener(new OnClickListener() {
-                @Override
+                	@Override
                     public void onClick(View vc) {
                 		dialog.cancel();
                     }
@@ -151,26 +144,24 @@ public class LifeDropper extends Activity {
                 dialog.show();
 			}
 		});
+		
+		preview.onCreate();
 	}
 
 	//@Override
 	public void onPause() {
-		//Log.d(TAG, "onPause'd activity");
+		Log.d(TAG, "onPause'd activity");
 		super.onPause();
         wl.release();  
-		//camera.stopPreview();
-		//camera.release();
 		IS_PAUSING = YES;
 		preview.onPause();
 	}
 
 	@Override
 	public void onResume() {
-		//Log.d(TAG, "onResumed'd");
+		Log.d(TAG, "onResumed'd");
 		super.onResume();
-		wl.acquire();  
-		//preview.onResume();
-		//camera.open();
+		wl.acquire();
 	}
 
 	public void onRestoreInstanceState() {
@@ -199,7 +190,7 @@ public class LifeDropper extends Activity {
 
 		@Override
 		protected void onDraw(Canvas canvas) {
-			Log.d(TAG, "OnDraw'd");
+			Log.w(TAG, "OnDraw'd");
 			//
 			// FIXME - this is redrawing the decorations with every frame,
 			//  should only redraw after a framebuffer has been processed.
@@ -292,6 +283,14 @@ public class LifeDropper extends Activity {
 			}
 		}
 
+	    //@Override
+		public void onCreate() {
+	    	Log.d(TAG, "Preview onCreated'd");
+	    	
+	    	// Coming out of pause
+			IS_PAUSING = NO;
+	    }
+
 		// Called once the holder is ready
 		public void surfaceCreated(SurfaceHolder holder) {
 			Log.d(TAG, "surfaceCreated'd");
@@ -308,7 +307,7 @@ public class LifeDropper extends Activity {
 					//
 					// Called for each frame previewed
 					public void onPreviewFrame(byte[] data, Camera camera) {
-						Log.d(TAG, "onPreviewFrame'd");
+						Log.w(TAG, "onPreviewFrame'd");
 
 						// Allocate space for processing buffer. Allow it
 						//  to grow if necessary. No max cap.
@@ -343,25 +342,6 @@ public class LifeDropper extends Activity {
 			}
 		}
 
-		// Called when the holder is destroyed
-		@Override
-		public void surfaceDestroyed(SurfaceHolder holder) {
-			Log.d(TAG, "surfaceDestroyed'd start");
-
-			// Surface will be destroyed when we return, so stop the preview.
-			// Because the CameraDevice object is not a shared resource, it's
-			// very important to release it when the activity is paused.
-//			camera.setPreviewCallback(null);
-//			Log.d(TAG, "surfaceDestroyed'd 1");
-//			camera.stopPreview();
-//			Log.d(TAG, "surfaceDestroyed'd 2");
-//			camera.release();
-//			Log.d(TAG, "surfaceDestroyed'd 3");
-//			camera = null;
-
-			Log.d(TAG, "surfaceDestroyed'd finish");
-		}
-
 		// Called when holder has changed
 		public void surfaceChanged(SurfaceHolder holder, int format, int w, int h) {
 			Log.d(TAG, "surfaceChange'd");
@@ -370,64 +350,67 @@ public class LifeDropper extends Activity {
 				Camera.Size s = p.getPreviewSize();
 				Log.d(TAG, "fmt:" + Integer.toString(p.getPreviewFormat()));
 				p.setPictureFormat(ImageFormat.RGB_565);
-				// p.setPictureSize(200,200);
-				// p.setPreviewSize(200, 200);
 				camera.setParameters(p);
-				// view_w = this.getWidth();
-				// view_h = this.getHeight();
 				view_w = s.width;
 				view_h = s.height;
-				//decodeBuf = new int[(yuv_w * yuv_h)];
 				
-				// getsupportedpreviewsizes needs v5
-				if (Build.VERSION.SDK_INT >= 5) {
-		
-					List<Camera.Size> ls = p.getSupportedPreviewSizes();
-					for (Iterator it = ls.iterator(); it.hasNext();) {
-						Camera.Size sz = (Camera.Size) it.next();
-						Log.d(TAG, "prv sz:" + Integer.toString(sz.width) + ","
-								+ Integer.toString(sz.height));
-					}
-		
-					ls = p.getSupportedPictureSizes();
-					for (Iterator it = ls.iterator(); it.hasNext();) {
-						Camera.Size sz = (Camera.Size) it.next();
-						Log.d(TAG, "pic sz:" + Integer.toString(sz.width) + ","
-								+ Integer.toString(sz.height));
-					}
-				}
-				
+//				// getsupportedpreviewsizes needs v5
+//				if (Build.VERSION.SDK_INT >= 5) {
+//		
+//					List<Camera.Size> ls = p.getSupportedPreviewSizes();
+//					for (Iterator it = ls.iterator(); it.hasNext();) {
+//						Camera.Size sz = (Camera.Size) it.next();
+//						Log.d(TAG, "prv sz:" + Integer.toString(sz.width) + ","
+//								+ Integer.toString(sz.height));
+//					}
+//		
+//					ls = p.getSupportedPictureSizes();
+//					for (Iterator it = ls.iterator(); it.hasNext();) {
+//						Camera.Size sz = (Camera.Size) it.next();
+//						Log.d(TAG, "pic sz:" + Integer.toString(sz.width) + ","
+//								+ Integer.toString(sz.height));
+//					}
+//				}
+//				
 				camera.startPreview();
 			} catch (Exception e) {
 				// FIXME - put toast errors if this happens
 				Log.d(TAG, "YuvImage error:" + e.getMessage());
 				e.printStackTrace();
-			}
+			}			
 		}
-
 		
-		//@Override
-		public void onPause() {
-			Log.d(TAG, "onPause'd - preview class");
+		// Called when the holder is destroyed
+		@Override
+		public void surfaceDestroyed(SurfaceHolder holder) {
+			Log.d(TAG, "surfaceDestroyed'd start");
 
 			// Surface will be destroyed when we return, so stop the preview.
 			// Because the CameraDevice object is not a shared resource, it's
 			// very important to release it when the activity is paused.
-			//camera.setPreviewCallback(null);
-			Log.d(TAG, "onpause'd 1");
-			camera.stopPreview();
-			Log.d(TAG, "onpause'd 2");
-			camera.release();
-			Log.d(TAG, "onpause'd 3");
-			camera = null;
+			if (camera != null) {
+				camera.stopPreview();
+			}
 
-			//super.onPause();
-			//preview.pause();
-			//camera.stopPreview();
-			//camera.release();
+			// Log.d(TAG, "surfaceDestroyed'd finish");
+		}
+
+		public void onPause() {
+			Log.d(TAG, "onPause'd - preview class");
+			
+			// Surface will be destroyed when we return, so stop the preview.
+			// Because the CameraDevice object is not a shared resource, it's
+			// very important to release it when the activity is paused.
+			
+			if (camera != null) {
+				camera.setPreviewCallback(null);
+				camera.stopPreview();
+				camera.release();
+				camera = null;
+			}
+			
 			Log.d(TAG, "CAMERA RELEASED HERE");
 		}
-		
 	}
 
 	// private class HandleFrameTask extends AsyncTask<byte[], Void, byte[]> {
@@ -435,21 +418,17 @@ public class LifeDropper extends Activity {
 		// can use UI thread here
 		protected void onPreExecute() {
 			Log.d(TAG, "OnPreExecute'd");
+			if (IS_PAUSING == YES) {
+				finish();
+			}
 			FRAMEBUFFER_IS = BUSY;
 		}
 
 		@Override
 		protected int[] doInBackground(byte[]... yuvs) {
-			Log.d(TAG, "doInBackground");
-//			Log.d(TAG, "**************** len "
-//					+ Integer.toString(yuvs[0].length));
-//			Log.d(TAG, "**************** w " + Integer.toString(view_w));
-//			Log.d(TAG, "**************** h " + Integer.toString(view_h));
+			Log.d(TAG, "doInBackground time=" + System.currentTimeMillis());
 
 			int[] iii = { 0 };
-
-			//Log.d(TAG, "onPreviewFrame called at: "
-			//		+ System.currentTimeMillis());
 
 			// YuvImage() needs min sdk version 8
 			if (Build.VERSION.SDK_INT >= 8) {
@@ -473,10 +452,10 @@ public class LifeDropper extends Activity {
 				Log.d(TAG, "Pre v 8 algorithm");
 				int center = (int) ((view_w * view_h) / 2) + (view_w / 2);
 				try {
-					ImageProcessing.decodeYUV(decodeBuf, yuvs[0], view_w,
-							view_h);
+					ImageProcessing.decodeYUV(decodeBuf, yuvs[0], view_w, view_h);
 				} catch (Exception e) {
-					Log.d("EEEEEEEEEEEEEEE ", "Error with decodeYUV");
+					Log.e(TAG, "decodeYUV error: " + e.getMessage());
+					e.printStackTrace();
 				}
 				iii[0] = decodeBuf[center];
 			}
@@ -487,7 +466,7 @@ public class LifeDropper extends Activity {
 		// can use UI thread here
 		// protected void onPostExecute(final byte[] rgb_result) {
 		protected void onPostExecute(int[] iRGB) {
-			Log.d(TAG, "onPostExecute'd");
+			Log.d(TAG, "doinbackground onPostExecute'd" + System.currentTimeMillis());
 
 			// Allow the next frame to be processed
 			FRAMEBUFFER_IS = AVAILABLE;
@@ -527,13 +506,13 @@ public class LifeDropper extends Activity {
 			}
 		}
 
-		protected void onProgressUpdate(Integer... progress) {
-			// setProgressPercent(progress[0]);
-		}
-
-		protected void onPostExecute(Long result) {
-			// showDialog("Downloaded " + result + " bytes");
-		}
+//		protected void onProgressUpdate(Integer... progress) {
+//			// setProgressPercent(progress[0]);
+//		}
+//
+//		protected void onPostExecute(Long result) {
+//			// showDialog("Downloaded " + result + " bytes");
+//		}
 	}
 	
 	
