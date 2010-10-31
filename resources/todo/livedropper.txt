@@ -2,34 +2,18 @@
 // TODO v0.1
 //
 
-* Stop screen timeout from going dark
-
-* Touch screen, slider pops up for brightness. 
-    tap anywhere, slider is on left, just slide 
-    up or down from where you are.
-
-* Tap color box, popup with just color block 
-   and hex value, says thanks, asks you to donate.
-
-* Remove hardcoded view and image sizes
-
-* Fix onPause crashes
-
-* Rename the class to LiveDropper
-
-* Add Help and about menus and osilabs website mobilecontent (new activity)
-
-* Create a donation ability
-
-* Add try catch blocks and throw up toast messages when shit can't happen right.
-
-* Make preview sploch take up more height
-
-* Same drop sample dialog have nicer display of color sample
 
 * Get running on g1 and emulator
 
-* When eclipse installs and it restarts, it starts out dim. must touch screen to brighten.
+* Rename the class to LiveDropper
+
+* toast messages when shit can't happen right.
+
+
+* Undim the screen when onresume-ing.
+
+? Put up a quick decoration on the drop sample showing a scale which 
+   will later be used to show current level of light boost or drop.
 
 TESTING
 
@@ -39,6 +23,7 @@ TESTING
 TERMINOLOGY
 * A live color picker.  Augmented Reality color picker. Live Dropper.
 * Live Color Sampler. Camera Dropper. 
+* "Get the color!"
 
 Graphic Designers, web designers, forensics, colorblind
 
@@ -50,7 +35,13 @@ Graphic Designers, web designers, forensics, colorblind
 
 // ** live dropper todo
 
+* Touch screen, slider pops up for brightness. 
+    tap anywhere, slider is on left, just slide 
+    up or down from where you are.
+
 * Take the multiple colors that define a sample region, be able to provide a drop made up of multiple colors coming together but at different amounts.  For example, instead of an rgb of the pixel of a skin color sample, take a 3x3 region sample of the skin, with 
+
+* Create a donation ability
 
 * Click capture, adjust hues, read value, return to camera
 

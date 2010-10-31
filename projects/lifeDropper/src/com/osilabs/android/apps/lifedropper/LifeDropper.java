@@ -519,7 +519,7 @@ public class LifeDropper extends Activity {
 	
 	/* Creates the menu items */
 	public boolean onCreateOptionsMenu(Menu menu) {
-	    menu.add(0, MENU_PREFS, 0, "Preferences");
+	    //menu.add(0, MENU_PREFS, 0, "Preferences");
 	    menu.add(0, MENU_ABOUT, 0, "About");
 	    menu.add(0, MENU_QUIT, 0, "Quit");
 	    
