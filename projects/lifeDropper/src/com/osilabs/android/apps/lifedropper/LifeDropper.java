@@ -158,10 +158,10 @@ public class LifeDropper extends Activity {
 		//Log.d(TAG, "onPause'd activity");
 		super.onPause();
         wl.release();  
-		preview.onPause();
 		//camera.stopPreview();
 		//camera.release();
 		IS_PAUSING = YES;
+		preview.onPause();
 	}
 
 	@Override
@@ -199,6 +199,7 @@ public class LifeDropper extends Activity {
 
 		@Override
 		protected void onDraw(Canvas canvas) {
+			Log.d(TAG, "OnDraw'd");
 			//
 			// FIXME - this is redrawing the decorations with every frame,
 			//  should only redraw after a framebuffer has been processed.
@@ -293,6 +294,7 @@ public class LifeDropper extends Activity {
 
 		// Called once the holder is ready
 		public void surfaceCreated(SurfaceHolder holder) {
+			Log.d(TAG, "surfaceCreated'd");
 
 			// The Surface has been created, acquire the camera and tell it
 			// where to draw.
@@ -306,6 +308,7 @@ public class LifeDropper extends Activity {
 					//
 					// Called for each frame previewed
 					public void onPreviewFrame(byte[] data, Camera camera) {
+						Log.d(TAG, "onPreviewFrame'd");
 
 						// Allocate space for processing buffer. Allow it
 						//  to grow if necessary. No max cap.
@@ -313,7 +316,7 @@ public class LifeDropper extends Activity {
 						if (data.length > BUFALLOCSIZE) {
 							// Buffer is not big enough for data
 							// allocate more spacs.
-							Log.v(TAG, "Allocating bufer for size: " + Integer.toString(size));
+							//Log.v(TAG, "Allocating bufer for size: " + Integer.toString(size));
 							decodeBuf = new int[size];
 							BUFALLOCSIZE = size;
 							
@@ -328,6 +331,7 @@ public class LifeDropper extends Activity {
 						
 						// Discard frames until processing completes
 						if (FRAMEBUFFER_IS == AVAILABLE) {
+							Log.d(TAG, "Framebuffer available for reuse");
 							new HandleFrameTask().execute(data);
 						}
 
@@ -340,17 +344,27 @@ public class LifeDropper extends Activity {
 		}
 
 		// Called when the holder is destroyed
+		@Override
 		public void surfaceDestroyed(SurfaceHolder holder) {
+			Log.d(TAG, "surfaceDestroyed'd start");
+
 			// Surface will be destroyed when we return, so stop the preview.
 			// Because the CameraDevice object is not a shared resource, it's
 			// very important to release it when the activity is paused.
-			camera.stopPreview();
-			//camera = null;
-			camera.release();
+//			camera.setPreviewCallback(null);
+//			Log.d(TAG, "surfaceDestroyed'd 1");
+//			camera.stopPreview();
+//			Log.d(TAG, "surfaceDestroyed'd 2");
+//			camera.release();
+//			Log.d(TAG, "surfaceDestroyed'd 3");
+//			camera = null;
+
+			Log.d(TAG, "surfaceDestroyed'd finish");
 		}
 
 		// Called when holder has changed
 		public void surfaceChanged(SurfaceHolder holder, int format, int w, int h) {
+			Log.d(TAG, "surfaceChange'd");
 			try{
 				Camera.Parameters p = camera.getParameters();
 				Camera.Size s = p.getPreviewSize();
@@ -395,10 +409,23 @@ public class LifeDropper extends Activity {
 		//@Override
 		public void onPause() {
 			Log.d(TAG, "onPause'd - preview class");
+
+			// Surface will be destroyed when we return, so stop the preview.
+			// Because the CameraDevice object is not a shared resource, it's
+			// very important to release it when the activity is paused.
+			//camera.setPreviewCallback(null);
+			Log.d(TAG, "onpause'd 1");
+			camera.stopPreview();
+			Log.d(TAG, "onpause'd 2");
+			camera.release();
+			Log.d(TAG, "onpause'd 3");
+			camera = null;
+
 			//super.onPause();
 			//preview.pause();
-			camera.stopPreview();
-			camera.release();
+			//camera.stopPreview();
+			//camera.release();
+			Log.d(TAG, "CAMERA RELEASED HERE");
 		}
 		
 	}
@@ -407,11 +434,13 @@ public class LifeDropper extends Activity {
 	private class HandleFrameTask extends AsyncTask<byte[], Void, int[]> {
 		// can use UI thread here
 		protected void onPreExecute() {
+			Log.d(TAG, "OnPreExecute'd");
 			FRAMEBUFFER_IS = BUSY;
 		}
 
 		@Override
 		protected int[] doInBackground(byte[]... yuvs) {
+			Log.d(TAG, "doInBackground");
 //			Log.d(TAG, "**************** len "
 //					+ Integer.toString(yuvs[0].length));
 //			Log.d(TAG, "**************** w " + Integer.toString(view_w));
@@ -458,6 +487,8 @@ public class LifeDropper extends Activity {
 		// can use UI thread here
 		// protected void onPostExecute(final byte[] rgb_result) {
 		protected void onPostExecute(int[] iRGB) {
+			Log.d(TAG, "onPostExecute'd");
+
 			// Allow the next frame to be processed
 			FRAMEBUFFER_IS = AVAILABLE;
 			
