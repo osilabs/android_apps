@@ -7,10 +7,24 @@
 
 * Rename the class to LiveDropper
 
+* Make beta download mobile site and link in livedropper. There 
+   the latest build can downloaded.
+
 * toast messages when shit can't happen right.
 
-
 * Undim the screen when onresume-ing.
+
+* Need target location for http://www.osilabs.com/m/mobilecontent/livedropper.
+   used as link for where to donate. Multiple ways. 
+	1. buy the donate app. 
+	2. Encourage to buy another osilabs app that costs money.
+
+* Need feedback util. Make a box on web site, write to db table.
+
+* Take nice picture of bluejay blue for one of the screenshots. go to borders, find
+   a book and take the picture.
+
+* fix about screen
 
 ? Put up a quick decoration on the drop sample showing a scale which 
    will later be used to show current level of light boost or drop.
@@ -34,6 +48,10 @@ Graphic Designers, web designers, forensics, colorblind
 
 
 // ** live dropper todo
+
+* Turn "training" of feature. With every drop, can ask you if it was brighter, darker, too red, too green too blue, needs more r|g|or b, too grey, not grey enough.
+
+* Menu option with paid version to get beta. Which is a link to the most current build out there. May have new features for users to try out, maybe even need them, and git me feedback b4 the next major release.
 
 * Touch screen, slider pops up for brightness. 
     tap anywhere, slider is on left, just slide 

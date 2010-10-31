@@ -6,9 +6,10 @@
     <string name="sample_title">Your drop</string>
     <string name="sample_button">Donate</string>
     <string name="drop_color_chosen_message">
-    	Your color drop. Hope you like it. Please consider donating
-    	an amount you feel this free tool is worth. Please visit
-    	http://www.osilabs.com/ for more useful android apps.
+    	Your drop.\n
+    	Hope you like it.\n 
+    	Please consider donating.\n
+    	http://www.osilabs.com/m/mobilecontent/livedropper.
     </string>
     
 </resources>
