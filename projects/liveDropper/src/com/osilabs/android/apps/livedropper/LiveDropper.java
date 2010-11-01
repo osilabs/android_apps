@@ -10,6 +10,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -79,7 +82,9 @@ public class LiveDropper extends Activity {
 	// In my testing, a good length/width for a byte[]
 	//  size of 497664 is 576x864
 	private int yuv_w = 0; 
-	private int yuv_h = 0;	
+	private int yuv_h = 0;
+	
+    String version = "0.1";
 
 	private Preview preview;
 	private Button captureButton;
@@ -213,7 +218,7 @@ public class LiveDropper extends Activity {
 					Paint paint = new Paint();
 					paint.setStyle(Paint.Style.FILL);
 					paint.setColor(Color.RED);
-					canvas.drawText("osilabs", 10, h - 8, paint);
+					canvas.drawText("osilabs.com", 15, h - 8, paint);
 
 					// FIXME - make a function to convert all these rgbs to and fro
 					paint.setColor(Color.rgb(
@@ -499,7 +504,7 @@ public class LiveDropper extends Activity {
 				// Set capture button color
 				captureButton = (Button) findViewById(R.id.capture_button);
 				//captureButton.setBackgroundColor(Color.rgb(200,200,230));
-				captureButton.setError("error x14d");
+				//captureButton.setError("error x14d");
 				captureButton.setHapticFeedbackEnabled(true);
 				TextView bl_tv = (TextView) findViewById(R.id.color_value_display);
 				bl_tv.setText("#" + HEXVAL);
@@ -540,18 +545,30 @@ public class LiveDropper extends Activity {
 		    	return true;
 
 			case MENU_ABOUT:
+		        //
+		        // Set locals with manifest variables
+		        //
+		        PackageInfo pInfo = null;
+				try {
+					pInfo = getPackageManager().getPackageInfo("com.osilabs.android.apps.livedropper",
+							PackageManager.GET_META_DATA);
+					version = pInfo.versionName;
+				} catch (NameNotFoundException e) {
+					e.printStackTrace();
+				}
+				
 		        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-		        alertDialog.setTitle(R.string.sample_title);
-		        alertDialog.setMessage("You are running version " + Build.VERSION.RELEASE);
+		        alertDialog.setTitle(R.string.app_name);
+		        alertDialog.setMessage("You are running version " + version);
 		        alertDialog.setButton(this.getString(R.string.sample_button),
 		        		new DialogInterface.OnClickListener() {
 		        	public void onClick(DialogInterface dialog, int which) {
 		        		Intent mIntent = new Intent(Intent.ACTION_VIEW, 
-		        				Uri.parse("http://osilabs.com/m/mobilecontent/livedropper/about.php#" + Build.VERSION.RELEASE)); 
+		        				Uri.parse("http://osilabs.com/m/mobilecontent/livedropper/about.php#" + version)); 
         				startActivity(mIntent); 
 		            } 
 		        });
-		        //alertDialog.setIcon(R.drawable.ic_launcher_main);
+		        alertDialog.setIcon(R.drawable.ic_launcher);
 		        alertDialog.show();
 		    	return true;
 

@@ -5,32 +5,13 @@
 
 * Get running on g1 and emulator
 
-* Rename the class to LiveDropper
-
-* Make beta download mobile site and link in livedropper. There 
-   the latest build can downloaded.
-
 * toast messages when shit can't happen right.
 
 * Undim the screen when onresume-ing.
 
-* Need target location for http://www.osilabs.com/m/mobilecontent/livedropper.
-   used as link for where to donate. Multiple ways. 
-	1. buy the donate app. 
-	2. Encourage to buy another osilabs app that costs money.
-
-* Need feedback util. Make a box on web site, write to db table.
-
 * Take nice picture of bluejay blue for one of the screenshots. go to borders, find
    a book and take the picture.
 
-* fix about screen
-
-? Put up a quick decoration on the drop sample showing a scale which 
-   will later be used to show current level of light boost or drop.
-
-* Refactored lifedropper to livedropper, still need to rename project
-   directory names. Deleted old class files, better 'about' message. 
 
 
 TESTING
@@ -52,6 +33,18 @@ Graphic Designers, web designers, forensics, colorblind
 
 
 // ** live dropper todo
+
+* Need feedback util. Make a box on web site, write to db table.
+
+* link for where to donate. Multiple ways. 
+	1. buy the donate app. 
+	2. Encourage to buy another osilabs app that costs money.
+
+* Put up a quick decoration on the drop sample showing a scale which 
+   will later be used to show current level of light boost or drop.
+
+* Make beta download mobile site and link in livedropper. There 
+   the latest build can downloaded.
 
 * Turn "training" of feature. With every drop, can ask you if it was brighter, darker, too red, too green too blue, needs more r|g|or b, too grey, not grey enough.
 
