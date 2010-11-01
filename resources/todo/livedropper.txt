@@ -29,6 +29,10 @@
 ? Put up a quick decoration on the drop sample showing a scale which 
    will later be used to show current level of light boost or drop.
 
+* Refactored lifedropper to livedropper, still need to rename project
+   directory names. Deleted old class files, better 'about' message. 
+
+
 TESTING
 
 * Different view port sizes: chk logo, decor positions
