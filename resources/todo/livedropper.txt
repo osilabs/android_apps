@@ -13,7 +13,6 @@
    a book and take the picture.
 
 
-
 TESTING
 
 * Different view port sizes: chk logo, decor positions

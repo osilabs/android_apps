@@ -94,6 +94,8 @@ public class LiveDropper extends Activity {
     @Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		Log.d(TAG, "onCreate'd");
 
 		// Prevent screen dimming
         PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);  
@@ -153,7 +155,7 @@ public class LiveDropper extends Activity {
 		preview.onCreate();
 	}
 
-	//@Override
+	@Override
 	public void onPause() {
 		Log.d(TAG, "onPause'd activity");
 		super.onPause();
@@ -165,6 +167,7 @@ public class LiveDropper extends Activity {
 	@Override
 	public void onResume() {
 		Log.d(TAG, "onResumed'd");
+		IS_PAUSING = NO;
 		super.onResume();
 		wl.acquire();
 	}
@@ -343,6 +346,8 @@ public class LiveDropper extends Activity {
 					}
 				});
 			} catch (IOException e) {
+	            camera.release();
+	            camera = null;
 				e.printStackTrace();
 			}
 		}
