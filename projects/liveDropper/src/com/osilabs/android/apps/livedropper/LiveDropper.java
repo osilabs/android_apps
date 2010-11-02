@@ -95,7 +95,7 @@ public class LiveDropper extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		Log.d(TAG, "onCreate'd");
+		//Log.d(TAG, "onCreate'd");
 
 		// Prevent screen dimming
         PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);  
@@ -157,7 +157,7 @@ public class LiveDropper extends Activity {
 
 	@Override
 	public void onPause() {
-		Log.d(TAG, "onPause'd activity");
+		//Log.d(TAG, "onPause'd activity");
 		super.onPause();
         wl.release();  
 		IS_PAUSING = YES;
@@ -166,14 +166,14 @@ public class LiveDropper extends Activity {
 
 	@Override
 	public void onResume() {
-		Log.d(TAG, "onResumed'd");
+		//Log.d(TAG, "onResumed'd");
 		IS_PAUSING = NO;
 		super.onResume();
 		wl.acquire();
 	}
 
 	public void onRestoreInstanceState() {
-		Log.d(TAG, "OnRestoreInstanceState'd");
+		//Log.d(TAG, "OnRestoreInstanceState'd");
 	}
 	
 	//
@@ -183,7 +183,7 @@ public class LiveDropper extends Activity {
 	// Called when shutter is opened
 	ShutterCallback shutterCallback = new ShutterCallback() { 
 		public void onShutter() {
-			Log.d(TAG, "onShutter'd");
+			//Log.d(TAG, "onShutter'd");
 		}
 	};
 
@@ -198,7 +198,7 @@ public class LiveDropper extends Activity {
 
 		@Override
 		protected void onDraw(Canvas canvas) {
-			Log.w(TAG, "OnDraw'd");
+			//Log.w(TAG, "OnDraw'd");
 			//
 			// FIXME - this is redrawing the decorations with every frame,
 			//  should only redraw after a framebuffer has been processed.
@@ -259,7 +259,7 @@ public class LiveDropper extends Activity {
 							0 + corner_padding, h - corner_padding - line_len, paint); // bottom-right
 			} catch (Exception e) {
 				// FIXME - put toast errors if this happens
-				Log.d(TAG, "YuvImage error:" + e.getMessage());
+				//Log.d(TAG, "YuvImage error:" + e.getMessage());
 				e.printStackTrace();
 			}
 
@@ -286,14 +286,14 @@ public class LiveDropper extends Activity {
 				mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 			} catch (Exception e) {
 				// FIXME - put toast errors if this happens
-				Log.d(TAG, "YuvImage error:" + e.getMessage());
+				//Log.d(TAG, "YuvImage error:" + e.getMessage());
 				e.printStackTrace();
 			}
 		}
 
 	    //@Override
 		public void onCreate() {
-	    	Log.d(TAG, "Preview onCreated'd");
+	    	//Log.d(TAG, "Preview onCreated'd");
 	    	
 	    	// Coming out of pause
 			IS_PAUSING = NO;
@@ -301,7 +301,7 @@ public class LiveDropper extends Activity {
 
 		// Called once the holder is ready
 		public void surfaceCreated(SurfaceHolder holder) {
-			Log.d(TAG, "surfaceCreated'd");
+			//Log.d(TAG, "surfaceCreated'd");
 
 			// The Surface has been created, acquire the camera and tell it
 			// where to draw.
@@ -315,7 +315,7 @@ public class LiveDropper extends Activity {
 					//
 					// Called for each frame previewed
 					public void onPreviewFrame(byte[] data, Camera camera) {
-						Log.w(TAG, "onPreviewFrame'd");
+						//Log.w(TAG, "onPreviewFrame'd");
 
 						// Allocate space for processing buffer. Allow it
 						//  to grow if necessary. No max cap.
@@ -338,7 +338,7 @@ public class LiveDropper extends Activity {
 						
 						// Discard frames until processing completes
 						if (FRAMEBUFFER_IS == AVAILABLE) {
-							Log.d(TAG, "Framebuffer available for reuse");
+							//Log.d(TAG, "Framebuffer available for reuse");
 							new HandleFrameTask().execute(data);
 						}
 
@@ -354,11 +354,11 @@ public class LiveDropper extends Activity {
 
 		// Called when holder has changed
 		public void surfaceChanged(SurfaceHolder holder, int format, int w, int h) {
-			Log.d(TAG, "surfaceChange'd");
+			//Log.d(TAG, "surfaceChange'd");
 			try{
 				Camera.Parameters p = camera.getParameters();
 				Camera.Size s = p.getPreviewSize();
-				Log.d(TAG, "fmt:" + Integer.toString(p.getPreviewFormat()));
+				//Log.d(TAG, "fmt:" + Integer.toString(p.getPreviewFormat()));
 				p.setPictureFormat(ImageFormat.RGB_565);
 				camera.setParameters(p);
 				view_w = s.width;
@@ -370,14 +370,14 @@ public class LiveDropper extends Activity {
 //					List<Camera.Size> ls = p.getSupportedPreviewSizes();
 //					for (Iterator it = ls.iterator(); it.hasNext();) {
 //						Camera.Size sz = (Camera.Size) it.next();
-//						Log.d(TAG, "prv sz:" + Integer.toString(sz.width) + ","
+//						//Log.d(TAG, "prv sz:" + Integer.toString(sz.width) + ","
 //								+ Integer.toString(sz.height));
 //					}
 //		
 //					ls = p.getSupportedPictureSizes();
 //					for (Iterator it = ls.iterator(); it.hasNext();) {
 //						Camera.Size sz = (Camera.Size) it.next();
-//						Log.d(TAG, "pic sz:" + Integer.toString(sz.width) + ","
+//						//Log.d(TAG, "pic sz:" + Integer.toString(sz.width) + ","
 //								+ Integer.toString(sz.height));
 //					}
 //				}
@@ -385,7 +385,7 @@ public class LiveDropper extends Activity {
 				camera.startPreview();
 			} catch (Exception e) {
 				// FIXME - put toast errors if this happens
-				Log.d(TAG, "YuvImage error:" + e.getMessage());
+				//Log.d(TAG, "YuvImage error:" + e.getMessage());
 				e.printStackTrace();
 			}			
 		}
@@ -393,7 +393,7 @@ public class LiveDropper extends Activity {
 		// Called when the holder is destroyed
 		@Override
 		public void surfaceDestroyed(SurfaceHolder holder) {
-			Log.d(TAG, "surfaceDestroyed'd start");
+			//Log.d(TAG, "surfaceDestroyed'd start");
 
 			// Surface will be destroyed when we return, so stop the preview.
 			// Because the CameraDevice object is not a shared resource, it's
@@ -402,11 +402,11 @@ public class LiveDropper extends Activity {
 				camera.stopPreview();
 			}
 
-			// Log.d(TAG, "surfaceDestroyed'd finish");
+			//Log.d(TAG, "surfaceDestroyed'd finish");
 		}
 
 		public void onPause() {
-			Log.d(TAG, "onPause'd - preview class");
+			//Log.d(TAG, "onPause'd - preview class");
 			
 			// Surface will be destroyed when we return, so stop the preview.
 			// Because the CameraDevice object is not a shared resource, it's
@@ -419,7 +419,7 @@ public class LiveDropper extends Activity {
 				camera = null;
 			}
 			
-			Log.d(TAG, "CAMERA RELEASED HERE");
+			//Log.d(TAG, "CAMERA RELEASED HERE");
 		}
 	}
 
@@ -427,7 +427,7 @@ public class LiveDropper extends Activity {
 	private class HandleFrameTask extends AsyncTask<byte[], Void, int[]> {
 		// can use UI thread here
 		protected void onPreExecute() {
-			Log.d(TAG, "OnPreExecute'd");
+			//Log..d(TAG, "OnPreExecute'd");
 			if (IS_PAUSING == YES) {
 				finish();
 			}
@@ -436,7 +436,7 @@ public class LiveDropper extends Activity {
 
 		@Override
 		protected int[] doInBackground(byte[]... yuvs) {
-			Log.d(TAG, "doInBackground time=" + System.currentTimeMillis());
+			//Log.d(TAG, "doInBackground time=" + System.currentTimeMillis());
 
 			int[] iii = { 0 };
 
@@ -454,17 +454,17 @@ public class LiveDropper extends Activity {
 					iii[0] = bit.getPixel(view_w / 2, view_h / 2);
 				} catch (Exception e) {
 					// FIXME - put toast errors if this happens
-					Log.d(TAG, "YuvImage error:" + e.getMessage());
+					//Log.d(TAG, "YuvImage error:" + e.getMessage());
 					e.printStackTrace();
 				}
 
 			} else {
-				Log.d(TAG, "Pre v 8 algorithm");
+				//Log.d(TAG, "Pre v 8 algorithm");
 				int center = (int) ((view_w * view_h) / 2) + (view_w / 2);
 				try {
 					ImageProcessing.decodeYUV(decodeBuf, yuvs[0], view_w, view_h);
 				} catch (Exception e) {
-					Log.e(TAG, "decodeYUV error: " + e.getMessage());
+					//Log.e(TAG, "decodeYUV error: " + e.getMessage());
 					e.printStackTrace();
 				}
 				iii[0] = decodeBuf[center];
@@ -476,7 +476,7 @@ public class LiveDropper extends Activity {
 		// can use UI thread here
 		// protected void onPostExecute(final byte[] rgb_result) {
 		protected void onPostExecute(int[] iRGB) {
-			Log.d(TAG, "doinbackground onPostExecute'd" + System.currentTimeMillis());
+			//Log.d(TAG, "doinbackground onPostExecute'd" + System.currentTimeMillis());
 
 			// Allow the next frame to be processed
 			FRAMEBUFFER_IS = AVAILABLE;
