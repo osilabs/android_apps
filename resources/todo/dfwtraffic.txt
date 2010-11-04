@@ -1,0 +1,10 @@
+//
+// DFW TODO
+//
+
+* Reorder apps on main site depending on app you came from.
+* Add download link to livedropper
+* Show datetime better
+
+* Pass webview dimenstions into webpage dom and size the traffic
+  map image to take up the untire viewpane. 

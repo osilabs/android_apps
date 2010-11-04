@@ -1,17 +1,22 @@
 
 >> Release checklist <<
 
-1 . update versions in manifest (+1 because updating code and 
-     will need to recommit)
-2 . comment out logging code
-3 . Put nice toast messages in exception handlers
-4 . Update osilabs/m/mobilecontent/{livedropper,tctraffic}/about.php
-     - Add version notes section.
-5 . Update osilabs/m/apps site
-6 . Update screenshots
-7 . compile live version of apk
-8 . create description for app market
-9 . run the apk to verify it is functioning properly
-10. upload apk
-11. Commit and push git. Tag with -m"TCT v0.3 - RELEASE 20101019"
+1. update versions in manifest (+1 because updating code and will need to recommit)
+2. Update Websites
+	- paste about.php pages and apps/index.php in wordprocessor and check spelling
+	- osilabs/m/mobilecontent/{livedropper,tctraffic,...}/about.php
+	- osilabs/m/apps/index.php (work on tindex.php version then make live)
+3. Code:
+	- comment out logging code
+	- put nice toast messages in exception handlers
+4. compile live version of apk
+	- name: theappname-0.2-prod.apk
+	- verify works on phone
+5. app market site
+	- update description
+	- update the upgrade notes section
+	- update screenshots
+	- upload apk
+	- publilsh
+6. Commit and push git. Tag with -m"TCT v0.3 - RELEASE 20101019"
 
