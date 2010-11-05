@@ -15,6 +15,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.hardware.Camera;
 import android.hardware.Camera.PreviewCallback;
 import android.hardware.Camera.ShutterCallback;
@@ -212,16 +213,58 @@ public class ColorblindAssist extends Activity {
 					// Text
 					Paint paint = new Paint();
 					paint.setStyle(Paint.Style.FILL);
-					paint.setColor(Color.RED);
+					paint.setColor(Color.YELLOW);
 					canvas.drawText("osilabs.com", 15, h - 8, paint);
+					
+					canvas.drawCircle(center_x, center_y, cirele_radius, paint);
+					
+					// The HUD is the heads up display and has the meters in it.
+					int hud_width  = 322;
+					int hud_height = 155;
+					int hud_bl_x   = 400; // bottom left x and y
+					int hud_bl_y   = 203;
+					int meter_width= 130;
+					int meter_gap  = 8;
+					
+					// For the RGB texts
+					int textsize = 40;
+					paint.setTextSize(textsize);
 
-					// FIXME - make a function to convert all these rgbs to and fro
+					// Red Bar
+					int r_height = ((((RGBs[_RED]*100)/255)*hud_height)/100);
+					paint.setColor(Color.RED);
+					canvas.drawRect(hud_bl_x,               0 + hud_bl_y - r_height, 
+									hud_bl_x + meter_width, 0 + hud_bl_y, 
+									paint);
+					paint.setColor(Color.BLACK);
+					canvas.drawText("R", hud_bl_x+5, 0 + hud_bl_y - RGBs[_RED] + textsize, paint);
+
+					// Green Bar
+					hud_bl_x += meter_width+meter_gap; // Shift right for the next bar
+					int g_height = ((((RGBs[_GRN]*100)/255)*hud_height)/100);
+					paint.setColor(Color.GREEN);
+					canvas.drawRect(hud_bl_x,               0 + hud_bl_y - g_height,
+									hud_bl_x + meter_width, 0 + hud_bl_y, 
+									paint);
+					paint.setColor(Color.BLACK);
+					canvas.drawText("G", hud_bl_x+5, 0 + hud_bl_y - RGBs[_GRN] + textsize, paint);
+					
+					// Blue Bar
+					hud_bl_x += meter_width+meter_gap; // Shift right for the next bar
+					int b_height = ((((RGBs[_BLU]*100)/255)*hud_height)/100);					paint.setStyle(Paint.Style.STROKE);
+					paint.setColor(Color.BLUE);
+					canvas.drawRect(hud_bl_x,               0 + hud_bl_y - b_height, 
+									hud_bl_x + meter_width, 0 + hud_bl_y, 
+									paint);
+					paint.setColor(Color.BLACK);
+					canvas.drawText("B", hud_bl_x+5, 0 + hud_bl_y - RGBs[_BLU] + textsize, paint);
+
+					
 					paint.setColor(Color.rgb(
 									255 - RGBs[_RED], 
 									255 - RGBs[_GRN],
 									255 - RGBs[_BLU]));
-					canvas.drawCircle(center_x, center_y, cirele_radius, paint);
-		
+
 					// crosshairs
 					canvas.drawLine(center_x, center_y, center_x - line_len, center_y,
 							paint); // left
