@@ -43,10 +43,10 @@ public class ColorblindAssist extends Activity {
 	private static final int AVAILABLE = 1;
 	private static final int YES = 0;
 	private static final int NO = 1;
-	private static final int _RED = 0;
-	private static final int _GRN = 1;
-	private static final int _BLU = 2;
-	private static final int _ALP = 3; // alpha
+//	private static final int _RED = 0;
+//	private static final int _GRN = 1;
+//	private static final int _BLU = 2;
+//	private static final int _ALP = 3; // alpha
 	private static final int MENU_PREFS = 0;
 	private static final int MENU_ABOUT = 1;
 	private static final int MENU_QUIT = 2;
@@ -54,18 +54,18 @@ public class ColorblindAssist extends Activity {
 	
 	private static int FRAMEBUFFER_IS = AVAILABLE;
 	private static int IS_PAUSING = NO;
-
-	// RGB values are set as they become available.
-	private static final int RGB_ELEMENTS = 4;
-	private static int[] RGBs = new int[RGB_ELEMENTS];
-	private static int RGBint = 0;
-	private static String HEXVAL = "000000";
-	private static String RGBVAL = "0,0,0";
 	
-	// Will be allocated based on byte[] size, will grow
-	//  if needed.
-	private static int[] decodeBuf;
-	private static int BUFALLOCSIZE = 0;
+//	// RGB values are set as they become available.
+//	private static final int RGB_ELEMENTS = 4;
+//	private static int[] RGBs = new int[RGB_ELEMENTS];
+//	//private static int RGBint = 0;
+//	private static String HEXVAL = "000000";
+//	private static String RGBVAL = "0,0,0";
+//	
+//	// Will be allocated based on byte[] size, will grow
+//	//  if needed.
+//	private static int[] decodeBuf;
+//	private static int BUFALLOCSIZE = 0;
 	
 	// View properties
 	private int view_w = 0;
@@ -81,7 +81,8 @@ public class ColorblindAssist extends Activity {
 	private Preview preview;
 	private Button captureButton;
 	private DrawOnTop mDraw;
-    private PowerManager.WakeLock wl;  
+    private PowerManager.WakeLock wl;
+	private ColorDrop d;
 
     @Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -89,15 +90,17 @@ public class ColorblindAssist extends Activity {
 		
 		//Log.d(TAG, "onCreate'd");
 
+		d = new ColorDrop();
+		
 		// Prevent screen dimming
         PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);  
         wl = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");  
 	  
-		// Default to black
-		RGBs[_RED] = 0;
-		RGBs[_GRN] = 0;
-		RGBs[_BLU] = 0;
-		RGBs[_ALP] = 0;
+//		// Default to black
+//		RGBs[_RED] = 0;
+//		RGBs[_GRN] = 0;
+//		RGBs[_BLU] = 0;
+//		RGBs[_ALP] = 0;
 
 		mDraw = new DrawOnTop(this);
 
@@ -110,40 +113,40 @@ public class ColorblindAssist extends Activity {
 		preview = new Preview(this);
 		((FrameLayout) findViewById(R.id.preview)).addView(preview);
 		
-		captureButton = (Button) findViewById(R.id.capture_button);
-		captureButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-                //set up dialog
-                final Dialog dialog = new Dialog(v.getContext());
-                dialog.setContentView(R.layout.drop);
-                dialog.setTitle("Your drop is #" + HEXVAL);
-                dialog.setCancelable(true);
-
-                //there are a lot of settings, for dialog, check them all out!
-                //set up text
-                TextView drop = (TextView) dialog.findViewById(R.id.drop_textview);
-                drop.setBackgroundColor(Color.rgb(RGBs[_RED], RGBs[_GRN], RGBs[_BLU]));
-                
+//		captureButton = (Button) findViewById(R.id.capture_button);
+//		captureButton.setOnClickListener(new OnClickListener() {
+//			public void onClick(View v) {
+//                //set up dialog
+//                final Dialog dialog = new Dialog(v.getContext());
+//                dialog.setContentView(R.layout.drop);
+//                dialog.setTitle("Your drop is #" + d.hexval);
+//                dialog.setCancelable(true);
+//
+//                //there are a lot of settings, for dialog, check them all out!
 //                //set up text
-//                TextView text = (TextView) dialog.findViewById(R.id.TextView01);
-//                text.setText(R.string.drop_color_chosen_message);
- 
-                //set up image view
-//                ImageView img = (ImageView) dialog.findViewById(R.id.ImageView01);
-//                img.setImageResource(R.drawable.icon);
- 
-                //set up button
-                Button button = (Button) dialog.findViewById(R.id.Button01);
-                button.setOnClickListener(new OnClickListener() {
-                	@Override
-                    public void onClick(View vc) {
-                		dialog.cancel();
-                    }
-                });
-                //now that the dialog is set up, it's time to show it    
-                dialog.show();
-			}
-		});
+//                TextView drop = (TextView) dialog.findViewById(R.id.drop_textview);
+//                drop.setBackgroundColor(Color.rgb(d.R, d.G, d.B));
+//                
+////                //set up text
+////                TextView text = (TextView) dialog.findViewById(R.id.TextView01);
+////                text.setText(R.string.drop_color_chosen_message);
+// 
+//                //set up image view
+////                ImageView img = (ImageView) dialog.findViewById(R.id.ImageView01);
+////                img.setImageResource(R.drawable.icon);
+// 
+//                //set up button
+//                Button button = (Button) dialog.findViewById(R.id.Button01);
+//                button.setOnClickListener(new OnClickListener() {
+//                	@Override
+//                    public void onClick(View vc) {
+//                		dialog.cancel();
+//                    }
+//                });
+//                //now that the dialog is set up, it's time to show it    
+//                dialog.show();
+//			}
+//		});
 		
 		preview.onCreate();
 	}
@@ -210,88 +213,88 @@ public class ColorblindAssist extends Activity {
 			int center_y = (int) h / 2;
 
 			try{
-					// Text
-					Paint paint = new Paint();
-					paint.setStyle(Paint.Style.FILL);
-					paint.setColor(Color.YELLOW);
-					canvas.drawText("osilabs.com", 15, h - 8, paint);
-					
-					canvas.drawCircle(center_x, center_y, cirele_radius, paint);
-					
-					// The HUD is the heads up display and has the meters in it.
-					int hud_width  = 322;
-					int hud_height = 155;
-					int hud_bl_x   = 400; // bottom left x and y
-					int hud_bl_y   = 203;
-					int meter_width= 130;
-					int meter_gap  = 8;
-					
-					// For the RGB texts
-					int textsize = 40;
-					paint.setTextSize(textsize);
+				// Text
+				Paint pInverseColor = new Paint();
+				pInverseColor.setColor(Color.rgb(255 - d.R, 255 - d.G, 255 - d.B));
+				
+				Paint paint = new Paint();
+				paint.setStyle(Paint.Style.FILL);
+				paint.setColor(Color.YELLOW);
+				canvas.drawText("osilabs.com", 15, h - 8, paint);
+				
+				canvas.drawCircle(center_x, center_y, cirele_radius, paint);
+				
+				// The HUD is the heads up display and has the meters in it.
+				int hud_width  = 322;
+				int hud_height = 300;
+				int hud_bl_x   = 400; // bottom left x and y
+				int hud_bl_y   = 355; 
+				int meter_width= 130;
+				int meter_gap  = 8;
+				
+				// For the RGB texts
+				int textsize = 40;
+				pInverseColor.setTextSize(textsize);
+				//canvas.drawText(d.colorname, hud_bl_x+5, 0 + hud_bl_y - hud_height + textsize, pInverseColor);
+				
+				// Red Bar
+				int r_height = ((((d.R*100)/255)*hud_height)/100);
+				paint.setStyle(Paint.Style.STROKE);
+				paint.setColor(Color.RED);
+				canvas.drawRect(hud_bl_x,               0 + hud_bl_y - r_height, 
+								hud_bl_x + meter_width, 0 + hud_bl_y, 
+								paint);
+				paint.setColor(Color.BLACK);
+				canvas.drawText("R", hud_bl_x+5, hud_bl_y - d.R, pInverseColor);
 
-					// Red Bar
-					int r_height = ((((RGBs[_RED]*100)/255)*hud_height)/100);
-					paint.setColor(Color.RED);
-					canvas.drawRect(hud_bl_x,               0 + hud_bl_y - r_height, 
-									hud_bl_x + meter_width, 0 + hud_bl_y, 
-									paint);
-					paint.setColor(Color.BLACK);
-					canvas.drawText("R", hud_bl_x+5, 0 + hud_bl_y - RGBs[_RED] + textsize, paint);
+				// Green Bar
+				hud_bl_x += meter_width+meter_gap; // Shift right for the next bar
+				int g_height = ((((d.G*100)/255)*hud_height)/100);
+				paint.setColor(Color.GREEN);
+				canvas.drawRect(hud_bl_x,               0 + hud_bl_y - g_height,
+								hud_bl_x + meter_width, 0 + hud_bl_y, 
+								paint);
+				paint.setColor(Color.BLACK);
+				canvas.drawText("G", hud_bl_x+5, hud_bl_y - d.G, pInverseColor);
+				
+				// Blue Bar
+				hud_bl_x += meter_width+meter_gap; // Shift right for the next bar
+				int b_height = ((((d.B*100)/255)*hud_height)/100);
+				paint.setColor(Color.BLUE);
+				canvas.drawRect(hud_bl_x,               0 + hud_bl_y - b_height, 
+								hud_bl_x + meter_width, 0 + hud_bl_y, 
+								paint);
+				paint.setColor(Color.BLACK);
+				canvas.drawText("B", hud_bl_x+5, hud_bl_y - d.B, pInverseColor);
 
-					// Green Bar
-					hud_bl_x += meter_width+meter_gap; // Shift right for the next bar
-					int g_height = ((((RGBs[_GRN]*100)/255)*hud_height)/100);
-					paint.setColor(Color.GREEN);
-					canvas.drawRect(hud_bl_x,               0 + hud_bl_y - g_height,
-									hud_bl_x + meter_width, 0 + hud_bl_y, 
-									paint);
-					paint.setColor(Color.BLACK);
-					canvas.drawText("G", hud_bl_x+5, 0 + hud_bl_y - RGBs[_GRN] + textsize, paint);
-					
-					// Blue Bar
-					hud_bl_x += meter_width+meter_gap; // Shift right for the next bar
-					int b_height = ((((RGBs[_BLU]*100)/255)*hud_height)/100);					paint.setStyle(Paint.Style.STROKE);
-					paint.setColor(Color.BLUE);
-					canvas.drawRect(hud_bl_x,               0 + hud_bl_y - b_height, 
-									hud_bl_x + meter_width, 0 + hud_bl_y, 
-									paint);
-					paint.setColor(Color.BLACK);
-					canvas.drawText("B", hud_bl_x+5, 0 + hud_bl_y - RGBs[_BLU] + textsize, paint);
 
-					
-					paint.setColor(Color.rgb(
-									255 - RGBs[_RED], 
-									255 - RGBs[_GRN],
-									255 - RGBs[_BLU]));
-
-					// crosshairs
-					canvas.drawLine(center_x, center_y, center_x - line_len, center_y,
-							paint); // left
-					canvas.drawLine(center_x, center_y, center_x, center_y + line_len,
-							paint); // top
-					canvas.drawLine(center_x, center_y, center_x + line_len, center_y,
-							paint); // right
-					canvas.drawLine(center_x, center_y, center_x, center_y - line_len,
-							paint); // bottom
-		
-					// corners
-					canvas.drawLine(0 + corner_padding, 0 + corner_padding, 0
-							+ corner_padding + line_len, 0 + corner_padding, paint); // top-left
-					canvas.drawLine(0 + corner_padding, 0 + corner_padding,
-							0 + corner_padding, 0 + corner_padding + line_len, paint); // top-left
-					canvas.drawLine(w - corner_padding, 0 + corner_padding, w
-							- corner_padding - line_len, 0 + corner_padding, paint); // top-right
-					canvas.drawLine(w - corner_padding, 0 + corner_padding, w
-							- corner_padding, 0 + corner_padding + line_len, paint); // top-right
-					canvas.drawLine(w - corner_padding, h - corner_padding, w
-							- corner_padding, h - corner_padding - line_len, paint); // bottom-left
-					canvas.drawLine(w - corner_padding, h - corner_padding, w
-							- corner_padding - line_len, h - corner_padding, paint); // bottom-left
-					canvas.drawLine(0 + corner_padding, h - corner_padding, 0
-							+ corner_padding + line_len, h - corner_padding, paint); // bottom-right
-					canvas.drawLine(0 + corner_padding, h - corner_padding,
-							0 + corner_padding, h - corner_padding - line_len, paint); // bottom-right
+				// crosshairs
+				canvas.drawLine(center_x, center_y, center_x - line_len, center_y,
+						paint); // left
+				canvas.drawLine(center_x, center_y, center_x, center_y + line_len,
+						paint); // top
+				canvas.drawLine(center_x, center_y, center_x + line_len, center_y,
+						paint); // right
+				canvas.drawLine(center_x, center_y, center_x, center_y - line_len,
+						paint); // bottom
+	
+				// corners
+				canvas.drawLine(0 + corner_padding, 0 + corner_padding, 0
+						+ corner_padding + line_len, 0 + corner_padding, paint); // top-left
+				canvas.drawLine(0 + corner_padding, 0 + corner_padding,
+						0 + corner_padding, 0 + corner_padding + line_len, paint); // top-left
+				canvas.drawLine(w - corner_padding, 0 + corner_padding, w
+						- corner_padding - line_len, 0 + corner_padding, paint); // top-right
+				canvas.drawLine(w - corner_padding, 0 + corner_padding, w
+						- corner_padding, 0 + corner_padding + line_len, paint); // top-right
+				canvas.drawLine(w - corner_padding, h - corner_padding, w
+						- corner_padding, h - corner_padding - line_len, paint); // bottom-left
+				canvas.drawLine(w - corner_padding, h - corner_padding, w
+						- corner_padding - line_len, h - corner_padding, paint); // bottom-left
+				canvas.drawLine(0 + corner_padding, h - corner_padding, 0
+						+ corner_padding + line_len, h - corner_padding, paint); // bottom-right
+				canvas.drawLine(0 + corner_padding, h - corner_padding,
+						0 + corner_padding, h - corner_padding - line_len, paint); // bottom-right
 			} catch (Exception e) {
 				// FIXME - put toast errors if this happens
 				//Log.d(TAG, "YuvImage error:" + e.getMessage());
@@ -355,12 +358,12 @@ public class ColorblindAssist extends Activity {
 						// Allocate space for processing buffer. Allow it
 						//  to grow if necessary. No max cap.
 						int size = data.length;
-						if (data.length > BUFALLOCSIZE) {
+						if (data.length > d.bufallocsize) {
 							// Buffer is not big enough for data
 							// allocate more spacs.
 							//Log.v(TAG, "Allocating bufer for size: " + Integer.toString(size));
-							decodeBuf = new int[size];
-							BUFALLOCSIZE = size;
+							d.decodeBuf = new int[size];
+							d.bufallocsize = size;
 							
 							// Set the w and h for the yuv image processing. 
 							// Don't need an actual picture dimension because
@@ -476,12 +479,12 @@ public class ColorblindAssist extends Activity {
 
 			int center = (int) ((view_w * view_h) / 2) + (view_w / 2);
 			try {
-				ImageProcessing.decodeYUV(decodeBuf, yuvs[0], view_w, view_h);
+				ImageProcessing.decodeYUV(d.decodeBuf, yuvs[0], view_w, view_h);
 			} catch (Exception e) {
 				//Log.e(TAG, "decodeYUV error: " + e.getMessage());
 				e.printStackTrace();
 			}
-			iii[0] = decodeBuf[center];
+			iii[0] = d.decodeBuf[center];
 
 			return iii;
 		}
@@ -497,35 +500,40 @@ public class ColorblindAssist extends Activity {
 			// Don't process the result of the async task if pausing
 			if (IS_PAUSING == NO) {
 				// Set global int
-				RGBint = iRGB[0];
+				d.RGBint = iRGB[0];
 
 				// Set global reg green and blue
-				RGBs[_ALP] = (iRGB[0] >> 24) & 255;
-				RGBs[_RED] = (iRGB[0] >> 16) & 255;
-				RGBs[_GRN] = (iRGB[0] >> 8) & 255;
-				RGBs[_BLU] = iRGB[0] & 255;
+				d.A = (iRGB[0] >> 24) & 255;
+				d.R = (iRGB[0] >> 16) & 255;
+				d.G = (iRGB[0] >> 8) & 255;
+				d.B = iRGB[0] & 255;
 	
 				// Set global rgb value for display
-				RGBVAL = RGBs[_RED] + "," + RGBs[_GRN] + "," + RGBs[_BLU];
+				d.RGBstr = d.R+","+d.G+","+d.B;
 
 				// Set global hexval
-				HEXVAL = Integer.toHexString(iRGB[0]).substring(2).toUpperCase();
+				//d.hexval = Integer.toHexString(iRGB[0]).substring(2).toUpperCase();
+				
+				// Set color
+				d.colorname = ImageProcessing. getColorNameFromRGB(d);
+				d.hexval = "";
 
 				// Make display string for previewer
-				String rgbDisplay= "rgb(" + RGBVAL + ")";
+				//d.RGBdisplay= "rgb("+d.RGBstr+")";
+				d.RGBdisplay = "";
 	
 				// Set drop color
 				TextView tv = (TextView) findViewById(R.id.preview_text);
-				tv.setText(rgbDisplay);
+				//tv.setText("| " + d.colorname);
 				tv.setBackgroundColor(iRGB[0]);
 
-				// Set capture button color
-				captureButton = (Button) findViewById(R.id.capture_button);
-				//captureButton.setBackgroundColor(Color.rgb(200,200,230));
-				//captureButton.setError("error x14d");
-				captureButton.setHapticFeedbackEnabled(true);
+//				// Set capture button color
+//				captureButton = (Button) findViewById(R.id.capture_button);
+//				//captureButton.setBackgroundColor(Color.rgb(200,200,230));
+//				//captureButton.setError("error x14d");
+//				captureButton.setHapticFeedbackEnabled(true);
 				TextView bl_tv = (TextView) findViewById(R.id.color_value_display);
-				bl_tv.setText("#" + HEXVAL);
+				bl_tv.setText("   " + d.colorname );
 			}
 		}
 
@@ -592,5 +600,4 @@ public class ColorblindAssist extends Activity {
 	    }
 	    return false;
 	}
-
 }

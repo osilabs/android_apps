@@ -18,7 +18,6 @@ public final class R {
         public static final int ImageView01=0x7f050001;
         public static final int ScrollView01=0x7f050002;
         public static final int bl_display=0x7f050006;
-        public static final int capture_button=0x7f050009;
         public static final int color_value_display=0x7f050008;
         public static final int drop_textview=0x7f050000;
         public static final int layout=0x7f050004;

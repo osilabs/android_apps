@@ -1,4 +1,5 @@
 package com.osilabs.android.apps.colorblindassist;
+import java.lang.Math;
 
 public class ImageProcessing {
 	// decode Y, U, and V values on the YUV 420 buffer described as YCbCr_422_SP
@@ -192,6 +193,75 @@ public class ImageProcessing {
 		return 0xff000000 + ((int) b_opposite << 16) + ((int) g_opposite << 8)
 				+ (int) r_opposite;
 
+	}
+	
+	public static String getColorNameFromRGB(ColorDrop d) {
+		// Turn R, G, and B into a string indicating the color
+		
+		// 0=red, 1=green, 2=blue
+		int c = 0;
+		
+		// Calculate Max and base color
+		int max = d.R;
+		String baseC = "red";
+		if (d.G>d.R) {
+			max = d.G;
+			baseC = "green";
+			c = 1;
+		}
+		if (d.B>max) {
+			max = d.B;
+			baseC = "blue";
+			c = 2;
+		}
+
+		// WHITE
+		if ((d.R+d.G+d.B) > 700) {
+			return "white";
+		}
+
+		// BLACK
+		if ((d.R+d.G+d.B) < 50) {
+			return "black";
+		}
+
+		// GRAY
+		if ( (Math.abs(d.R-d.G) < 25) && (Math.abs(d.R-d.B) < 25) ) {
+			return "gray";
+		}
+		
+		// PURPLE
+		// Purple is g < r < b
+		if (d.G < d.R) {
+			if (d.R < d.B) {
+				return "purple";
+			}
+		}
+		
+		
+//		// Look for purple - R and B are high, G is low
+//		// R::B diff is low
+//		if (Math.abs(d.R-d.B) <= 10) {
+//			// R::G diff is high
+//			if ((d.R-d.G) > 20) {
+//				return "purple";
+//			}
+//		}
+
+		// From base color, look for neighboring colors
+		switch(c) {
+		case 0:	
+			// red
+			
+			break;
+		case 1:	
+			// green
+			break;
+		case 2:	
+			// blue
+			break;
+		};
+		return baseC;
 	}
 
 	public float hue_2_rgb(float v1, float v2, float vh) {
