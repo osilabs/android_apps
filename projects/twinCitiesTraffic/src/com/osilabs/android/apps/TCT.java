@@ -55,23 +55,21 @@ public class TCT extends Activity {
 	// 0 = traffic
 	// 1 = incidents
 	// 2 = alerts
-	// 3 = camera
+	// 3 = incidentlist
+	// 4 = camera
 	//
 	protected static final String MNDOT_MOBILE_URL = "http://www.dot.state.mn.us/tmc/trafficinfo/mobile/freeways.html";
-	protected static final String TRAFFIC_MAP_URL = "http://osilabs.com/m/mobilecontent/tctraffic/trafficmap.php";
-	protected static final String INCIDENT_FEED = "http://www.dot.state.mn.us/tmc/trafficinfo/incidents.xml";
+	//protected static final String TRAFFIC_MAP_URL = "http://osilabs.com/m/mobilecontent/tctraffic/trafficmap.php";
+	//protected static final String INCIDENT_FEED = "http://www.dot.state.mn.us/tmc/trafficinfo/incidents.xml";
 
-	protected static final String[] VIEW_URLS = {	TRAFFIC_MAP_URL,
-											        TRAFFIC_MAP_URL,
-											        TRAFFIC_MAP_URL,
-											        MNDOT_MOBILE_URL };
 	
-	private static final String LOG_TAG = "<*^*^*^*^*^*^*^*^*^*> ";
+	private static final String TAG = "** osilabs.com **";
 	
 	private static final int MENU_TRAFFIC               = 0;
-	private static final int MENU_INCIDENTS             = 1;
+	private static final int MENU_CONGESTION             = 1;
 	private static final int MENU_ALERTS                = 2;
-	private static final int MENU_CAMERAS               = 3;
+	private static final int MENU_INCIDENTLIST          = 3;
+	private static final int MENU_CAMERAS               = 4;
 	private static final int MENU_REFRESH               = 100;
 	private static final int MENU_QUIT                  = 101;
 	//private static final int MENU_MNDOT_MOBILE_FREEWAYS = 102;
@@ -79,19 +77,27 @@ public class TCT extends Activity {
 	private static final int MENU_ABOUT                 = 104;
 
 	private static final int INDEX_TRAFFIC              = 0;
-	private static final int INDEX_INCIDENTS            = 1;
+	private static final int INDEX_CONGESTION            = 1;
 	private static final int INDEX_ALERTS               = 2;
-	private static final int INDEX_CAMERAS              = 3;
+	private static final int INDEX_INCIDENTLIST         = 3;
+	private static final int INDEX_CAMERAS              = 4;
 
 	//
-	// Defs
+	// Globals
 	//
-	protected static String CURRENT_WEBVIEW_URL = TRAFFIC_MAP_URL;
-	protected static int CURRENT_VIEW_INDEX = INDEX_TRAFFIC;
-	protected static String version = "0.1"; // The default, later overwritten w actual 
 	
-	Spinner spViewChoices;
-	WebView wvMain;
+	// a versioncode will be appended to this for it works with the current version
+	protected static String MOBILECONTENT_URL_PREFIX = "http://osilabs.com/m/mobilecontent/tctraffic";
+	protected static String CURRENT_WEBVIEW_URL = "";
+	protected static String TRAFFIC_MAP_URL = "";
+	// Will need to up this number if more indexes are needed.
+	protected static String[] VIEW_URLS = new String[8]; 
+	protected static int CURRENT_VIEW_INDEX = 0;
+//	// The default, later overwritten w actual value
+//	protected static String version = "0.1";
+	protected static PackageInfo pInfo = null;
+	protected static Spinner spViewChoices;
+	protected static WebView wvMain;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -99,17 +105,32 @@ public class TCT extends Activity {
         setContentView(R.layout.main);
 
         //
-        // Set locals with manifest variables
+        // Set globals
         //
-        PackageInfo pInfo = null;
+        
+        // Read in manifest
 		try {
-			pInfo = getPackageManager().getPackageInfo("com.osilabs.android.apps",
-					PackageManager.GET_META_DATA);
-			version = pInfo.versionName;
+			pInfo = getPackageManager().getPackageInfo("com.osilabs.android.apps", PackageManager.GET_META_DATA);
+			//version = pInfo.versionName;
 		} catch (NameNotFoundException e) {
 			e.printStackTrace();
+			// FIXME 0.4 - Add toast message here.
 		}
-      
+
+		// Set URLs with versioncode
+		TRAFFIC_MAP_URL = MOBILECONTENT_URL_PREFIX + pInfo.versionCode + "/trafficmap.php";
+
+		// The order of these needs to match the order of the VIEW_INDEXes. It is used to determine
+		//  which webview URI to use for the view.
+		//
+		// This is intialized with a finite number of indexes, if you exceed them,
+		//  up that number or get array out of bounds exception
+		VIEW_URLS[0] = TRAFFIC_MAP_URL;
+		VIEW_URLS[1] = TRAFFIC_MAP_URL;
+		VIEW_URLS[2] = TRAFFIC_MAP_URL;
+		VIEW_URLS[3] = TRAFFIC_MAP_URL;
+		VIEW_URLS[4] = TRAFFIC_MAP_URL;
+		
         //
 		// Restore view
         //
@@ -173,14 +194,18 @@ public class TCT extends Activity {
 			    case MENU_TRAFFIC:
 			        CURRENT_VIEW_INDEX = INDEX_TRAFFIC;
 			    	break;
-			    case MENU_INCIDENTS:
-			        CURRENT_VIEW_INDEX = INDEX_INCIDENTS;
+			    case MENU_CONGESTION:
+			        CURRENT_VIEW_INDEX = INDEX_CONGESTION;
 			    	break;		        
 			    case MENU_ALERTS:
 			        CURRENT_VIEW_INDEX = INDEX_ALERTS;
 			    	break;
+			    case MENU_INCIDENTLIST:
+			        CURRENT_VIEW_INDEX = INDEX_INCIDENTLIST;
+			    	break;
 			    case MENU_CAMERAS:
 			        CURRENT_VIEW_INDEX = INDEX_CAMERAS;
+			    	break;
 			}
 
 	    	if (CURRENT_WEBVIEW_URL != VIEW_URLS[CURRENT_VIEW_INDEX]) {
@@ -267,11 +292,11 @@ public class TCT extends Activity {
 			case MENU_ABOUT:
 		        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 		        alertDialog.setTitle("Twin Cities Traffic");
-		        alertDialog.setMessage("You are running version " + version);
+		        alertDialog.setMessage("You are running version " + pInfo.versionName);
 		        alertDialog.setButton("More...", new DialogInterface.OnClickListener() {
 		        	public void onClick(DialogInterface dialog, int which) {
 		        		Intent mIntent = new Intent(Intent.ACTION_VIEW, 
-		        				Uri.parse("http://osilabs.com/m/mobilecontent/tctraffic/about.php#" + version)); 
+		        				Uri.parse("http://osilabs.com/m/mobilecontent/tctraffic/about.php#" + pInfo.versionName)); 
         				startActivity(mIntent); 
 		            } 
 		        });

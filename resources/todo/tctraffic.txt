@@ -1,14 +1,27 @@
 // Release 0.4
 
+* Toast messages in try catach
+
 * Add menu button icons
 
 * Fix icon?
 
 * choose region (west, northwest,...) then maps center onload to your area
 
+* Make live feed work for incidents
+
+* rename incident list
+
+* center the maps when loaded
+
+* FEATURES OF 0.4
+* Much faster switching between views
 
 
 // Ideas
+
+* Incident list screen has cameras in xml feed. Use those to pull up a view of the accident
+
 * Tilt screen to switch view.  configure what view you get when vert and horriz. Default is 'traffic' for vert, camera for horriz.
 
 * Save settings: choose and save default camera shot for quick view
@@ -19,7 +32,8 @@
 
 // todo
 
-* fix zoom problem 
+
+* When in landscape mode, the window.scrollTo doesn't put the view in a good place.
 
 * in onstart or oncreate throw up a toast saying shit is loading.
 

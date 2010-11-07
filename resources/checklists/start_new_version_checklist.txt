@@ -1,0 +1,13 @@
+
+>> New Version checklist <<
+
+**
+** TCTRAFFIC
+**
+
+1. Up the versionname and versioncode in the manifest.
+	- the versioncode is used in the trafficmap URL path 
+	  (ie ".../mobilecontent/tctraffic" + versioncode + "/trafficmap.php")
+2. cp -rp  ".../mobilecontent/tctraffic" + (versioncode - 1) to ".../mobilecontent/tctraffic" + versioncode 
+	- a directory matching the versioncode must exist and will be automatically used.
+
