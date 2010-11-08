@@ -14,13 +14,14 @@
     <string name="pref_dialog_title">Choose Initial View</string>
     <string name="pref_selected">pref_selected</string>
     <string name="pref_current_view">0</string>
+    <string name="pref_camera_1">0</string>
     
     <string-array name="view_choices">
         <item>Traffic</item>
         <item>Congestion</item>
-        <item>Alerts</item>
-        <item>Incidents</item>
-        <item>Cameras</item>
+        <item>Alert Map</item>
+        <item>Incident Report</item>
+        <item>Camera</item>
     </string-array>
     
     <style name="osistyle" parent="@android:style/TextAppearance.Medium">

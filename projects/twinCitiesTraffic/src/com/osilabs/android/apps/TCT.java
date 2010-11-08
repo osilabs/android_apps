@@ -14,6 +14,7 @@ package com.osilabs.android.apps;
 //import com.osilabs.android.apps.R;
 //import android.R;
 
+
 import android.app.Activity;
 import android.app.AlertDialog;
 //import android.content.Context;
@@ -26,6 +27,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 //import android.preference.PreferenceManager;
 //import android.util.DisplayMetrics;
 import android.util.Log;
@@ -85,6 +87,9 @@ public class TCT extends Activity {
 	//
 	// Globals
 	//
+
+	// Prefs
+	protected static int PREF_CAMERA_1;
 	
 	// a versioncode will be appended to this for it works with the current version
 	protected static String MOBILECONTENT_URL_PREFIX = "http://osilabs.com/m/mobilecontent/tctraffic";
@@ -93,11 +98,13 @@ public class TCT extends Activity {
 	// Will need to up this number if more indexes are needed.
 	protected static String[] VIEW_URLS = new String[8]; 
 	protected static int CURRENT_VIEW_INDEX = 0;
-//	// The default, later overwritten w actual value
-//	protected static String version = "0.1";
+
 	protected static PackageInfo pInfo = null;
 	protected static Spinner spViewChoices;
 	protected static WebView wvMain;
+
+	// For posting runnables
+	private Handler mHandler = new Handler();
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -139,6 +146,9 @@ public class TCT extends Activity {
         CURRENT_VIEW_INDEX = mySharedPreferences.getInt("pref_current_view", 2);
         CURRENT_WEBVIEW_URL = VIEW_URLS[CURRENT_VIEW_INDEX];
         
+        // Restore camera 1
+        PREF_CAMERA_1 = mySharedPreferences.getInt("pref_camera_1", 1);
+        
         //
 		// Quick View Spinner
 		// 
@@ -163,10 +173,14 @@ public class TCT extends Activity {
         webSettings.setJavaScriptEnabled(true);
         wvMain.setWebViewClient(new MyWebViewClient(this));
         wvMain.setWebChromeClient(new WebChromeClient());
+        // Enable jsi
+        wvMain.addJavascriptInterface(new JsiJavaScriptInterface(this), "jsi");
+        
     	// It's going to take a second to load
 		Toast.makeText(this, "Loading...", Toast.LENGTH_LONG).show();
 		// Load the webview
-		wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_VIEW_INDEX);
+    	wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_VIEW_INDEX+"&camera="+PREF_CAMERA_1);
+		
     }
 
 //    public void onConfigurationChanged(Configuration newConfig) {
@@ -208,6 +222,10 @@ public class TCT extends Activity {
 			    	break;
 			}
 
+			// CURRENT_WEBVIEW_URL is still what the last view was, 
+			//  VIEW_URLS[CURRENT_VIEW_INDEX] has the new view which
+			//  has a different URL (This was used when the cameras
+			//  view had to reload the webview with a different url).
 	    	if (CURRENT_WEBVIEW_URL != VIEW_URLS[CURRENT_VIEW_INDEX]) {
 	    		// Set the new Current URL
 		    	CURRENT_WEBVIEW_URL = VIEW_URLS[CURRENT_VIEW_INDEX];
@@ -220,7 +238,8 @@ public class TCT extends Activity {
 		    	// Load the other URL into the webview
 	    		wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_VIEW_INDEX);
 	    	} else {
-		    	// Just switch div
+		    	// Just switch div - This stays fast because we don't have to
+	    		//  reload the webview a lot, only for camera switching.
 	    		wvMain.loadUrl("javascript: jumpTo('"+CURRENT_VIEW_INDEX+"')");
 	    	}
 		}
@@ -256,6 +275,68 @@ public class TCT extends Activity {
 		}
 	}
     
+    final class JsiJavaScriptInterface {
+		Activity activity;
+    	JsiJavaScriptInterface(Activity a) { activity = a; }
+
+        /**
+         * 
+         * @param camnum quick view camera number
+         * @param camid id used in URI paths
+         */
+        public void setChosenCamera(int camnum, int camid) {
+        	
+			Toast.makeText(getApplicationContext(), "Loading new camera...", Toast.LENGTH_LONG).show();
+
+			// Set the current camera
+			CURRENT_VIEW_INDEX = INDEX_CAMERAS;
+			PREF_CAMERA_1 = camid;
+			
+			// Reload the webview so it just shows the chosen camera
+	    	wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_VIEW_INDEX+"&camera="+PREF_CAMERA_1);
+	    	
+			// Set the chosen camera in the persistent settings
+	    	SharedPreferences prefs 
+				= getSharedPreferences("com.osilabs.android.apps", Activity.MODE_PRIVATE);
+			    SharedPreferences.Editor editor = prefs.edit();
+			    editor.putInt("pref_camera_1", PREF_CAMERA_1);
+			    editor.commit();
+
+			// FIXME - verify this doesn't need to be posted as a runnable.
+	    	
+        	// Post a runnable
+            //mHandler.post(new Runnable() {
+            //    public void run() {
+            //    	spinner.setSelection(0);
+            //    }
+            //});
+        }
+        
+        
+        public void chooseCamera(int oldcamid) {
+        	
+			Toast.makeText(getApplicationContext(), "Loading camera settings...", Toast.LENGTH_LONG).show();
+
+			CURRENT_VIEW_INDEX = INDEX_CAMERAS;
+			
+			// Reload the webview, currently viewing camera so just call again 
+			//  and leave camera emtpy
+	    	wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_VIEW_INDEX);
+	    	
+	    	// FIXME - verify this doesn't need to be posted as a runnable.
+	    	
+        	// Post a runnable
+            //mHandler.post(new Runnable() {
+            //    public void run() {
+            //    	spinner.setSelection(0);
+            //    }
+            //});
+        }
+        
+        
+    } 
+
+	
 	/* Creates the menu items */
 	public boolean onCreateOptionsMenu(Menu menu) {
 	    menu.add(0, MENU_REFRESH, 0, "Refresh");
@@ -272,7 +353,7 @@ public class TCT extends Activity {
 	    switch (item.getItemId()) {
 		    case MENU_REFRESH:
 		    	Toast.makeText(getApplicationContext(), "Refreshing", Toast.LENGTH_SHORT).show();
-		    	wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_VIEW_INDEX);
+		    	wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_VIEW_INDEX+"&camera="+PREF_CAMERA_1);
 		        return true;
 		        
 //		    case MENU_MNDOT_MOBILE_FREEWAYS:

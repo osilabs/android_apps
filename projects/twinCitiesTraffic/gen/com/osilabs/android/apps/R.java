@@ -28,6 +28,7 @@ public final class R {
     }
     public static final class string {
         public static final int app_name=0x7f060000;
+        public static final int pref_camera_1=0x7f06000c;
         public static final int pref_current_view=0x7f06000b;
         public static final int pref_default=0x7f060005;
         public static final int pref_dialog_title=0x7f060009;
