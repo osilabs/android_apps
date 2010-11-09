@@ -378,7 +378,7 @@ public class TCT extends Activity {
 		        alertDialog.setButton("More...", new DialogInterface.OnClickListener() {
 		        	public void onClick(DialogInterface dialog, int which) {
 		        		Intent mIntent = new Intent(Intent.ACTION_VIEW, 
-		        				Uri.parse("http://osilabs.com/m/mobilecontent/tctraffic/about.php#" + pInfo.versionName)); 
+		        				Uri.parse(MOBILECONTENT_URL_PREFIX + pInfo.versionCode + "/about.php")); 
         				startActivity(mIntent); 
 		            } 
 		        });
