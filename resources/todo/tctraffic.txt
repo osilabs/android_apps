@@ -1,9 +1,12 @@
 // Release 0.4
 
-* When no incidents, displays no message at all. make it say something nice.  Maybe "All clear!"
-* Toast messages in try catach
+* FEATURES OF 0.4
+* Much faster switching between views
 
-* Check orientation changes with camera display
+
+// Release 0.5
+
+* Toast messages in try catach
 
 * Add menu button icons
 
@@ -13,20 +16,10 @@
 
 * choose region (west, northwest,...) then maps center onload to your area
 
-* Make live feed work for incidents
-
-* rename incident list
-
-* center the maps when loaded
 
 ??????
 
 * Choosing to configure cameras, or saving a camera, or loading all can take a long time after the toast message goes away
-
-
-* FEATURES OF 0.4
-* Much faster switching between views
-
 
 // Ideas
 

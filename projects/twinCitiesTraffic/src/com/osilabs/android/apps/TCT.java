@@ -171,6 +171,7 @@ public class TCT extends Activity {
         webSettings.setSupportZoom(true);
         webSettings.setDefaultFontSize(23);
         webSettings.setJavaScriptEnabled(true);
+        webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         wvMain.setWebViewClient(new MyWebViewClient(this));
         wvMain.setWebChromeClient(new WebChromeClient());
         // Enable jsi
