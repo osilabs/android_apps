@@ -93,6 +93,7 @@ public class TCT extends Activity {
 	
 	// a versioncode will be appended to this for it works with the current version
 	protected static String MOBILECONTENT_URL_PREFIX = "http://osilabs.com/m/mobilecontent/tctraffic";
+	protected static String MOBILECONTENT_URL_ABOUT = "http://osilabs.com/m/mobilecontent/about/tct_about.php";
 	protected static String CURRENT_WEBVIEW_URL = "";
 	protected static String TRAFFIC_MAP_URL = "";
 	// Will need to up this number if more indexes are needed.
@@ -378,11 +379,11 @@ public class TCT extends Activity {
 		        alertDialog.setButton("More...", new DialogInterface.OnClickListener() {
 		        	public void onClick(DialogInterface dialog, int which) {
 		        		Intent mIntent = new Intent(Intent.ACTION_VIEW, 
-		        				Uri.parse(MOBILECONTENT_URL_PREFIX + pInfo.versionCode + "/about.php")); 
+		        				Uri.parse(MOBILECONTENT_URL_ABOUT)); 
         				startActivity(mIntent); 
 		            } 
 		        });
-		        alertDialog.setIcon(R.drawable.ic_launcher_main);
+		        alertDialog.setIcon(R.drawable.ic_launcher);
 		        alertDialog.show();
 		    	return true;
 
