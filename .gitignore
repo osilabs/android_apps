@@ -1,5 +1,6 @@
-# gitignore
 *.class
 *class
 *~
-
+*.dex
+*.ap_
+*\/R.java
