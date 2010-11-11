@@ -201,6 +201,16 @@ public class ImageProcessing {
 		// 0=red, 1=green, 2=blue
 		int c = 0;
 		
+		// -------------------------------------------------------------
+		// Algorithm
+		//
+		// 1. Determine if red, green, or blue. If no other colors are
+		//     set after this point, the color will end up falling
+		//     back on one of these three colors.
+		// 2. Figure out if black, gray, or white.
+		// 3. Look for alternates: purple, yellow, pink, brown, orange.
+		// -------------------------------------------------------------
+		
 		// Calculate Max and base color
 		int max = d.R;
 		String baseC = "red";
@@ -216,28 +226,38 @@ public class ImageProcessing {
 		}
 
 		// WHITE
-		if ((d.R+d.G+d.B) > 700) {
+		if ((d.R+d.G+d.B) > 650) {
 			return "white";
 		}
 
 		// BLACK
-		if ((d.R+d.G+d.B) < 50) {
+		if ((d.R+d.G+d.B) < 80) {
 			return "black";
 		}
 
 		// GRAY
-		if ( (Math.abs(d.R-d.G) < 25) && (Math.abs(d.R-d.B) < 25) ) {
+		if ( (Math.abs(d.R-d.G) < 15) && (Math.abs(d.R-d.B) < 15) ) {
 			return "gray";
 		}
 		
 		// PURPLE
-		// Purple is g < r < b
-		if (d.G < d.R) {
-			if (d.R < d.B) {
-				return "purple";
-			}
+		// Purple is g < r < b or g < b < r
+		if ( ((d.G < d.R) && (d.R < d.B)) || ((d.G < d.B) && (d.B < d.R)) ) {
+			return "purple";
 		}
 		
+		// YELLOW
+		// r and g are close, blue is much lower. r must be high.
+		if ( ((d.R-d.G) < 30) && ((d.G-d.B) > 80) && (d.R > 190) ) {
+			return "yellow";
+		}
+		
+		// orange
+		// stairstep r > g > b, diff r:g = diff g:b +- n
+		// && r > b
+		if ((((d.R-d.G) - (d.G-d.B)) < 20) && d.R > d.B) {
+			return "orange";
+		}
 		
 //		// Look for purple - R and B are high, G is low
 //		// R::B diff is low
@@ -264,6 +284,8 @@ public class ImageProcessing {
 		return baseC;
 	}
 
+	
+	
 	public float hue_2_rgb(float v1, float v2, float vh) {
 		if (vh < 0) {
 			vh += 1;

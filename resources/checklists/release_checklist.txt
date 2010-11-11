@@ -19,4 +19,7 @@
 	- upload apk
 	- publilsh
 6. Commit and push git. Tag with -m"TCT v0.3 - RELEASE 20101019"
+	$ git tag 'TCT_v0.4_RELEASE_20101109'
+	$ git push origin master
+	$ git push origin TCT_v0.4_RELEASE_20101109
 

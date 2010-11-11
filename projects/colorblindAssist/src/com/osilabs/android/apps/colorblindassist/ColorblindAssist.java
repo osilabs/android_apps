@@ -207,29 +207,31 @@ public class ColorblindAssist extends Activity {
 			
 			int line_len = (w/20); //30;
 			int corner_padding = 20;
-			int cirele_radius = 4;
+			int circle_radius = 10;
 
 			int center_x = (int) w / 2;
 			int center_y = (int) h / 2;
 
 			try{
+				int inverseColor = Color.rgb(255 - d.R, 255 - d.G, 255 - d.B);
+				
 				// Text
 				Paint pInverseColor = new Paint();
-				pInverseColor.setColor(Color.rgb(255 - d.R, 255 - d.G, 255 - d.B));
+				pInverseColor.setColor(inverseColor);
 				
 				Paint paint = new Paint();
-				paint.setStyle(Paint.Style.FILL);
-				paint.setColor(Color.YELLOW);
+				paint.setStyle(Paint.Style.STROKE);
+				paint.setColor(inverseColor);
 				canvas.drawText("osilabs.com", 15, h - 8, paint);
 				
-				canvas.drawCircle(center_x, center_y, cirele_radius, paint);
+				canvas.drawCircle(center_x, center_y, circle_radius, paint);
 				
 				// The HUD is the heads up display and has the meters in it.
 				int hud_width  = 322;
-				int hud_height = 300;
+				int hud_height = 333;
 				int hud_bl_x   = 400; // bottom left x and y
-				int hud_bl_y   = 355; 
-				int meter_width= 130;
+				int hud_bl_y   = 395; 
+				int meter_width= 125;
 				int meter_gap  = 8;
 				
 				// For the RGB texts
@@ -269,6 +271,7 @@ public class ColorblindAssist extends Activity {
 
 
 				// crosshairs
+				paint.setColor(inverseColor);
 				canvas.drawLine(center_x, center_y, center_x - line_len, center_y,
 						paint); // left
 				canvas.drawLine(center_x, center_y, center_x, center_y + line_len,
@@ -515,7 +518,7 @@ public class ColorblindAssist extends Activity {
 				//d.hexval = Integer.toHexString(iRGB[0]).substring(2).toUpperCase();
 				
 				// Set color
-				d.colorname = ImageProcessing. getColorNameFromRGB(d);
+				d.colorname = ImageProcessing.getColorNameFromRGB(d);
 				d.hexval = "";
 
 				// Make display string for previewer
@@ -525,7 +528,8 @@ public class ColorblindAssist extends Activity {
 				// Set drop color
 				TextView tv = (TextView) findViewById(R.id.preview_text);
 				//tv.setText("| " + d.colorname);
-				tv.setBackgroundColor(iRGB[0]);
+				//tv.setBackgroundColor(iRGB[0]);
+				tv.setBackgroundColor(Color.BLACK);
 
 //				// Set capture button color
 //				captureButton = (Button) findViewById(R.id.capture_button);
@@ -533,7 +537,7 @@ public class ColorblindAssist extends Activity {
 //				//captureButton.setError("error x14d");
 //				captureButton.setHapticFeedbackEnabled(true);
 				TextView bl_tv = (TextView) findViewById(R.id.color_value_display);
-				bl_tv.setText("   " + d.colorname );
+				bl_tv.setText(" " + d.colorname );
 			}
 		}
 

@@ -20,6 +20,10 @@
 				android:textSize="24sp" 
 				android:id="@+id/bl_display"/>
 				
+			<TextView android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:text="@string/color_value"
+				android:textSize="70dip" android:id="@+id/color_value_display"/>
+
 			<TextView 
 				android:text="" 
 				android:background="#000000"
@@ -28,9 +32,6 @@
 				android:layout_weight="1"
 				android:id="@+id/preview_text"/>
 				
-			<TextView android:layout_width="fill_parent"
-				android:layout_height="wrap_content" android:text="@string/color_value"
-				android:textSize="24sp" android:id="@+id/color_value_display"/>
 
 <!--			<Button -->
 <!--				android:layout_width="fill_parent"-->

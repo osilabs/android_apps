@@ -1,0 +1,45 @@
+// -------------------------------------------------------------
+// TODO v0.1
+//
+
+//
+// END TODO v0.1
+// -------------------------------------------------------------
+
+// ** b4 v0.0.1
+
+* Rename to Super ColorVision
+
+* Move color bars to bottom of screen
+
+* Fix hardcoded coordinates for placing graphs
+
+* Fix freeze when you leave then comeback.
+
+* Tweak the color so they are more right-ish.
+
+* Unit tests for colors
+
+* When you start, the word 'Calibtating...' is too big.
+
+
+// ** live dropper todo
+
+* Different layout methods for displaying the color text.
+	- Grid : color words always show in same place on grid. so position of word indicates the color.
+
+* Rename it to ColorVisionAssist
+
+* Choose different threashold modes. course = only r g and b diffs, fine uses more colors.
+
+* Choose different colorblindness orientations. Red/green, pink/blue.
+
+* 
+
+// ** Paid version
+
+* Vertical orientation option
+
+* left and right handedness options.  Make the gray bar with the appname vertical on the side, with the appname text sideways near top and an icon on the bottom of this vertical bar you hit with your l or r thumb depending on your choice. The icon launches settings configuration.  The bar is like a vertical launcher bar.
+
+
