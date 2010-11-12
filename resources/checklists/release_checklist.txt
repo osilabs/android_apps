@@ -3,13 +3,13 @@
 
 1. update versions in manifest (+1 because updating code and will need to recommit)
 2. Update Websites
-	- paste about.php pages and apps/index.php in wordprocessor and check spelling
 	- osilabs/m/mobilecontent/{livedropper,tctraffic,...}/about.php
 	- osilabs/m/apps/index.php (work on tindex.php version then make live)
+	- paste about.php pages and apps/index.php in wordprocessor and check spelling
 3. Code:
 	- comment out logging code
 	- put nice toast messages in exception handlers
-4. compile live version of apk
+4. compile "export" live version of apk
 	- name: theappname-0.2-prod.apk
 	- verify works on phone
 5. app market site
