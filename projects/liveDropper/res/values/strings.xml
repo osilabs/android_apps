@@ -5,6 +5,8 @@
     <string name="app_name">Liv<b>e</b> Droppe<b>r</b></string>
     <string name="sample_title">Your drop</string>
     <string name="sample_button">More...</string>
+    <string name="menu_help">Help</string>
+    <string name="menu_quit">Quit</string>
     <string name="drop_color_chosen_message">
     	Your drop.\n
     	Hope you like it.\n 

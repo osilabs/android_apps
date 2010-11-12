@@ -31,6 +31,7 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -211,7 +212,7 @@ public class LiveDropper extends Activity {
 			
 			int line_len = (w/20); //30;
 			int corner_padding = 20;
-			int cirele_radius = 4;
+			int cirele_radius = 8;
 
 			int center_x = (int) w / 2;
 			int center_y = (int) h / 2;
@@ -219,7 +220,7 @@ public class LiveDropper extends Activity {
 			try{
 					// Text
 					Paint paint = new Paint();
-					paint.setStyle(Paint.Style.FILL);
+					paint.setStyle(Paint.Style.STROKE);
 					paint.setColor(Color.RED);
 					canvas.drawText("osilabs.com", 15, h - 8, paint);
 
@@ -525,13 +526,13 @@ public class LiveDropper extends Activity {
 //		}
 	}
 	
-	
-	
 	/* Creates the menu items */
 	public boolean onCreateOptionsMenu(Menu menu) {
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.options, menu);
 	    //menu.add(0, MENU_PREFS, 0, "Preferences");
-	    menu.add(0, MENU_ABOUT, 0, "About");
-	    menu.add(0, MENU_QUIT, 0, "Quit");
+	 //   menu.add(0, MENU_ABOUT, 0, "About");
+	//    menu.add(0, MENU_QUIT, 0, "Quit");
 	    
 	    return true;
 	}
@@ -549,7 +550,7 @@ public class LiveDropper extends Activity {
 		    	//this.startActivityForResult(intent, 0);
 		    	return true;
 
-			case MENU_ABOUT:
+			case R.id.menu_help:
 		        //
 		        // Set locals with manifest variables
 		        //
@@ -577,7 +578,7 @@ public class LiveDropper extends Activity {
 		        alertDialog.show();
 		    	return true;
 
-		    case MENU_QUIT:
+		    case R.id.menu_quit:
 		        finish();
 		        return true;
 	    }

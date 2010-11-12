@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_help"
+          android:icon="@drawable/ic_menu_questionmark"
+          android:title="@string/menu_help" />
+    <item android:id="@+id/menu_quit"
+          android:icon="@drawable/ic_menu_x"
+          android:title="@string/menu_quit" />
+</menu>
