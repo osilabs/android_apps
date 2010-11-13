@@ -31,6 +31,28 @@ Graphic Designers, web designers, forensics, colorblind
 
 
 
+// *** Fixing the black screen on cheryl's moto milestone
+
+* I *think* this is caused by the Droid/Milestone not liking the default 
+previewFrameRate that Android sets. Try setting that to one of the values 
+specified by getSupportedPreviewFrameRates(). 
+
+* You need to call setPreviewDisplay in surfaceChanged. 
+And the app shouldn't call setPreviewSize with arbitrary numbers because not 
+every device support 240x160. Use getPreviewSize in 1.6 or use 
+getSupportedPreviewSizes in 2.0.
+
+* Yes. You still need to do that. If applications do not call 
+setPreviewDisplay, camera drivers may not start the preview even if 
+startPreview is called. Ex: the current implementation on Droid. 
+
+
+
+// *** Ideas
+
+* 
+
+
 // ** live dropper todo
 
 * Need feedback util. Make a box on web site, write to db table.

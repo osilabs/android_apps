@@ -23,6 +23,14 @@
 
 // Ideas
 
+* Your route is figured out from the cameras you chose. They are used to try to tell you if you should avoid that route today. Maybe tap the route icon and up comes a message tailored to you avoiding or taking your route.
+
+* Tap a camera shot, context menu pops up offers 1. next cameras north or west
+
+* Use lat and long on incident feed xml to give realtime update of distance you are from the incident.
+
+* Text to speach will read out loud the Incident Feed.  Does all on the page in succession.
+
 * Incident list screen has cameras in xml feed. Use those to pull up a view of the accident
 
 * Tilt screen to switch view.  configure what view you get when vert and horriz. Default is 'traffic' for vert, camera for horriz.
@@ -30,8 +38,6 @@
 * Save settings: choose and save default camera shot for quick view
 
 * On incident map, have a setting that says what one tap of an incident icon does. 1. to incident description or 2. Nearest camera. Long press offers either.
-
-* add a button for my saved default camera shot
 
 // todo
 
