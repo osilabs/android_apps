@@ -1,10 +1,10 @@
 // Release 0.4
 
-* FEATURES OF 0.4
-* Much faster switching between views
-
-
 // Release 0.5
+
+* Lots of hardcoded strings to move into Const's
+
+* When I have launched the police scanner, whenever the app restarts it goes to the police scanner and skips tctraffic.
 
 * Toast messages in try catach
 

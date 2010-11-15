@@ -3,4 +3,4 @@
 *~
 *.dex
 *.ap_
-*\/R.java
+*/R.java
