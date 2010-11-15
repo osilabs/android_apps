@@ -185,7 +185,7 @@ public class SuperTCT extends Activity {
 			public void onClick(View v) {
 				
 				boolean scannerAvailable = isIntentAvailable(SuperTCT.this,
-		    		"net.gordonedwards.scannerradio.intent.action.ACTION_PLAY_SCANNERx");
+		    		"net.gordonedwards.scannerradio.intent.action.ACTION_PLAY_SCANNER");
 				
 				if (scannerAvailable) {
 	    			Intent intent = new Intent("net.gordonedwards.scannerradio.intent.action.ACTION_PLAY_SCANNER");
