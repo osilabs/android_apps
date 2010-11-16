@@ -36,6 +36,7 @@ import android.os.Handler;
 //import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -70,7 +71,6 @@ public class SuperTCT extends Activity {
 	protected static final String MNDOT_MOBILE_URL = "http://www.dot.state.mn.us/tmc/trafficinfo/mobile/freeways.html";
 	//protected static final String TRAFFIC_MAP_URL = "http://osilabs.com/m/mobilecontent/tctraffic/trafficmap.php";
 	//protected static final String INCIDENT_FEED = "http://www.dot.state.mn.us/tmc/trafficinfo/incidents.xml";
-
 	
 	private static final String TAG = "** osilabs.com **";
 	
@@ -95,6 +95,7 @@ public class SuperTCT extends Activity {
 	private static final int INDEX_INCIDENTLIST         = 3;
 	private static final int INDEX_CAMERAS              = 4;
 
+	protected static final String NAMESPACE = "com.osilabs.android.apps.supertct";
 	private static final String[] 
         INDEX_STRINGS = {"Traffic", "Congestion", "Alert Map", "Incident Report", "Camera"};
 
@@ -105,22 +106,24 @@ public class SuperTCT extends Activity {
 	// Prefs
 	protected static int PREF_CAMERA_1;
 	
-	// a versioncode will be appended to this for it works with the current version
-	protected static String MOBILECONTENT_URL_PREFIX = "http://osilabs.com/m/mobilecontent/tctraffic";
-	protected static String MOBILECONTENT_URL_ABOUT = "http://osilabs.com/m/mobilecontent/about/tct_about.php";
 	protected static String CURRENT_WEBVIEW_URL = "";
 	protected static String TRAFFIC_MAP_URL = "";
+	protected static String AD_BANNER_URL = "";
+
 	// Will need to up this number if more indexes are needed.
 	protected static String[] VIEW_URLS = new String[8]; 
 	protected static int CURRENT_VIEW_INDEX = 0;
+	protected static String MOBILECONTENT_URL_PREFIX = "http://osilabs.com/m/mobilecontent/tctraffic";
+	protected static String MOBILECONTENT_URL_ABOUT = "http://osilabs.com/m/mobilecontent/about/tct_about.php";
 
 	protected static PackageInfo pInfo = null;
 	protected static Spinner spViewChoices;
+	protected static WebView wvAd;
 	protected static WebView wvMain;
 
 	// Navbar components
-	protected ImageView launcherScannerPolice;
-	protected ImageView launcherScannerWeather;
+	protected ImageView refresh;
+	//protected ImageView launcherScannerWeather;
 	protected TextView tvSpinner;
 	
 	// For posting runnables
@@ -130,6 +133,8 @@ public class SuperTCT extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        
+        Log.d(TAG, "onCreate");
 
         //
         // Set globals
@@ -137,7 +142,7 @@ public class SuperTCT extends Activity {
         
         // Read in manifest
 		try {
-			pInfo = getPackageManager().getPackageInfo("com.osilabs.android.apps.supertct", PackageManager.GET_META_DATA);
+			pInfo = getPackageManager().getPackageInfo(NAMESPACE, PackageManager.GET_META_DATA);
 			//version = pInfo.versionName;
 		} catch (NameNotFoundException e) {
 			e.printStackTrace();
@@ -146,6 +151,7 @@ public class SuperTCT extends Activity {
 
 		// Set URLs with versioncode
 		TRAFFIC_MAP_URL = MOBILECONTENT_URL_PREFIX + pInfo.versionCode + "/trafficmap.php";
+		AD_BANNER_URL = MOBILECONTENT_URL_PREFIX + pInfo.versionCode + "/adbanner.php";
 
 		// The order of these needs to match the order of the VIEW_INDEXes. It is used to determine
 		//  which webview URI to use for the view.
@@ -162,7 +168,7 @@ public class SuperTCT extends Activity {
 		// Restore view
         //
 		SharedPreferences mySharedPreferences = getSharedPreferences(
-                "com.osilabs.android.apps.supertct", Activity.MODE_PRIVATE);
+				NAMESPACE, Activity.MODE_PRIVATE);
         CURRENT_VIEW_INDEX = mySharedPreferences.getInt("pref_current_view", 2);
         CURRENT_WEBVIEW_URL = VIEW_URLS[CURRENT_VIEW_INDEX];
         
@@ -174,71 +180,53 @@ public class SuperTCT extends Activity {
     public void onStart() {
     	super.onStart();
     	
-	    //
+        Log.d(TAG, "onStart");
+
+        //
 	    // Set up Navigation Bar
 	    //
 	    
-	    // Police Scanner
-	    launcherScannerPolice = (ImageView) findViewById(R.id.launcher_scanner_police);
-	    launcherScannerPolice.setOnClickListener(new View.OnClickListener() {
+	    // Refresh
+	    refresh = (ImageView) findViewById(R.id.navbar_refresh);
+	    refresh.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				
-				boolean scannerAvailable = isIntentAvailable(SuperTCT.this,
-		    		"net.gordonedwards.scannerradio.intent.action.ACTION_PLAY_SCANNER");
-				
-				if (scannerAvailable) {
-	    			Intent intent = new Intent("net.gordonedwards.scannerradio.intent.action.ACTION_PLAY_SCANNER");
-	    			intent.putExtra("node", SCAN_NODE_POLICE);
-	    			startActivity(intent);
-				} else {
-				    AlertDialog scannerAlert = new AlertDialog.Builder(SuperTCT.this).create();
-			        scannerAlert.setTitle("Super Twin Cities Traffic");
-			        scannerAlert.setMessage("To use the police scanner, install the \"Scanner Radio\" app from the market.");
-			        scannerAlert.setIcon(R.drawable.ic_launcher);
-			        scannerAlert.setButton("Get plugin to use the scanner", new DialogInterface.OnClickListener() {
-			        	public void onClick(DialogInterface dialog, int which) {
-			    			Intent intent = new Intent(
-			    					Intent.ACTION_VIEW,
-			    					Uri.parse("market://details?id=com.scannerradio"));
-			    			startActivity(intent);
-			            } 
-			        });
-			        scannerAlert.show();
-				}
+				// FIXME - this same call happens twice, move to lib
+		    	Toast.makeText(getApplicationContext(), "Refreshing", Toast.LENGTH_SHORT).show();
+		    	wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_VIEW_INDEX+"&camera="+PREF_CAMERA_1);
 			}
 		});
-	    
-		// Weather Scanner
-	    launcherScannerWeather = (ImageView) findViewById(R.id.launcher_scanner_weather);
-	    launcherScannerWeather.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				
-				boolean scannerAvailable = isIntentAvailable(SuperTCT.this,
-		    		"net.gordonedwards.scannerradio.intent.action.ACTION_PLAY_SCANNERx");
-				
-				if (scannerAvailable) {
-	    			Intent intent = new Intent("net.gordonedwards.scannerradio.intent.action.ACTION_PLAY_SCANNER");
-	    			intent.putExtra("node", SCAN_NODE_WEATHER);
-	    			startActivity(intent);
-				} else {
-				    AlertDialog scannerAlert = new AlertDialog.Builder(SuperTCT.this).create();
-			        scannerAlert.setTitle("Super Twin Cities Traffic");
-			        scannerAlert.setMessage("To use the Weather Radio, install the \"Scanner Radio\" app from market://details?id=net.gordonedwards.scannerradio");
-			        scannerAlert.setIcon(R.drawable.ic_launcher);
-			        scannerAlert.setButton("Get plugin to use the scanner", new DialogInterface.OnClickListener() {
-			        	public void onClick(DialogInterface dialog, int which) {
-			    			Intent intent = new Intent(
-			    					Intent.ACTION_VIEW,
-			    					Uri.parse("market://details?id=com.scannerradio"));
-			    			startActivity(intent);
-			            } 
-			        });
-			        scannerAlert.show();
-				}
-			}
-		});
+//	    
+//		// Weather Scanner
+//	    launcherScannerWeather = (ImageView) findViewById(R.id.launcher_scanner_weather);
+//	    launcherScannerWeather.setOnClickListener(new View.OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				
+//				boolean scannerAvailable = isIntentAvailable(SuperTCT.this,
+//		    		"net.gordonedwards.scannerradio.intent.action.ACTION_PLAY_SCANNERx");
+//				
+//				if (scannerAvailable) {
+//	    			Intent intent = new Intent("net.gordonedwards.scannerradio.intent.action.ACTION_PLAY_SCANNER");
+//	    			intent.putExtra("node", SCAN_NODE_WEATHER);
+//	    			startActivity(intent);
+//				} else {
+//				    AlertDialog scannerAlert = new AlertDialog.Builder(SuperTCT.this).create();
+//			        scannerAlert.setTitle("Super Twin Cities Traffic");
+//			        scannerAlert.setMessage("To use the Weather Radio, install the \"Scanner Radio\" app from market://details?id=net.gordonedwards.scannerradio");
+//			        scannerAlert.setIcon(R.drawable.ic_launcher);
+//			        scannerAlert.setButton("Get plugin to use the scanner", new DialogInterface.OnClickListener() {
+//			        	public void onClick(DialogInterface dialog, int which) {
+//			    			Intent intent = new Intent(
+//			    					Intent.ACTION_VIEW,
+//			    					Uri.parse("market://details?id=com.scannerradio"));
+//			    			startActivity(intent);
+//			            } 
+//			        });
+//			        scannerAlert.show();
+//				}
+//			}
+//		});
 
 	    //
 		// Spinner Choices
@@ -264,7 +252,7 @@ public class SuperTCT extends Activity {
 		});
 
 		//
-		// Web View
+		// Main Web View
 		//
 		wvMain = (WebView) findViewById(R.id.mainWebView);
         WebSettings webSettings = wvMain.getSettings();
@@ -278,13 +266,19 @@ public class SuperTCT extends Activity {
         wvMain.setWebChromeClient(new WebChromeClient());
         // Enable jsi
         wvMain.addJavascriptInterface(new JsiJavaScriptInterface(this), "jsi");
-        
     	// It's going to take a second to load
 		Toast.makeText(this, "Loading...", Toast.LENGTH_LONG).show();
 		// Load the webview
     	wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_VIEW_INDEX+"&camera="+PREF_CAMERA_1);
-    	
-    	
+
+		//
+		// Ad banner Web View
+		//
+		wvAd = (WebView) findViewById(R.id.adWebView);
+        WebSettings awebSettings = wvAd.getSettings();
+        awebSettings.setJavaScriptEnabled(true);
+        awebSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+    	wvAd.loadUrl(AD_BANNER_URL);
     }
 
 //    public void onConfigurationChanged(Configuration newConfig) {
@@ -452,37 +446,69 @@ public class SuperTCT extends Activity {
 	
 	/* Creates the menu items */
 	public boolean onCreateOptionsMenu(Menu menu) {
-	    menu.add(0, MENU_SCANNER, 0, "Scanner");
-	    menu.add(0, MENU_REFRESH, 0, "Refresh");
-	    // menu.add(0, MENU_MNDOT_MOBILE_FREEWAYS, 0, "Cameras");
-	    // menu.add(0, MENU_PREFS, 0, "Preferences");
-	    menu.add(0, MENU_ABOUT, 0, "About");
-	    menu.add(0, MENU_QUIT, 0, "Quit");
+		
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.options, menu);
 	    
 	    return true;
 	}
 	
 	/* Handles item selections */
 	public boolean onOptionsItemSelected(MenuItem item) {
-	    switch (item.getItemId()) {
+		// FIXME - move to top
+		boolean scannerAvailable = isIntentAvailable(SuperTCT.this,
+    		"net.gordonedwards.scannerradio.intent.action.ACTION_PLAY_SCANNER");
 
-		case MENU_SCANNER:
+		switch (item.getItemId()) {
+
+		case R.id.menu_scanner_police:
 			
-	        AlertDialog scannerAlert = new AlertDialog.Builder(this).create();
-	        scannerAlert.setTitle("Super Twin Cities Traffic");
-	        scannerAlert.setMessage("Choose a channel");
-	        scannerAlert.setIcon(R.drawable.ic_launcher);
-	        scannerAlert.setButton("Weather", new DialogInterface.OnClickListener() {
-	        	public void onClick(DialogInterface dialog, int which) {
-	    			Intent intent = new Intent("net.gordonedwards.scannerradio.intent.action.ACTION_PLAY_SCANNER");
-	    			intent.putExtra("node", SCAN_NODE_WEATHER);
-	    			startActivity(intent);
-	            } 
-	        });
-	        scannerAlert.show();
+			if (scannerAvailable) {
+    			Intent intent = new Intent("net.gordonedwards.scannerradio.intent.action.ACTION_PLAY_SCANNER");
+    			intent.putExtra("node", SCAN_NODE_POLICE);
+    			startActivity(intent);
+			} else {
+			    AlertDialog scannerAlert = new AlertDialog.Builder(SuperTCT.this).create();
+		        scannerAlert.setTitle("Super Twin Cities Traffic");
+		        scannerAlert.setMessage("To use this feature, install the \"Scanner Radio\" app from market");
+		        scannerAlert.setIcon(R.drawable.ic_launcher);
+		        scannerAlert.setButton("Get plugin to use the scanner", new DialogInterface.OnClickListener() {
+		        	public void onClick(DialogInterface dialog, int which) {
+		    			Intent intent = new Intent(
+		    					Intent.ACTION_VIEW,
+		    					Uri.parse("market://details?id=com.scannerradio"));
+		    			startActivity(intent);
+		            } 
+		        });
+		        scannerAlert.show();
+			}
+
 	    	return true;
 
-		case MENU_REFRESH:
+
+		case R.id.menu_scanner_weather:
+			if (scannerAvailable) {
+    			Intent intent = new Intent("net.gordonedwards.scannerradio.intent.action.ACTION_PLAY_SCANNER");
+    			intent.putExtra("node", SCAN_NODE_WEATHER);
+    			startActivity(intent);
+			} else {
+			    AlertDialog scannerAlert = new AlertDialog.Builder(SuperTCT.this).create();
+		        scannerAlert.setTitle("Super Twin Cities Traffic");
+		        scannerAlert.setMessage("To use the Weather Radio, install the \"Scanner Radio\" app from market");
+		        scannerAlert.setIcon(R.drawable.ic_launcher);
+		        scannerAlert.setButton("Get plugin to use the scanner", new DialogInterface.OnClickListener() {
+		        	public void onClick(DialogInterface dialog, int which) {
+		    			Intent intent = new Intent(
+		    					Intent.ACTION_VIEW,
+		    					Uri.parse("market://details?id=com.scannerradio"));
+		    			startActivity(intent);
+		            } 
+		        });
+		        scannerAlert.show();
+			}
+	    	return true;
+
+		case R.id.menu_refresh:
 		    	Toast.makeText(getApplicationContext(), "Refreshing", Toast.LENGTH_SHORT).show();
 		    	wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_VIEW_INDEX+"&camera="+PREF_CAMERA_1);
 		        return true;
@@ -501,7 +527,7 @@ public class SuperTCT extends Activity {
 //		    	this.startActivityForResult(intent, 0);
 //		    	return true;
 
-			case MENU_ABOUT:
+			case R.id.menu_help:
 		        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 		        alertDialog.setTitle("Twin Cities Traffic");
 		        alertDialog.setMessage("You are running version " + pInfo.versionName);
@@ -516,7 +542,7 @@ public class SuperTCT extends Activity {
 		        alertDialog.show();
 		    	return true;
 
-		    case MENU_QUIT:
+		    case R.id.menu_exit:
 		        finish();
 		        return true;
 	    }
@@ -527,16 +553,15 @@ public class SuperTCT extends Activity {
 		// Save Settings
         //Toast.makeText(getApplicationContext(), "set cur view: " + viewIndex, Toast.LENGTH_SHORT).show();
     	SharedPreferences prefs 
-			= getSharedPreferences("com.osilabs.android.apps", Activity.MODE_PRIVATE);
+			= getSharedPreferences(NAMESPACE, Activity.MODE_PRIVATE);
 	    SharedPreferences.Editor editor = prefs.edit();
 	    editor.putInt("pref_current_view", viewIndex);
 	    editor.commit();
 
 	    // Set text of spinner
 		tvSpinner = (TextView) findViewById(R.id.view_spinner);
-		tvSpinner.setText(INDEX_STRINGS[ viewIndex ] + " ^");
+		tvSpinner.setText(INDEX_STRINGS[ viewIndex ]);
 
-	    
 	    return true;
 	}
 }
