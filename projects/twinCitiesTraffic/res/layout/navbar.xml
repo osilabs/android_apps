@@ -28,15 +28,9 @@
 	 			android:src="@drawable/ic_more"
 				android:layout_width="wrap_content" 
 				android:layout_height="fill_parent"
-				android:maxHeight="25dip" />
-		  
-	
-	<!--	  <ImageView	android:id="@+id/launcher_scanner_weather"-->
-	<!--	  				android:src="@drawable/ic_menu_x"-->
-	<!--					android:layout_width="wrap_content" -->
-	<!--					android:layout_height="wrap_content"/>-->
+				android:maxHeight="25dip"
+				android:layout_marginRight="4dip" />
 				
-			
 			<TextView 
 				android:id="@+id/view_spinner"
 				android:clickable="true"

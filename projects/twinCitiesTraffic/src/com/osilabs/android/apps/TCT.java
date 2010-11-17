@@ -105,6 +105,7 @@ public class TCT extends Activity {
 
 	// Navbar components
 	protected ImageView refresh;
+	protected ImageView ivMore;
 	//protected ImageView launcherScannerWeather;
 	protected TextView tvSpinner;
 	
@@ -176,37 +177,6 @@ public class TCT extends Activity {
 				refreshViews();
 			}
 		});
-//	    
-//		// Weather Scanner
-//	    launcherScannerWeather = (ImageView) findViewById(R.id.launcher_scanner_weather);
-//	    launcherScannerWeather.setOnClickListener(new View.OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				
-//				boolean scannerAvailable = isIntentAvailable(TCT.this,
-//		    		SCANNER_RADIO_NAMESPACE + ".intent.action." + SCANNER_RADIO_ACTION");
-//				
-//				if (scannerAvailable) {
-//	    			Intent intent = new Intent(SCANNER_RADIO_NAMESPACE + ".intent.action." + SCANNER_RADIO_ACTION);
-//	    			intent.putExtra("node", SCAN_NODE_WEATHER2);
-//	    			startActivity(intent);
-//				} else {
-//				    AlertDialog scannerAlert = new AlertDialog.Builder(TCT.this).create();
-//			        scannerAlert.setTitle("Super Twin Cities Traffic");
-//			        scannerAlert.setMessage("To use the Weather Radio, install the \"Scanner Radio\" app from market://details?id=net.gordonedwards.scannerradio");
-//			        scannerAlert.setIcon(R.drawable.ic_launcher);
-//			        scannerAlert.setButton("Get plugin to use the scanner", new DialogInterface.OnClickListener() {
-//			        	public void onClick(DialogInterface dialog, int which) {
-//			    			Intent intent = new Intent(
-//			    					Intent.ACTION_VIEW,
-//			    					Uri.parse("market://details?id=com.scannerradio"));
-//			    			startActivity(intent);
-//			            } 
-//			        });
-//			        scannerAlert.show();
-//				}
-//			}
-//		});
 
 	    //
 		// Spinner Choices
@@ -219,6 +189,17 @@ public class TCT extends Activity {
 		spViewChoices.setAdapter(adapter);
 		spViewChoices.setHapticFeedbackEnabled(true); // fixme - doesn't seem to work
 		spViewChoices.setSelection(CURRENT_VIEW_INDEX);
+		
+	    //
+		// View Choice Expand Icon
+	    //
+		ivMore = (ImageView) findViewById(R.id.launcher_more);
+		ivMore.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				spViewChoices.performClick();
+			}
+		});
 
 	    //
 		// View Choice Spinner
