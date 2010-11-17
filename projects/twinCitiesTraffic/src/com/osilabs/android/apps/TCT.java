@@ -173,9 +173,7 @@ public class TCT extends Activity {
 	    refresh.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// FIXME - this same call happens twice, move to lib
-		    	Toast.makeText(getApplicationContext(), "Refreshing", Toast.LENGTH_SHORT).show();
-		    	wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_VIEW_INDEX+"&camera="+PREF_CAMERA_1);
+				refreshViews();
 			}
 		});
 //	    
@@ -495,9 +493,8 @@ public class TCT extends Activity {
 	    	return true;
 
 		case R.id.menu_refresh:
-		    	Toast.makeText(getApplicationContext(), "Refreshing", Toast.LENGTH_SHORT).show();
-		    	wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_VIEW_INDEX+"&camera="+PREF_CAMERA_1);
-		        return true;
+			refreshViews();
+			return true;
 		        
 //		    case MENU_MNDOT_MOBILE_FREEWAYS:
 //		    	setCurrentView(INDEX_CAMERAS);
@@ -549,5 +546,13 @@ public class TCT extends Activity {
 		tvSpinner.setText(INDEX_STRINGS[ viewIndex ]);
 
 	    return true;
+	}
+	
+	public void refreshViews() {
+		Toast.makeText(getApplicationContext(), "Refreshing", Toast.LENGTH_SHORT).show();
+		// Refresh main content webview
+		wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_VIEW_INDEX+"&camera="+PREF_CAMERA_1);
+		// Refresh banner webview
+		wvAd.loadUrl(AD_BANNER_URL);
 	}
 }

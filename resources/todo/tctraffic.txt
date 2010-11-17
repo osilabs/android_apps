@@ -1,7 +1,8 @@
 
 // Release 0.5 
 
-* Custom 404 page for when the adbanner can't get it's content. This just happened and the ugly default could not find page page is just that.
+
+* When banner ad 404's no way to refresh it. Make refresh refresh that one too
 
 * Change colors of ads to match tct look and feel
 
@@ -13,6 +14,8 @@
 
 * Move text messages to file
 
+* Reload icon
+
 * make all icon versions for different densities
 
 * Add hepatic feedback
@@ -23,6 +26,8 @@
 
 
 // Release 0.6
+
+* Custom 404 page for when the adbanner can't get it's content. This just happened and the ugly default could not find page page is just that. 
 
 * Context menus when you click the maps (scanner, phone numbers, refresh)
 
