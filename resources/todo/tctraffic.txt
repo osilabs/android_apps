@@ -1,15 +1,3 @@
-
-// Release 0.5 
-
-* Find fixmes, consolidated redundant code to fns/libs
-
-* Move text messages to file
-
-* make all icon versions for different densities
-
-
-
-
 // Release 0.6
 
 * Add hepatic feedback

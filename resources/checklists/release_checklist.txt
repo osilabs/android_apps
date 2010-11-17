@@ -4,21 +4,20 @@
 1. update versions in manifest (+1 because updating code and will need to recommit)
 2. Update Websites
 	- osilabs/m/mobilecontent/{livedropper,tctraffic,...}/about.php
-	- osilabs/m/apps/index.php (work on tindex.php version then make live)
 	- paste about.php pages and apps/index.php in wordprocessor and check spelling
 3. Code:
 	- comment out logging code
 	- put nice toast messages in exception handlers
-4. compile "export" live version of apk
+4. Screenshots
+5. compile "export" live version of apk
 	- name: theappname-0.2-prod.apk
 	- verify works on phone
-5. app market site
+6. app market site
 	- update description
 	- update the upgrade notes section
-	- update screenshots
 	- upload apk
 	- publilsh
-6. Commit and push git. Tag with -m"TCT v0.3 - RELEASE 20101019"
+7. Commit and push git. Tag with -m"TCT v0.3 - RELEASE 20101019"
 	$ git tag 'TCT_v0.4_RELEASE_20101109'
 	$ git push origin master
 	$ git push origin TCT_v0.4_RELEASE_20101109
