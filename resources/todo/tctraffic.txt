@@ -1,30 +1,23 @@
 
 // Release 0.5 
 
-* Put padding left on textview by expand icon
-
-* Uninstall scanner radio and test launchers
-
-* Add feedback tool
-
 * Find fixmes, consolidated redundant code to fns/libs
 
 * Move text messages to file
 
-* Reload icon
-
 * make all icon versions for different densities
 
-* Add hepatic feedback
-
-
-* Lots of hardcoded strings to move into Const's
 
 
 
 // Release 0.6
 
+* Add hepatic feedback
+
+* Use a more standard "Refresh" icon
+
 * When the "Oh No, the internet connectin ..." message comes up, instead, give a big retry icon and tell them to try again when they are near a connection.
+
 * Feedback tool
 // FIXME - check if intent exists
 Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);

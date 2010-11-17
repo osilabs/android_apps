@@ -503,7 +503,7 @@ public class TCT extends Activity {
 		} else {
 		    AlertDialog scannerAlert = new AlertDialog.Builder(TCT.this).create();
 	        scannerAlert.setTitle("Twin Cities Traffic");
-	        scannerAlert.setMessage("To use this feature, install the \"Scanner Radio\" app from market");
+	        scannerAlert.setMessage("To use this feature, install the \"Scanner Radio\" app from the market");
 	        scannerAlert.setIcon(R.drawable.ic_launcher);
 	        scannerAlert.setButton("Get the plugin", new DialogInterface.OnClickListener() {
 	        	public void onClick(DialogInterface dialog, int which) {
