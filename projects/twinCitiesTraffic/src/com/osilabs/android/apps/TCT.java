@@ -435,100 +435,54 @@ public class TCT extends Activity {
 	
 	/* Handles item selections */
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// FIXME - move to top
-		boolean scannerAvailable = isIntentAvailable(TCT.this,
-				SCANNER_RADIO_NAMESPACE + ".intent.action." + SCANNER_RADIO_ACTION);
-
 		switch (item.getItemId()) {
-
-		case R.id.menu_scanner_police:
-			
-			if (scannerAvailable) {
-    			Intent intent = new Intent(SCANNER_RADIO_NAMESPACE + ".intent.action." + SCANNER_RADIO_ACTION);
-    			intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
-    			intent.putExtra("node", SCAN_NODE_POLICE);
-    			startActivity(intent);
-			} else {
-			    AlertDialog scannerAlert = new AlertDialog.Builder(TCT.this).create();
-		        scannerAlert.setTitle("Super Twin Cities Traffic");
-		        scannerAlert.setMessage("To use this feature, install the \"Scanner Radio\" app from market");
-		        scannerAlert.setIcon(R.drawable.ic_launcher);
-		        scannerAlert.setButton("Get plugin to use the scanner", new DialogInterface.OnClickListener() {
-		        	public void onClick(DialogInterface dialog, int which) {
-		    			Intent intent = new Intent(
-		    					Intent.ACTION_VIEW,
-		    					Uri.parse("market://details?id=com.scannerradio"));
-		    			intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
-		    			startActivity(intent);
-		            } 
-		        });
-		        scannerAlert.show();
-			}
-
-	    	return true;
-
-
-		case R.id.menu_scanner_weather:
-			if (scannerAvailable) {
-    			Intent intent = new Intent(SCANNER_RADIO_NAMESPACE + ".intent.action." + SCANNER_RADIO_ACTION);
-    			intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
-    			intent.putExtra("node", SCAN_NODE_WEATHER2);
-    			startActivity(intent);
-			} else {
-			    AlertDialog scannerAlert = new AlertDialog.Builder(TCT.this).create();
-		        scannerAlert.setTitle("Super Twin Cities Traffic");
-		        scannerAlert.setMessage("To use the Weather Radio, install the \"Scanner Radio\" app from market");
-		        scannerAlert.setIcon(R.drawable.ic_launcher);
-		        scannerAlert.setButton("Get plugin to use the scanner", new DialogInterface.OnClickListener() {
-		        	public void onClick(DialogInterface dialog, int which) {
-		    			Intent intent = new Intent(
-		    					Intent.ACTION_VIEW,
-		    					Uri.parse("market://details?id=com.scannerradio"));
-		    			intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
-		    			startActivity(intent);
-		            } 
-		        });
-		        scannerAlert.show();
-			}
-	    	return true;
-
-		case R.id.menu_refresh:
-			refreshViews();
-			return true;
-		        
-//		    case MENU_MNDOT_MOBILE_FREEWAYS:
-//		    	setCurrentView(INDEX_CAMERAS);
-//		    	// CURRENT_WEBVIEW_URL = MNDOT_MOBILE_URL;
-//		    	// CURRENT_VIEW_INDEX  = INDEX_CAMERAS;
-//		    	wvMain.loadUrl(VIEW_URLS[INDEX_CAMERAS]);
-//	    		return true;
-//		        
-//		    case MENU_PREFS:
-//		    	//Toast.makeText(getApplicationContext(), "Prefs", Toast.LENGTH_SHORT).show();
-//		    	Intent intent = new Intent()
-//		    		.setClass(this, com.osilabs.android.apps.Prefs.class);
-//		    	this.startActivityForResult(intent, 0);
-//		    	return true;
-
-			case R.id.menu_help:
-		        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-		        alertDialog.setTitle("Twin Cities Traffic");
-		        alertDialog.setMessage("You are running version " + pInfo.versionName);
-		        alertDialog.setButton("More...", new DialogInterface.OnClickListener() {
-		        	public void onClick(DialogInterface dialog, int which) {
-		        		Intent mIntent = new Intent(Intent.ACTION_VIEW, 
-		        				Uri.parse(MOBILECONTENT_URL_ABOUT)); 
-        				startActivity(mIntent); 
-		            } 
-		        });
-		        alertDialog.setIcon(R.drawable.ic_launcher);
-		        alertDialog.show();
+			case R.id.menu_scanner_police:
+				launchScanner(SCAN_NODE_POLICE);
 		    	return true;
-
-		    case R.id.menu_exit:
-		        finish();
-		        return true;
+	
+			case R.id.menu_scanner_weather:
+				launchScanner(SCAN_NODE_WEATHER2);
+		    	return true;
+				
+			case R.id.menu_refresh:
+				refreshViews();
+				return true;
+			        
+	//		    case MENU_MNDOT_MOBILE_FREEWAYS:
+	//		    	setCurrentView(INDEX_CAMERAS);
+	//		    	// CURRENT_WEBVIEW_URL = MNDOT_MOBILE_URL;
+	//		    	// CURRENT_VIEW_INDEX  = INDEX_CAMERAS;
+	//		    	wvMain.loadUrl(VIEW_URLS[INDEX_CAMERAS]);
+	//	    		return true;
+	//		        
+	//		    case MENU_PREFS:
+	//		    	//Toast.makeText(getApplicationContext(), "Prefs", Toast.LENGTH_SHORT).show();
+	//		    	Intent intent = new Intent()
+	//		    		.setClass(this, com.osilabs.android.apps.Prefs.class);
+	//		    	this.startActivityForResult(intent, 0);
+	//		    	return true;
+	
+				case R.id.menu_help:
+					
+			        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+			        alertDialog.setTitle("Twin Cities Traffic");
+			        alertDialog.setMessage("You are running version " + pInfo.versionName);
+			        alertDialog.setButton("More...", new DialogInterface.OnClickListener() {
+			        	public void onClick(DialogInterface dialog, int which) {
+			        		Intent mIntent = new Intent(Intent.ACTION_VIEW, 
+			        				Uri.parse(MOBILECONTENT_URL_ABOUT)); 
+	        				startActivity(mIntent); 
+			            } 
+			        });
+			        alertDialog.setIcon(R.drawable.ic_launcher);
+			        alertDialog.show();
+			    	return true;
+	
+			    case R.id.menu_exit:
+			        finish();
+			        return true;
 	    }
+		
 	    return false;
 	}
 	
@@ -554,5 +508,33 @@ public class TCT extends Activity {
 		wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_VIEW_INDEX+"&camera="+PREF_CAMERA_1);
 		// Refresh banner webview
 		wvAd.loadUrl(AD_BANNER_URL);
+	}
+	
+	public void launchScanner(int which_scanner) {
+		boolean scannerAvailable = isIntentAvailable(TCT.this,
+				SCANNER_RADIO_NAMESPACE + ".intent.action." + SCANNER_RADIO_ACTION);
+
+		if (scannerAvailable) {
+			Intent intent = new Intent(SCANNER_RADIO_NAMESPACE + ".intent.action." + SCANNER_RADIO_ACTION);
+			intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
+			intent.putExtra("node", which_scanner);
+			startActivity(intent);
+		} else {
+		    AlertDialog scannerAlert = new AlertDialog.Builder(TCT.this).create();
+	        scannerAlert.setTitle("Twin Cities Traffic");
+	        scannerAlert.setMessage("To use this feature, install the \"Scanner Radio\" app from market");
+	        scannerAlert.setIcon(R.drawable.ic_launcher);
+	        scannerAlert.setButton("Get the plugin", new DialogInterface.OnClickListener() {
+	        	public void onClick(DialogInterface dialog, int which) {
+	    			Intent intent = new Intent(
+	    					Intent.ACTION_VIEW,
+	    					Uri.parse("market://details?id=com.scannerradio"));
+	    			intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
+	    			startActivity(intent);
+	            } 
+	        });
+	        scannerAlert.show();
+		}
+
 	}
 }

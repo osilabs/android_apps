@@ -1,12 +1,9 @@
 
 // Release 0.5 
 
+* Put padding left on textview by expand icon
 
-* When banner ad 404's no way to refresh it. Make refresh refresh that one too
-
-* Change colors of ads to match tct look and feel
-
-* Align lightning to right of navbar
+* Uninstall scanner radio and test launchers
 
 * Add feedback tool
 
@@ -26,6 +23,18 @@
 
 
 // Release 0.6
+
+* When the "Oh No, the internet connectin ..." message comes up, instead, give a big retry icon and tell them to try again when they are near a connection.
+* Feedback tool
+// FIXME - check if intent exists
+Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+emailIntent .setType("plain/text");
+emailIntent .setFlags(emailIntent.FLAG_ACTIVITY_NEW_TASK);
+emailIntent .putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"tct_app_feedback@osilabs.com"});
+emailIntent .putExtra(android.content.Intent.EXTRA_SUBJECT, "** TCT Feedback **");
+emailIntent .putExtra(android.content.Intent.EXTRA_TEXT, "Phone:xxx\nTCT Version:yyy\nAndroid Version:zzz\n\nMy Twin Cities Traffic Feedback:\n");
+getApplicationContext().startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+
 
 * Custom 404 page for when the adbanner can't get it's content. This just happened and the ugly default could not find page page is just that. 
 

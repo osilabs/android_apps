@@ -16,7 +16,7 @@
 	<WebView 
 		android:id="@+id/adWebView" 
 		android:layout_width="fill_parent"
-		android:layout_height="152dip"
+		android:layout_height="156dip"
 		android:layout_weight=".5"
 		android:layout_gravity="top"
 		android:scrollbars="none" />
