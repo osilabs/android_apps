@@ -11,10 +11,6 @@ import android.preference.PreferenceActivity;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.widget.Toast;
 
-/**
- * @author dezurik
- *
- */
 public class Prefs extends PreferenceActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
