@@ -67,6 +67,7 @@ public class TCT extends Activity {
 
 	private static final int SCAN_NODE_POLICE  = 16004; // FIXME - put these scanner values in an array. Use ./adb logcat |grep node to see the scanner ids
 	private static final int SCAN_NODE_WEATHER = 24058; 
+	private static final int SCAN_NODE_WEATHER2 = 19405; // Clearwater Weather Radio (WunderGround.com)
 
 	private static final int INDEX_TRAFFIC              = 0;
 	private static final int INDEX_CONGESTION           = 1;
@@ -189,7 +190,7 @@ public class TCT extends Activity {
 //				
 //				if (scannerAvailable) {
 //	    			Intent intent = new Intent(SCANNER_RADIO_NAMESPACE + ".intent.action." + SCANNER_RADIO_ACTION);
-//	    			intent.putExtra("node", SCAN_NODE_WEATHER);
+//	    			intent.putExtra("node", SCAN_NODE_WEATHER2);
 //	    			startActivity(intent);
 //				} else {
 //				    AlertDialog scannerAlert = new AlertDialog.Builder(TCT.this).create();
@@ -446,6 +447,7 @@ public class TCT extends Activity {
 			
 			if (scannerAvailable) {
     			Intent intent = new Intent(SCANNER_RADIO_NAMESPACE + ".intent.action." + SCANNER_RADIO_ACTION);
+    			intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
     			intent.putExtra("node", SCAN_NODE_POLICE);
     			startActivity(intent);
 			} else {
@@ -458,6 +460,7 @@ public class TCT extends Activity {
 		    			Intent intent = new Intent(
 		    					Intent.ACTION_VIEW,
 		    					Uri.parse("market://details?id=com.scannerradio"));
+		    			intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
 		    			startActivity(intent);
 		            } 
 		        });
@@ -470,7 +473,8 @@ public class TCT extends Activity {
 		case R.id.menu_scanner_weather:
 			if (scannerAvailable) {
     			Intent intent = new Intent(SCANNER_RADIO_NAMESPACE + ".intent.action." + SCANNER_RADIO_ACTION);
-    			intent.putExtra("node", SCAN_NODE_WEATHER);
+    			intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
+    			intent.putExtra("node", SCAN_NODE_WEATHER2);
     			startActivity(intent);
 			} else {
 			    AlertDialog scannerAlert = new AlertDialog.Builder(TCT.this).create();
@@ -482,6 +486,7 @@ public class TCT extends Activity {
 		    			Intent intent = new Intent(
 		    					Intent.ACTION_VIEW,
 		    					Uri.parse("market://details?id=com.scannerradio"));
+		    			intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
 		    			startActivity(intent);
 		            } 
 		        });

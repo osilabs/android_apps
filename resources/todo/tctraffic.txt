@@ -1,21 +1,32 @@
 
 // Release 0.5 
 
-* make all icon versions for different densities
-
-* Context menus when you click the maps (scanner, phone numbers, refresh)
-
-* Align lightning to right of navbar
-
-* loading icon should be lightning
+* Custom 404 page for when the adbanner can't get it's content. This just happened and the ugly default could not find page page is just that.
 
 * Change colors of ads to match tct look and feel
 
-* Custom 404 page for when the adbanner can't get it's content. This just happened and the ugly default could not find page page is just that.
+* Align lightning to right of navbar
+
+* Add feedback tool
+
+* Find fixmes, consolidated redundant code to fns/libs
+
+* Move text messages to file
+
+* make all icon versions for different densities
+
+* Add hepatic feedback
+
 
 * Lots of hardcoded strings to move into Const's
 
-* When I have launched the police scanner, whenever the app restarts it goes to the police scanner and skips tctraffic.
+
+
+// Release 0.6
+
+* Context menus when you click the maps (scanner, phone numbers, refresh)
+
+* When in landscape mode, the window.scrollTo doesn't put the view in a good place.
 
 * Toast messages in try catach
 
@@ -49,13 +60,9 @@
 // todo
 
 
-* When in landscape mode, the window.scrollTo doesn't put the view in a good place.
-
 * in onstart or oncreate throw up a toast saying shit is loading.
 
 * Build a route: All boils down to telling you if you should avoid the route this morning or not.
-
-* When orientation vert, spinner at bottom, when horriz, spinner goes to right of ad at top.
 
 * Shake phone to refresh maps (settings to set sensitivity of this or disable)
 
