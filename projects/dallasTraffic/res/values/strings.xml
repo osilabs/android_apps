@@ -3,6 +3,12 @@
     <string name="app_name">Dallas Traffic</string>
     <string name="quick_view_label">Quick View</string>
 
+<!--    <string name="const_"></string>-->
+<!--    <string name="const_"></string>-->
+<!--    <string name="const_"></string>-->
+<!--    <string name="const_"></string>-->
+
+
     <string name="menu_refresh">Refresh</string>
     <string name="menu_scanner_police">Police Scanner</string>
     <string name="menu_scanner_weather">Weather</string>
@@ -25,8 +31,8 @@
     
     <string-array name="view_choices">
         <item>Traffic</item>
-        <item>Traffic :: Night Mode</item>
-        <item>Incidents</item>
+        <item>Notices</item>
+        <item>Cameras</item>
     </string-array>
     
     <style name="osistyle" parent="@android:style/TextAppearance.Medium">

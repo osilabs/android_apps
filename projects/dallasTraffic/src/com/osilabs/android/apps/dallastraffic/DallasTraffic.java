@@ -41,6 +41,42 @@ import android.widget.AdapterView.OnItemSelectedListener;
  * @author dezurik
  */
 public class DallasTraffic extends Activity {
+	
+	// --------------------------------------------------
+	// Configuration Data
+	// 
+	protected static String MOBILECONTENT_URL_PREFIX = "http://osilabs.com/m/mobilecontent/dallastraffic";
+	protected static String MOBILECONTENT_URL_ABOUT = "http://osilabs.com/m/mobilecontent/about/dallastraffic_about.php";
+	private static final int MENU_TRAFFIC               = 0;
+	private static final int MENU_NOTICE                = 1;
+	private static final int MENU_CAMERAS               = 2;
+	private static final int MENU_ALERTS                = 3;// not used
+	private static final int MENU_INCIDENTLIST          = 4;// not used
+	private static final int MENU_CONGESTION            = 5;// not used
+	private static final int MENU_REFRESH               = 100;
+	private static final int MENU_QUIT                  = 101;
+	private static final int MENU_SCANNER               = 102;
+	private static final int MENU_PREFS                 = 103;
+	private static final int MENU_ABOUT                 = 104;
+	private static final int SCAN_NODE_POLICE  = 16004; // FIXME - put these scanner values in an array. Use ./adb logcat |grep node to see the scanner ids
+	private static final int SCAN_NODE_WEATHER = 24058; 
+	private static final int SCAN_NODE_WEATHER2 = 19405; // Clearwater Weather Radio (WunderGround.com)
+	private static final int INDEX_TRAFFIC              = 0;
+	private static final int INDEX_NOTICE               = 1;
+	private static final int INDEX_CAMERAS              = 2;
+	private static final int INDEX_ALERTS               = 3;
+	private static final int INDEX_INCIDENTLIST         = 4;
+	private static final int INDEX_CONGESTION           = 5;
+	protected static final String NAMESPACE = "com.osilabs.android.apps.dallastraffic";
+	private static final String[] INDEX_STRINGS = {"Traffic", "Notices", "Cameras", "Alert Map", "Incident Report", "Congestion"};
+	//
+	// /Configuration Data
+	// --------------------------------------------------
+
+	
+
+	
+	
 	//
 	// Consts
 	//
@@ -51,39 +87,14 @@ public class DallasTraffic extends Activity {
 	// 3 = incidentlist
 	// 4 = camera
 	//
-	protected static final String MNDOT_MOBILE_URL = "http://www.dot.state.mn.us/tmc/trafficinfo/mobile/freeways.html";
+	//protected static final String MNDOT_MOBILE_URL = "http://www.dot.state.mn.us/tmc/trafficinfo/mobile/freeways.html";
 	//protected static final String TRAFFIC_MAP_URL = "http://osilabs.com/m/mobilecontent/DallasTrafficraffic/trafficmap.php";
 	//protected static final String INCIDENT_FEED = "http://www.dot.state.mn.us/tmc/trafficinfo/incidents.xml";
 	
 	private static final String TAG = "** osilabs.com **";
 	
-	private static final int MENU_TRAFFIC               = 0;
-	private static final int MENU_CONGESTION             = 1;
-	private static final int MENU_ALERTS                = 2;
-	private static final int MENU_INCIDENTLIST          = 3;
-	private static final int MENU_CAMERAS               = 4;
-	private static final int MENU_REFRESH               = 100;
-	private static final int MENU_QUIT                  = 101;
-	private static final int MENU_SCANNER               = 102;
-	//private static final int MENU_MNDOT_MOBILE_FREEWAYS = 102;
-	//private static final int MENU_PREFS                 = 103;
-	private static final int MENU_ABOUT                 = 104;
-
-	private static final int SCAN_NODE_POLICE  = 16004; // FIXME - put these scanner values in an array. Use ./adb logcat |grep node to see the scanner ids
-	private static final int SCAN_NODE_WEATHER = 24058; 
-	private static final int SCAN_NODE_WEATHER2 = 19405; // Clearwater Weather Radio (WunderGround.com)
-
-	private static final int INDEX_TRAFFIC              = 0;
-	private static final int INDEX_CONGESTION           = 1;
-	private static final int INDEX_ALERTS               = 2;
-	private static final int INDEX_INCIDENTLIST         = 3;
-	private static final int INDEX_CAMERAS              = 4;
-
-	protected static final String NAMESPACE = "com.osilabs.android.apps.dallastraffic";
 	protected static final String SCANNER_RADIO_NAMESPACE = "net.gordonedwards.scannerradio";
 	protected static final String SCANNER_RADIO_ACTION = "ACTION_PLAY_SCANNER";
-	private static final String[] 
-        INDEX_STRINGS = {"Traffic", "Congestion", "Alert Map", "Incident Report", "Camera"};
 
 	//
 	// Globals
@@ -99,8 +110,6 @@ public class DallasTraffic extends Activity {
 	// Will need to up this number if more indexes are needed.
 	protected static String[] VIEW_URLS = new String[8]; 
 	protected static int CURRENT_VIEW_INDEX = 0;
-	protected static String MOBILECONTENT_URL_PREFIX = "http://osilabs.com/m/mobilecontent/dallastraffic2";
-	protected static String MOBILECONTENT_URL_ABOUT = "http://osilabs.com/m/mobilecontent/about/dallastraffic_about.php";
 
 	protected static PackageInfo pInfo = null;
 	protected static Spinner spViewChoices;
@@ -277,21 +286,24 @@ public class DallasTraffic extends Activity {
 			CURRENT_VIEW_INDEX = pos;
 			setCurrentView(CURRENT_VIEW_INDEX);
 			switch (CURRENT_VIEW_INDEX) {
-			    case MENU_TRAFFIC:
-			        CURRENT_VIEW_INDEX = INDEX_TRAFFIC;
+				case MENU_TRAFFIC:
+					CURRENT_VIEW_INDEX = INDEX_TRAFFIC;
+					break;
+				case MENU_NOTICE:
+					CURRENT_VIEW_INDEX = INDEX_NOTICE;
+					break;
+			    case MENU_CAMERAS:
+			        CURRENT_VIEW_INDEX = INDEX_CAMERAS;
 			    	break;
-			    case MENU_CONGESTION:
-			        CURRENT_VIEW_INDEX = INDEX_CONGESTION;
-			    	break;		        
 			    case MENU_ALERTS:
 			        CURRENT_VIEW_INDEX = INDEX_ALERTS;
 			    	break;
 			    case MENU_INCIDENTLIST:
 			        CURRENT_VIEW_INDEX = INDEX_INCIDENTLIST;
 			    	break;
-			    case MENU_CAMERAS:
-			        CURRENT_VIEW_INDEX = INDEX_CAMERAS;
-			    	break;
+			    case MENU_CONGESTION:
+			        CURRENT_VIEW_INDEX = INDEX_CONGESTION;
+			    	break;		        
 			}
 
 			// CURRENT_WEBVIEW_URL is still what the last view was, 
@@ -343,7 +355,7 @@ public class DallasTraffic extends Activity {
         }
         // Javascript in webview can call colsole.log('the message') to log messages.
 		public void onConsoleMessage(String message, int lineNumber, String sourceID) {
-			Log.d("DallasTraffic application", message + " -- From line " + lineNumber + " of " + sourceID);
+			Log.d(TAG, message + " -- From line " + lineNumber + " of " + sourceID);
 		}
 	}
     
@@ -450,7 +462,7 @@ public class DallasTraffic extends Activity {
 				case R.id.menu_help:
 					
 			        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-			        alertDialog.setTitle("Twin Cities Traffic");
+			        alertDialog.setTitle(R.string.app_name);
 			        alertDialog.setMessage("You are running version " + pInfo.versionName);
 			        alertDialog.setButton("More...", new DialogInterface.OnClickListener() {
 			        	public void onClick(DialogInterface dialog, int which) {
