@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <resources>
     <string name="app_name">Dallas Traffic</string>
     <string name="quick_view_label">Quick View</string>
+
+    <string name="menu_refresh">Refresh</string>
+    <string name="menu_scanner_police">Police Scanner</string>
+    <string name="menu_scanner_weather">Weather</string>
+    <string name="menu_help">Help</string>
+    <string name="menu_exit">Exit</string>
 
     <!-- Preferences strings -->
     <string name="prefs_app_name">Preferences</string>
@@ -16,6 +21,7 @@
     <string name="pref_selected">pref_selected</string>
     
     <string name="pref_current_view">0</string>
+    <string name="pref_camera_1">0</string>
     
     <string-array name="view_choices">
         <item>Traffic</item>
