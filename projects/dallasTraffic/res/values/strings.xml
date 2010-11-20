@@ -30,9 +30,13 @@
     <string name="pref_camera_1">0</string>
     
     <string-array name="view_choices">
-        <item>Traffic</item>
-        <item>Notices</item>
-        <item>Cameras</item>
+        <item>US 75</item>
+        <item>SH 183</item>
+        <item>US 67</item>
+        <item>IH 35E</item>
+        <item>IH 30</item>
+        <item>IH 635</item>
+        <item>Loop 12</item>
     </string-array>
     
     <style name="osistyle" parent="@android:style/TextAppearance.Medium">

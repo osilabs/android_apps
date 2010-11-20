@@ -222,17 +222,17 @@ public class DallasTraffic extends Activity {
 	    
 
 	    
-//		 Spinner Choices
-//		 
-//        spViewChoices = (Spinner) findViewById(R.id.view_choice_spinner);
-//		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-//			this, R.array.view_choices, android.R.layout.simple_spinner_item);
-//		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//		spViewChoices.setOnItemSelectedListener(new QuickViewOnItemSelectedListener());
-//		spViewChoices.setAdapter(adapter);
-//		spViewChoices.setHapticFeedbackEnabled(true); // fixme - doesn't seem to work
-//		spViewChoices.setSelection(CURRENT_VIEW_INDEX);
-//		
+		// Spinner Choices
+		 
+        spViewChoices = (Spinner) findViewById(R.id.view_choice_spinner);
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+			this, R.array.view_choices, android.R.layout.simple_spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spViewChoices.setOnItemSelectedListener(new QuickViewOnItemSelectedListener());
+		spViewChoices.setAdapter(adapter);
+		spViewChoices.setHapticFeedbackEnabled(true); // fixme - doesn't seem to work
+		spViewChoices.setSelection(CURRENT_VIEW_INDEX);
+		
 //	    //
 //		// View Choice Expand Icon
 //	    //
@@ -244,16 +244,16 @@ public class DallasTraffic extends Activity {
 //			}
 //		});
 //
-//	    //
-//		// View Choice Spinner
-//	    //
-//		tvSpinner = (TextView) findViewById(R.id.view_spinner);
-//	    tvSpinner.setOnClickListener(new View.OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				spViewChoices.performClick();
-//			}
-//		});
+	    //
+		// View Choice Spinner
+	    //
+		tvSpinner = (TextView) findViewById(R.id.view_spinner);
+	    tvSpinner.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				spViewChoices.performClick();
+			}
+		});
     }
 
     @Override
@@ -324,7 +324,8 @@ public class DallasTraffic extends Activity {
 	public class QuickViewOnItemSelectedListener implements OnItemSelectedListener {
 	
 		public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-			setMainWebView(pos);
+			//setMainWebView(pos);
+			Toast.makeText(getApplicationContext(), "Set sub cameras", Toast.LENGTH_LONG).show();	
 		}
 	
 		public void onNothingSelected(AdapterView parent) {
