@@ -262,6 +262,9 @@ public class DallasTraffic extends Activity {
     	
         Log.d(TAG, "onStart");
 
+        // Inflate some views.
+		ivMore = (ImageView) findViewById(R.id.launcher_more);
+		tvSpinner = (TextView) findViewById(R.id.view_spinner);
 
 		//
 		// Main Web View
@@ -331,27 +334,32 @@ public class DallasTraffic extends Activity {
 	
 	// FIXME - move these
 	public void hideCameraConfiguration() {
-		ivMore.setVisibility(View.GONE);
-		tvSpinner.setVisibility(View.GONE);
+		ivMore.setVisibility(ImageView.GONE);
+		tvSpinner.setVisibility(TextView.GONE);
 	}
 	public void showCameraConfiguration() {
-		ivMore.setVisibility(View.VISIBLE);
-		tvSpinner.setVisibility(View.VISIBLE);
+		ivMore.setVisibility(ImageView.VISIBLE);
+		tvSpinner.setVisibility(TextView.VISIBLE);
 	}
 	public void setCurrentTab() {
 		
 		//LEFT OFF HERE TRYING TO SET TINT OF ICONS - clicking the icon causes FC
-		//ivTraffic.setColorFilter(Color.GREEN, PorterDuff.Mode.DARKEN);
+		ivTraffic.setColorFilter(null);
+		ivAlerts.setColorFilter(null);
+		ivCameras.setColorFilter(null);
 		
 		switch (CURRENT_VIEW_INDEX) {
 			case MENU_TRAFFIC:
-				break;
-			case MENU_NOTICE:
+				ivTraffic.setColorFilter(Color.GREEN, PorterDuff.Mode.DARKEN);
 				break;
 		    case MENU_CAMERAS:
+				ivCameras.setColorFilter(Color.GREEN, PorterDuff.Mode.DARKEN);
 		    	break;
 		    case MENU_ALERTS:
+				ivAlerts.setColorFilter(Color.GREEN, PorterDuff.Mode.DARKEN);
 		    	break;
+			case MENU_NOTICE:
+				break;
 		    case MENU_INCIDENTLIST:
 		    	break;
 		    case MENU_CONGESTION:
@@ -362,7 +370,7 @@ public class DallasTraffic extends Activity {
 	public void setMainWebView(int view_index) {
 		CURRENT_VIEW_INDEX = view_index;
 		setCurrentView(CURRENT_VIEW_INDEX);
-//        hideCameraConfiguration();
+        hideCameraConfiguration();
         setCurrentTab();
 		switch (CURRENT_VIEW_INDEX) {
 			case MENU_TRAFFIC:
@@ -374,7 +382,7 @@ public class DallasTraffic extends Activity {
 		    case MENU_CAMERAS:
 		        CURRENT_VIEW_INDEX = INDEX_CAMERAS;
 		        // Enable camera configuration
-//		        showCameraConfiguration();
+		        showCameraConfiguration();
 		    	break;
 		    case MENU_ALERTS:
 		        CURRENT_VIEW_INDEX = INDEX_ALERTS;
@@ -570,7 +578,6 @@ public class DallasTraffic extends Activity {
 	    editor.commit();
 
 	    // Set text of spinner
-		tvSpinner = (TextView) findViewById(R.id.view_spinner);
 		tvSpinner.setText(INDEX_STRINGS[ viewIndex ]);
 
 	    return true;
