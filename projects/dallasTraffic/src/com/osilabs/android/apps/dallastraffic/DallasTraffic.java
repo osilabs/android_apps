@@ -48,9 +48,9 @@ public class DallasTraffic extends Activity {
 	protected static String MOBILECONTENT_URL_PREFIX = "http://osilabs.com/m/mobilecontent/dallastraffic";
 	protected static String MOBILECONTENT_URL_ABOUT = "http://osilabs.com/m/mobilecontent/about/dallastraffic_about.php";
 	private static final int MENU_TRAFFIC               = 0;
-	private static final int MENU_NOTICE                = 1;
+	private static final int MENU_ALERTS                = 1;
 	private static final int MENU_CAMERAS               = 2;
-	private static final int MENU_ALERTS                = 3;// not used
+	private static final int MENU_NOTICE                = 3;// not used
 	private static final int MENU_INCIDENTLIST          = 4;// not used
 	private static final int MENU_CONGESTION            = 5;// not used
 	private static final int MENU_REFRESH               = 100;
@@ -62,13 +62,13 @@ public class DallasTraffic extends Activity {
 	private static final int SCAN_NODE_WEATHER = 24058; 
 	private static final int SCAN_NODE_WEATHER2 = 19405; // Clearwater Weather Radio (WunderGround.com)
 	private static final int INDEX_TRAFFIC              = 0;
-	private static final int INDEX_NOTICE               = 1;
+	private static final int INDEX_ALERTS               = 1;
 	private static final int INDEX_CAMERAS              = 2;
-	private static final int INDEX_ALERTS               = 3;
+	private static final int INDEX_NOTICE               = 3;
 	private static final int INDEX_INCIDENTLIST         = 4;
 	private static final int INDEX_CONGESTION           = 5;
 	protected static final String NAMESPACE = "com.osilabs.android.apps.dallastraffic";
-	private static final String[] INDEX_STRINGS = {"Traffic", "Notices", "Cameras", "Alert Map", "Incident Report", "Congestion"};
+	private static final String[] INDEX_STRINGS = {"Traffic", "Alerts", "Cameras", "Alert Map", "Incident Report", "Congestion"};
 	//
 	// /Configuration Data
 	// --------------------------------------------------
@@ -107,9 +107,11 @@ public class DallasTraffic extends Activity {
 	protected static WebView wvMain;
 
 	// Navbar components
-	protected ImageView refresh;
+	protected ImageView ivTraffic;
+	protected ImageView ivRefresh;
+	protected ImageView ivAlerts;
+	protected ImageView ivCameras;
 	protected ImageView ivMore;
-	//protected ImageView launcherScannerWeather;
 	protected TextView tvSpinner;
 	
 	// For posting runnables
@@ -149,6 +151,9 @@ public class DallasTraffic extends Activity {
 		VIEW_URLS[2] = TRAFFIC_MAP_URL;
 		VIEW_URLS[3] = TRAFFIC_MAP_URL;
 		VIEW_URLS[4] = TRAFFIC_MAP_URL;
+		VIEW_URLS[5] = TRAFFIC_MAP_URL;
+		VIEW_URLS[6] = TRAFFIC_MAP_URL;
+		VIEW_URLS[7] = TRAFFIC_MAP_URL;
 		
         //
 		// Restore view
@@ -164,60 +169,78 @@ public class DallasTraffic extends Activity {
 	    // -------------------------
 	    // Top Nav bar
 	    //
-	    refresh = (ImageView) findViewById(R.id.launcher_traffic);
-	    refresh.setOnClickListener(new View.OnClickListener() {
+
+	    ivTraffic = (ImageView) findViewById(R.id.launcher_traffic);
+	    ivTraffic.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				setMainWebView(INDEX_TRAFFIC);
 			}
 		});
 
-        // -------------------------
-	    // Bottom Navigation Bar
-	    //
-	    
-	    // Refresh
-	    refresh = (ImageView) findViewById(R.id.navbar_refresh);
-	    refresh.setOnClickListener(new View.OnClickListener() {
+	    ivAlerts = (ImageView) findViewById(R.id.launcher_alerts);
+	    ivAlerts.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				setMainWebView(INDEX_ALERTS);
+			}
+		});
+
+	    ivCameras = (ImageView) findViewById(R.id.launcher_cameras);
+	    ivCameras.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				setMainWebView(INDEX_CAMERAS);
+			}
+		});
+
+	    ivRefresh = (ImageView) findViewById(R.id.navbar_refresh);
+	    ivRefresh.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				//setMainWebView(CURRENT_VIEW_INDEX);
 				refreshViews();
 			}
 		});
 
+	    // -------------------------
+	    // Bottom Navigation Bar
 	    //
-		// Spinner Choices
-		// 
-        spViewChoices = (Spinner) findViewById(R.id.view_choice_spinner);
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-			this, R.array.view_choices, android.R.layout.simple_spinner_item);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spViewChoices.setOnItemSelectedListener(new QuickViewOnItemSelectedListener());
-		spViewChoices.setAdapter(adapter);
-		spViewChoices.setHapticFeedbackEnabled(true); // fixme - doesn't seem to work
-		spViewChoices.setSelection(CURRENT_VIEW_INDEX);
-		
-	    //
-		// View Choice Expand Icon
-	    //
-		ivMore = (ImageView) findViewById(R.id.launcher_more);
-		ivMore.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				spViewChoices.performClick();
-			}
-		});
+	    
 
-	    //
-		// View Choice Spinner
-	    //
-		tvSpinner = (TextView) findViewById(R.id.view_spinner);
-	    tvSpinner.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				spViewChoices.performClick();
-			}
-		});
+	    
+//		 Spinner Choices
+//		 
+//        spViewChoices = (Spinner) findViewById(R.id.view_choice_spinner);
+//		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+//			this, R.array.view_choices, android.R.layout.simple_spinner_item);
+//		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//		spViewChoices.setOnItemSelectedListener(new QuickViewOnItemSelectedListener());
+//		spViewChoices.setAdapter(adapter);
+//		spViewChoices.setHapticFeedbackEnabled(true); // fixme - doesn't seem to work
+//		spViewChoices.setSelection(CURRENT_VIEW_INDEX);
+//		
+//	    //
+//		// View Choice Expand Icon
+//	    //
+//		ivMore = (ImageView) findViewById(R.id.launcher_more);
+//		ivMore.setOnClickListener(new View.OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				spViewChoices.performClick();
+//			}
+//		});
+//
+//	    //
+//		// View Choice Spinner
+//	    //
+//		tvSpinner = (TextView) findViewById(R.id.view_spinner);
+//	    tvSpinner.setOnClickListener(new View.OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				spViewChoices.performClick();
+//			}
+//		});
     }
 
     @Override

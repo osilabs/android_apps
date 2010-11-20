@@ -32,14 +32,6 @@
 				android:layout_marginRight="4dip" />
 				
 			<ImageView
-		  		android:id="@+id/launcher_cameras"
-	 			android:src="@drawable/ic_weather"
-				android:layout_width="wrap_content" 
-				android:layout_height="fill_parent"
-				android:maxHeight="25dip"
-				android:layout_marginRight="4dip" />
-				
-			<ImageView
 		  		android:id="@+id/launcher_alerts"
 	 			android:src="@drawable/ic_weather"
 				android:layout_width="wrap_content" 
@@ -47,7 +39,15 @@
 				android:maxHeight="25dip"
 				android:layout_marginRight="4dip" />
 				
-	<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			<ImageView
+		  		android:id="@+id/launcher_cameras"
+	 			android:src="@drawable/ic_weather"
+				android:layout_width="wrap_content" 
+				android:layout_height="fill_parent"
+				android:maxHeight="25dip"
+				android:layout_marginRight="4dip" />
+
+		<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
   			android:layout_width="wrap_content"
 	  	  	android:layout_height="fill_parent"
 	    	android:layout_gravity="right|center_vertical"
