@@ -16,3 +16,8 @@
 
 * Get an android widdler
 
+* OnLoad/onStart/others call show/hideCameraConfiguration so it is showing or hidden when the reaccess the app.
+
+* Move cam escription to under camera shot so the shot is as high up the screen as posible.
+
+* Color the tabs when active

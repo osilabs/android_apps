@@ -13,6 +13,9 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -67,8 +70,13 @@ public class DallasTraffic extends Activity {
 	private static final int INDEX_NOTICE               = 3;
 	private static final int INDEX_INCIDENTLIST         = 4;
 	private static final int INDEX_CONGESTION           = 5;
+	private static final String[] INDEX_STRINGS = {		"Traffic", 
+														"Alerts", 
+														"Cameras", 
+														"Alert Map", 
+														"Incident Report", 
+														"Congestion"};
 	protected static final String NAMESPACE = "com.osilabs.android.apps.dallastraffic";
-	private static final String[] INDEX_STRINGS = {"Traffic", "Alerts", "Cameras", "Alert Map", "Incident Report", "Congestion"};
 	//
 	// /Configuration Data
 	// --------------------------------------------------
@@ -114,6 +122,9 @@ public class DallasTraffic extends Activity {
 	protected ImageView ivMore;
 	protected TextView tvSpinner;
 	
+	// Tints and paints
+	protected int color_tab;
+	
 	// For posting runnables
 	private Handler mHandler = new Handler();
 	
@@ -127,6 +138,8 @@ public class DallasTraffic extends Activity {
         //
         // Set globals
         //
+        
+        color_tab = Color.GREEN;
         
         // Read in manifest
 		try {
@@ -316,10 +329,41 @@ public class DallasTraffic extends Activity {
 		}
 	}
 	
-	// FIXME - move this
+	// FIXME - move these
+	public void hideCameraConfiguration() {
+		ivMore.setVisibility(View.GONE);
+		tvSpinner.setVisibility(View.GONE);
+	}
+	public void showCameraConfiguration() {
+		ivMore.setVisibility(View.VISIBLE);
+		tvSpinner.setVisibility(View.VISIBLE);
+	}
+	public void setCurrentTab() {
+		
+		//LEFT OFF HERE TRYING TO SET TINT OF ICONS - clicking the icon causes FC
+		//ivTraffic.setColorFilter(Color.GREEN, PorterDuff.Mode.DARKEN);
+		
+		switch (CURRENT_VIEW_INDEX) {
+			case MENU_TRAFFIC:
+				break;
+			case MENU_NOTICE:
+				break;
+		    case MENU_CAMERAS:
+		    	break;
+		    case MENU_ALERTS:
+		    	break;
+		    case MENU_INCIDENTLIST:
+		    	break;
+		    case MENU_CONGESTION:
+		    	break;
+		}
+	}
+
 	public void setMainWebView(int view_index) {
 		CURRENT_VIEW_INDEX = view_index;
 		setCurrentView(CURRENT_VIEW_INDEX);
+//        hideCameraConfiguration();
+        setCurrentTab();
 		switch (CURRENT_VIEW_INDEX) {
 			case MENU_TRAFFIC:
 				CURRENT_VIEW_INDEX = INDEX_TRAFFIC;
@@ -329,6 +373,8 @@ public class DallasTraffic extends Activity {
 				break;
 		    case MENU_CAMERAS:
 		        CURRENT_VIEW_INDEX = INDEX_CAMERAS;
+		        // Enable camera configuration
+//		        showCameraConfiguration();
 		    	break;
 		    case MENU_ALERTS:
 		        CURRENT_VIEW_INDEX = INDEX_ALERTS;
