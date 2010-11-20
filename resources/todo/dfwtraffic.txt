@@ -1,10 +1,18 @@
-//
-// DFW TODO
-//
+// v0.2
 
-* Reorder apps on main site depending on app you came from.
-* Add download link to livedropper
-* Show datetime better
+* finish gettng camera working
 
-* Pass webview dimenstions into webpage dom and size the traffic
-  map image to take up the untire viewpane. 
+* top nav bar - police radio, weather radio, incidents, cameras. switch bottom to chooser for cams when on camera tab
+
+* put camera xml in android and use native pop
+
+* feedback tool
+
+* Credit the dot site
+
+* Rename navbar to bottomnav
+
+* Need icons for refresh, calendar, traffic, alerts, and cameras
+
+
+

@@ -43,26 +43,33 @@
 				android:textColor="#999999"
 				android:hapticFeedbackEnabled="true"
 				/>
-				
+								
 			<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    			android:layout_width="fill_parent"
+    			android:layout_width="wrap_content"
 			    android:layout_height="fill_parent"
 			    android:layout_gravity="right|center_vertical"
-    			android:stretchColumns="1">
+    			>
 		    	<TableRow 
-		    		android:gravity="right|center_vertical"
+				    android:layout_gravity="right|center_vertical"
 		    		android:paddingRight="4dip"
 		    		android:paddingTop="6dip"
 		    		android:layout_width="fill_parent"
 		    		android:layout_height="fill_parent">
-				  <ImageView	android:id="@+id/navbar_refresh"
-				  				android:src="@drawable/ic_refresh"
-								android:layout_width="fill_parent" 
+				  <ImageView	android:id="@+id/navbar_weather"
+				  				android:src="@drawable/ic_weather"
+								android:layout_width="wrap_content" 
 								android:layout_height="fill_parent"
-								android:layout_gravity="right|center_vertical" />
+								android:layout_gravity="right"
+								android:tint="#FFFFFF66" />
+				  <ImageView	android:id="@+id/navbar_police"
+				  				android:src="@drawable/ic_weather"
+								android:layout_width="wrap_content" 
+								android:layout_height="fill_parent"
+								android:layout_gravity="right|center_vertical"
+								android:tint="#FFFF0000" />
 		    	</TableRow>
 			</TableLayout>	
-				
+
 
 	</LinearLayout>
 </LinearLayout>

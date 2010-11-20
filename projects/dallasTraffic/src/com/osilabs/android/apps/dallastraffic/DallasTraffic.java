@@ -80,17 +80,7 @@ public class DallasTraffic extends Activity {
 	//
 	// Consts
 	//
-	// VIEW_INDEX's
-	// 0 = traffic
-	// 1 = incidents
-	// 2 = alerts
-	// 3 = incidentlist
-	// 4 = camera
-	//
-	//protected static final String MNDOT_MOBILE_URL = "http://www.dot.state.mn.us/tmc/trafficinfo/mobile/freeways.html";
-	//protected static final String TRAFFIC_MAP_URL = "http://osilabs.com/m/mobilecontent/DallasTrafficraffic/trafficmap.php";
-	//protected static final String INCIDENT_FEED = "http://www.dot.state.mn.us/tmc/trafficinfo/incidents.xml";
-	
+
 	private static final String TAG = "** osilabs.com **";
 	
 	protected static final String SCANNER_RADIO_NAMESPACE = "net.gordonedwards.scannerradio";
@@ -170,16 +160,20 @@ public class DallasTraffic extends Activity {
         
         // Restore camera 1
         PREF_CAMERA_1 = mySharedPreferences.getInt("pref_camera_1", 1);
-    }
+        
+	    // -------------------------
+	    // Top Nav bar
+	    //
+	    refresh = (ImageView) findViewById(R.id.launcher_traffic);
+	    refresh.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				setMainWebView(INDEX_TRAFFIC);
+			}
+		});
 
-    @Override
-    public void onStart() {
-    	super.onStart();
-    	
-        Log.d(TAG, "onStart");
-
-        //
-	    // Set up Navigation Bar
+        // -------------------------
+	    // Bottom Navigation Bar
 	    //
 	    
 	    // Refresh
@@ -224,6 +218,14 @@ public class DallasTraffic extends Activity {
 				spViewChoices.performClick();
 			}
 		});
+    }
+
+    @Override
+    public void onStart() {
+    	super.onStart();
+    	
+        Log.d(TAG, "onStart");
+
 
 		//
 		// Main Web View
@@ -283,54 +285,60 @@ public class DallasTraffic extends Activity {
 	public class QuickViewOnItemSelectedListener implements OnItemSelectedListener {
 	
 		public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-			CURRENT_VIEW_INDEX = pos;
-			setCurrentView(CURRENT_VIEW_INDEX);
-			switch (CURRENT_VIEW_INDEX) {
-				case MENU_TRAFFIC:
-					CURRENT_VIEW_INDEX = INDEX_TRAFFIC;
-					break;
-				case MENU_NOTICE:
-					CURRENT_VIEW_INDEX = INDEX_NOTICE;
-					break;
-			    case MENU_CAMERAS:
-			        CURRENT_VIEW_INDEX = INDEX_CAMERAS;
-			    	break;
-			    case MENU_ALERTS:
-			        CURRENT_VIEW_INDEX = INDEX_ALERTS;
-			    	break;
-			    case MENU_INCIDENTLIST:
-			        CURRENT_VIEW_INDEX = INDEX_INCIDENTLIST;
-			    	break;
-			    case MENU_CONGESTION:
-			        CURRENT_VIEW_INDEX = INDEX_CONGESTION;
-			    	break;		        
-			}
-
-			// CURRENT_WEBVIEW_URL is still what the last view was, 
-			//  VIEW_URLS[CURRENT_VIEW_INDEX] has the new view which
-			//  has a different URL (This was used when the cameras
-			//  view had to reload the webview with a different url).
-	    	if (CURRENT_WEBVIEW_URL != VIEW_URLS[CURRENT_VIEW_INDEX]) {
-	    		// Set the new Current URL
-		    	CURRENT_WEBVIEW_URL = VIEW_URLS[CURRENT_VIEW_INDEX];
-
-		    	// It's going to take a second to reload a new webview,
-		    	//  state the obvious
-				Toast.makeText(	parent.getContext(), 
-								"Loading...", Toast.LENGTH_LONG).show();
-
-		    	// Load the other URL into the webview
-	    		wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_VIEW_INDEX);
-	    	} else {
-		    	// Just switch div - This stays fast because we don't have to
-	    		//  reload the webview a lot, only for camera switching.
-	    		wvMain.loadUrl("javascript: jumpTo('"+CURRENT_VIEW_INDEX+"')");
-	    	}
+			setMainWebView(pos);
 		}
 	
 		public void onNothingSelected(AdapterView parent) {
 		  // Do nothing.
 		}
+	}
+	
+	// FIXME - move this
+	public void setMainWebView(int view_index) {
+		CURRENT_VIEW_INDEX = view_index;
+		setCurrentView(CURRENT_VIEW_INDEX);
+		switch (CURRENT_VIEW_INDEX) {
+			case MENU_TRAFFIC:
+				CURRENT_VIEW_INDEX = INDEX_TRAFFIC;
+				break;
+			case MENU_NOTICE:
+				CURRENT_VIEW_INDEX = INDEX_NOTICE;
+				break;
+		    case MENU_CAMERAS:
+		        CURRENT_VIEW_INDEX = INDEX_CAMERAS;
+		    	break;
+		    case MENU_ALERTS:
+		        CURRENT_VIEW_INDEX = INDEX_ALERTS;
+		    	break;
+		    case MENU_INCIDENTLIST:
+		        CURRENT_VIEW_INDEX = INDEX_INCIDENTLIST;
+		    	break;
+		    case MENU_CONGESTION:
+		        CURRENT_VIEW_INDEX = INDEX_CONGESTION;
+		    	break;		        
+		}
+
+		// CURRENT_WEBVIEW_URL is still what the last view was, 
+		//  VIEW_URLS[CURRENT_VIEW_INDEX] has the new view which
+		//  has a different URL (This was used when the cameras
+		//  view had to reload the webview with a different url).
+    	if (CURRENT_WEBVIEW_URL != VIEW_URLS[CURRENT_VIEW_INDEX]) {
+    		// Set the new Current URL
+	    	CURRENT_WEBVIEW_URL = VIEW_URLS[CURRENT_VIEW_INDEX];
+
+	    	// It's going to take a second to reload a new webview,
+	    	//  state the obvious
+			Toast.makeText(	getApplicationContext(), 
+							"Loading...", Toast.LENGTH_LONG).show();
+
+	    	// Load the other URL into the webview
+    		wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_VIEW_INDEX);
+    	} else {
+	    	// Just switch div - This stays fast because we don't have to
+    		//  reload the webview a lot, only for camera switching.
+    		wvMain.loadUrl("javascript: jumpTo('"+CURRENT_VIEW_INDEX+"')");
+    	}
+		
 	}
 	
 	private class MyWebViewClient extends WebViewClient {
