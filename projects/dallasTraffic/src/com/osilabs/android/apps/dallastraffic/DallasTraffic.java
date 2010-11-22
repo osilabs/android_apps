@@ -4,7 +4,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-//import android.content.Context;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,13 +19,14 @@ import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-//import android.preference.PreferenceManager;
+import android.preference.PreferenceManager;
 //import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -33,6 +34,9 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -173,11 +177,11 @@ public class DallasTraffic extends Activity {
         //
 		SharedPreferences mySharedPreferences = getSharedPreferences(
 				NAMESPACE, Activity.MODE_PRIVATE);
-        CURRENT_VIEW_INDEX = mySharedPreferences.getInt("pref_current_view", 2);
+        CURRENT_VIEW_INDEX = mySharedPreferences.getInt("session_current_view", 2);
         CURRENT_WEBVIEW_URL = VIEW_URLS[CURRENT_VIEW_INDEX];
         
         // Restore camera 1
-        PREF_CAMERA_1 = mySharedPreferences.getInt("pref_camera_1", 1);
+        PREF_CAMERA_1 = mySharedPreferences.getInt("session_camera_1", 1);
         
 	    // -------------------------
 	    // Top Nav bar
@@ -251,7 +255,43 @@ public class DallasTraffic extends Activity {
 	    tvSpinner.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				spViewChoices.performClick();
+				Context c = v.getContext();
+				
+		    	//Toast.makeText(getApplicationContext(), "Prefs", Toast.LENGTH_SHORT).show();
+		    	Intent intent = new Intent()
+		    		.setClass(c, com.osilabs.android.apps.dallastraffic.Prefs.class);
+		    	c.startActivity(intent);
+				
+				
+//                //set up dialog
+//                final Dialog dialog = new Dialog(v.getContext());
+//                dialog.setContentView(R.layout.cameraconfig);
+//                dialog.setTitle("Camera Options");
+//                dialog.setCancelable(true);
+//
+//                //there are a lot of settings, for dialog, check them all out!
+//                //set up text
+//                TextView drop = (TextView) dialog.findViewById(R.id.drop_textview);
+//                drop.setBackgroundColor(Color.YELLOW);
+//                
+////                //set up text
+////                TextView text = (TextView) dialog.findViewById(R.id.TextView01);
+////                text.setText(R.string.drop_color_chosen_message);
+// 
+//                //set up image view
+////                ImageView img = (ImageView) dialog.findViewById(R.id.ImageView01);
+////                img.setImageResource(R.drawable.icon);
+// 
+//                //set up button
+//                Button button = (Button) dialog.findViewById(R.id.Button01);
+//                button.setOnClickListener(new OnClickListener() {
+//                	@Override
+//                    public void onClick(View vc) {
+//                		dialog.cancel();
+//                    }
+//                });
+//                //now that the dialog is set up, it's time to show it    
+//                dialog.show();
 			}
 		});
     }
@@ -469,7 +509,7 @@ public class DallasTraffic extends Activity {
 	    	SharedPreferences prefs 
 				= getSharedPreferences(NAMESPACE, Activity.MODE_PRIVATE);
 			    SharedPreferences.Editor editor = prefs.edit();
-			    editor.putInt("pref_camera_1", PREF_CAMERA_1);
+			    editor.putInt("session_camera_1", PREF_CAMERA_1);
 			    editor.commit();
 
 			// FIXME - verify this doesn't need to be posted as a runnable.
@@ -538,12 +578,12 @@ public class DallasTraffic extends Activity {
 	//		    	wvMain.loadUrl(VIEW_URLS[INDEX_CAMERAS]);
 	//	    		return true;
 	//		        
-	//		    case MENU_PREFS:
-	//		    	//Toast.makeText(getApplicationContext(), "Prefs", Toast.LENGTH_SHORT).show();
-	//		    	Intent intent = new Intent()
-	//		    		.setClass(this, com.osilabs.android.apps.dallastraffic.Prefs.class);
-	//		    	this.startActivityForResult(intent, 0);
-	//		    	return true;
+//			    case MENU_PREFS:
+//			    	//Toast.makeText(getApplicationContext(), "Prefs", Toast.LENGTH_SHORT).show();
+//			    	Intent intent = new Intent()
+//			    		.setClass(this, com.osilabs.android.apps.dallastraffic.Prefs.class);
+//			    	this.startActivityForResult(intent, 0);
+//			    	return true;
 	
 				case R.id.menu_help:
 					
@@ -575,7 +615,7 @@ public class DallasTraffic extends Activity {
     	SharedPreferences prefs 
 			= getSharedPreferences(NAMESPACE, Activity.MODE_PRIVATE);
 	    SharedPreferences.Editor editor = prefs.edit();
-	    editor.putInt("pref_current_view", viewIndex);
+	    editor.putInt("session_current_view", viewIndex);
 	    editor.commit();
 
 	    // Set text of spinner

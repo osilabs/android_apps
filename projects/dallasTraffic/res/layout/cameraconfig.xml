@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:orientation="vertical" 
+		android:gravity="center"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:padding="16dip">
+		
+<!--	<ImageView android:id="@+id/ImageView01"-->
+<!--		android:layout_width="wrap_content" android:layout_height="wrap_content"-->
+<!--		android:layout_centerHorizontal="true" />-->
+
+
+	<TextView android:id="@+id/drop_textview"
+		android:text="zoinks" 
+		android:layout_height="wrap_content" 
+		android:layout_width="wrap_content"
+		android:layout_gravity="center"
+		android:layout_weight=".6"
+		/>
+
+	<ScrollView android:id="@+id/ScrollView01"
+		android:layout_width="wrap_content" 
+		android:layout_height="200dip"
+		android:layout_below="@+id/drop_textview"
+		android:layout_weight=".4"
+		>
+
+		<TextView 
+			android:id="@+id/TextView01"
+			android:text="vvvvvvvv vvvvvvvv vvvvvvvv vvvvvvvv vvvvvvvv vvvvvvvv vvvvvvvv vvvvvvvv vvvvvvvv vvvvvvvv vvvvvvvv vvvvvvvv vvvvvvvv vvvvvvvv vvvvvvvv vvvvvvvv vvvvvvvv vvvvvvvv vvvvvvvv vvvvvvvv vvvvvvvv vvvvvvvv vvvvvvvv tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas tfas sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd sovidd" 
+			android:layout_width="wrap_content" android:autoLink="web|email"
+			android:layout_height="wrap_content" />
+
+	</ScrollView>
+
+
+	<LinearLayout
+	  xmlns:android="http://schemas.android.com/apk/res/android"
+	  android:layout_width="fill_parent"
+	  android:layout_height="fill_parent"
+	  android:layout_weight="1"
+	  android:layout_gravity="center"
+	  android:orientation="horizontal"
+	  >
+		<Button android:id="@+id/Button02" 
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content"
+			android:layout_marginTop="20dip"
+			android:text="Back" 
+			android:layout_weight=".5"
+			/>
+		
+		<Button android:id="@+id/Button01" 
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content"
+			android:layout_centerHorizontal="true" 
+			android:layout_marginTop="20dip"
+			android:text="Choose Camera" 
+			android:layout_weight=".5"
+			/>
+
+	</LinearLayout>
+</LinearLayout>

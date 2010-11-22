@@ -1,5 +1,8 @@
 // v0.2
 
+
+* Rename Prefs class to CameraPrefs
+
 * finish gettng camera working
 
 * top nav bar - police radio, weather radio, incidents, cameras. switch bottom to chooser for cams when on camera tab

@@ -1,13 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string-array name="pref_qview_options">
-		<item>Traffic</item>
-		<item>Incidents</item>
-		<item>Alerts</item>
+
+	<!--	Camera Prefs-->
+	<string-array name="campref_crossroads_US75">
+        <item>Zachary</item>
+        <item>Co Rd 73</item>
+        <item>Hopkins Crossroads</item>
 	</string-array>
-	<string-array name="pref_qview_option_values">
-		<item>0</item>
-		<item>1</item>
-		<item>2</item>
+	<string-array name="campref_crossroads_US75_values">
+		<item>277</item>
+		<item>15</item>
+		<item>234</item>
 	</string-array>
+
+	<string-array name="campref_crossroads_SH183">
+        <item>wilson</item>
+        <item>shire</item>
+        <item>22nd</item>
+        <item>soilten</item>
+	</string-array>
+	<string-array name="campref_crossroads_SH183_values">
+		<item>39</item>
+		<item>122</item>
+		<item>23</item>
+		<item>194</item>
+	</string-array>
+
 </resources>
