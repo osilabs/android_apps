@@ -117,6 +117,7 @@ public class DallasTraffic extends Activity {
 	protected static Spinner spViewChoices;
 	protected static WebView wvAd;
 	protected static WebView wvMain;
+	protected static SharedPreferences mySharedPreferences;
 
 	// Navbar components
 	protected ImageView ivTraffic;
@@ -175,7 +176,7 @@ public class DallasTraffic extends Activity {
         //
 		// Restore view
         //
-		SharedPreferences mySharedPreferences = getSharedPreferences(
+		mySharedPreferences = getSharedPreferences(
 				NAMESPACE, Activity.MODE_PRIVATE);
         CURRENT_VIEW_INDEX = mySharedPreferences.getInt("session_current_view", 2);
         CURRENT_WEBVIEW_URL = VIEW_URLS[CURRENT_VIEW_INDEX];
@@ -257,12 +258,20 @@ public class DallasTraffic extends Activity {
 			public void onClick(View v) {
 				Context c = v.getContext();
 				
-		    	//Toast.makeText(getApplicationContext(), "Prefs", Toast.LENGTH_SHORT).show();
-		    	Intent intent = new Intent()
+		    	Toast.makeText(getApplicationContext(), "CAMERA before: " + PREF_CAMERA_1, Toast.LENGTH_SHORT).show();
+		    	
+				Intent intent = new Intent()
 		    		.setClass(c, com.osilabs.android.apps.dallastraffic.Prefs.class);
 		    	c.startActivity(intent);
-				
-				
+		    	
+
+		    	//
+		    	//
+		    	// LEFT OFF HERE TRYING TO FIGURE OUT HOW TO RETURN THE CHOSEN CAMERA
+		    	//
+		    	//
+		    	
+		    	
 //                //set up dialog
 //                final Dialog dialog = new Dialog(v.getContext());
 //                dialog.setContentView(R.layout.cameraconfig);

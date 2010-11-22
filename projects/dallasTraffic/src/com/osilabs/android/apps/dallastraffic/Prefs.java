@@ -3,6 +3,7 @@
  */
 package com.osilabs.android.apps.dallastraffic;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -26,7 +27,8 @@ public class Prefs extends PreferenceActivity {
 	        //
 	        prefs[i].setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 	        	public boolean onPreferenceChange(Preference preference, Object newval) {
-	                Toast.makeText(getApplicationContext(), "Camera Selected", Toast.LENGTH_SHORT).show();
+	                //Toast.makeText(getApplicationContext(), "Camera Selected", Toast.LENGTH_SHORT).show();
+	        		
 	                finish();
 	        		return true;
 	        	}
@@ -34,11 +36,11 @@ public class Prefs extends PreferenceActivity {
 	        prefs[i].setOnPreferenceClickListener(new OnPreferenceClickListener() {
 	            public boolean onPreferenceClick(Preference preference) {
 	                Toast.makeText(getApplicationContext(), "pref: " + preference, Toast.LENGTH_SHORT).show();
-//	            	SharedPreferences prefs 
-//	            		= getSharedPreferences("com.osilabs.android.apps.dallastraffic", 0);
-//	                SharedPreferences.Editor editor = prefs.edit();
-//	                editor.putInt("pref_default", 2); //Integer.parseInt(preference.toString()));
-//	                editor.commit();
+	            	SharedPreferences sprefs 
+	            		= getSharedPreferences("com.osilabs.android.apps.dallastraffic", 0);
+	                SharedPreferences.Editor editor = sprefs.edit();
+	                editor.putInt("session_camera_1", 2); //Integer.parseInt(preference.toString()));
+	                editor.commit();
 //	                Prefs.finish();
 	                return true;
 	            }
