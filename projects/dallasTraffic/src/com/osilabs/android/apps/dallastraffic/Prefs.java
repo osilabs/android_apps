@@ -18,38 +18,47 @@ public class Prefs extends PreferenceActivity {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.prefs);
 		
-        // Get the custom preference
-        Preference pref = (Preference) findPreference("session_selected");
-        
         //
         // Catch the onCameraSelect event to finish() so control is sent back to main activity.
         //
-        pref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+        Preference campref_US75 = (Preference) findPreference("session_selected_US75");
+        campref_US75.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
         	public boolean onPreferenceChange(Preference preference, Object newval) {
                 Toast.makeText(getApplicationContext(), "Camera Selected", Toast.LENGTH_SHORT).show();
                 finish();
         		return true;
         	}
         });
-        
-        pref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+        campref_US75.setOnPreferenceClickListener(new OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
                 Toast.makeText(getApplicationContext(), "pref: " + preference, Toast.LENGTH_SHORT).show();
-//            	
 //            	SharedPreferences prefs 
 //            		= getSharedPreferences("com.osilabs.android.apps.dallastraffic", 0);
 //                SharedPreferences.Editor editor = prefs.edit();
 //                editor.putInt("pref_default", 2); //Integer.parseInt(preference.toString()));
 //                editor.commit();
 //                Prefs.finish();
-                //getCallingActivity().finish();
-                
-                
-               // finish();
                 return true;
             }
         });
-        
-        //finish();
+	
+    
+	    //
+	    // Catch the onCameraSelect event to finish() so control is sent back to main activity.
+	    //
+	    Preference campref_SH183 = (Preference) findPreference("session_selected_SH183");
+	    campref_SH183.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+	    	public boolean onPreferenceChange(Preference preference, Object newval) {
+	            Toast.makeText(getApplicationContext(), "Camera Selected", Toast.LENGTH_SHORT).show();
+	            finish();
+	    		return true;
+	    	}
+	    });
+	    campref_SH183.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+	        public boolean onPreferenceClick(Preference preference) {
+	            Toast.makeText(getApplicationContext(), "pref: " + preference, Toast.LENGTH_SHORT).show();
+	            return true;
+	        }
+	    });
 	}
 }

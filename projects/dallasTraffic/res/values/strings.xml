@@ -3,39 +3,34 @@
     <string name="app_name">Dallas Traffic</string>
     <string name="quick_view_label">Quick View</string>
 
-<!--    <string name="const_"></string>-->
-<!--    <string name="const_"></string>-->
-<!--    <string name="const_"></string>-->
-<!--    <string name="const_"></string>-->
-
-
     <string name="menu_refresh">Refresh</string>
     <string name="menu_scanner_police">Police Scanner</string>
     <string name="menu_scanner_weather">Weather</string>
     <string name="menu_help">Help</string>
     <string name="menu_exit">Exit</string>
 
-	<!-- Camera Prefs -->
-    <string name="campref_activity_name">Camera Choices</string>
-    <string name="campref_crossroad_dialog_title">Cameras for xxx</string>
-    
-	<!-- Per camera prefs -->
-    <string name="campref_mainroad_US75">US75</string>
-    <string name="campref_mainroad_summary_US75">4 Cameras, 1 favorite</string>
-    <string name="campref_mainroad_crossroad_default_US75">234</string>
-    <string name="campref_mainroad_SH183">SH183</string>
-    <string name="campref_mainroad_summary_SH183">14 Cameras</string>
-
-
     <!-- Preferences strings -->
+    <string name="session_current_view">0</string>
+    <string name="session_camera_1">0</string>
+
+	<!-- Camera Prefs -->
     <string name="camprefs">Camera Choices</string>
     <string name="camprefs_title">Preferences</string>
     <string name="camprefs_summary">Summary z</string>
-    
-    <string name="session_selected">session_selected</string>
-    <string name="session_current_view">0</string>
-    <string name="session_camera_1">0</string>
-    
+    <string name="campref_activity_name">Camera Choices</string>
+	<!-- Per camera prefs -->
+    <string name="campref_mainroad_US75">US75</string>
+    <string name="campref_mainroad_summary_US75">4 Cameras, 1 favorite</string>
+    <string name="campref_crossroad_dialog_title_US75">Cameras for US75</string>    
+    <string name="campref_mainroad_crossroad_default_US75">234</string>
+    <string name="session_selected_US75">session_selected_US75</string>
+    <!--  -->
+    <string name="campref_mainroad_SH183">SH183</string>
+    <string name="campref_mainroad_summary_SH183">14 Cameras</string>
+    <string name="campref_crossroad_dialog_title_SH183">Cameras for SH183</string>    
+    <string name="campref_mainroad_crossroad_default_SH183">23</string>
+    <string name="session_selected_SH183">session_selected_SH183</string>
+
     <string-array name="view_choices">
         <item>US 75</item>
         <item>SH 183</item>
