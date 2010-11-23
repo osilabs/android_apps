@@ -256,51 +256,52 @@ public class DallasTraffic extends Activity {
 	    tvSpinner.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Context c = v.getContext();
-				
-		    	Toast.makeText(getApplicationContext(), "CAMERA before: " + PREF_CAMERA_1, Toast.LENGTH_SHORT).show();
-		    	
-				Intent intent = new Intent()
-		    		.setClass(c, com.osilabs.android.apps.dallastraffic.Prefs.class);
-		    	c.startActivity(intent);
-		    	
-
-		    	//
-		    	//
-		    	// LEFT OFF HERE TRYING TO FIGURE OUT HOW TO RETURN THE CHOSEN CAMERA
-		    	//
-		    	//
-		    	
-		    	
-//                //set up dialog
-//                final Dialog dialog = new Dialog(v.getContext());
-//                dialog.setContentView(R.layout.cameraconfig);
-//                dialog.setTitle("Camera Options");
-//                dialog.setCancelable(true);
+				spViewChoices.performClick();
+//				Context c = v.getContext();
+//				
+//		    	Toast.makeText(getApplicationContext(), "CAMERA before: " + PREF_CAMERA_1, Toast.LENGTH_SHORT).show();
+//		    	
+//				Intent intent = new Intent()
+//		    		.setClass(c, com.osilabs.android.apps.dallastraffic.Prefs.class);
+//		    	c.startActivity(intent);
+//		    	
 //
-//                //there are a lot of settings, for dialog, check them all out!
-//                //set up text
-//                TextView drop = (TextView) dialog.findViewById(R.id.drop_textview);
-//                drop.setBackgroundColor(Color.YELLOW);
-//                
+//		    	//
+//		    	//
+//		    	// LEFT OFF HERE TRYING TO FIGURE OUT HOW TO RETURN THE CHOSEN CAMERA
+//		    	//
+//		    	//
+//		    	
+//		    	
+////                //set up dialog
+////                final Dialog dialog = new Dialog(v.getContext());
+////                dialog.setContentView(R.layout.cameraconfig);
+////                dialog.setTitle("Camera Options");
+////                dialog.setCancelable(true);
+////
+////                //there are a lot of settings, for dialog, check them all out!
 ////                //set up text
-////                TextView text = (TextView) dialog.findViewById(R.id.TextView01);
-////                text.setText(R.string.drop_color_chosen_message);
-// 
-//                //set up image view
-////                ImageView img = (ImageView) dialog.findViewById(R.id.ImageView01);
-////                img.setImageResource(R.drawable.icon);
-// 
-//                //set up button
-//                Button button = (Button) dialog.findViewById(R.id.Button01);
-//                button.setOnClickListener(new OnClickListener() {
-//                	@Override
-//                    public void onClick(View vc) {
-//                		dialog.cancel();
-//                    }
-//                });
-//                //now that the dialog is set up, it's time to show it    
-//                dialog.show();
+////                TextView drop = (TextView) dialog.findViewById(R.id.drop_textview);
+////                drop.setBackgroundColor(Color.YELLOW);
+////                
+//////                //set up text
+//////                TextView text = (TextView) dialog.findViewById(R.id.TextView01);
+//////                text.setText(R.string.drop_color_chosen_message);
+//// 
+////                //set up image view
+//////                ImageView img = (ImageView) dialog.findViewById(R.id.ImageView01);
+//////                img.setImageResource(R.drawable.icon);
+//// 
+////                //set up button
+////                Button button = (Button) dialog.findViewById(R.id.Button01);
+////                button.setOnClickListener(new OnClickListener() {
+////                	@Override
+////                    public void onClick(View vc) {
+////                		dialog.cancel();
+////                    }
+////                });
+////                //now that the dialog is set up, it's time to show it    
+////                dialog.show();
 			}
 		});
     }
@@ -374,14 +375,60 @@ public class DallasTraffic extends Activity {
 	
 		public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 			//setMainWebView(pos);
-			Toast.makeText(getApplicationContext(), "Set sub cameras", Toast.LENGTH_LONG).show();	
+			Toast.makeText(getApplicationContext(), "Launch subcams: " 
+					+ Integer.toString(pos)
+					, Toast.LENGTH_LONG).show();
+			
+			Context c = view.getContext();
+			Intent intent = new Intent()
+				.setClass(c, com.osilabs.android.apps.dallastraffic.CameraPicker.class);
+			intent.putExtra("mainroad", Integer.toString(pos));
+				startActivityForResult(intent,1);
+				
 		}
+		
 	
 		public void onNothingSelected(AdapterView parent) {
 		  // Do nothing.
 		}
 	}
-	
+
+	protected void onActivityResult(int requestCode, int resultCode, Intent data){
+	    // See which child activity is calling us back.
+	    switch (resultCode) {
+	        case 1:
+	            // This is the standard resultCode that is sent back if the
+	            // activity crashed or didn't doesn't supply an explicit result.
+	            if (resultCode == RESULT_CANCELED){
+	    			Toast.makeText(getApplicationContext(), 
+	    					"Camera may have moved, please try again"
+	    					, Toast.LENGTH_LONG).show();
+	            } 
+	            else {
+	                Bundle extras = data.getExtras();
+	                int cam = extras.getInt("selected_camera");
+	    			Toast.makeText(getApplicationContext(), 
+	    					"CAM:" + Integer.toString(cam)
+	    					, Toast.LENGTH_LONG).show();
+	                		                
+	            	// FIXME - this happens in a few places, consolidate it.
+	    			PREF_CAMERA_1 = cam;
+	    			
+	    			// Reload the webview so it just shows the chosen camera
+	    	    	wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_VIEW_INDEX+"&camera="+PREF_CAMERA_1);
+	    	    	
+	    			// Set the chosen camera in the persistent settings
+	    	    	SharedPreferences prefs 
+	    				= getSharedPreferences(NAMESPACE, Activity.MODE_PRIVATE);
+	    			    SharedPreferences.Editor editor = prefs.edit();
+	    			    editor.putInt("session_camera_1", PREF_CAMERA_1);
+	    			    editor.commit();
+	            }
+	        default:
+	            break;
+	    }
+	}
+
 	// FIXME - move these
 	public void hideCameraConfiguration() {
 		ivMore.setVisibility(ImageView.GONE);
