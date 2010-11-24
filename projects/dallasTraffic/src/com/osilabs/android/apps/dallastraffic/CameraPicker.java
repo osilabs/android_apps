@@ -31,8 +31,14 @@ public class CameraPicker extends ListActivity
         // Get array of crossroads for the current mainroad
         int getRes = getResources().getIdentifier("campref_crossroads_" + mainroads[ mainroad_pos ] , "array", getPackageName());
 
-        String[] cameras = getResources().getStringArray(getRes);
-        setListAdapter(new ArrayAdapter<String>(this, R.layout.camera_list_item, cameras));
+        try {
+			String[] cameras = getResources().getStringArray(getRes);
+			setListAdapter(new ArrayAdapter<String>(this, R.layout.camera_list_item, cameras));
+		} catch (Exception e) {
+	        Toast.makeText(this, 
+	                "Oops. Cameras not found. " + e.getMessage(),
+	                Toast.LENGTH_SHORT).show();
+		}
     }    
  
     @Override
