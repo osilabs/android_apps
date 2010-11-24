@@ -45,16 +45,22 @@ public class CameraPicker extends ListActivity
     public void onListItemClick(ListView parent, View v, int position, long id) 
     {   
     	
-//        Intent i = getIntent();
+        Intent i = getIntent();
 //        //String mainroad = i.getExtras().getString("mainroad");
-//        int mainroad_pos= i.getExtras().getInt("mainroad_pos");
+        int mainroad_pos = i.getExtras().getInt("mainroad_pos");
 //        10
-//    	String[] mainroads = getResources().getStringArray(R.array.campref_mainroads_values);
+    	String[] mainroads = getResources().getStringArray(R.array.campref_mainroads_values);
 //        
 //        // Get array of crossroads for the current mainroad
-//        int getRes = getResources().getIdentifier("campref_crossroads_" + mainroads[ position ] , "array", getPackageName());
+        int mrGetRes = getResources().getIdentifier("campref_crossroads_" + mainroads[ mainroad_pos ] + "_values" , "array", getPackageName());
 //    	
-    	String[] cameras = getResources().getStringArray(R.array.campref_crossroads_SH183_values);
+    	String[] cameras = getResources().getStringArray(mrGetRes);
+    	
+    	
+    	
+    	
+    	
+    	
     	
         Toast.makeText(this, 
             "You have selected " + cameras[position], 
