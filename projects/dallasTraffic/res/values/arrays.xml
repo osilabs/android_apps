@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<!--	Camera Prefs-->
+	<!--	Camera Mainroads-->
+    <string-array name="campref_mainroads">
+        <item>US75</item>
+        <item>SH183</item>
+        <item>SOMEWHERE</item>
+        <item>IH35E</item>
+        <item>SPUR 408</item>
+        <item>IH635</item>
+        <item>Loop 12</item>
+    </string-array>
+    <string-array name="campref_mainroads_values">
+        <item>US75</item>
+        <item>SH183</item>
+        <item>SOMEWHERE</item>
+        <item>IH35E</item>
+        <item>SPUR 408</item>
+        <item>IH635</item>
+        <item>Loop 12</item>
+    </string-array>
+    
+	<!--	Camera Crossroads-->
 	<string-array name="campref_crossroads_US75">
-        <item>Zachary</item>
-        <item>Co Rd 73</item>
-        <item>Hopkins Crossroads</item>
-        <item>Zachary</item>
-        <item>Co Rd 73</item>
-        <item>Hopkins Crossroads</item>
-        <item>Zachary</item>
-        <item>Co Rd 73</item>
-        <item>Hopkins Crossroads</item>
-        <item>Zachary</item>
-        <item>Co Rd 73</item>
-        <item>Hopkins Crossroads</item>
-        <item>Zachary</item>
-        <item>Co Rd 73</item>
-        <item>Hopkins Crossroads</item>
-        <item>Zachary</item>
-        <item>Co Rd 73</item>
-        <item>Hopkins Crossroads</item>
         <item>Zachary</item>
         <item>Co Rd 73</item>
         <item>Hopkins Crossroads</item>
@@ -29,26 +31,7 @@
 		<item>277</item>
 		<item>15</item>
 		<item>234</item>
-		<item>277</item>
-		<item>15</item>
-		<item>234</item>
-		<item>277</item>
-		<item>15</item>
-		<item>234</item>
-		<item>277</item>
-		<item>15</item>
-		<item>234</item>
-		<item>277</item>
-		<item>15</item>
-		<item>234</item>
-		<item>277</item>
-		<item>15</item>
-		<item>234</item>
-		<item>277</item>
-		<item>15</item>
-		<item>234</item>
 	</string-array>
-
 	<string-array name="campref_crossroads_SH183">
         <item>wilson</item>
         <item>shire</item>
@@ -60,6 +43,16 @@
 		<item>122</item>
 		<item>23</item>
 		<item>194</item>
+	</string-array>
+	<string-array name="campref_crossroads_SOMEWHERE">
+        <item>aaaa</item>
+        <item>bb</item>
+        <item>cccccc</item>
+	</string-array>
+	<string-array name="campref_crossroads_SOMEWHERE_values">
+		<item>277</item>
+		<item>15</item>
+		<item>234</item>
 	</string-array>
 
 </resources>

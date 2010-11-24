@@ -31,15 +31,7 @@
     <string name="campref_mainroad_crossroad_default_SH183">23</string>
     <string name="session_selected_SH183">session_selected_SH183</string>
 
-    <string-array name="view_choices">
-        <item>US 75</item>
-        <item>SH 183</item>
-        <item>US 67</item>
-        <item>IH 35E</item>
-        <item>IH 30</item>
-        <item>IH 635</item>
-        <item>Loop 12</item>
-    </string-array>
+
     
     <style name="osistyle" parent="@android:style/TextAppearance.Medium">
         <item name="android:layout_width">fill_parent</item>

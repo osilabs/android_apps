@@ -1,5 +1,7 @@
 package com.osilabs.android.apps.dallastraffic;
 
+import java.lang.reflect.Field;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -17,29 +19,47 @@ public class CameraPicker extends ListActivity
         setContentView(R.layout.camera_picker);
         
         Intent i = getIntent();
-        String mainroad = i.getExtras().getString("mainroad");
+        //String mainroad = i.getExtras().getString("mainroad");
+        int mainroad_pos= i.getExtras().getInt("mainroad_pos");
+        
+    	String[] mainroads = getResources().getStringArray(R.array.campref_mainroads_values);
+    	
         Toast.makeText(this, 
-                "Mainroad is " + mainroad, 
+                "Mainroad is " + mainroads[ mainroad_pos ],
                 Toast.LENGTH_SHORT).show();
-                
-        String[] cameras = getResources().getStringArray(R.array.campref_crossroads_US75);
+        
+        // Get array of crossroads for the current mainroad
+        int getRes = getResources().getIdentifier("campref_crossroads_" + mainroads[ mainroad_pos ] , "array", getPackageName());
+
+        String[] cameras = getResources().getStringArray(getRes);
         setListAdapter(new ArrayAdapter<String>(this, R.layout.camera_list_item, cameras));
     }    
  
-    public void onListItemClick(
-    ListView parent, View v,
-    int position, long id) 
+    @Override
+    public void onListItemClick(ListView parent, View v, int position, long id) 
     {   
-    	String[] cameras = getResources().getStringArray(R.array.campref_crossroads_US75_values);
+    	
+//        Intent i = getIntent();
+//        //String mainroad = i.getExtras().getString("mainroad");
+//        int mainroad_pos= i.getExtras().getInt("mainroad_pos");
+//        10
+//    	String[] mainroads = getResources().getStringArray(R.array.campref_mainroads_values);
+//        
+//        // Get array of crossroads for the current mainroad
+//        int getRes = getResources().getIdentifier("campref_crossroads_" + mainroads[ position ] , "array", getPackageName());
+//    	
+    	String[] cameras = getResources().getStringArray(R.array.campref_crossroads_SH183_values);
+    	
         Toast.makeText(this, 
             "You have selected " + cameras[position], 
             Toast.LENGTH_SHORT).show();
         
-        Bundle info = new Bundle();
-        info.putInt("selected_camera", Integer.parseInt(cameras[position]) );
-        info.putLong("selected_camera_position", position);
         Intent intent = new Intent();
-        intent.putExtras(info);
+        Bundle extras = new Bundle();
+
+        extras.putInt("selected_camera", Integer.parseInt(cameras[position]) );
+        extras.putLong("selected_camera_position", position);
+        intent.putExtras(extras);
         setResult(RESULT_OK, intent);
         
         // Return control back to main traffic app

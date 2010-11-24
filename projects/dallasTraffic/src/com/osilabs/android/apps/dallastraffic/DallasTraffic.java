@@ -231,7 +231,7 @@ public class DallasTraffic extends Activity {
 		 
         spViewChoices = (Spinner) findViewById(R.id.view_choice_spinner);
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-			this, R.array.view_choices, android.R.layout.simple_spinner_item);
+			this, R.array.campref_mainroads, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spViewChoices.setOnItemSelectedListener(new QuickViewOnItemSelectedListener());
 		spViewChoices.setAdapter(adapter);
@@ -249,10 +249,18 @@ public class DallasTraffic extends Activity {
 //			}
 //		});
 //
-	    //
-		// View Choice Spinner
-	    //
-		tvSpinner = (TextView) findViewById(R.id.view_spinner);
+    }
+
+    @Override
+    public void onStart() {
+    	super.onStart();
+    	
+        Log.d(TAG, "onStart");
+
+        // Inflate some views.
+		ivMore = (ImageView) findViewById(R.id.launcher_more);
+
+		tvSpinner = (TextView) findViewById(R.id.camera_config_spinner);
 	    tvSpinner.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -304,17 +312,6 @@ public class DallasTraffic extends Activity {
 ////                dialog.show();
 			}
 		});
-    }
-
-    @Override
-    public void onStart() {
-    	super.onStart();
-    	
-        Log.d(TAG, "onStart");
-
-        // Inflate some views.
-		ivMore = (ImageView) findViewById(R.id.launcher_more);
-		tvSpinner = (TextView) findViewById(R.id.view_spinner);
 
 		//
 		// Main Web View
@@ -374,29 +371,38 @@ public class DallasTraffic extends Activity {
 	public class QuickViewOnItemSelectedListener implements OnItemSelectedListener {
 	
 		public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-			//setMainWebView(pos);
-			Toast.makeText(getApplicationContext(), "Launch subcams: " 
-					+ Integer.toString(pos)
-					, Toast.LENGTH_LONG).show();
+//			//setMainWebView(pos);
+//			Toast.makeText(getApplicationContext(), "Launch subcams: " 
+//					+ Integer.toString(pos)
+//					, Toast.LENGTH_LONG).show();
 			
 			Context c = view.getContext();
-			Intent intent = new Intent()
-				.setClass(c, com.osilabs.android.apps.dallastraffic.CameraPicker.class);
-			intent.putExtra("mainroad", Integer.toString(pos));
-				startActivityForResult(intent,1);
-				
+			
+			Intent intent = new Intent().setClass(c, com.osilabs.android.apps.dallastraffic.CameraPicker.class);
+			intent.putExtra("mainroad_pos", pos);
+			// Turning on new task will make this activity return to onActivityResult as soon
+			//  as it starts
+			//intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
+			startActivityForResult(intent, 33); // FIXME - Make this a const
 		}
-		
 	
 		public void onNothingSelected(AdapterView parent) {
 		  // Do nothing.
 		}
 	}
 
+	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
-	    // See which child activity is calling us back.
-	    switch (resultCode) {
-	        case 1:
+		// See which child activity is calling us back.
+	    switch (requestCode) {
+	        case 33:
+	            //Bundle extras = data.getExtras();
+	            //int cam = extras.getInt("selected_camera");
+	    		Toast.makeText(getApplicationContext(), 
+	    				"CAM:" + Integer.toString(resultCode)
+	    				, Toast.LENGTH_LONG).show();
+	        	
+	        	
 	            // This is the standard resultCode that is sent back if the
 	            // activity crashed or didn't doesn't supply an explicit result.
 	            if (resultCode == RESULT_CANCELED){
@@ -405,13 +411,14 @@ public class DallasTraffic extends Activity {
 	    					, Toast.LENGTH_LONG).show();
 	            } 
 	            else {
-	                Bundle extras = data.getExtras();
-	                int cam = extras.getInt("selected_camera");
+	               Bundle extras = data.getExtras();
+	               int cam = extras.getInt("selected_camera");
 	    			Toast.makeText(getApplicationContext(), 
 	    					"CAM:" + Integer.toString(cam)
 	    					, Toast.LENGTH_LONG).show();
 	                		                
-	            	// FIXME - this happens in a few places, consolidate it.
+	            	// FIXME - this happens in a few places, consolidate it. Like the
+	    			//  next few lines do
 	    			PREF_CAMERA_1 = cam;
 	    			
 	    			// Reload the webview so it just shows the chosen camera
@@ -428,6 +435,7 @@ public class DallasTraffic extends Activity {
 	            break;
 	    }
 	}
+
 
 	// FIXME - move these
 	public void hideCameraConfiguration() {
