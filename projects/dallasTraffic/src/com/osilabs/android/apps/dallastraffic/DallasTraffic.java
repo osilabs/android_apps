@@ -280,7 +280,14 @@ public class DallasTraffic extends Activity {
 	    tvSpinner.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				spViewChoices.performClick();
+///				spViewChoices.performClick();
+				
+				Context c = v.getContext();
+				
+				Intent intent = new Intent().setClass(c, com.osilabs.android.apps.dallastraffic.CameraELV.class);
+				startActivityForResult(intent, 33); // FIXME - Make this a const
+
+				
 //				Context c = v.getContext();
 //				
 //		    	Toast.makeText(getApplicationContext(), "CAMERA before: " + PREF_CAMERA_1, Toast.LENGTH_SHORT).show();

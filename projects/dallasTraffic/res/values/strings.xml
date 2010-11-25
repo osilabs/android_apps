@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <resources>
+
+    <string name="expandable_list_sample_action">Sample action</string>
+
+
+
     <string name="app_name">Dallas Traffic</string>
     <string name="quick_view_label">Quick View</string>
 
