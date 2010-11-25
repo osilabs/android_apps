@@ -1,26 +1,32 @@
 // v0.2
 
-
-* Rename Prefs class to CameraPrefs
-
-* finish gettng camera working
-
-* top nav bar - police radio, weather radio, incidents, cameras. switch bottom to chooser for cams when on camera tab
-
-* put camera xml in android and use native pop
-
-* feedback tool
-
-* Credit the dot site
-
-* Rename navbar to bottomnav
-
-* Need icons for refresh, calendar, traffic, alerts, and cameras
-
-* Get an android widdler
-
+>> Bugs <<
+* The iconcolor of the alert icon ends up matching the background color when highlighted so you can't see it.
+* popup that shows mainroads, when you select a radio option the was already chosen last, it won't go to the listview.
+* When it starts, no tabs are highlighted.
 * OnLoad/onStart/others call show/hideCameraConfiguration so it is showing or hidden when the reaccess the app.
+* If it starts out on camera view, the config link isn't showing
+* When it recompoles and starts it always starts on the listview.
 
-* Move cam escription to under camera shot so the shot is as high up the screen as posible.
+>> Layout <<
+* Height of ad banner is too short, cuts off bottom.
+* Space tab/refresh icons from top so they arent so close to the ad banner
+* make sure the lines between tob/bottom navbars look nice
+* Need icons for calendar and police
+* Right justify scanner icons.
 
-* Color the tabs when active
+>> New Features <<
+* Make incident feed pass number to overlay on incident tab icon
+* feedback tool
+* Credit the daltrans
+* Get an android widdler
+* Rename camera config link
+
+>> Cleanup code <<
+* Rename navbar to bottomnav
+* Rename Prefs class to CameraPrefs
+* Remove old camera config link and unused html
+
+
+
+

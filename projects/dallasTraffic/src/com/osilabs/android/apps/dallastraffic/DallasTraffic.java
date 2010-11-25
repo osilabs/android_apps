@@ -197,6 +197,11 @@ public class DallasTraffic extends Activity {
 		});
 
 	    ivAlerts = (ImageView) findViewById(R.id.launcher_alerts);
+	    // This particular icon is much whiter than the others so i am making it darker
+	    //  with the alpha.
+	    ivAlerts.setAlpha(146);
+	    //ivAlerts.setColorFilter(Color.MAGENTA, PorterDuff.Mode.DST_ATOP); // same as tint
+	    //ivAlerts.setBackgroundColor(Color.CYAN);
 	    ivAlerts.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -213,6 +218,9 @@ public class DallasTraffic extends Activity {
 		});
 
 	    ivRefresh = (ImageView) findViewById(R.id.navbar_refresh);
+	    // Give it a nice blue color. SRC_ATOP means color the icon, not
+	    //  the background.
+	    ivRefresh.setColorFilter(0xFF6B7594, PorterDuff.Mode.SRC_ATOP); // same as tint
 	    ivRefresh.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
