@@ -23,10 +23,6 @@ public class CameraPicker extends ListActivity
         int mainroad_pos= i.getExtras().getInt("mainroad_pos");
         
     	String[] mainroads = getResources().getStringArray(R.array.campref_mainroads_values);
-    	
-        Toast.makeText(this, 
-                "Mainroad is " + mainroads[ mainroad_pos ],
-                Toast.LENGTH_SHORT).show();
         
         // Get array of crossroads for the current mainroad
         int getRes = getResources().getIdentifier("campref_crossroads_" + mainroads[ mainroad_pos ] , "array", getPackageName());
@@ -55,16 +51,7 @@ public class CameraPicker extends ListActivity
         int mrGetRes = getResources().getIdentifier("campref_crossroads_" + mainroads[ mainroad_pos ] + "_values" , "array", getPackageName());
 //    	
     	String[] cameras = getResources().getStringArray(mrGetRes);
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-        Toast.makeText(this, 
-            "You have selected " + cameras[position], 
-            Toast.LENGTH_SHORT).show();
+
         
         Intent intent = new Intent();
         Bundle extras = new Bundle();

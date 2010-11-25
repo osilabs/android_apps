@@ -106,6 +106,9 @@ public class DallasTraffic extends Activity {
 	//
 	// Globals
 	//
+	
+	// Used to affect behavior during oncreate/onstart
+	private boolean spinner_initialized = false;
 
 	// Prefs
 	protected static int PREF_CAMERA_1;
@@ -249,7 +252,7 @@ public class DallasTraffic extends Activity {
 		spViewChoices.setOnItemSelectedListener(new QuickViewOnItemSelectedListener());
 		spViewChoices.setAdapter(adapter);
 		spViewChoices.setHapticFeedbackEnabled(true); // fixme - doesn't seem to work
-		spViewChoices.setSelection(CURRENT_VIEW_INDEX);
+//		spViewChoices.setSelection(CURRENT_VIEW_INDEX);
 		
 //	    //
 //		// View Choice Expand Icon
@@ -268,7 +271,7 @@ public class DallasTraffic extends Activity {
     public void onStart() {
     	super.onStart();
     	
-        Log.d(TAG, "onStart");
+    	Log.d(TAG, "onStart");
 
         // Inflate some views.
 		ivMore = (ImageView) findViewById(R.id.launcher_more);
@@ -383,24 +386,36 @@ public class DallasTraffic extends Activity {
 	// 
 	public class QuickViewOnItemSelectedListener implements OnItemSelectedListener {
 	
+		@Override
 		public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-//			//setMainWebView(pos);
-//			Toast.makeText(getApplicationContext(), "Launch subcams: " 
-//					+ Integer.toString(pos)
-//					, Toast.LENGTH_LONG).show();
 			
-			Context c = view.getContext();
-			
-			Intent intent = new Intent().setClass(c, com.osilabs.android.apps.dallastraffic.CameraPicker.class);
-			intent.putExtra("mainroad_pos", pos);
-			// Turning on new task will make this activity return to onActivityResult as soon
-			//  as it starts
-			//intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
-			startActivityForResult(intent, 33); // FIXME - Make this a const
+			// Stinking hack because this event fires upon when the activity starts.
+			//  Discarding the first fire for this reason.
+			if( !spinner_initialized ) {
+				spinner_initialized = true;
+			} else {
+	//			//setMainWebView(pos);
+				Toast.makeText(getApplicationContext(), "Launch subcams: " 
+						+ Integer.toString(pos)
+						, Toast.LENGTH_LONG).show();
+				
+				Context c = view.getContext();
+				
+				Intent intent = new Intent().setClass(c, com.osilabs.android.apps.dallastraffic.CameraPicker.class);
+				intent.putExtra("mainroad_pos", pos);
+				// Turning on new task will make this activity return to onActivityResult as soon
+				//  as it starts
+				//intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK); 
+				//intent.setFlags(intent.FLAG_ACTIVITY_FORWARD_RESULT);
+				startActivityForResult(intent, 33); // FIXME - Make this a const
+			}
 		}
 	
-		public void onNothingSelected(AdapterView parent) {
-		  // Do nothing.
+		@Override
+		public void onNothingSelected(AdapterView parent) { 
+			//setMainWebView(pos);
+			Toast.makeText(getApplicationContext(), "Nothing Selected" 
+					, Toast.LENGTH_LONG).show();
 		}
 	}
 
@@ -409,13 +424,7 @@ public class DallasTraffic extends Activity {
 		// See which child activity is calling us back.
 	    switch (requestCode) {
 	        case 33:
-	            //Bundle extras = data.getExtras();
-	            //int cam = extras.getInt("selected_camera");
-	    		Toast.makeText(getApplicationContext(), 
-	    				"CAM:" + Integer.toString(resultCode)
-	    				, Toast.LENGTH_LONG).show();
-	        	
-	        	
+
 	            // This is the standard resultCode that is sent back if the
 	            // activity crashed or didn't doesn't supply an explicit result.
 	            if (resultCode == RESULT_CANCELED){
@@ -425,11 +434,7 @@ public class DallasTraffic extends Activity {
 	            } 
 	            else {
 	               Bundle extras = data.getExtras();
-	               int cam = extras.getInt("selected_camera");
-	    			Toast.makeText(getApplicationContext(), 
-	    					"CAM:" + Integer.toString(cam)
-	    					, Toast.LENGTH_LONG).show();
-	                		                
+	               int cam = extras.getInt("selected_camera");	                
 	            	// FIXME - this happens in a few places, consolidate it. Like the
 	    			//  next few lines do
 	    			PREF_CAMERA_1 = cam;
