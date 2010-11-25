@@ -24,7 +24,7 @@
     <string name="campref_crossroad_dialog_title_US75">Cameras for US75</string>    
     <string name="campref_mainroad_crossroad_default_US75">234</string>
     <string name="session_selected_US75">session_selected_US75</string>
-    <!--  -->
+    <!-- FIXME - this shouldnt be associated with a mainroad. -->
     <string name="campref_mainroad_SH183">SH183</string>
     <string name="campref_mainroad_summary_SH183">14 Cameras</string>
     <string name="campref_crossroad_dialog_title_SH183">Cameras for SH183</string>    

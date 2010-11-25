@@ -76,7 +76,7 @@ public class DallasTraffic extends Activity {
 	private static final int INDEX_CONGESTION           = 5;
 	private static final String[] INDEX_STRINGS = {		"Traffic", 
 														"Alerts", 
-														"Cameras", 
+														"Options", 
 														"Alert Map", 
 														"Incident Report", 
 														"Congestion"};

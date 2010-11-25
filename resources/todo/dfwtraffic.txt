@@ -1,13 +1,14 @@
 // v0.2
 
 >> Bugs <<
-* The iconcolor of the alert icon ends up matching the background color when highlighted so you can't see it.
 * popup that shows mainroads, when you select a radio option the was already chosen last, it won't go to the listview.
 * When it starts, no tabs are highlighted.
 * OnLoad/onStart/others call show/hideCameraConfiguration so it is showing or hidden when the reaccess the app.
 * If it starts out on camera view, the config link isn't showing
 * When it recompoles and starts it always starts on the listview.
 * Switched to camera tab and afer sitting for 10 seconds or so, view changed to traffic map
+* Some of the mainroad choices to to blank camera lists. Update array so this works.
+* More icon by options doesn't seem to work
 
 >> Layout <<
 * Height of ad banner is too short, cuts off bottom.
