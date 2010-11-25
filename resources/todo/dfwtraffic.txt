@@ -7,6 +7,7 @@
 * OnLoad/onStart/others call show/hideCameraConfiguration so it is showing or hidden when the reaccess the app.
 * If it starts out on camera view, the config link isn't showing
 * When it recompoles and starts it always starts on the listview.
+* Switched to camera tab and afer sitting for 10 seconds or so, view changed to traffic map
 
 >> Layout <<
 * Height of ad banner is too short, cuts off bottom.
@@ -14,9 +15,11 @@
 * make sure the lines between tob/bottom navbars look nice
 * Need icons for calendar and police
 * Right justify scanner icons.
+* Alert icon is too big
 
 >> New Features <<
-* Make incident feed pass number to overlay on incident tab icon
+* Split out Help and About
+* Make incident feed pass number to overlay on incident tab icon (http://stackoverflow.com/questions/2317617/how-to-keep-text-on-imageview-in-android)
 * feedback tool
 * Credit the daltrans
 * Get an android widdler

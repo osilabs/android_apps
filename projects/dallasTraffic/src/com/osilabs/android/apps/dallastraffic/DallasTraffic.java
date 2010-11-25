@@ -97,7 +97,12 @@ public class DallasTraffic extends Activity {
 	
 	protected static final String SCANNER_RADIO_NAMESPACE = "net.gordonedwards.scannerradio";
 	protected static final String SCANNER_RADIO_ACTION = "ACTION_PLAY_SCANNER";
-
+	public    static final int    ALPHA_ON = 0xFFFF;
+	public    static final int    ALPHA_OFF = 0xFFFF;
+	public    static final int    ALPHA_ON_ALERTS = 0xFFEE;
+	public    static final int    ALPHA_OFF_ALERTS = 0xFF88;
+	public    static final int    TAB_ACTIVE_COLOR = 0xFF00FF00; // green
+	
 	//
 	// Globals
 	//
@@ -199,7 +204,7 @@ public class DallasTraffic extends Activity {
 	    ivAlerts = (ImageView) findViewById(R.id.launcher_alerts);
 	    // This particular icon is much whiter than the others so i am making it darker
 	    //  with the alpha.
-	    ivAlerts.setAlpha(146);
+	    ivAlerts.setAlpha(ALPHA_OFF_ALERTS);
 	    //ivAlerts.setColorFilter(Color.MAGENTA, PorterDuff.Mode.DST_ATOP); // same as tint
 	    //ivAlerts.setBackgroundColor(Color.CYAN);
 	    ivAlerts.setOnClickListener(new View.OnClickListener() {
@@ -455,21 +460,22 @@ public class DallasTraffic extends Activity {
 		tvSpinner.setVisibility(TextView.VISIBLE);
 	}
 	public void setCurrentTab() {
-		
-		//LEFT OFF HERE TRYING TO SET TINT OF ICONS - clicking the icon causes FC
-		ivTraffic.setColorFilter(null);
-		ivAlerts.setColorFilter(null);
-		ivCameras.setColorFilter(null);
+		ivTraffic.setColorFilter(null); ivTraffic.setAlpha(ALPHA_OFF);
+		ivAlerts.setColorFilter(null); ivAlerts.setAlpha(ALPHA_OFF_ALERTS);
+		ivCameras.setColorFilter(null); ivCameras.setAlpha(ALPHA_OFF);
 		
 		switch (CURRENT_VIEW_INDEX) {
 			case MENU_TRAFFIC:
-				ivTraffic.setColorFilter(Color.GREEN, PorterDuff.Mode.DARKEN);
+				ivTraffic.setColorFilter(TAB_ACTIVE_COLOR, PorterDuff.Mode.SRC_ATOP);
+				ivTraffic.setAlpha(ALPHA_ON);
 				break;
-		    case MENU_CAMERAS:
-				ivCameras.setColorFilter(Color.GREEN, PorterDuff.Mode.DARKEN);
-		    	break;
 		    case MENU_ALERTS:
-				ivAlerts.setColorFilter(Color.GREEN, PorterDuff.Mode.DARKEN);
+				ivAlerts.setColorFilter(TAB_ACTIVE_COLOR, PorterDuff.Mode.SRC_ATOP);
+				ivAlerts.setAlpha(ALPHA_ON_ALERTS);
+		    	break;
+		    case MENU_CAMERAS:
+				ivCameras.setColorFilter(TAB_ACTIVE_COLOR, PorterDuff.Mode.SRC_ATOP);
+				ivCameras.setAlpha(ALPHA_ON);
 		    	break;
 			case MENU_NOTICE:
 				break;
