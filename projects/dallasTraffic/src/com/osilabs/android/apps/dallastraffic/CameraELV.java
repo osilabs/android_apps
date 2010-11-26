@@ -44,12 +44,33 @@ public class CameraELV extends ExpandableListActivity implements OnChildClickLis
 
     @Override
     public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, 
-    		int childPosition, long id) { 
-    	Toast.makeText(this, "onChildClick",
-                Toast.LENGTH_SHORT).show();
+    	int childPosition, long id) { 
     	
-		return false;
+    	// Get mainroad
+        String[] mainroads = getResources().getStringArray(R.array.campref_mainroads_values);
+
+        // Get crossroad camera id
+        int getRes = getResources().getIdentifier("campref_crossroads_" + mainroads[groupPosition] + "_values" , "array", getPackageName());
+        String[] crossroads = getResources().getStringArray(getRes);
+
+//    	Toast.makeText(this, "onChildClick."
+//    			+ " id:" + Long.toString(id)
+//    			+ " Mainroad:" + mainroads[groupPosition]
+//    			+ " Crossroad:" + crossroads[childPosition]
+//                ,Toast.LENGTH_SHORT).show();
     	
+        Intent intent = new Intent();
+        Bundle extras = new Bundle();
+
+        // Set the id of the selected camera
+        extras.putInt("selected_camera", Integer.parseInt(crossroads[childPosition]) );
+        intent.putExtras(extras);
+        setResult(RESULT_OK, intent);
+      
+        // Return control back to main traffic app
+      	finish();
+
+		return false;    	
     }
     
     @Override

@@ -236,35 +236,6 @@ public class DallasTraffic extends Activity {
 				refreshViews();
 			}
 		});
-
-	    // -------------------------
-	    // Bottom Navigation Bar
-	    //
-	    
-
-	    
-		// Spinner Choices
-		 
-        spViewChoices = (Spinner) findViewById(R.id.view_choice_spinner);
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-			this, R.array.campref_mainroads, android.R.layout.simple_spinner_item);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spViewChoices.setOnItemSelectedListener(new QuickViewOnItemSelectedListener());
-		spViewChoices.setAdapter(adapter);
-		spViewChoices.setHapticFeedbackEnabled(true); // fixme - doesn't seem to work
-//		spViewChoices.setSelection(CURRENT_VIEW_INDEX);
-		
-//	    //
-//		// View Choice Expand Icon
-//	    //
-//		ivMore = (ImageView) findViewById(R.id.launcher_more);
-//		ivMore.setOnClickListener(new View.OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				spViewChoices.performClick();
-//			}
-//		});
-//
     }
 
     @Override
@@ -272,6 +243,10 @@ public class DallasTraffic extends Activity {
     	super.onStart();
     	
     	Log.d(TAG, "onStart");
+
+	    // -------------------------
+	    // Bottom Navigation Bar
+	    //
 
         // Inflate some views.
 		ivMore = (ImageView) findViewById(R.id.launcher_more);
@@ -286,53 +261,6 @@ public class DallasTraffic extends Activity {
 				
 				Intent intent = new Intent().setClass(c, com.osilabs.android.apps.dallastraffic.CameraELV.class);
 				startActivityForResult(intent, 33); // FIXME - Make this a const
-
-				
-//				Context c = v.getContext();
-//				
-//		    	Toast.makeText(getApplicationContext(), "CAMERA before: " + PREF_CAMERA_1, Toast.LENGTH_SHORT).show();
-//		    	
-//				Intent intent = new Intent()
-//		    		.setClass(c, com.osilabs.android.apps.dallastraffic.Prefs.class);
-//		    	c.startActivity(intent);
-//		    	
-//
-//		    	//
-//		    	//
-//		    	// LEFT OFF HERE TRYING TO FIGURE OUT HOW TO RETURN THE CHOSEN CAMERA
-//		    	//
-//		    	//
-//		    	
-//		    	
-////                //set up dialog
-////                final Dialog dialog = new Dialog(v.getContext());
-////                dialog.setContentView(R.layout.cameraconfig);
-////                dialog.setTitle("Camera Options");
-////                dialog.setCancelable(true);
-////
-////                //there are a lot of settings, for dialog, check them all out!
-////                //set up text
-////                TextView drop = (TextView) dialog.findViewById(R.id.drop_textview);
-////                drop.setBackgroundColor(Color.YELLOW);
-////                
-//////                //set up text
-//////                TextView text = (TextView) dialog.findViewById(R.id.TextView01);
-//////                text.setText(R.string.drop_color_chosen_message);
-//// 
-////                //set up image view
-//////                ImageView img = (ImageView) dialog.findViewById(R.id.ImageView01);
-//////                img.setImageResource(R.drawable.icon);
-//// 
-////                //set up button
-////                Button button = (Button) dialog.findViewById(R.id.Button01);
-////                button.setOnClickListener(new OnClickListener() {
-////                	@Override
-////                    public void onClick(View vc) {
-////                		dialog.cancel();
-////                    }
-////                });
-////                //now that the dialog is set up, it's time to show it    
-////                dialog.show();
 			}
 		});
 
@@ -364,21 +292,14 @@ public class DallasTraffic extends Activity {
         awebSettings.setJavaScriptEnabled(true);
         awebSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
     	wvAd.loadUrl(AD_BANNER_URL);
+    	
+    	//
+    	// Set the current tab
+    	//
+    	setMainWebView(CURRENT_VIEW_INDEX);
+
     }
 
-//    public void onConfigurationChanged(Configuration newConfig) {
-//        super.onConfigurationChanged(newConfig);
-//        
-//        Toast.makeText(this, "FLIPPED", Toast.LENGTH_SHORT).show();
-//        
-//        // Checks the orientation of the screen
-//        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-//            Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
-//        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-//            Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
-//        }
-//    }
-    
     public static boolean isIntentAvailable(Context context, String action) {
         final PackageManager packageManager = context.getPackageManager();
         final Intent intent = new Intent(action);
@@ -401,7 +322,6 @@ public class DallasTraffic extends Activity {
 			if( !spinner_initialized ) {
 				spinner_initialized = true;
 			} else {
-	//			//setMainWebView(pos);
 				Toast.makeText(getApplicationContext(), "Launch subcams: " 
 						+ Integer.toString(pos)
 						, Toast.LENGTH_LONG).show();
@@ -410,17 +330,12 @@ public class DallasTraffic extends Activity {
 				
 				Intent intent = new Intent().setClass(c, com.osilabs.android.apps.dallastraffic.CameraPicker.class);
 				intent.putExtra("mainroad_pos", pos);
-				// Turning on new task will make this activity return to onActivityResult as soon
-				//  as it starts
-				//intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK); 
-				//intent.setFlags(intent.FLAG_ACTIVITY_FORWARD_RESULT);
 				startActivityForResult(intent, 33); // FIXME - Make this a const
 			}
 		}
 	
 		@Override
 		public void onNothingSelected(AdapterView parent) { 
-			//setMainWebView(pos);
 			Toast.makeText(getApplicationContext(), "Nothing Selected" 
 					, Toast.LENGTH_LONG).show();
 		}
@@ -611,31 +526,7 @@ public class DallasTraffic extends Activity {
             //    }
             //});
         }
-        
-        
-        public void chooseCamera(int oldcamid) {
-        	
-			Toast.makeText(getApplicationContext(), "Loading camera settings...", Toast.LENGTH_LONG).show();
-
-			CURRENT_VIEW_INDEX = INDEX_CAMERAS;
-			
-			// Reload the webview, currently viewing camera so just call again 
-			//  and leave camera emtpy
-	    	wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_VIEW_INDEX);
-	    	
-	    	// FIXME - verify this doesn't need to be posted as a runnable.
-	    	
-        	// Post a runnable
-            //mHandler.post(new Runnable() {
-            //    public void run() {
-            //    	spinner.setSelection(0);
-            //    }
-            //});
-        }
-        
-        
     } 
-
 	
 	/* Creates the menu items */
 	public boolean onCreateOptionsMenu(Menu menu) {
