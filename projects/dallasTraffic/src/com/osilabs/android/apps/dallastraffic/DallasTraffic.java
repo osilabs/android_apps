@@ -308,38 +308,6 @@ public class DallasTraffic extends Activity {
                     PackageManager.MATCH_DEFAULT_ONLY);
         return list.size() > 0;
     }
-    
-    //
-	// Quick View Spinner
-	// 
-	public class QuickViewOnItemSelectedListener implements OnItemSelectedListener {
-	
-		@Override
-		public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-			
-			// Stinking hack because this event fires upon when the activity starts.
-			//  Discarding the first fire for this reason.
-			if( !spinner_initialized ) {
-				spinner_initialized = true;
-			} else {
-				Toast.makeText(getApplicationContext(), "Launch subcams: " 
-						+ Integer.toString(pos)
-						, Toast.LENGTH_LONG).show();
-				
-				Context c = view.getContext();
-				
-				Intent intent = new Intent().setClass(c, com.osilabs.android.apps.dallastraffic.CameraPicker.class);
-				intent.putExtra("mainroad_pos", pos);
-				startActivityForResult(intent, 33); // FIXME - Make this a const
-			}
-		}
-	
-		@Override
-		public void onNothingSelected(AdapterView parent) { 
-			Toast.makeText(getApplicationContext(), "Nothing Selected" 
-					, Toast.LENGTH_LONG).show();
-		}
-	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
