@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+
 <string-array name="campref_mainroads"><item>US75</item> 
 <item>SH183</item> 
 <item>IH35E</item> 
@@ -65,7 +67,7 @@
 <string-array name="campref_crossroads_High_Five_S_W__2"><item>High Five S.W. 2</item></string-array> 
 <string-array name="campref_crossroads_IH30_IH35E_Mixmaster"><item>IH30/IH35E Mixmaster</item></string-array> 
 <string-array name="campref_crossroads_SH114"><item>Dallas/Tarrant County Line</item><item>Freeport Pkwy.</item><item>Esters</item><item>Belt Line West</item><item>Belt Line East</item><item>Longhorn Dr.</item><item>SH161</item><item>MacArthur</item><item>Hidden Ridge</item><item>OConnor</item><item>Rochelle West</item><item>Rochelle East</item></string-array> 
-<string-array name="campref_crossroads_IH35"><item></item></string-array> 
+<string-array name="campref_crossroads_IH35"><item>Bear Creek</item></string-array> 
 <string-array name="campref_crossroads_IH35W"><item>FM2449</item><item>Crawford Rd.</item><item>FM407</item><item>FM1171</item><item>Earnhardt Way</item><item>SH114</item><item>Eagle Pkwy.</item></string-array> 
 <string-array name="campref_crossroads_US75_values"><item>29</item><item>31</item><item>43</item><item>52</item><item>53</item><item>93</item><item>112</item><item>113</item><item>283</item><item>284</item><item>285</item><item>286</item><item>287</item><item>288</item><item>289</item><item>290</item><item>291</item><item>292</item><item>293</item><item>294</item><item>314</item><item>315</item><item>521</item><item>522</item><item>523</item><item>524</item><item>527</item><item>530</item><item>532</item><item>575</item><item>544</item><item>545</item><item>542</item><item>543</item><item>525</item><item>537</item><item>538</item><item>539</item><item>546</item><item>534</item><item>541</item><item>529</item><item>535</item><item>526</item><item>531</item></string-array> 
 <string-array name="campref_crossroads_SH183_values"><item>105</item><item>106</item><item>107</item><item>139</item><item>141</item><item>143</item><item>145</item><item>146</item><item>147</item><item>153</item><item>162</item></string-array> 

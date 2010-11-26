@@ -1,8 +1,6 @@
 // v0.2
 
 >> Bugs <<
-* popup that shows mainroads, when you select a radio option the was already chosen last, it won't go to the listview.
-* If it starts out on camera view, the config link isn't showing
 * Switched to camera tab and afer sitting for 10 seconds or so, view changed to traffic map
 * Some of the mainroad choices to to blank camera lists. Update array so this works.
 * More icon by options doesn't seem to work
@@ -10,6 +8,8 @@
 * The generated xml is broken. mainroads not showing correctly. have crossroads inside the values...
 
 >> Layout <<
++ * Get single radio icon, use spinner when clicked.
++ * Layout the exp. listview entries.
 * Height of ad banner is too short, cuts off bottom.
 * Space tab/refresh icons from top so they arent so close to the ad banner
 * make sure the lines between tob/bottom navbars look nice
@@ -18,6 +18,8 @@
 * Alert icon is too big
 
 >> New Features <<
++ * show small italic datestamp under bottom left of camera shots.
+* Close the other exp. listview items as each new group is opened
 * Split out Help and About
 * Make incident feed pass number to overlay on incident tab icon (http://stackoverflow.com/questions/2317617/how-to-keep-text-on-imageview-in-android)
 * feedback tool

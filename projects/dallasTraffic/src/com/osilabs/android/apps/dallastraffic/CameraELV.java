@@ -117,19 +117,19 @@ public class CameraELV extends ExpandableListActivity implements OnChildClickLis
     	, {"Red Bird", "Kiest", "Polk", "Loop 12", "Swansee", "Hampton", "Camp Wisdom", "IH20 North"}
     	, {"Kirnwood", "Wheatland", "Hampton", "South Polk", "Willoughby", "Spur 408 East", "Dallas/Tarrant County Line", "Robinson Rd.", "Carrier Pkwy.", "Fish Creek", "Belt Line", "Mountain Creek EB", "Mountain Creek Pkwy.", "Cedar Ridge", "Duncanville Rd.", "Oriole", "Camp Wisdom", "Westmoreland", "Spur 408 EB", "Spur 408 WB", "Spur 408", "IH35E S.W. #1", "IH35E S.W. #2", "IH35E S.W. #3"}
     	, {"Loop 12", "Illinois", "Kiest North", "Kiest", "Kiest South", "Grady Niblo", "Artesian Creek NB", "Artesian Creek SB", "IH20 North"}
-    	, {""}
-    	, {""}
+    	, {"High Five S.E. 1"}
+    	, {"High Five S.E. 2"}
     	, {"Hotel St.", "Lamar", "Cadiz", "Akard", "St. Paul", "Good Latimer EB", "Haskell", "Carroll", "East Grand", "St. Francis", "Jim Miller", "Samuell", "Dolphin", "Hunnicut", "IH45", "Good Latimer WB", "2nd Ave.", "US80", "Big Town", "Motley", "Gus Thomasson", "Galloway", "Houston St.", "NW 19th St.", "NW 7th St.", "Belt Line", "MacArthur West", "MacArthur East", "Gifford Hill RR Spur", "Loop 12", "Westmoreland", "Hampton", "Sylvan", "Cesar Chavez Blvd.", "Duncan Perry"}
     	, {"Trinity River (Elm Fork)", "SH183 East", "SH183 South", "Grauwyler", "Union Bower", "Irving Blvd.", "Shady Grove", "Trinity River (West Fork)", "Singleton", "IH30 North", "Anderson", "Jefferson", "Keeneland Pkwy."}
     	, {"US75", "IH35E North", "IH35E South", "IH35E East", "US75 North", "US75 South", "US75 West"}
     	, {"Ross", "Pacific", "Taylor"}
-    	, {""}
-    	, {""}
-    	, {""}
-    	, {""}
-    	, {""}
+    	, {"High Five N.E. 1"}
+    	, {"High Five N.E. 2"}
+    	, {"High Five S.W. 1"}
+    	, {"High Five S.W. 2"}
+    	, {"IH30/IH35E Mixmaster"}
     	, {"Dallas/Tarrant County Line", "Freeport Pkwy.", "Esters", "Belt Line West", "Belt Line East", "Longhorn Dr.", "SH161", "MacArthur", "Hidden Ridge", "OConnor", "Rochelle West", "Rochelle East"}
-    	, {""}
+    	, {"Bear Creek"}
     	, {"FM2449", "Crawford Rd.", "FM407", "FM1171", "Earnhardt Way", "SH114", "Eagle Pkwy."}
     	};
     	 
