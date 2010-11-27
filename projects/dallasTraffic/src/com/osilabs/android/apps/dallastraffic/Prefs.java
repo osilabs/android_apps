@@ -3,13 +3,8 @@
  */
 package com.osilabs.android.apps.dallastraffic;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import android.preference.Preference.OnPreferenceChangeListener;
-import android.preference.Preference.OnPreferenceClickListener;
-import android.widget.Toast;
 
 public class Prefs extends PreferenceActivity {
 	@Override

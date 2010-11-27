@@ -18,7 +18,6 @@
     <string name="session_current_view">0</string>
     <string name="session_camera_1">0</string>    
 
-
 	<!-- Camera Prefs -->
     <string name="prefs">Camera Choices</string>
     <string name="prefs_title">Preferences</string>
@@ -28,7 +27,7 @@
     <string name="pref_police_radios">Police Scanners</string>
     <string name="pref_police_radios_summary">Choose your favorite</string>
     <string name="pref_police_radios_title">Favorite Police Scanner</string>    
-    <string name="pref_police_radios_default">0</string>
+    <string name="pref_police_radios_default">999999</string>
     <string name="pref_police_radios_dialog_title">Choose</string>
     <string name="pref_police_radios_selected">pref_police_radios_selected</string>
 	<!-- weather radio prefs -->

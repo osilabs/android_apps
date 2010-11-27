@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-	android:key="@string/prefs" android:title="@string/prefs_title"
+	android:key="@string/prefs" 
+	android:title="@string/prefs_title"
 	android:summary="@string/prefs_summary">
 	<PreferenceCategory android:title="Radios">
 		<!-- Police Radios -->

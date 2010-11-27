@@ -67,9 +67,6 @@ public class DallasTraffic extends Activity {
 	private static final int MENU_ABOUT                 = 104;
 	private static final int RADIO_OPTION_WEATHER       = 0;
 	private static final int RADIO_OPTION_POLICE        = 1;
-	private static int SCAN_NODE_POLICE  			= 16004; // FIXME - put these scanner values in an array. Use ./adb logcat |grep node to see the scanner ids
-	private static int SCAN_NODE_WEATHER 			= 24058; 
-	private static final int SCAN_NODE_WEATHER2 		= 19405; // Clearwater Weather Radio (WunderGround.com)
 	private static final int INDEX_TRAFFIC              = 0;
 	private static final int INDEX_ALERTS               = 1;
 	private static final int INDEX_CAMERAS              = 2;
@@ -83,6 +80,9 @@ public class DallasTraffic extends Activity {
 		"Incident Report", 
 		"Congestion"};
 	protected static final String NAMESPACE = "com.osilabs.android.apps.dallastraffic";
+	// Use './adb logcat |grep node' to see the scanner ids
+	private static int SCAN_NODE_POLICE  			= 16004; // FIXME - put these scanner values in an array. 
+	private static int SCAN_NODE_WEATHER 			= 24058; 
 	//
 	// /Configuration Data
 	// --------------------------------------------------
@@ -298,29 +298,22 @@ public class DallasTraffic extends Activity {
 
 	    // Radios Icon Click
 	    ivRadios = (ImageView) findViewById(R.id.navbar_radios);
+	    // FIXME - move these colors to defs file
 	    ivRadios.setColorFilter(0xFFFF9999, PorterDuff.Mode.SRC_ATOP); // same as tint
 	    ivRadios.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				final CharSequence[] items = {"Police Radios", "Weather Radios"};
+				final CharSequence[] items = {"Weather Radio", "Police Scanner"};
 				AlertDialog alert = new AlertDialog.Builder(DallasTraffic.this)
                 .setTitle("Radios")
                 .setItems(items, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                    	
-                    	// Set Global with current prefs
-    		    		mySharedPreferences = getSharedPreferences(NAMESPACE, Activity.MODE_PRIVATE);
+    		    		// Check prefs for changed radios.
+    					setCurrentRadios();
 
-    		    		SCAN_NODE_POLICE  = mySharedPreferences.getInt("pref_police_radios", 0);
-                    	SCAN_NODE_WEATHER = mySharedPreferences.getInt("pref_weather_radios", 0);
-    	    			
-    		    		Toast.makeText(getApplicationContext(), 
-    	    					"radio from prefs:" + SCAN_NODE_POLICE
-    	    					, Toast.LENGTH_LONG).show();
-
-    		            switch(which) {
+    					switch(which) {
 	        		        case RADIO_OPTION_WEATHER:
-	            		        launchScanner(SCAN_NODE_WEATHER);
+	        			        launchScanner(SCAN_NODE_WEATHER);
 	            		        break;
 	        		        case RADIO_OPTION_POLICE:
 	            		        launchScanner(SCAN_NODE_POLICE);
@@ -340,6 +333,19 @@ public class DallasTraffic extends Activity {
 
     }
 
+    protected void setCurrentRadios() {
+    	// Set Global with current prefs
+    	// If this namespace path doesn't end in '_preferences' this won't work.
+    	mySharedPreferences = getSharedPreferences("com.osilabs.android.apps.dallastraffic_preferences", 0);
+
+		String wr_saved = getApplicationContext().getResources().getString(R.string.pref_weather_radios_selected);
+		String wr_def   = getApplicationContext().getResources().getString(R.string.pref_weather_radios_default);
+		SCAN_NODE_WEATHER = Integer.parseInt(mySharedPreferences.getString(wr_saved, wr_def));
+		String pr_saved = getApplicationContext().getResources().getString(R.string.pref_police_radios_selected);
+		String pr_def   = getApplicationContext().getResources().getString(R.string.pref_police_radios_default);
+		SCAN_NODE_POLICE = Integer.parseInt(mySharedPreferences.getString(pr_saved, pr_def));
+    }
+    
     public static boolean isIntentAvailable(Context context, String action) {
         final PackageManager packageManager = context.getPackageManager();
         final Intent intent = new Intent(action);
@@ -550,11 +556,13 @@ public class DallasTraffic extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case R.id.menu_scanner_police:
+				setCurrentRadios();
 				launchScanner(SCAN_NODE_POLICE);
 		    	return true;
 	
 			case R.id.menu_scanner_weather:
-				launchScanner(SCAN_NODE_WEATHER2);
+				setCurrentRadios();
+				launchScanner(SCAN_NODE_WEATHER);
 		    	return true;
 				
 			case R.id.menu_refresh:
