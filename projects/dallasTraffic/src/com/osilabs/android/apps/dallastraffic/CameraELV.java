@@ -12,6 +12,7 @@ package com.osilabs.android.apps.dallastraffic;
 //import java.util.Map;
 import android.app.ExpandableListActivity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.Gravity;
@@ -169,23 +170,29 @@ public class CameraELV extends ExpandableListActivity implements OnChildClickLis
             return crossroads[groupPosition].length;
         }
 
-        public TextView getGenericView() {
+        // FIXME - Use XML to create the group and child groups, define a style there.
+        public TextView getGenericView(boolean ismainroads) {
             // Layout parameters for the ExpandableListView
             AbsListView.LayoutParams lp = new AbsListView.LayoutParams(
                     ViewGroup.LayoutParams.FILL_PARENT, 64);
-
             TextView textView = new TextView(CameraELV.this);
             textView.setLayoutParams(lp);
-            // Center the text vertically
-            textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
-            // Set the text starting position
-            textView.setPadding(36, 0, 0, 0);
+            if( ismainroads ) {
+            	textView.setTextSize(20);
+            	textView.setTextAppearance(getApplicationContext(), R.style.expandableListGroup);
+                textView.setBackgroundColor(0xFF6B7594);
+                textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT);
+                textView.setPadding(0, 0, 40, 0);
+            } else {
+                textView.setPadding(36, 0, 0, 0);
+                textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);            	
+            }
             return textView;
         }
 
         public View getChildView(int groupPosition, int childPosition, boolean isLastChild,
                 View convertView, ViewGroup parent) {
-            TextView textView = getGenericView();
+            TextView textView = getGenericView(false);
             textView.setText(getChild(groupPosition, childPosition).toString());
             return textView;
         }
@@ -204,7 +211,7 @@ public class CameraELV extends ExpandableListActivity implements OnChildClickLis
 
         public View getGroupView(int groupPosition, boolean isExpanded, View convertView,
                 ViewGroup parent) {
-            TextView textView = getGenericView();
+            TextView textView = getGenericView(true);
             textView.setText(getGroup(groupPosition).toString());
             return textView;
         }
