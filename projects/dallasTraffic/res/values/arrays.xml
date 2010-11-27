@@ -89,4 +89,5 @@
 <string-array name="campref_crossroads_IH30_IH35E_Mixmaster_values"><item>358</item></string-array> 
 <string-array name="campref_crossroads_SH114_values"><item>489</item><item>490</item><item>491</item><item>492</item><item>493</item><item>494</item><item>495</item><item>496</item><item>497</item><item>498</item><item>499</item><item>500</item></string-array> 
 <string-array name="campref_crossroads_IH35_values"><item>576</item></string-array> 
-<string-array name="campref_crossroads_IH35W_values"><item>568</item><item>569</item><item>570</item><item>571</item><item>572</item><item>573</item><item>574</item></string-array> </resources>
+<string-array name="campref_crossroads_IH35W_values"><item>568</item><item>569</item><item>570</item><item>571</item><item>572</item><item>573</item><item>574</item></string-array> 
+</resources>

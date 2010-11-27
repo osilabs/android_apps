@@ -1,35 +1,29 @@
 // v0.2
 
->> Bugs <<
-* Switched to camera tab and afer sitting for 10 seconds or so, view changed to traffic map
-* Some of the mainroad choices to to blank camera lists. Update array so this works.
+* Layout the exp. listview entries.
+* Move the radios to the preferences framework
 * More icon by options doesn't seem to work
 * Remove longpress feature on exp. listview.
-* The generated xml is broken. mainroads not showing correctly. have crossroads inside the values...
-
->> Layout <<
-+ * Get single radio icon, use spinner when clicked.
-+ * Layout the exp. listview entries.
 * Height of ad banner is too short, cuts off bottom.
-* Space tab/refresh icons from top so they arent so close to the ad banner
-* make sure the lines between tob/bottom navbars look nice
-* Need icons for calendar and police
 * Right justify scanner icons.
-* Alert icon is too big
-
->> New Features <<
-+ * show small italic datestamp under bottom left of camera shots.
-* Close the other exp. listview items as each new group is opened
+* Lighten the tab icons
+* show small italic datestamp under bottom left of camera shots.
 * Split out Help and About
-* Make incident feed pass number to overlay on incident tab icon (http://stackoverflow.com/questions/2317617/how-to-keep-text-on-imageview-in-android)
 * feedback tool
 * Credit the daltrans
-* Get an android widdler
-* Rename camera config link
-
->> Cleanup code <<
 * Rename navbar to bottomnav
 * Rename Prefs class to CameraPrefs
-* Remove old camera config link and unused html
+* Remove old camera config unused html
+
+>> Bugs <<
+
+>> Layout <<
+
+>> New Features <<
+* Get an android widdler
+* Make incident feed pass number to overlay on incident tab icon (http://stackoverflow.com/questions/2317617/how-to-keep-text-on-imageview-in-android)
+* Close the other exp. listview items as each new group is opened
+
+>> Cleanup code <<
 
 

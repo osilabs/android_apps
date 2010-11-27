@@ -65,9 +65,11 @@ public class DallasTraffic extends Activity {
 	private static final int MENU_SCANNER               = 102;
 	private static final int MENU_PREFS                 = 103;
 	private static final int MENU_ABOUT                 = 104;
-	private static final int SCAN_NODE_POLICE  = 16004; // FIXME - put these scanner values in an array. Use ./adb logcat |grep node to see the scanner ids
-	private static final int SCAN_NODE_WEATHER = 24058; 
-	private static final int SCAN_NODE_WEATHER2 = 19405; // Clearwater Weather Radio (WunderGround.com)
+	private static final int RADIO_OPTION_WEATHER       = 0;
+	private static final int RADIO_OPTION_POLICE        = 1;
+	private static final int SCAN_NODE_POLICE  			= 16004; // FIXME - put these scanner values in an array. Use ./adb logcat |grep node to see the scanner ids
+	private static final int SCAN_NODE_WEATHER 			= 24058; 
+	private static final int SCAN_NODE_WEATHER2 		= 19405; // Clearwater Weather Radio (WunderGround.com)
 	private static final int INDEX_TRAFFIC              = 0;
 	private static final int INDEX_ALERTS               = 1;
 	private static final int INDEX_CAMERAS              = 2;
@@ -75,11 +77,23 @@ public class DallasTraffic extends Activity {
 	private static final int INDEX_INCIDENTLIST         = 4;
 	private static final int INDEX_CONGESTION           = 5;
 	private static final String[] INDEX_STRINGS = {		"Traffic", 
-														"Alerts", 
-														"Options", 
-														"Alert Map", 
-														"Incident Report", 
-														"Congestion"};
+		"Alerts", 
+		"Options", 
+		"Alert Map", 
+		"Incident Report", 
+		"Congestion"};
+	private static final String[] POLICE_RADIOS = {
+		"Dallas Police 3 South East, 4 South West, 6 North Central, 7 South Central, and 9 Traffic"
+	};
+	private static final int[] POLICE_RADIOS_VALUES = {
+		24533
+	};
+	private static final String[] WEATHER_RADIOS = {
+		"Dallas Weather Radio"
+	};
+	private static final int[] WEATHER_RADIOS_VALUES = {
+		21093
+	};
 	protected static final String NAMESPACE = "com.osilabs.android.apps.dallastraffic";
 	//
 	// /Configuration Data
@@ -129,10 +143,11 @@ public class DallasTraffic extends Activity {
 
 	// Navbar components
 	protected ImageView ivTraffic;
-	protected ImageView ivRefresh;
 	protected ImageView ivAlerts;
 	protected ImageView ivCameras;
 	protected ImageView ivMore;
+	protected ImageView ivRefresh;
+	protected ImageView ivRadios;
 	protected TextView tvSpinner;
 	
 	// Tints and paints
@@ -244,27 +259,7 @@ public class DallasTraffic extends Activity {
     	
     	Log.d(TAG, "onStart");
 
-	    // -------------------------
-	    // Bottom Navigation Bar
 	    //
-
-        // Inflate some views.
-		ivMore = (ImageView) findViewById(R.id.launcher_more);
-
-		tvSpinner = (TextView) findViewById(R.id.camera_config_spinner);
-	    tvSpinner.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-///				spViewChoices.performClick();
-				
-				Context c = v.getContext();
-				
-				Intent intent = new Intent().setClass(c, com.osilabs.android.apps.dallastraffic.CameraELV.class);
-				startActivityForResult(intent, 33); // FIXME - Make this a const
-			}
-		});
-
-		//
 		// Main Web View
 		//
 		wvMain = (WebView) findViewById(R.id.mainWebView);
@@ -293,7 +288,53 @@ public class DallasTraffic extends Activity {
         awebSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
     	wvAd.loadUrl(AD_BANNER_URL);
     	
-    	//
+	    // -------------------------
+	    // Bottom Navigation Bar
+	    //
+
+        // Inflate some views.
+		ivMore = (ImageView) findViewById(R.id.launcher_more);
+
+		tvSpinner = (TextView) findViewById(R.id.camera_config_spinner);
+	    tvSpinner.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+///				spViewChoices.performClick();
+				
+				Context c = v.getContext();
+				
+				Intent intent = new Intent().setClass(c, com.osilabs.android.apps.dallastraffic.CameraELV.class);
+				startActivityForResult(intent, 33); // FIXME - Make this a const
+			}
+		});
+
+	    // Radios Icon Click
+	    ivRadios = (ImageView) findViewById(R.id.navbar_radios);
+	    ivRadios.setColorFilter(0xFFFF9999, PorterDuff.Mode.SRC_ATOP); // same as tint
+	    ivRadios.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				final CharSequence[] items = {POLICE_RADIOS[0], WEATHER_RADIOS[0]};
+				AlertDialog alert = new AlertDialog.Builder(DallasTraffic.this)
+                .setTitle("Radios")
+                .setItems(items, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                    	switch(which) {
+	        		        case RADIO_OPTION_WEATHER:
+	            		        launchScanner(WEATHER_RADIOS_VALUES[0]);
+	            		        break;
+	        		        case RADIO_OPTION_POLICE:
+	            		        launchScanner(POLICE_RADIOS_VALUES[0]);
+	            		        break;
+        		        }
+                    }
+                }).create();
+				
+				alert.show();
+			}
+		});
+
+	    //
     	// Set the current tab
     	//
     	setMainWebView(CURRENT_VIEW_INDEX);

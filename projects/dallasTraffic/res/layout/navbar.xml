@@ -57,16 +57,11 @@
 		    		android:layout_width="wrap_content"
 		    		android:layout_height="fill_parent"
 		    		>
-				  <ImageView	android:id="@+id/navbar_weather"
-				  				android:src="@drawable/ic_weather"
+				  <ImageView	android:id="@+id/navbar_radios"
+				  				android:src="@drawable/ic_menu_notifications"
 								android:layout_width="wrap_content" 
 								android:layout_height="fill_parent"
-								android:tint="#FFFFFF66" />
-				  <ImageView	android:id="@+id/navbar_police"
-				  				android:src="@drawable/ic_weather"
-								android:layout_width="wrap_content" 
-								android:layout_height="fill_parent"
-								android:tint="#FFFF0000" />
+								android:tint="#FFFF9999" />
 		    	</TableRow>
 			</TableLayout>	
 
