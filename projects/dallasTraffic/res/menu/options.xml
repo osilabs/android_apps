@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_prefs"
+          android:icon="@drawable/ic_weather"
+          android:title="@string/menu_prefs" />
     <item android:id="@+id/menu_scanner_weather"
           android:icon="@drawable/ic_weather"
           android:title="@string/menu_scanner_weather" />
     <item android:id="@+id/menu_scanner_police"
-          android:icon="@drawable/ic_police"
+          android:icon="@drawable/ic_menu_notifications"
           android:title="@string/menu_scanner_police" />
     <item android:id="@+id/menu_refresh"
           android:icon="@drawable/ic_refresh"

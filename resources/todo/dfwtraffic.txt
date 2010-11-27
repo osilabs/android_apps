@@ -1,15 +1,10 @@
 // v0.2
 
-* Remove longpress feature on exp. listview.
-
-* show small italic datestamp under bottom left of camera shots.
-* Remove old camera config unused html
-
-* Split out Help and About
-* feedback tool
-* Credit the daltrans
-
 * Move the radios to the preferences framework
+
+* feedback tool
+* Split out Help and About
+* Credit the daltrans
 
 * More icon by options doesn't seem to work
 * Right justify scanner icons.
@@ -18,7 +13,7 @@
 
 * Rename navbar to bottomnav
 * Rename Prefs class to CameraPrefs
-
+* Find all the com.osilabs... namespaces and centralize them
 
 >> Bugs <<
 

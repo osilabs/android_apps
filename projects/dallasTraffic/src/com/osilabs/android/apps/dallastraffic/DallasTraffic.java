@@ -67,8 +67,8 @@ public class DallasTraffic extends Activity {
 	private static final int MENU_ABOUT                 = 104;
 	private static final int RADIO_OPTION_WEATHER       = 0;
 	private static final int RADIO_OPTION_POLICE        = 1;
-	private static final int SCAN_NODE_POLICE  			= 16004; // FIXME - put these scanner values in an array. Use ./adb logcat |grep node to see the scanner ids
-	private static final int SCAN_NODE_WEATHER 			= 24058; 
+	private static int SCAN_NODE_POLICE  			= 16004; // FIXME - put these scanner values in an array. Use ./adb logcat |grep node to see the scanner ids
+	private static int SCAN_NODE_WEATHER 			= 24058; 
 	private static final int SCAN_NODE_WEATHER2 		= 19405; // Clearwater Weather Radio (WunderGround.com)
 	private static final int INDEX_TRAFFIC              = 0;
 	private static final int INDEX_ALERTS               = 1;
@@ -82,18 +82,6 @@ public class DallasTraffic extends Activity {
 		"Alert Map", 
 		"Incident Report", 
 		"Congestion"};
-	private static final String[] POLICE_RADIOS = {
-		"Dallas Police 3 South East, 4 South West, 6 North Central, 7 South Central, and 9 Traffic"
-	};
-	private static final int[] POLICE_RADIOS_VALUES = {
-		24533
-	};
-	private static final String[] WEATHER_RADIOS = {
-		"Dallas Weather Radio"
-	};
-	private static final int[] WEATHER_RADIOS_VALUES = {
-		21093
-	};
 	protected static final String NAMESPACE = "com.osilabs.android.apps.dallastraffic";
 	//
 	// /Configuration Data
@@ -314,17 +302,28 @@ public class DallasTraffic extends Activity {
 	    ivRadios.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				final CharSequence[] items = {POLICE_RADIOS[0], WEATHER_RADIOS[0]};
+				final CharSequence[] items = {"Police Radios", "Weather Radios"};
 				AlertDialog alert = new AlertDialog.Builder(DallasTraffic.this)
                 .setTitle("Radios")
                 .setItems(items, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                    	switch(which) {
+                    	
+                    	// Set Global with current prefs
+    		    		mySharedPreferences = getSharedPreferences(NAMESPACE, Activity.MODE_PRIVATE);
+
+    		    		SCAN_NODE_POLICE  = mySharedPreferences.getInt("pref_police_radios", 0);
+                    	SCAN_NODE_WEATHER = mySharedPreferences.getInt("pref_weather_radios", 0);
+    	    			
+    		    		Toast.makeText(getApplicationContext(), 
+    	    					"radio from prefs:" + SCAN_NODE_POLICE
+    	    					, Toast.LENGTH_LONG).show();
+
+    		            switch(which) {
 	        		        case RADIO_OPTION_WEATHER:
-	            		        launchScanner(WEATHER_RADIOS_VALUES[0]);
+	            		        launchScanner(SCAN_NODE_WEATHER);
 	            		        break;
 	        		        case RADIO_OPTION_POLICE:
-	            		        launchScanner(POLICE_RADIOS_VALUES[0]);
+	            		        launchScanner(SCAN_NODE_POLICE);
 	            		        break;
         		        }
                     }
@@ -354,32 +353,33 @@ public class DallasTraffic extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
 		// See which child activity is calling us back.
 	    switch (requestCode) {
-	        case 33:
+            
+        case 33:
 
-	            // This is the standard resultCode that is sent back if the
-	            // activity crashed or didn't doesn't supply an explicit result.
-	            if (resultCode == RESULT_CANCELED){
-	    			Toast.makeText(getApplicationContext(), 
-	    					"Camera may have moved, please try again"
-	    					, Toast.LENGTH_LONG).show();
-	            } 
-	            else {
-	               Bundle extras = data.getExtras();
-	               int cam = extras.getInt("selected_camera");	                
-	            	// FIXME - this happens in a few places, consolidate it. Like the
-	    			//  next few lines do
-	    			PREF_CAMERA_1 = cam;
-	    			
-	    			// Reload the webview so it just shows the chosen camera
-	    	    	wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_VIEW_INDEX+"&camera="+PREF_CAMERA_1);
-	    	    	
-	    			// Set the chosen camera in the persistent settings
-	    	    	SharedPreferences prefs 
-	    				= getSharedPreferences(NAMESPACE, Activity.MODE_PRIVATE);
-	    			    SharedPreferences.Editor editor = prefs.edit();
-	    			    editor.putInt("session_camera_1", PREF_CAMERA_1);
-	    			    editor.commit();
-	            }
+            // This is the standard resultCode that is sent back if the
+            // activity crashed or didn't doesn't supply an explicit result.
+            if (resultCode == RESULT_CANCELED){
+    			Toast.makeText(getApplicationContext(), 
+    					"Camera may have moved, please try again"
+    					, Toast.LENGTH_LONG).show();
+            } 
+            else {
+               Bundle extras = data.getExtras();
+               int cam = extras.getInt("selected_camera");	                
+            	// FIXME - this happens in a few places, consolidate it. Like the
+    			//  next few lines do
+    			PREF_CAMERA_1 = cam;
+    			
+    			// Reload the webview so it just shows the chosen camera
+    	    	wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_VIEW_INDEX+"&camera="+PREF_CAMERA_1);
+    	    	
+    			// Set the chosen camera in the persistent settings
+    	    	SharedPreferences prefs 
+    				= getSharedPreferences(NAMESPACE, Activity.MODE_PRIVATE);
+    			    SharedPreferences.Editor editor = prefs.edit();
+    			    editor.putInt("session_camera_1", PREF_CAMERA_1);
+    			    editor.commit();
+            }
 	        default:
 	            break;
 	    }
@@ -560,40 +560,31 @@ public class DallasTraffic extends Activity {
 			case R.id.menu_refresh:
 				refreshViews();
 				return true;
-			        
-	//		    case MENU_MNDOT_MOBILE_FREEWAYS:
-	//		    	setCurrentView(INDEX_CAMERAS);
-	//		    	// CURRENT_WEBVIEW_URL = MNDOT_MOBILE_URL;
-	//		    	// CURRENT_VIEW_INDEX  = INDEX_CAMERAS;
-	//		    	wvMain.loadUrl(VIEW_URLS[INDEX_CAMERAS]);
-	//	    		return true;
-	//		        
-//			    case MENU_PREFS:
-//			    	//Toast.makeText(getApplicationContext(), "Prefs", Toast.LENGTH_SHORT).show();
-//			    	Intent intent = new Intent()
-//			    		.setClass(this, com.osilabs.android.apps.dallastraffic.Prefs.class);
-//			    	this.startActivityForResult(intent, 0);
-//			    	return true;
-	
-				case R.id.menu_help:
-					
-			        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-			        alertDialog.setTitle(R.string.app_name);
-			        alertDialog.setMessage("You are running version " + pInfo.versionName);
-			        alertDialog.setButton("More...", new DialogInterface.OnClickListener() {
-			        	public void onClick(DialogInterface dialog, int which) {
-			        		Intent mIntent = new Intent(Intent.ACTION_VIEW, 
-			        				Uri.parse(MOBILECONTENT_URL_ABOUT)); 
-	        				startActivity(mIntent); 
-			            } 
-			        });
-			        alertDialog.setIcon(R.drawable.ic_launcher);
-			        alertDialog.show();
-			    	return true;
-	
-			    case R.id.menu_exit:
-			        finish();
-			        return true;
+				
+		    case R.id.menu_prefs:
+		    	Intent intent = new Intent()
+		    		.setClass(this, com.osilabs.android.apps.dallastraffic.Prefs.class);
+		    	this.startActivityForResult(intent, 22);
+		    	return true;
+
+		    case R.id.menu_help:
+		        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+		        alertDialog.setTitle(R.string.app_name);
+		        alertDialog.setMessage("You are running version " + pInfo.versionName);
+		        alertDialog.setButton("More...", new DialogInterface.OnClickListener() {
+		        	public void onClick(DialogInterface dialog, int which) {
+		        		Intent mIntent = new Intent(Intent.ACTION_VIEW, 
+		        				Uri.parse(MOBILECONTENT_URL_ABOUT)); 
+        				startActivity(mIntent); 
+		            } 
+		        });
+		        alertDialog.setIcon(R.drawable.ic_launcher);
+		        alertDialog.show();
+		    	return true;
+
+		    case R.id.menu_exit:
+		        finish();
+		        return true;
 	    }
 		
 	    return false;

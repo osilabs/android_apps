@@ -1,30 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-  android:key="@string/camprefs"
-  android:title="@string/camprefs_title"
-  android:summary="@string/camprefs_summary"
-  >
-<!--US75-->
-	<ListPreference 
-		android:key="@string/session_selected_US75" 
-		android:title="@string/campref_mainroad_US75" 
-		android:summary="@string/campref_mainroad_summary_US75"
-		android:defaultValue="@string/campref_mainroad_crossroad_default_US75" 
+	android:key="@string/prefs" android:title="@string/prefs_title"
+	android:summary="@string/prefs_summary">
+	<PreferenceCategory android:title="Radios">
+		<!-- Police Radios -->
+		<ListPreference android:key="@string/pref_police_radios_selected"
+			android:title="@string/pref_police_radios_title" android:summary="@string/pref_police_radios_summary"
+			android:defaultValue="@string/pref_police_radios_default"
+			android:dialogTitle="@string/pref_police_radios_dialog_title"
+			android:entries="@array/pref_police_radios" android:entryValues="@array/pref_police_radios_values"></ListPreference>
 
-		android:dialogTitle="@string/campref_crossroad_dialog_title_US75" 
-		android:entries="@array/campref_crossroads_US75"
-		android:entryValues="@array/campref_crossroads_US75_values"
-		></ListPreference>
-
-<!--SH183-->
-	<ListPreference 
-		android:key="@string/session_selected_SH183" 
-		android:title="@string/campref_mainroad_SH183" 
-		android:summary="@string/campref_mainroad_summary_SH183"
-		android:defaultValue="@string/campref_mainroad_crossroad_default_SH183" 
-
-		android:dialogTitle="@string/campref_crossroad_dialog_title_SH183" 
-		android:entries="@array/campref_crossroads_SH183"
-		android:entryValues="@array/campref_crossroads_SH183_values"
-		></ListPreference>
+		<!-- Weather Radios -->
+		<ListPreference android:key="@string/pref_weather_radios_selected"
+			android:title="@string/pref_weather_radios_title" android:summary="@string/pref_weather_radios_summary"
+			android:defaultValue="@string/pref_weather_radios_default"
+			android:dialogTitle="@string/pref_weather_radios_dialog_title"
+			android:entries="@array/pref_weather_radios" android:entryValues="@array/pref_weather_radios_values"></ListPreference>
+	</PreferenceCategory>
 </PreferenceScreen>

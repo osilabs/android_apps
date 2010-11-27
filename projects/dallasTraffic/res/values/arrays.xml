@@ -1,7 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+<string-array name="pref_police_radios">
+<item>Carrollton Police and Fire</item>
+<item>Dallas County Fire, Sheriff and Constables</item>
+<item>Dallas Fire Rescue</item>
+<item>Dallas Police SE, SW, North Central, South Central, with Traffic</item>
+<item>Dallas Police Central, NE</item>
+<item>Garland Police and Fire</item>
+<item>Grand Prairie Plice and Fire Rescue</item>
+<item>Mesquite and Corkrell Hill Police and Fire</item>
+<item>Richardson Police, Fire, and EMS</item>
+<item>Sachse, Wylie, and Murphy Police and Fire</item>
+</string-array> 
+<string-array name="pref_police_radios_values">
+<item>12529</item> 
+<item>21115</item> 
+<item>12535</item> 
+<item>21093</item> 
+<item>20352</item> 
+<item>21075</item> 
+<item>23025</item> 
+<item>21116</item> 
+<item>24138</item> 
+<item>12531</item> 
+</string-array> 
 
+<string-array name="pref_weather_radios">
+<item>Dallas Weather Radio</item> 
+<item>Crowley / Fort Worth Weather Radio</item> 
+<item>Corsicana Weather Radio</item> 
+</string-array> 
+<string-array name="pref_weather_radios_values">
+<item>2233</item> 
+<item>24109</item> 
+<item>23034</item> 
+</string-array> 
+
+
+
+
+
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!--    PASTE GENERATED XML BELOW THIS POINT    -->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 <string-array name="campref_mainroads"><item>US75</item> 
 <item>SH183</item> 
 <item>IH35E</item> 

@@ -17,35 +17,25 @@ public class Prefs extends PreferenceActivity {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.prefs);
 		
-		Preference[] prefs = new Preference[2]; 
-		prefs[0] = (Preference) findPreference("session_selected_US75");
-		prefs[1] = (Preference) findPreference("session_selected_SH183");
-		
-		for(int i=0; i<prefs.length; i++) {
-	        //
-	        // Catch the onCameraSelect event to finish() so control is sent back to main activity.
-	        //
-	        prefs[i].setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-	        	public boolean onPreferenceChange(Preference preference, Object newval) {
-	                //Toast.makeText(getApplicationContext(), "Camera Selected", Toast.LENGTH_SHORT).show();
-	        		
-	                finish();
-	        		return true;
-	        	}
-	        });
-	        prefs[i].setOnPreferenceClickListener(new OnPreferenceClickListener() {
-	            public boolean onPreferenceClick(Preference preference) {
-	                Toast.makeText(getApplicationContext(), "pref: " + preference, Toast.LENGTH_SHORT).show();
-	            	SharedPreferences sprefs 
-	            		= getSharedPreferences("com.osilabs.android.apps.dallastraffic", 0);
-	                SharedPreferences.Editor editor = sprefs.edit();
-	                editor.putInt("session_camera_1", 2); //Integer.parseInt(preference.toString()));
-	                editor.commit();
-//	                Prefs.finish();
-	                return true;
-	            }
-	        });
-		}
+//		Preference p_prefs = (Preference) findPreference("pref_police_radios");
+//		Preference w_prefs = (Preference) findPreference("pref_weather_radios");
+//		
+//        p_prefs.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+//        	public boolean onPreferenceChange(Preference preference, Object newval) {
+//                finish();
+//        		return true;
+//        	}
+//        });
+//        p_prefs.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+//            public boolean onPreferenceClick(Preference preference) {
+//            	SharedPreferences sprefs = getSharedPreferences("com.osilabs.android.apps.dallastraffic", 0);
+//                SharedPreferences.Editor editor = sprefs.edit();
+//                editor.putInt("session_camera_1", Integer.parseInt(preference.toString()));
+//                editor.commit();
+////	                Prefs.finish();
+//                return true;
+//            }
+//        });
 		
 //        //
 //        // Catch the onCameraSelect event to finish() so control is sent back to main activity.
