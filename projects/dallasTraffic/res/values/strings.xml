@@ -19,23 +19,23 @@
     <string name="session_camera_1">0</string>    
 
 	<!-- Camera Prefs -->
-    <string name="prefs">Camera Choices</string>
+    <string name="prefs"> Choices</string>
     <string name="prefs_title">Preferences</string>
     <string name="prefs_summary">Summary z</string>
     <string name="pref_activity_name">Camera Choices</string>
 	<!-- police radio prefs -->
     <string name="pref_police_radios">Police Scanners</string>
-    <string name="pref_police_radios_summary">Choose your favorite</string>
-    <string name="pref_police_radios_title">Favorite Police Scanner</string>    
+    <string name="pref_police_radios_summary">Set your favorite</string>
+    <string name="pref_police_radios_title">Police Scanners</string>    
     <string name="pref_police_radios_default">999999</string>
-    <string name="pref_police_radios_dialog_title">Choose</string>
+    <string name="pref_police_radios_dialog_title">Select Favorite Police Scanner</string>
     <string name="pref_police_radios_selected">pref_police_radios_selected</string>
 	<!-- weather radio prefs -->
     <string name="pref_weather_radios">Weather Radios</string>
-    <string name="pref_weather_radios_summary">Choose your favorite</string>
-    <string name="pref_weather_radios_title">Favorite Weather Radio</string>    
+    <string name="pref_weather_radios_summary">Set your favorite</string>
+    <string name="pref_weather_radios_title">Weather Radios</string>    
     <string name="pref_weather_radios_default">0</string>
-    <string name="pref_weather_radios_dialog_title">Choose</string>
+    <string name="pref_weather_radios_dialog_title">Select Favorite Weather Radio</string>
     <string name="pref_weather_radios_selected">pref_weather_radios_selected</string>
     
     <style name="osistyle" parent="@android:style/TextAppearance.Medium">
