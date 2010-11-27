@@ -1,19 +1,24 @@
 // v0.2
 
-* Layout the exp. listview entries.
-* Move the radios to the preferences framework
-* More icon by options doesn't seem to work
 * Remove longpress feature on exp. listview.
-* Height of ad banner is too short, cuts off bottom.
-* Right justify scanner icons.
-* Lighten the tab icons
+
 * show small italic datestamp under bottom left of camera shots.
+* Remove old camera config unused html
+
 * Split out Help and About
 * feedback tool
 * Credit the daltrans
+
+* Move the radios to the preferences framework
+
+* More icon by options doesn't seem to work
+* Right justify scanner icons.
+* Height of ad banner is too short, cuts off bottom.
+* Darken the tab icons
+
 * Rename navbar to bottomnav
 * Rename Prefs class to CameraPrefs
-* Remove old camera config unused html
+
 
 >> Bugs <<
 

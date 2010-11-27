@@ -76,8 +76,14 @@ public class CameraELV extends ExpandableListActivity implements OnChildClickLis
     
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-        menu.setHeaderTitle("Sample menu");
-        menu.add(0, 0, 0, R.string.expandable_list_sample_action);
+    	//
+    	// Turn this back on to do something on long press.
+    	//
+    	
+    	//Toast.makeText(this, "Tap the entry to select it",
+        //        Toast.LENGTH_SHORT).show();
+    	// menu.setHeaderTitle("Sample menu");
+    	// menu.add(0, 0, 0, R.string.expandable_list_sample_action);
     }
 
     @Override
