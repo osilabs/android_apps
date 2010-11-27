@@ -52,8 +52,9 @@ public class DallasTraffic extends Activity {
 	// --------------------------------------------------
 	// Configuration Data
 	// 
-	protected static String MOBILECONTENT_URL_PREFIX = "http://osilabs.com/m/mobilecontent/dallastraffic";
-	protected static String MOBILECONTENT_URL_ABOUT = "http://osilabs.com/m/mobilecontent/about/dallastraffic_about.php";
+	protected static String MOBILECONTENT_URL_PREFIX    = "http://osilabs.com/m/mobilecontent/dallastraffic";
+	protected static String MOBILECONTENT_URL_ABOUT     = "http://osilabs.com/m/mobilecontent/about/dt_about.php";
+	protected static String MOBILECONTENT_URL_HELP      = "http://osilabs.com/m/mobilecontent/help/dt_help.php";
 	private static final int MENU_TRAFFIC               = 0;
 	private static final int MENU_ALERTS                = 1;
 	private static final int MENU_CAMERAS               = 2;
@@ -65,6 +66,7 @@ public class DallasTraffic extends Activity {
 	private static final int MENU_SCANNER               = 102;
 	private static final int MENU_PREFS                 = 103;
 	private static final int MENU_ABOUT                 = 104;
+	private static final int MENU_HELP                  = 105;
 	private static final int RADIO_OPTION_WEATHER       = 0;
 	private static final int RADIO_OPTION_POLICE        = 1;
 	private static final int INDEX_TRAFFIC              = 0;
@@ -578,6 +580,11 @@ public class DallasTraffic extends Activity {
 		    	return true;
 
 		    case R.id.menu_help:
+        		Intent mIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(MOBILECONTENT_URL_HELP + "?phoneinfo=xxx")); 
+				startActivity(mIntent); 
+		    	return true;
+
+		    case R.id.menu_about:
 		        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 		        alertDialog.setTitle(R.string.app_name);
 		        alertDialog.setMessage("You are running version " + pInfo.versionName);

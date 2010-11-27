@@ -10,8 +10,9 @@
     <string name="menu_prefs">Settings</string>
     <string name="menu_refresh">Refresh</string>
     <string name="menu_scanner_police">Police Scanner</string>
-    <string name="menu_scanner_weather">Weather</string>
+    <string name="menu_scanner_weather">Weather Radio</string>
     <string name="menu_help">Help</string>
+    <string name="menu_about">About</string>
     <string name="menu_exit">Exit</string>
 
     <!-- Preferences strings -->
