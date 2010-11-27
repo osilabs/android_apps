@@ -9,13 +9,13 @@
 		android:id="@+id/border"
 		android:layout_width="fill_parent"
 		android:layout_height="1dip" 
-		android:layout_gravity="center_vertical"
+		android:gravity="center_vertical"
 		android:background="#333333"/>
 	<TextView 			
 		android:id="@+id/border"
 		android:layout_width="fill_parent"
 		android:layout_height="1dip" 
-		android:layout_gravity="center_vertical"
+		android:gravity="center_vertical"
 		android:background="#111111"/>
 	
 	<LinearLayout
@@ -51,17 +51,20 @@
     			android:layout_width="fill_parent"
 			    android:layout_height="fill_parent"
 			    android:layout_marginBottom="4dip"
-			    android:layout_gravity="right|top"
+			    android:gravity="right"
     			>
 		    	<TableRow 
-		    		android:layout_width="wrap_content"
+		    		android:layout_width="fill_parent"
 		    		android:layout_height="fill_parent"
+					android:gravity="right"
 		    		>
 				  <ImageView	android:id="@+id/navbar_radios"
 				  				android:src="@drawable/ic_menu_notifications"
 								android:layout_width="wrap_content" 
 								android:layout_height="fill_parent"
-								android:tint="#FFFF9999" />
+								android:tint="#FFFF9999" 
+								android:gravity="right"
+								/>
 		    	</TableRow>
 			</TableLayout>	
 

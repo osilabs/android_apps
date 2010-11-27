@@ -73,9 +73,10 @@ public class DallasTraffic extends Activity {
 	private static final int INDEX_NOTICE               = 3;
 	private static final int INDEX_INCIDENTLIST         = 4;
 	private static final int INDEX_CONGESTION           = 5;
-	private static final String[] INDEX_STRINGS = {		"Traffic", 
+	private static final String[] INDEX_STRINGS = {		
+		"Traffic", 
 		"Alerts", 
-		"Options", 
+		"Cameras...", 
 		"Alert Map", 
 		"Incident Report", 
 		"Congestion"};
@@ -284,6 +285,7 @@ public class DallasTraffic extends Activity {
 		ivMore = (ImageView) findViewById(R.id.launcher_more);
 
 		tvSpinner = (TextView) findViewById(R.id.camera_config_spinner);
+		tvSpinner.setTextColor(0xFF00FF00); // FIXME - share this green
 	    tvSpinner.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
