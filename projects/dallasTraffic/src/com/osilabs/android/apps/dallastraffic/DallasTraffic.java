@@ -1,5 +1,6 @@
 package com.osilabs.android.apps.dallastraffic;
 
+import java.net.URLEncoder;
 import java.util.List;
 
 import android.app.Activity;
@@ -17,6 +18,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -234,6 +236,7 @@ public class DallasTraffic extends Activity {
 	    ivRefresh = (ImageView) findViewById(R.id.navbar_refresh);
 	    // Give it a nice blue color. SRC_ATOP means color the icon, not
 	    //  the background.
+	    //FIXME - move this to colors
 	    ivRefresh.setColorFilter(0xFF6B7594, PorterDuff.Mode.SRC_ATOP); // same as tint
 	    ivRefresh.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -580,7 +583,18 @@ public class DallasTraffic extends Activity {
 		    	return true;
 
 		    case R.id.menu_help:
-        		Intent mIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(MOBILECONTENT_URL_HELP + "?phoneinfo=xxx")); 
+		    	String phoneinfo = 
+		    		getApplicationContext().getResources().getString(R.string.app_name ) + 
+		    		" v" + pInfo.versionName + ", " +
+		    		Build.MANUFACTURER + ", " +
+	    			Build.MODEL + ", " +
+	    			Build.BRAND + ", " +
+	    			Build.DEVICE + ", " +
+	    			Build.DISPLAY + ", " +
+	    			Build.FINGERPRINT + ", " +
+	    			Build.PRODUCT + ", " +
+	    			Build.VERSION.RELEASE;
+        		Intent mIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(MOBILECONTENT_URL_HELP + "?phoneinfo=" + URLEncoder.encode(phoneinfo))); 
 				startActivity(mIntent); 
 		    	return true;
 
