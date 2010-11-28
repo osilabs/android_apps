@@ -1,5 +1,6 @@
 // v0.2
 
+* Add a boolean toggle that indicates if it is the paid version or free version.
 * Put traffic icon on help page somewhere.
 * Move the radio icon off the wall a bit
 
