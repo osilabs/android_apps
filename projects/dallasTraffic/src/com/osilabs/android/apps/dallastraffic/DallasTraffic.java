@@ -288,9 +288,10 @@ public class DallasTraffic extends Activity {
 
         // Inflate some views.
 		ivMore = (ImageView) findViewById(R.id.launcher_more);
+		ivMore.setColorFilter(0xFF7C86A5, PorterDuff.Mode.SRC_ATOP); // FIXME - share this blue. it's lighter than the reload blue
 
 		tvSpinner = (TextView) findViewById(R.id.camera_config_spinner);
-		tvSpinner.setTextColor(0xFF00FF00); // FIXME - share this green
+		tvSpinner.setTextColor(0xFF7C86A5); // FIXME - share this blue. it's lighter than the reload blue
 	    tvSpinner.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
