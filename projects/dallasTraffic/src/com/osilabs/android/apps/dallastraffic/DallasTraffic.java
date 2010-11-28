@@ -289,18 +289,19 @@ public class DallasTraffic extends Activity {
         // Inflate some views.
 		ivMore = (ImageView) findViewById(R.id.launcher_more);
 		ivMore.setColorFilter(0xFF7C86A5, PorterDuff.Mode.SRC_ATOP); // FIXME - share this blue. it's lighter than the reload blue
+		ivMore.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				launchCameraPicker();
+			}
+		});
 
 		tvSpinner = (TextView) findViewById(R.id.camera_config_spinner);
 		tvSpinner.setTextColor(0xFF7C86A5); // FIXME - share this blue. it's lighter than the reload blue
 	    tvSpinner.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-///				spViewChoices.performClick();
-				
-				Context c = v.getContext();
-				
-				Intent intent = new Intent().setClass(c, com.osilabs.android.apps.dallastraffic.CameraELV.class);
-				startActivityForResult(intent, 33); // FIXME - Make this a const
+				launchCameraPicker();
 			}
 		});
 
@@ -341,6 +342,11 @@ public class DallasTraffic extends Activity {
 
     }
 
+    protected void launchCameraPicker() {
+		Context c = getApplicationContext();
+		Intent intent = new Intent().setClass(c, com.osilabs.android.apps.dallastraffic.CameraELV.class);
+		startActivityForResult(intent, 33); // FIXME - Make this a const
+    }
     protected void setCurrentRadios() {
     	// Set Global with current prefs
     	// If this namespace path doesn't end in '_preferences' this won't work.
