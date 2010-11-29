@@ -44,7 +44,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
-
 /**
  * Main class
  * @author dezurik
@@ -342,15 +341,15 @@ public class DallasTraffic extends Activity {
 
     }
 
-    protected void launchCameraPicker() {
+    protected void launchCameraPicker() { 
 		Context c = getApplicationContext();
-		Intent intent = new Intent().setClass(c, com.osilabs.android.apps.dallastraffic.CameraELV.class);
+		Intent intent = new Intent().setClassName(c, NAMESPACE + ".CameraELV");
 		startActivityForResult(intent, 33); // FIXME - Make this a const
     }
     protected void setCurrentRadios() {
     	// Set Global with current prefs
     	// If this namespace path doesn't end in '_preferences' this won't work.
-    	mySharedPreferences = getSharedPreferences("com.osilabs.android.apps.dallastraffic_preferences", 0);
+    	mySharedPreferences = getSharedPreferences(NAMESPACE + "_preferences", 0);
 
 		String wr_saved = getApplicationContext().getResources().getString(R.string.pref_weather_radios_selected);
 		String wr_def   = getApplicationContext().getResources().getString(R.string.pref_weather_radios_default);
@@ -588,8 +587,8 @@ public class DallasTraffic extends Activity {
 				return true;
 				
 		    case R.id.menu_prefs:
-		    	Intent intent = new Intent()
-		    		.setClass(this, com.osilabs.android.apps.dallastraffic.Prefs.class);
+		    	Intent intent = new Intent();
+				intent.setClassName(this, NAMESPACE + ".Prefs");
 		    	this.startActivityForResult(intent, 22);
 		    	return true;
 

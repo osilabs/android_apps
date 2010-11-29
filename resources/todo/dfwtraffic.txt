@@ -1,19 +1,19 @@
-// v0.2
+// v2.0
 
+* Find all the com.osilabs... namespaces and centralize them
 * make corsicana the default weather radio
 * Add a boolean toggle that indicates if it is the paid version or free version.
 * Put traffic icon on help page somewhere.
+* Hit the fixme's
 
-* Need about icon
-
-* Darken the tab icons
-
-* Rename navbar to bottomnav
-* Rename Prefs class to CameraPrefs
-* Find all the com.osilabs... namespaces and centralize them
 
 * Test radios when I don't have scanner radio installed. 
 
+
+// 2.1
+* Darken the tab icons
+* Rename navbar to bottomnav
+* Rename Prefs class to CameraPrefs
 * bug - Hit refresh on a camera, quickly switch tab. camera will refresh but will be on the other tab. Make the html call a jsi in to set the tab to the right page.
 
 
