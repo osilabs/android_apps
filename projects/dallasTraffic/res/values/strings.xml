@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
+	<!--	~~~~~~~~~~~~~ ~~~~~~~~~~~~~ ~~~~~~~~~~~~~ -->
+	<!--	~~~~~~~~~~~~~ -->
+	<!--	CONFIGURE HERE-->
+	<!--	~~~~~~~~~~~~~ -->
+    <string name="pref_police_radios_default">21093</string>
+    <string name="pref_weather_radios_default">23034</string>
+	<!--	~~~~~~~~~~~~~ -->
+	<!--	~~~~~~~~~~~~~ ~~~~~~~~~~~~~ ~~~~~~~~~~~~~ -->
+
 <!--	FIXME remove this-->
     <string name="expandable_list_sample_action">Sample action</string>
 
@@ -28,14 +37,12 @@
     <string name="pref_police_radios">Police Scanners</string>
     <string name="pref_police_radios_summary">Set your favorite</string>
     <string name="pref_police_radios_title">Police Scanners</string>    
-    <string name="pref_police_radios_default">999999</string>
     <string name="pref_police_radios_dialog_title">Select Favorite Police Scanner</string>
     <string name="pref_police_radios_selected">pref_police_radios_selected</string>
 	<!-- weather radio prefs -->
     <string name="pref_weather_radios">Weather Radios</string>
     <string name="pref_weather_radios_summary">Set your favorite</string>
     <string name="pref_weather_radios_title">Weather Radios</string>    
-    <string name="pref_weather_radios_default">0</string>
     <string name="pref_weather_radios_dialog_title">Select Favorite Weather Radio</string>
     <string name="pref_weather_radios_selected">pref_weather_radios_selected</string>
     

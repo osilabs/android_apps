@@ -85,8 +85,8 @@ public class DallasTraffic extends Activity {
 		"Congestion"};
 	protected static final String NAMESPACE = "com.osilabs.android.apps.dallastraffic";
 	// Use './adb logcat |grep node' to see the scanner ids
-	private static int SCAN_NODE_POLICE  			= 16004; // FIXME - put these scanner values in an array. 
-	private static int SCAN_NODE_WEATHER 			= 24058; 
+	private static int SCAN_NODE_POLICE  			= 21093;
+	private static int SCAN_NODE_WEATHER 			= 23034; 
 	//
 	// /Configuration Data
 	// --------------------------------------------------
