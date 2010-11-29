@@ -4,16 +4,6 @@
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
 
-	<!--  Hidden spinner for choosing mainroads -->
-	<Spinner 
-        android:id="@+id/view_choice_spinner"
-        android:layout_width="0dip"
-        android:layout_height="0dip"
-        android:prompt="@string/quick_view_label"
-		android:layout_weight="0"
-		android:visibility="invisible"
-    />
-
 	<!--  ad banner -->
 	<WebView 
 		android:id="@+id/adWebView" 

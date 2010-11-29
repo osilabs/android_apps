@@ -1,14 +1,9 @@
-// v2.0
+// v0.2
 
+
+
+// v0.3
 * Add a boolean toggle that indicates if it is the paid version or free version.
-* Put traffic icon on help page somewhere.
-* Hit the fixme's
-
-
-* Test radios when I don't have scanner radio installed. 
-
-
-// 2.1
 * Darken the tab icons
 * Rename navbar to bottomnav
 * Rename Prefs class to CameraPrefs

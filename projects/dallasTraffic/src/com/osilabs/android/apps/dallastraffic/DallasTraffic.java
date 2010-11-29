@@ -168,7 +168,6 @@ public class DallasTraffic extends Activity {
 			//version = pInfo.versionName;
 		} catch (NameNotFoundException e) {
 			e.printStackTrace();
-			// FIXME 0.4 - Add toast message here.
 		}
 
 		// Set URLs with versioncode
@@ -236,8 +235,7 @@ public class DallasTraffic extends Activity {
 	    ivRefresh = (ImageView) findViewById(R.id.navbar_refresh);
 	    // Give it a nice blue color. SRC_ATOP means color the icon, not
 	    //  the background.
-	    //FIXME - move this to colors
-	    ivRefresh.setColorFilter(0xFF6B7594, PorterDuff.Mode.SRC_ATOP); // same as tint
+	    ivRefresh.setColorFilter(getResources().getColor(R.color.darkPowderBlue), PorterDuff.Mode.SRC_ATOP); // same as tint
 	    ivRefresh.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -288,7 +286,7 @@ public class DallasTraffic extends Activity {
 
         // Inflate some views.
 		ivMore = (ImageView) findViewById(R.id.launcher_more);
-		ivMore.setColorFilter(0xFF7C86A5, PorterDuff.Mode.SRC_ATOP); // FIXME - share this blue. it's lighter than the reload blue
+		ivMore.setColorFilter(getResources().getColor(R.color.lighterDarkPowderBlue), PorterDuff.Mode.SRC_ATOP);
 		ivMore.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -297,7 +295,7 @@ public class DallasTraffic extends Activity {
 		});
 
 		tvSpinner = (TextView) findViewById(R.id.camera_config_spinner);
-		tvSpinner.setTextColor(0xFF7C86A5); // FIXME - share this blue. it's lighter than the reload blue
+		tvSpinner.setTextColor(getResources().getColor(R.color.lighterDarkPowderBlue));
 	    tvSpinner.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -307,8 +305,7 @@ public class DallasTraffic extends Activity {
 
 	    // Radios Icon Click
 	    ivRadios = (ImageView) findViewById(R.id.navbar_radios);
-	    // FIXME - move these colors to defs file
-	    ivRadios.setColorFilter(0xFFFF9999, PorterDuff.Mode.SRC_ATOP); // same as tint
+	    ivRadios.setColorFilter(getResources().getColor(R.color.lightRed), PorterDuff.Mode.SRC_ATOP); // same as tint
 	    ivRadios.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
