@@ -1,14 +1,11 @@
 // v0.2
 
+* make corsicana the default weather radio
 * Add a boolean toggle that indicates if it is the paid version or free version.
 * Put traffic icon on help page somewhere.
-* Move the radio icon off the wall a bit
 
 * Need about icon
 
-
-* More icon by options doesn't seem to work
-* Height of ad banner is too short, cuts off bottom.
 * Darken the tab icons
 
 * Rename navbar to bottomnav
@@ -18,6 +15,9 @@
 * Test radios when I don't have scanner radio installed. 
 
 * bug - Hit refresh on a camera, quickly switch tab. camera will refresh but will be on the other tab. Make the html call a jsi in to set the tab to the right page.
+
+
+
 >> Bugs <<
 
 >> Layout <<

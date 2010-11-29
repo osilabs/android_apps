@@ -523,11 +523,15 @@ public class DallasTraffic extends Activity {
 		Activity activity;
     	JsiJavaScriptInterface(Activity a) { activity = a; }
 
-        /**
-         * 
-         * @param camnum quick view camera number
-         * @param camid id used in URI paths
-         */
+    	public void setLoadedTab(int loadedIndex) {
+    		// This can't set current tab for the following reason:
+    		//  android.view.ViewRoot$CalledFromWrongThreadException: 
+    		//  Only the original thread that created a view hierarchy 
+    		//  can touch its views.
+    		//
+    		// setMainWebView(loadedIndex); 
+    	}
+    	
         public void setChosenCamera(int camnum, int camid) {
         	
 			Toast.makeText(getApplicationContext(), "Loading new camera...", Toast.LENGTH_LONG).show();
