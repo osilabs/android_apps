@@ -1,7 +1,5 @@
 // v0.2
 
-
-
 // v0.3
 * Add a boolean toggle that indicates if it is the paid version or free version.
 * Darken the tab icons
