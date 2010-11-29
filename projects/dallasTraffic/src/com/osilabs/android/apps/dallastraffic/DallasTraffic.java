@@ -56,6 +56,7 @@ public class DallasTraffic extends Activity {
 	protected static String MOBILECONTENT_URL_PREFIX    = "http://osilabs.com/m/mobilecontent/dallastraffic";
 	protected static String MOBILECONTENT_URL_ABOUT     = "http://osilabs.com/m/mobilecontent/about/dt_about.php";
 	protected static String MOBILECONTENT_URL_HELP      = "http://osilabs.com/m/mobilecontent/help/dt_help.php";
+	private static final int DEFAULT_CAMERA_ID          = 29;
 	private static final int MENU_TRAFFIC               = 0;
 	private static final int MENU_ALERTS                = 1;
 	private static final int MENU_CAMERAS               = 2;
@@ -197,7 +198,7 @@ public class DallasTraffic extends Activity {
         CURRENT_WEBVIEW_URL = VIEW_URLS[CURRENT_VIEW_INDEX];
         
         // Restore camera 1
-        PREF_CAMERA_1 = mySharedPreferences.getInt("session_camera_1", 1);
+        PREF_CAMERA_1 = mySharedPreferences.getInt("session_camera_1", DEFAULT_CAMERA_ID);
         
 	    // -------------------------
 	    // Top Nav bar

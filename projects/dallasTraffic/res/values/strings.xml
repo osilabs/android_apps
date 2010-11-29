@@ -7,6 +7,7 @@
 	<!--	~~~~~~~~~~~~~ -->
     <string name="pref_police_radios_default">21093</string>
     <string name="pref_weather_radios_default">23034</string>
+    <string name="session_camera_1">29</string>    
 	<!--	~~~~~~~~~~~~~ -->
 	<!--	~~~~~~~~~~~~~ ~~~~~~~~~~~~~ ~~~~~~~~~~~~~ -->
 
@@ -26,7 +27,6 @@
 
     <!-- Preferences strings -->
     <string name="session_current_view">0</string>
-    <string name="session_camera_1">0</string>    
 
 	<!-- Camera Prefs -->
     <string name="prefs"> Choices</string>

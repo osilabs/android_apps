@@ -1,6 +1,5 @@
 // v2.0
 
-* make corsicana the default weather radio
 * Add a boolean toggle that indicates if it is the paid version or free version.
 * Put traffic icon on help page somewhere.
 * Hit the fixme's
