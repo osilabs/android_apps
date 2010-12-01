@@ -4,7 +4,6 @@ import java.net.URLEncoder;
 import java.util.List;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,36 +13,24 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.preference.PreferenceManager;
-//import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ExpandableListAdapter;
-import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.os.Bundle;
 
 public class SeattleTraffic extends Activity {
 	
@@ -51,8 +38,8 @@ public class SeattleTraffic extends Activity {
 	// Configuration Data
 	// 
 	protected static String MOBILECONTENT_URL_PREFIX    = "http://osilabs.com/m/mobilecontent/seattletraffic";
-	protected static String MOBILECONTENT_URL_ABOUT     = "http://osilabs.com/m/mobilecontent/about/dt_about.php";
-	protected static String MOBILECONTENT_URL_HELP      = "http://osilabs.com/m/mobilecontent/help/dt_help.php";
+	protected static String MOBILECONTENT_URL_ABOUT     = "http://osilabs.com/m/mobilecontent/about/st_about.php";
+	protected static String MOBILECONTENT_URL_HELP      = "http://osilabs.com/m/mobilecontent/help/st_help.php";
 	private static final int DEFAULT_CAMERA_ID          = 29;
 	private static final int MENU_TRAFFIC               = 0;
 	private static final int MENU_ALERTS                = 1;
@@ -60,12 +47,6 @@ public class SeattleTraffic extends Activity {
 	private static final int MENU_NOTICE                = 3;// not used
 	private static final int MENU_INCIDENTLIST          = 4;// not used
 	private static final int MENU_CONGESTION            = 5;// not used
-	private static final int MENU_REFRESH               = 100;
-	private static final int MENU_QUIT                  = 101;
-	private static final int MENU_SCANNER               = 102;
-	private static final int MENU_PREFS                 = 103;
-	private static final int MENU_ABOUT                 = 104;
-	private static final int MENU_HELP                  = 105;
 	private static final int RADIO_OPTION_WEATHER       = 0;
 	private static final int RADIO_OPTION_POLICE        = 1;
 	private static final int INDEX_TRAFFIC              = 0;
@@ -110,9 +91,6 @@ public class SeattleTraffic extends Activity {
 	//
 	// Globals
 	//
-	
-	// Used to affect behavior during oncreate/onstart
-	private boolean spinner_initialized = false;
 
 	// Prefs
 	protected static int PREF_CAMERA_1;
@@ -122,7 +100,6 @@ public class SeattleTraffic extends Activity {
 	protected static String AD_BANNER_URL = "";
 
 	// Will need to up this number if more indexes are needed.
-	protected static String[] VIEW_URLS = new String[8]; 
 	protected static int CURRENT_VIEW_INDEX = 0;
 
 	protected static PackageInfo pInfo = null;
@@ -132,19 +109,17 @@ public class SeattleTraffic extends Activity {
 	protected static SharedPreferences mySharedPreferences;
 
 	// Navbar components
-	protected ImageView ivTraffic;
+	protected ImageView ivMaps;
 	protected ImageView ivAlerts;
 	protected ImageView ivCameras;
 	protected ImageView ivMore;
 	protected ImageView ivRefresh;
 	protected ImageView ivRadios;
-	protected TextView tvSpinner;
+	protected TextView tvSpinner; // FIXME -rename to pop
+	protected TextView tvMapsPop;
 	
 	// Tints and paints
 	protected int color_tab;
-	
-	// For posting runnables
-	private Handler mHandler = new Handler();
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -157,6 +132,7 @@ public class SeattleTraffic extends Activity {
         // Set globals
         //
         
+        // FIXME - i think this green is set elsewhere too
         color_tab = Color.GREEN;
         
         // Read in manifest
@@ -170,20 +146,6 @@ public class SeattleTraffic extends Activity {
 		// Set URLs with versioncode
 		TRAFFIC_MAP_URL = MOBILECONTENT_URL_PREFIX + pInfo.versionCode + "/trafficmap.php";
 		AD_BANNER_URL = MOBILECONTENT_URL_PREFIX + pInfo.versionCode + "/adbanner.php";
-
-		// The order of these needs to match the order of the VIEW_INDEXes. It is used to determine
-		//  which webview URI to use for the view.
-		//
-		// This is intialized with a finite number of indexes, if you exceed them,
-		//  up that number or get array out of bounds exception
-		VIEW_URLS[0] = TRAFFIC_MAP_URL;
-		VIEW_URLS[1] = TRAFFIC_MAP_URL;
-		VIEW_URLS[2] = TRAFFIC_MAP_URL;
-		VIEW_URLS[3] = TRAFFIC_MAP_URL;
-		VIEW_URLS[4] = TRAFFIC_MAP_URL;
-		VIEW_URLS[5] = TRAFFIC_MAP_URL;
-		VIEW_URLS[6] = TRAFFIC_MAP_URL;
-		VIEW_URLS[7] = TRAFFIC_MAP_URL;
 		
         //
 		// Restore view
@@ -191,17 +153,14 @@ public class SeattleTraffic extends Activity {
 		mySharedPreferences = getSharedPreferences(
 				NAMESPACE, Activity.MODE_PRIVATE);
         CURRENT_VIEW_INDEX = mySharedPreferences.getInt("session_current_view", 2);
-        CURRENT_WEBVIEW_URL = VIEW_URLS[CURRENT_VIEW_INDEX];
-        
-        // Restore camera 1
-        PREF_CAMERA_1 = mySharedPreferences.getInt("session_camera_1", DEFAULT_CAMERA_ID);
+        CURRENT_WEBVIEW_URL = TRAFFIC_MAP_URL;
         
 	    // -------------------------
 	    // Top Nav bar
 	    //
 
-	    ivTraffic = (ImageView) findViewById(R.id.launcher_traffic);
-	    ivTraffic.setOnClickListener(new View.OnClickListener() {
+	    ivMaps = (ImageView) findViewById(R.id.launcher_traffic);
+	    ivMaps.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				setMainWebView(INDEX_TRAFFIC);
@@ -212,8 +171,6 @@ public class SeattleTraffic extends Activity {
 	    // This particular icon is much whiter than the others so i am making it darker
 	    //  with the alpha.
 	    ivAlerts.setAlpha(ALPHA_OFF_ALERTS);
-	    //ivAlerts.setColorFilter(Color.MAGENTA, PorterDuff.Mode.DST_ATOP); // same as tint
-	    //ivAlerts.setBackgroundColor(Color.CYAN);
 	    ivAlerts.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -221,6 +178,8 @@ public class SeattleTraffic extends Activity {
 			}
 		});
 
+	    // Set up camera tab
+        PREF_CAMERA_1 = mySharedPreferences.getInt("session_camera_1", DEFAULT_CAMERA_ID);
 	    ivCameras = (ImageView) findViewById(R.id.launcher_cameras);
 	    ivCameras.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -281,7 +240,15 @@ public class SeattleTraffic extends Activity {
 	    // Bottom Navigation Bar
 	    //
 
-        // Inflate some views.
+    	tvMapsPop = (TextView) findViewById(R.id.maps_config_pop);
+    	tvMapsPop.setTextColor(getResources().getColor(R.color.lighterDarkPowderBlue));
+    	tvMapsPop.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				launchMapPicker();
+			}
+		});
+
 		ivMore = (ImageView) findViewById(R.id.launcher_more);
 		ivMore.setColorFilter(getResources().getColor(R.color.lighterDarkPowderBlue), PorterDuff.Mode.SRC_ATOP);
 		ivMore.setOnClickListener(new View.OnClickListener() {
@@ -341,6 +308,12 @@ public class SeattleTraffic extends Activity {
 		Intent intent = new Intent().setClassName(c, NAMESPACE + ".CameraELV");
 		startActivityForResult(intent, 33); // FIXME - Make this a const
     }
+    protected void launchMapPicker() { 
+    	wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+0+"&map=" 
+    			+ Config.maps_urls[1] 
+    			+ "&camera=" 
+    			+ PREF_CAMERA_1);
+    }
     protected void setCurrentRadios() {
     	// Set Global with current prefs
     	// If this namespace path doesn't end in '_preferences' this won't work.
@@ -369,7 +342,6 @@ public class SeattleTraffic extends Activity {
 	    switch (requestCode) {
             
         case 33:
-
             // This is the standard resultCode that is sent back if the
             // activity crashed or didn't doesn't supply an explicit result.
             if (resultCode == RESULT_CANCELED){
@@ -394,6 +366,8 @@ public class SeattleTraffic extends Activity {
     			    editor.putInt("session_camera_1", PREF_CAMERA_1);
     			    editor.commit();
             }
+            
+            
 	        default:
 	            break;
 	    }
@@ -409,15 +383,17 @@ public class SeattleTraffic extends Activity {
 		ivMore.setVisibility(ImageView.VISIBLE);
 		tvSpinner.setVisibility(TextView.VISIBLE);
 	}
-	public void setCurrentTab() {
-		ivTraffic.setColorFilter(null); ivTraffic.setAlpha(ALPHA_OFF);
+	public void setCurrentTabStyle() {
+		//ivMaps.setColorFilter(null); ivMaps.setAlpha(ALPHA_OFF);
+		MapsTab.setInactive(ivMaps);
 		ivAlerts.setColorFilter(null); ivAlerts.setAlpha(ALPHA_OFF_ALERTS);
 		ivCameras.setColorFilter(null); ivCameras.setAlpha(ALPHA_OFF);
 		
 		switch (CURRENT_VIEW_INDEX) {
 			case MENU_TRAFFIC:
-				ivTraffic.setColorFilter(TAB_ACTIVE_COLOR, PorterDuff.Mode.SRC_ATOP);
-				ivTraffic.setAlpha(ALPHA_ON);
+//				ivMaps.setColorFilter(TAB_ACTIVE_COLOR, PorterDuff.Mode.SRC_ATOP);
+//				ivMaps.setAlpha(ALPHA_ON);
+				MapsTab.setActive(ivMaps);
 				break;
 		    case MENU_ALERTS:
 				ivAlerts.setColorFilter(TAB_ACTIVE_COLOR, PorterDuff.Mode.SRC_ATOP);
@@ -440,10 +416,12 @@ public class SeattleTraffic extends Activity {
 		CURRENT_VIEW_INDEX = view_index;
 		setCurrentView(CURRENT_VIEW_INDEX);
         hideCameraConfiguration();
-        setCurrentTab();
+        MapsTab.hideConfiguration(tvMapsPop);
+        setCurrentTabStyle();
 		switch (CURRENT_VIEW_INDEX) {
 			case MENU_TRAFFIC:
 				CURRENT_VIEW_INDEX = INDEX_TRAFFIC;
+		        MapsTab.showConfiguration(tvMapsPop);
 				break;
 			case MENU_NOTICE:
 				CURRENT_VIEW_INDEX = INDEX_NOTICE;
@@ -464,27 +442,7 @@ public class SeattleTraffic extends Activity {
 		    	break;		        
 		}
 
-		// CURRENT_WEBVIEW_URL is still what the last view was, 
-		//  VIEW_URLS[CURRENT_VIEW_INDEX] has the new view which
-		//  has a different URL (This was used when the cameras
-		//  view had to reload the webview with a different url).
-    	if (CURRENT_WEBVIEW_URL != VIEW_URLS[CURRENT_VIEW_INDEX]) {
-    		// Set the new Current URL
-	    	CURRENT_WEBVIEW_URL = VIEW_URLS[CURRENT_VIEW_INDEX];
-
-	    	// It's going to take a second to reload a new webview,
-	    	//  state the obvious
-			Toast.makeText(	getApplicationContext(), 
-							"Loading...", Toast.LENGTH_LONG).show();
-
-	    	// Load the other URL into the webview
-    		wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_VIEW_INDEX);
-    	} else {
-	    	// Just switch div - This stays fast because we don't have to
-    		//  reload the webview a lot, only for camera switching.
-    		wvMain.loadUrl("javascript: jumpTo('"+CURRENT_VIEW_INDEX+"')");
-    	}
-		
+		wvMain.loadUrl("javascript: jumpTo('"+CURRENT_VIEW_INDEX+"')");
 	}
 	
 	private class MyWebViewClient extends WebViewClient {
@@ -655,7 +613,7 @@ public class SeattleTraffic extends Activity {
 
 		if (scannerAvailable) {
 			Intent intent = new Intent(SCANNER_RADIO_NAMESPACE + ".intent.action." + SCANNER_RADIO_ACTION);
-			intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			intent.putExtra("node", which_scanner);
 			startActivity(intent);
 		} else {
@@ -668,7 +626,7 @@ public class SeattleTraffic extends Activity {
 	    			Intent intent = new Intent(
 	    					Intent.ACTION_VIEW,
 	    					Uri.parse("market://details?id=com.scannerradio"));
-	    			intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
+	    			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 	    			startActivity(intent);
 	            } 
 	        });

@@ -1,0 +1,121 @@
+// v0.1
+
+* Set timezone to pacific time
+
+
+
+// v0.2
+* Add a boolean toggle that indicates if it is the paid version or free version.
+* Darken the tab icons
+* Rename navbar to bottomnav
+* Rename Prefs class to CameraPrefs
+* bug - Hit refresh on a camera, quickly switch tab. camera will refresh but will be on the other tab. Make the html call a jsi in to set the tab to the right page.
+
+
+
+>> Layout <<
+
+>> New Features <<
+* Get an android widdler
+* Make incident feed pass number to overlay on incident tab icon (http://stackoverflow.com/questions/2317617/how-to-keep-text-on-imageview-in-android)
+* Close the other exp. listview items as each new group is opened
+
+>> Cleanup code <<
+
+
+
+
+>> Bugs <<
+//
+// App dies - go from camera popup to back button over and over fast. May be bc of too many toast messages. 
+//
+D/** osilabs.com **(18219): onStart
+I/ActivityManager( 1307): Displayed activity com.osilabs.android.apps.seattletraffic/.SeattleTraffic: 10334 ms (total 10334 ms)
+I/ActivityManager( 1307): Starting activity: Intent { cmp=com.osilabs.android.apps.seattletraffic/.CameraELV }
+I/ActivityManager( 1307): Displayed activity com.osilabs.android.apps.seattletraffic/.CameraELV: 292 ms (total 292 ms)
+E/KINETO  ( 1438): KLOG0C3- xmk_QueryOSQueue SDL Queue empty : WAIT_FOREVER 
+E/KINETO  ( 1438): KLOG0A3- ibs_os_GetMsg: Timeout forever for UKCC qHnd 0x80c3503c
+D/** osilabs.com **(18219): onStart
+I/ActivityManager( 1307): Starting activity: Intent { cmp=com.osilabs.android.apps.seattletraffic/.CameraELV }
+I/ActivityManager( 1307): Displayed activity com.osilabs.android.apps.seattletraffic/.CameraELV: 283 ms (total 283 ms)
+W/KeyCharacterMap(18219): No keyboard for id 65541
+W/KeyCharacterMap(18219): Using default keymap: /system/usr/keychars/qwerty.kcm.bin
+D/** osilabs.com **(18219): onStart
+E/KINETO  ( 1438): KLOG0C3- xmk_QueryOSQueue SDL Queue empty : WAIT_FOREVER 
+E/KINETO  ( 1438): KLOG0A3- ibs_os_GetMsg: Timeout forever for UKCC qHnd 0x80c3503c
+I/ActivityManager( 1307): Starting activity: Intent { cmp=com.osilabs.android.apps.seattletraffic/.CameraELV }
+I/ActivityManager( 1307): Displayed activity com.osilabs.android.apps.seattletraffic/.CameraELV: 311 ms (total 311 ms)
+E/KINETO  ( 1438): KLOG0C3- xmk_QueryOSQueue SDL Queue empty : WAIT_FOREVER 
+E/KINETO  ( 1438): KLOG0A3- ibs_os_GetMsg: Timeout forever for UKCC qHnd 0x80c3503c
+E/KINETO  ( 1438): KLOG103- Recevied GANSWITCH_NETWORK_STATE_IND
+E/KINETO  ( 1438): KLOG103- ganswitch_network_state_ind regnStatus=1
+E/KINETO  ( 1438): KLOG0C3- UKCCQueuePost : Enter len =%d 
+E/KINETO  ( 1438): KLOG084-  01 00 09 02 00 00 00 00
+E/KINETO  ( 1438): 
+W/KeyCharacterMap(18219): No keyboard for id 65541
+W/KeyCharacterMap(18219): Using default keymap: /system/usr/keychars/qwerty.kcm.bin
+D/** osilabs.com **(18219): onStart
+I/DEBUG   (15683): pid: 18219, tid: 18226  >>> com.osilabs.android.apps.seattletraffic <<<
+E/KINETO  ( 1438): KLOG0C4- xInEnv: 0x2ad700 --> 0x2ad700, opcode=521
+E/KINETO  ( 1438): KLOG0C4- AsGanRrModeIndEncoder
+E/KINETO  ( 1438): KLOG0C4- AsGanRrModeIndEncoder: rrmode 0
+E/KINETO  ( 1438): KLOG0C4- SendIpaGsmRRState
+E/KINETO  ( 1438): KLOG0C4- SendIpcDataReq 0xa6
+E/KINETO  ( 1438): KLOG0C4- IPC_SEND 3331
+E/KINETO  ( 1438): KLOG0C3- GAN_OS_sendIpcMessage : Enter
+E/KINETO  ( 1438): KLOG003- IPA_MSG_GSM_RR_STATE event
+E/KINETO  ( 1438): KLOG0C4- XMK_SEND_ENV: id=218 recv=3
+E/KINETO  ( 1438): KLOG0C4- xmk_Send: 254 -> 3, id=218
+E/KINETO  ( 1438): KLOG0C4- snd: 254 recv: 3 sig: 218 prio: 100
+E/KINETO  ( 1438): KLOG0C4- NewState: Process 3 to State 254, Symbol 59
+E/KINETO  ( 1438): KLOG0C3- xmk_QueryOSQueue SDL Queue empty : WAIT_FOREVER 
+E/KINETO  ( 1438): KLOG0A3- ibs_os_GetMsg: Timeout forever for UKCC qHnd 0x80c3503c
+E/KINETO  ( 1438): KLOG004- GSM RR State: 0 - UMA RR State: 3
+I/ActivityManager( 1307): Process com.osilabs.android.apps.seattletraffic (pid 18219) has died.
+I/WindowManager( 1307): WIN DEATH: Window{4502c890 com.osilabs.android.apps.seattletraffic/com.osilabs.android.apps.seattletraffic.SeattleTraffic paused=false}
+W/WindowManager( 1307): Failed looking up window
+W/WindowManager( 1307): java.lang.IllegalArgumentException: Requested window android.os.BinderProxy@44fb9780 does not exist
+W/WindowManager( 1307): 	at com.android.server.WindowManagerService.windowForClientLocked(WindowManagerService.java:9346)
+W/WindowManager( 1307): 	at com.android.server.WindowManagerService.windowForClientLocked(WindowManagerService.java:9337)
+W/WindowManager( 1307): 	at com.android.server.WindowManagerService$WindowState$DeathRecipient.binderDied(WindowManagerService.java:8223)
+W/WindowManager( 1307): 	at android.os.BinderProxy.sendDeathNotice(Binder.java:346)
+W/WindowManager( 1307): 	at dalvik.system.NativeStart.run(Native Method)
+I/UsageStats( 1307): Unexpected resume of com.android.launcher while already resumed in com.osilabs.android.apps.seattletraffic
+W/InputManagerService( 1307): Got RemoteException sending setActive(false) notification to pid 18219 uid 10119
+W/NotificationService( 1307): Object died trying to hide notification android.app.ITransientNotification$Stub$Proxy@45237f80 in package com.osilabs.android.apps.seattletraffic
+W/ActivityManager( 1307): setProcessForeground called on unknown pid: 18219
+W/NotificationService( 1307): Object died trying to show notification android.app.ITransientNotification$Stub$Proxy@45185960 in package com.osilabs.android.apps.seattletraffic
+W/ActivityManager( 1307): setProcessForeground called on unknown pid: 18219
+---------------------------------
+I/ActivityManager( 1307): Displayed activity com.osilabs.android.apps.seattletraffic/.CameraELV: 311 ms (total 311 ms)
+D/** osilabs.com **(18453): onStart
+E/KINETO  ( 1438): KLOG103- Recevied GANSWITCH_NETWORK_STATE_IND
+E/KINETO  ( 1438): KLOG103- ganswitch_network_state_ind regnStatus=1
+E/KINETO  ( 1438): KLOG0C3- UKCCQueuePost : Enter len =%d 
+E/KINETO  ( 1438): KLOG084-  01 00 09 02 00 00 00 00
+E/KINETO  ( 1438): 
+E/KINETO  ( 1438): KLOG0C4- xInEnv: 0x2ad700 --> 0x2ad700, opcode=521
+E/KINETO  ( 1438): KLOG0C4- AsGanRrModeIndEncoder
+E/KINETO  ( 1438): KLOG0C4- AsGanRrModeIndEncoder: rrmode 0
+E/KINETO  ( 1438): KLOG0C4- SendIpaGsmRRState
+E/KINETO  ( 1438): KLOG0C4- SendIpcDataReq 0xa6
+E/KINETO  ( 1438): KLOG0C4- IPC_SEND 3331
+E/KINETO  ( 1438): KLOG0C3- GAN_OS_sendIpcMessage : Enter
+E/KINETO  ( 1438): KLOG003- IPA_MSG_GSM_RR_STATE event
+E/KINETO  ( 1438): KLOG0C4- XMK_SEND_ENV: id=218 recv=3
+E/KINETO  ( 1438): KLOG0C4- xmk_Send: 254 -> 3, id=218
+E/KINETO  ( 1438): KLOG0C4- snd: 254 recv: 3 sig: 218 prio: 100
+E/KINETO  ( 1438): KLOG0C4- NewState: Process 3 to State 254, Symbol 59
+E/KINETO  ( 1438): KLOG0C3- xmk_QueryOSQueue SDL Queue empty : WAIT_FOREVER 
+E/KINETO  ( 1438): KLOG0A3- ibs_os_GetMsg: Timeout forever for UKCC qHnd 0x80c3503c
+E/KINETO  ( 1438): KLOG004- GSM RR State: 0 - UMA RR State: 3
+I/DEBUG   (15683): pid: 18453, tid: 18460  >>> com.osilabs.android.apps.seattletraffic <<<
+I/ActivityManager( 1307): Process com.osilabs.android.apps.seattletraffic (pid 18453) has died.
+I/WindowManager( 1307): WIN DEATH: Window{44fcb620 com.osilabs.android.apps.seattletraffic/com.osilabs.android.apps.seattletraffic.SeattleTraffic paused=false}
+I/UsageStats( 1307): Unexpected resume of com.android.launcher while already resumed in com.osilabs.android.apps.seattletraffic
+W/InputManagerService( 1307): Got RemoteException sending setActive(false) notification to pid 18453 uid 10119
+W/NotificationService( 1307): Object died trying to hide notification android.app.ITransientNotification$Stub$Proxy@450c27e0 in package com.osilabs.android.apps.seattletraffic
+W/ActivityManager( 1307): setProcessForeground called on unknown pid: 18453
+W/NotificationService( 1307): Object died trying to show notification android.app.ITransientNotification$Stub$Proxy@450c1b98 in package com.osilabs.android.apps.seattletraffic
+W/ActivityManager( 1307): setProcessForeground called on unknown pid: 18453
+

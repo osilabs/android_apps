@@ -26,7 +26,12 @@
 	  android:orientation="horizontal"
 	  >
 	
-		  <ImageView
+			<!--  Config pop up launchers -->
+			<!-- maps -->
+
+
+			<!-- camera-->
+		    <ImageView
 		  		android:id="@+id/launcher_more"
 	 			android:src="@drawable/ic_more"
 				android:layout_width="wrap_content" 
@@ -35,7 +40,6 @@
 				android:layout_marginRight="2dip"
 				android:visibility="gone" 
 				/>
-				
 			<TextView 
 				android:id="@+id/camera_config_spinner"
 				android:clickable="true"
@@ -47,6 +51,16 @@
 				android:visibility="gone" 
 				/>
 								
+			<TextView 
+				android:id="@+id/maps_config_pop"
+				android:clickable="true"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content" 
+				android:textSize="24sp" 
+				android:text="Maps..."
+				android:textColor="#999999" 
+				/>
+
 			<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     			android:layout_width="fill_parent"
 			    android:layout_height="fill_parent"

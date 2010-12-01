@@ -5,9 +5,18 @@
 ** TCTRAFFIC
 **
 
+* Create new android project in eclipse and close eclipse.
+
+* cp manifest, src/.../*.java, res/ from sourceproject to targetproject.
+
+* Edit java and xml to remove errors
+
+* git commit -m"ST - SEEDING FROM DT V0.2"
+
 1. Up the versionname and versioncode in the manifest.
 	- the versioncode is used in the trafficmap URL path 
 	  (ie ".../mobilecontent/tctraffic" + versioncode + "/trafficmap.php")
 2. cp -rp  ".../mobilecontent/tctraffic" + (versioncode - 1) to ".../mobilecontent/tctraffic" + versioncode 
 	- a directory matching the versioncode must exist and will be automatically used.
 
+ST - SEEDING FROM DT V0.2
