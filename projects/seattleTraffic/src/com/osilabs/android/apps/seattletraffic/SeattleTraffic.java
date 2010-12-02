@@ -222,10 +222,6 @@ public class SeattleTraffic extends Activity {
         wvMain.setWebChromeClient(new WebChromeClient());
         // Enable jsi
         wvMain.addJavascriptInterface(new JsiJavaScriptInterface(this), "jsi");
-    	// It's going to take a second to load
-		Toast.makeText(this, "Loading...", Toast.LENGTH_LONG).show();
-		// Load the webview
-    	wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_VIEW_INDEX+"&camera="+PREF_CAMERA_1);
 
 		//
 		// Ad banner Web View
@@ -234,7 +230,7 @@ public class SeattleTraffic extends Activity {
         WebSettings awebSettings = wvAd.getSettings();
         awebSettings.setJavaScriptEnabled(true);
         awebSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
-    	wvAd.loadUrl(AD_BANNER_URL);
+    	// wvAd.loadUrl(AD_BANNER_URL);
     	
 	    // -------------------------
 	    // Bottom Navigation Bar
@@ -297,10 +293,14 @@ public class SeattleTraffic extends Activity {
 		});
 
 	    //
-    	// Set the current tab
+    	// Set the current tab and load it
     	//
+	    
+        // It's going to take a second to load
+		Toast.makeText(this, "Loading...", Toast.LENGTH_LONG).show();
+		
     	setMainWebView(CURRENT_VIEW_INDEX);
-
+		reloadViews();
     }
 
     protected void launchCameraPicker() { 
@@ -309,10 +309,16 @@ public class SeattleTraffic extends Activity {
 		startActivityForResult(intent, 33); // FIXME - Make this a const
     }
     protected void launchMapPicker() { 
-    	wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+0+"&map=" 
-    			+ Config.maps_urls[1] 
-    			+ "&camera=" 
-    			+ PREF_CAMERA_1);
+		AlertDialog alert = new AlertDialog.Builder(SeattleTraffic.this)
+        .setTitle("Maps")
+        .setItems(Config.maps, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+            	MapsTab.CURRENT_INDEX = which;
+            	reloadViews();
+            }
+        }).create();
+		
+		alert.show();
     }
     protected void setCurrentRadios() {
     	// Set Global with current prefs
@@ -357,8 +363,9 @@ public class SeattleTraffic extends Activity {
     			PREF_CAMERA_1 = cam;
     			
     			// Reload the webview so it just shows the chosen camera
-    	    	wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_VIEW_INDEX+"&camera="+PREF_CAMERA_1);
-    	    	
+    	    	//wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_VIEW_INDEX+"&camera="+PREF_CAMERA_1);
+				refreshViews();
+				
     			// Set the chosen camera in the persistent settings
     	    	SharedPreferences prefs 
     				= getSharedPreferences(NAMESPACE, Activity.MODE_PRIVATE);
@@ -493,8 +500,9 @@ public class SeattleTraffic extends Activity {
 			PREF_CAMERA_1 = camid;
 			
 			// Reload the webview so it just shows the chosen camera
-	    	wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_VIEW_INDEX+"&camera="+PREF_CAMERA_1);
-	    	
+	    	//wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_VIEW_INDEX+"&camera="+PREF_CAMERA_1);
+			refreshViews();
+			
 			// Set the chosen camera in the persistent settings
 	    	SharedPreferences prefs 
 				= getSharedPreferences(NAMESPACE, Activity.MODE_PRIVATE);
@@ -601,8 +609,18 @@ public class SeattleTraffic extends Activity {
 	
 	public void refreshViews() {
 		Toast.makeText(getApplicationContext(), "Refreshing", Toast.LENGTH_SHORT).show();
+		reloadViews();
+	}
+	
+	public void reloadViews() {
+		Log.d(TAG, "reloadViews()");
+		
 		// Refresh main content webview
-		wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_VIEW_INDEX+"&camera="+PREF_CAMERA_1);
+		wvMain.loadUrl(CURRENT_WEBVIEW_URL
+						+ "?target=" + CURRENT_VIEW_INDEX
+						+ "&camera=" + PREF_CAMERA_1 
+						+ MapsTab.getReloadURLParts());
+		
 		// Refresh banner webview
 		wvAd.loadUrl(AD_BANNER_URL);
 	}

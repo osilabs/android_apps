@@ -11,12 +11,17 @@ public class MapsTab {
 	public    static final int    ALPHA_OFF = 0xFFFF;
 	public    static final int    TAB_ACTIVE_COLOR = 0xFF00FF00;
 
-	public    static final int    CURRENT_INDEX = 1;
+	// If never set, is set to first map.
+	public    static int    	  CURRENT_INDEX = 0;
 	
 	public static String getActiveMapURL() {
 		return Config.maps[CURRENT_INDEX];
 	}
-	
+	public static String getReloadURLParts() {
+		return	"&map=" + Config.maps_urls[CURRENT_INDEX] +
+				"&scrolldown=" +
+				"&scrollover=";
+	}
 	public static void setActive(ImageView ivTraffic) {
 		ivTraffic.setColorFilter(TAB_ACTIVE_COLOR, PorterDuff.Mode.SRC_ATOP);
 		ivTraffic.setAlpha(ALPHA_ON);	
