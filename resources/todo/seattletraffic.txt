@@ -1,7 +1,8 @@
 // v0.1
 
 * Set timezone to pacific time
-
+* Set radios
+* Put copywright messages on maps.
 
 
 // v0.2

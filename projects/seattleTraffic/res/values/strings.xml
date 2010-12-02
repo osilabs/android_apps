@@ -7,15 +7,13 @@
 	<!--	~~~~~~~~~~~~~ -->
     <string name="pref_police_radios_default">21093</string>
     <string name="pref_weather_radios_default">23034</string>
-    <string name="session_camera_1">29</string>    
+    <string name="session_camera_1">29</string>
+    <string name="session_map">0</string>
+    <string name="session_alert">0</string>
 	<!--	~~~~~~~~~~~~~ -->
 	<!--	~~~~~~~~~~~~~ ~~~~~~~~~~~~~ ~~~~~~~~~~~~~ -->
 
-<!--	FIXME remove this-->
-    <string name="expandable_list_sample_action">Sample action</string>
-
     <string name="app_name">Seattle Traffic</string>
-    <string name="quick_view_label">Quick View</string>
 
     <string name="menu_prefs">Settings</string>
     <string name="menu_refresh">Refresh</string>
@@ -45,14 +43,4 @@
     <string name="pref_weather_radios_title">Weather Radios</string>    
     <string name="pref_weather_radios_dialog_title">Select Favorite Weather Radio</string>
     <string name="pref_weather_radios_selected">pref_weather_radios_selected</string>
-    
-    <style name="osistyle" parent="@android:style/TextAppearance.Medium">
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">#444444</item>
-        <item name="android:textStyle">italic</item>
-        <item name="android:typeface">sans</item>
-        <item name="android:gravity">center_vertical|center_horizontal</item>
-    </style>
-    
 </resources>

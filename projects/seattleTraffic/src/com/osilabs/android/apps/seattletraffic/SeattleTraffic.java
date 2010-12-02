@@ -40,28 +40,11 @@ public class SeattleTraffic extends Activity {
 	protected static String MOBILECONTENT_URL_PREFIX    = "http://osilabs.com/m/mobilecontent/seattletraffic";
 	protected static String MOBILECONTENT_URL_ABOUT     = "http://osilabs.com/m/mobilecontent/about/st_about.php";
 	protected static String MOBILECONTENT_URL_HELP      = "http://osilabs.com/m/mobilecontent/help/st_help.php";
-	private static final int DEFAULT_CAMERA_ID          = 29;
-	private static final int MENU_TRAFFIC               = 0;
-	private static final int MENU_ALERTS                = 1;
-	private static final int MENU_CAMERAS               = 2;
-	private static final int MENU_NOTICE                = 3;// not used
-	private static final int MENU_INCIDENTLIST          = 4;// not used
-	private static final int MENU_CONGESTION            = 5;// not used
-	private static final int RADIO_OPTION_WEATHER       = 0;
-	private static final int RADIO_OPTION_POLICE        = 1;
-	private static final int INDEX_TRAFFIC              = 0;
-	private static final int INDEX_ALERTS               = 1;
-	private static final int INDEX_CAMERAS              = 2;
-	private static final int INDEX_NOTICE               = 3;
-	private static final int INDEX_INCIDENTLIST         = 4;
-	private static final int INDEX_CONGESTION           = 5;
 	private static final String[] INDEX_STRINGS = {		
-		"Traffic", 
-		"Alerts", 
-		"Cameras...", 
-		"Alert Map", 
-		"Incident Report", 
-		"Congestion"};
+		"Maps...",
+		"Info...", 
+		"Cameras..."
+	};
 	protected static final String NAMESPACE = "com.osilabs.android.apps.seattletraffic";
 	// Use './adb logcat |grep node' to see the scanner ids
 	private static int SCAN_NODE_POLICE  			= 21093;
@@ -70,9 +53,6 @@ public class SeattleTraffic extends Activity {
 	// /Configuration Data
 	// --------------------------------------------------
 
-	
-
-	
 	
 	//
 	// Consts
@@ -87,13 +67,27 @@ public class SeattleTraffic extends Activity {
 	public    static final int    ALPHA_ON_ALERTS = 0xFFEE;
 	public    static final int    ALPHA_OFF_ALERTS = 0xFF88;
 	public    static final int    TAB_ACTIVE_COLOR = 0xFF00FF00; // green
-	
+
+	private static final int MENU_TRAFFIC               = 0;
+	private static final int MENU_ALERTS                = 1;
+	private static final int MENU_CAMERAS               = 2;
+	private static final int RADIO_OPTION_WEATHER       = 0;
+	private static final int RADIO_OPTION_POLICE        = 1;
+	private static final int INDEX_TRAFFIC              = 0;
+	private static final int INDEX_ALERTS               = 1;
+	private static final int INDEX_CAMERAS              = 2;
+	private static final int INDEX_NOTICE               = 3;
+	private static final int INDEX_INCIDENTLIST         = 4;
+	private static final int INDEX_CONGESTION           = 5;
+
 	//
 	// Globals
 	//
 
 	// Prefs
 	protected static int PREF_CAMERA_1;
+	protected static int PREF_MAP;
+	protected static int PREF_ALERT;
 	
 	protected static String CURRENT_WEBVIEW_URL = "";
 	protected static String TRAFFIC_MAP_URL = "";
@@ -147,13 +141,21 @@ public class SeattleTraffic extends Activity {
 		TRAFFIC_MAP_URL = MOBILECONTENT_URL_PREFIX + pInfo.versionCode + "/trafficmap.php";
 		AD_BANNER_URL = MOBILECONTENT_URL_PREFIX + pInfo.versionCode + "/adbanner.php";
 		
+		// Default the current view
+		// FIXME - this should be an index not a url
+        CURRENT_WEBVIEW_URL = TRAFFIC_MAP_URL;
+		
         //
-		// Restore view
+		// Restore preferences
         //
 		mySharedPreferences = getSharedPreferences(
 				NAMESPACE, Activity.MODE_PRIVATE);
         CURRENT_VIEW_INDEX = mySharedPreferences.getInt("session_current_view", 2);
-        CURRENT_WEBVIEW_URL = TRAFFIC_MAP_URL;
+        
+        PREF_CAMERA_1 = mySharedPreferences.getInt("session_camera_1", Config.DEFAULT_CAMERA_ID);
+        PREF_MAP = mySharedPreferences.getInt("session_map", Config.DEFAULT_MAP_INDEX);
+        PREF_ALERT = mySharedPreferences.getInt("session_alert", Config.DEFAULT_CAMERA_ID);
+
         
 	    // -------------------------
 	    // Top Nav bar
@@ -179,7 +181,7 @@ public class SeattleTraffic extends Activity {
 		});
 
 	    // Set up camera tab
-        PREF_CAMERA_1 = mySharedPreferences.getInt("session_camera_1", DEFAULT_CAMERA_ID);
+        PREF_CAMERA_1 = mySharedPreferences.getInt("session_camera_1", Config.DEFAULT_CAMERA_ID); // FIXME - defaultcamid should come form config.defaultcam...
 	    ivCameras = (ImageView) findViewById(R.id.launcher_cameras);
 	    ivCameras.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -410,12 +412,6 @@ public class SeattleTraffic extends Activity {
 				ivCameras.setColorFilter(TAB_ACTIVE_COLOR, PorterDuff.Mode.SRC_ATOP);
 				ivCameras.setAlpha(ALPHA_ON);
 		    	break;
-			case MENU_NOTICE:
-				break;
-		    case MENU_INCIDENTLIST:
-		    	break;
-		    case MENU_CONGESTION:
-		    	break;
 		}
 	}
 
@@ -430,23 +426,14 @@ public class SeattleTraffic extends Activity {
 				CURRENT_VIEW_INDEX = INDEX_TRAFFIC;
 		        MapsTab.showConfiguration(tvMapsPop);
 				break;
-			case MENU_NOTICE:
-				CURRENT_VIEW_INDEX = INDEX_NOTICE;
-				break;
+		    case MENU_ALERTS:
+		        CURRENT_VIEW_INDEX = INDEX_ALERTS;
+		    	break;
 		    case MENU_CAMERAS:
 		        CURRENT_VIEW_INDEX = INDEX_CAMERAS;
 		        // Enable camera configuration
 		        showCameraConfiguration();
 		    	break;
-		    case MENU_ALERTS:
-		        CURRENT_VIEW_INDEX = INDEX_ALERTS;
-		    	break;
-		    case MENU_INCIDENTLIST:
-		        CURRENT_VIEW_INDEX = INDEX_INCIDENTLIST;
-		    	break;
-		    case MENU_CONGESTION:
-		        CURRENT_VIEW_INDEX = INDEX_CONGESTION;
-		    	break;		        
 		}
 
 		wvMain.loadUrl("javascript: jumpTo('"+CURRENT_VIEW_INDEX+"')");
