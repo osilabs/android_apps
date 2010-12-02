@@ -40,11 +40,11 @@ public class SeattleTraffic extends Activity {
 	protected static String MOBILECONTENT_URL_PREFIX    = "http://osilabs.com/m/mobilecontent/seattletraffic";
 	protected static String MOBILECONTENT_URL_ABOUT     = "http://osilabs.com/m/mobilecontent/about/st_about.php";
 	protected static String MOBILECONTENT_URL_HELP      = "http://osilabs.com/m/mobilecontent/help/st_help.php";
-	private static final String[] INDEX_STRINGS = {		
-		"Maps...",
-		"Info...", 
-		"Cameras..."
-	};
+//	private static final String[] INDEX_STRINGS = {		
+//		"xMaps...",
+//		"xInfo...", 
+//		"xCameras..."
+//	};
 	protected static final String NAMESPACE = "com.osilabs.android.apps.seattletraffic";
 	// Use './adb logcat |grep node' to see the scanner ids
 	private static int SCAN_NODE_POLICE  			= 21093;
@@ -60,25 +60,22 @@ public class SeattleTraffic extends Activity {
 
 	private static final String TAG = "** osilabs.com **";
 	
-	protected static final String SCANNER_RADIO_NAMESPACE = "net.gordonedwards.scannerradio";
+	protected static final String SCANNER_RADIO_NAMESPACE = "net.gordonedwards.scannerradio"; // FIXME - move all these to class for scanner radio
 	protected static final String SCANNER_RADIO_ACTION = "ACTION_PLAY_SCANNER";
-	public    static final int    ALPHA_ON = 0xFFFF;
-	public    static final int    ALPHA_OFF = 0xFFFF;
-	public    static final int    ALPHA_ON_ALERTS = 0xFFEE;
-	public    static final int    ALPHA_OFF_ALERTS = 0xFF88;
+//	public    static final int    ALPHA_ON = 0xFFFF;
+//	public    static final int    ALPHA_OFF = 0xFFFF;
+//	public    static final int    ALPHA_ON_ALERTS = 0xFFEE;
+//	public    static final int    ALPHA_OFF_ALERTS = 0xFF88;
 	public    static final int    TAB_ACTIVE_COLOR = 0xFF00FF00; // green
 
 	private static final int MENU_TRAFFIC               = 0;
 	private static final int MENU_ALERTS                = 1;
 	private static final int MENU_CAMERAS               = 2;
-	private static final int RADIO_OPTION_WEATHER       = 0;
-	private static final int RADIO_OPTION_POLICE        = 1;
 	private static final int INDEX_TRAFFIC              = 0;
 	private static final int INDEX_ALERTS               = 1;
 	private static final int INDEX_CAMERAS              = 2;
-	private static final int INDEX_NOTICE               = 3;
-	private static final int INDEX_INCIDENTLIST         = 4;
-	private static final int INDEX_CONGESTION           = 5;
+	private static final int RADIO_OPTION_WEATHER       = 0;
+	private static final int RADIO_OPTION_POLICE        = 1;
 
 	//
 	// Globals
@@ -103,14 +100,25 @@ public class SeattleTraffic extends Activity {
 	protected static SharedPreferences mySharedPreferences;
 
 	// Navbar components
+
+	// Tabs
 	protected ImageView ivMaps;
 	protected ImageView ivAlerts;
 	protected ImageView ivCameras;
-	protected ImageView ivMore;
+	
+	// Configs
+	protected ImageView ivMapMore;
+	protected TextView  tvMapsPop;
+	
+	protected ImageView ivAlertMore;
+	protected TextView  tvAlertsPop;
+	
+	protected ImageView ivCameraMore;
+	protected TextView  tvCamerasPop;
+
+	// Misc icons
 	protected ImageView ivRefresh;
 	protected ImageView ivRadios;
-	protected TextView tvSpinner; // FIXME -rename to pop
-	protected TextView tvMapsPop;
 	
 	// Tints and paints
 	protected int color_tab;
@@ -172,7 +180,7 @@ public class SeattleTraffic extends Activity {
 	    ivAlerts = (ImageView) findViewById(R.id.launcher_alerts);
 	    // This particular icon is much whiter than the others so i am making it darker
 	    //  with the alpha.
-	    ivAlerts.setAlpha(ALPHA_OFF_ALERTS);
+	    ivAlerts.setAlpha(AlertsTab.ALPHA_OFF);
 	    ivAlerts.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -237,7 +245,16 @@ public class SeattleTraffic extends Activity {
 	    // -------------------------
 	    // Bottom Navigation Bar
 	    //
-
+        
+        // Maps config...
+		ivMapMore = (ImageView) findViewById(R.id.maps_config_pop_icon);
+		ivMapMore.setColorFilter(getResources().getColor(R.color.lighterDarkPowderBlue), PorterDuff.Mode.SRC_ATOP);
+		ivMapMore.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				launchMapPicker();
+			}
+		});
     	tvMapsPop = (TextView) findViewById(R.id.maps_config_pop);
     	tvMapsPop.setTextColor(getResources().getColor(R.color.lighterDarkPowderBlue));
     	tvMapsPop.setOnClickListener(new View.OnClickListener() {
@@ -246,19 +263,37 @@ public class SeattleTraffic extends Activity {
 				launchMapPicker();
 			}
 		});
+        
+        // Alerts config...
+		ivAlertMore = (ImageView) findViewById(R.id.alerts_config_pop_icon);
+		ivAlertMore.setColorFilter(getResources().getColor(R.color.lighterDarkPowderBlue), PorterDuff.Mode.SRC_ATOP);
+		ivAlertMore.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				launchAlertPicker();
+			}
+		});
+    	tvAlertsPop = (TextView) findViewById(R.id.alerts_config_pop);
+    	tvAlertsPop.setTextColor(getResources().getColor(R.color.lighterDarkPowderBlue));
+    	tvAlertsPop.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				launchAlertPicker();
+			}
+		});
 
-		ivMore = (ImageView) findViewById(R.id.launcher_more);
-		ivMore.setColorFilter(getResources().getColor(R.color.lighterDarkPowderBlue), PorterDuff.Mode.SRC_ATOP);
-		ivMore.setOnClickListener(new View.OnClickListener() {
+        // Cameras config...
+		ivCameraMore = (ImageView) findViewById(R.id.cameras_config_pop_icon);
+		ivCameraMore.setColorFilter(getResources().getColor(R.color.lighterDarkPowderBlue), PorterDuff.Mode.SRC_ATOP);
+		ivCameraMore.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				launchCameraPicker();
 			}
 		});
-
-		tvSpinner = (TextView) findViewById(R.id.camera_config_spinner);
-		tvSpinner.setTextColor(getResources().getColor(R.color.lighterDarkPowderBlue));
-	    tvSpinner.setOnClickListener(new View.OnClickListener() {
+		tvCamerasPop = (TextView) findViewById(R.id.cameras_config_pop);
+		tvCamerasPop.setTextColor(getResources().getColor(R.color.lighterDarkPowderBlue));
+	    tvCamerasPop.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				launchCameraPicker();
@@ -322,29 +357,19 @@ public class SeattleTraffic extends Activity {
 		
 		alert.show();
     }
-    protected void setCurrentRadios() {
-    	// Set Global with current prefs
-    	// If this namespace path doesn't end in '_preferences' this won't work.
-    	mySharedPreferences = getSharedPreferences(NAMESPACE + "_preferences", 0);
-
-		String wr_saved = getApplicationContext().getResources().getString(R.string.pref_weather_radios_selected);
-		String wr_def   = getApplicationContext().getResources().getString(R.string.pref_weather_radios_default);
-		SCAN_NODE_WEATHER = Integer.parseInt(mySharedPreferences.getString(wr_saved, wr_def));
-		String pr_saved = getApplicationContext().getResources().getString(R.string.pref_police_radios_selected);
-		String pr_def   = getApplicationContext().getResources().getString(R.string.pref_police_radios_default);
-		SCAN_NODE_POLICE = Integer.parseInt(mySharedPreferences.getString(pr_saved, pr_def));
+    protected void launchAlertPicker() { 
+		AlertDialog alert = new AlertDialog.Builder(SeattleTraffic.this)
+        .setTitle("Info Source") // FIXME - put in strings file
+        .setItems(Config.alerts, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+            	AlertsTab.CURRENT_INDEX = which;
+            	reloadViews();
+            }
+        }).create();
+		
+		alert.show();
     }
-    
-    public static boolean isIntentAvailable(Context context, String action) {
-        final PackageManager packageManager = context.getPackageManager();
-        final Intent intent = new Intent(action);
-        List<ResolveInfo> list =
-            packageManager.queryIntentActivities(intent,
-                    PackageManager.MATCH_DEFAULT_ONLY);
-        return list.size() > 0;
-    }
-
-	@Override
+    @Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
 		// See which child activity is calling us back.
 	    switch (requestCode) {
@@ -376,41 +401,69 @@ public class SeattleTraffic extends Activity {
     			    editor.commit();
             }
             
-            
 	        default:
 	            break;
 	    }
 	}
 
 
+    
+    protected void setCurrentRadios() {
+    	// Set Global with current prefs
+    	// If this namespace path doesn't end in '_preferences' this won't work.
+    	mySharedPreferences = getSharedPreferences(NAMESPACE + "_preferences", 0);
+
+		String wr_saved = getApplicationContext().getResources().getString(R.string.pref_weather_radios_selected);
+		String wr_def   = getApplicationContext().getResources().getString(R.string.pref_weather_radios_default);
+		SCAN_NODE_WEATHER = Integer.parseInt(mySharedPreferences.getString(wr_saved, wr_def));
+		String pr_saved = getApplicationContext().getResources().getString(R.string.pref_police_radios_selected);
+		String pr_def   = getApplicationContext().getResources().getString(R.string.pref_police_radios_default);
+		SCAN_NODE_POLICE = Integer.parseInt(mySharedPreferences.getString(pr_saved, pr_def));
+    }
+    
+    // FIXME - move this into its own class for intent stuff
+    public static boolean isIntentAvailable(Context context, String action) {
+        final PackageManager packageManager = context.getPackageManager();
+        final Intent intent = new Intent(action);
+        List<ResolveInfo> list =
+            packageManager.queryIntentActivities(intent,
+                    PackageManager.MATCH_DEFAULT_ONLY);
+        return list.size() > 0;
+    }
+
+	
 	// FIXME - move these
-	public void hideCameraConfiguration() {
-		ivMore.setVisibility(ImageView.GONE);
-		tvSpinner.setVisibility(TextView.GONE);
-	}
-	public void showCameraConfiguration() {
-		ivMore.setVisibility(ImageView.VISIBLE);
-		tvSpinner.setVisibility(TextView.VISIBLE);
-	}
+//	public void hideCameraConfiguration() {
+//		ivMore.setVisibility(ImageView.GONE);
+//		tvCamerasPop.setVisibility(TextView.GONE);
+//	}
+//	public void showCameraConfiguration() {
+//		ivMore.setVisibility(ImageView.VISIBLE);
+//		tvCamerasPop.setVisibility(TextView.VISIBLE);
+//	}
 	public void setCurrentTabStyle() {
 		//ivMaps.setColorFilter(null); ivMaps.setAlpha(ALPHA_OFF);
+		//ivAlerts.setColorFilter(null); ivAlerts.setAlpha(ALPHA_OFF_ALERTS);
+		//ivCameras.setColorFilter(null); ivCameras.setAlpha(ALPHA_OFF);
 		MapsTab.setInactive(ivMaps);
-		ivAlerts.setColorFilter(null); ivAlerts.setAlpha(ALPHA_OFF_ALERTS);
-		ivCameras.setColorFilter(null); ivCameras.setAlpha(ALPHA_OFF);
+		AlertsTab.setInactive(ivAlerts);
+		CamerasTab.setInactive(ivCameras);
 		
 		switch (CURRENT_VIEW_INDEX) {
-			case MENU_TRAFFIC:
+			case MENU_TRAFFIC: // FIXME - rename this to MENU_MAPS
 //				ivMaps.setColorFilter(TAB_ACTIVE_COLOR, PorterDuff.Mode.SRC_ATOP);
 //				ivMaps.setAlpha(ALPHA_ON);
 				MapsTab.setActive(ivMaps);
 				break;
 		    case MENU_ALERTS:
-				ivAlerts.setColorFilter(TAB_ACTIVE_COLOR, PorterDuff.Mode.SRC_ATOP);
-				ivAlerts.setAlpha(ALPHA_ON_ALERTS);
+//				ivAlerts.setColorFilter(TAB_ACTIVE_COLOR, PorterDuff.Mode.SRC_ATOP);
+//				ivAlerts.setAlpha(ALPHA_ON_ALERTS);
+				AlertsTab.setActive(ivAlerts);
 		    	break;
 		    case MENU_CAMERAS:
-				ivCameras.setColorFilter(TAB_ACTIVE_COLOR, PorterDuff.Mode.SRC_ATOP);
-				ivCameras.setAlpha(ALPHA_ON);
+				//ivCameras.setColorFilter(TAB_ACTIVE_COLOR, PorterDuff.Mode.SRC_ATOP);
+				//ivCameras.setAlpha(ALPHA_ON);
+				CamerasTab.setActive(ivCameras);
 		    	break;
 		}
 	}
@@ -418,22 +471,28 @@ public class SeattleTraffic extends Activity {
 	public void setMainWebView(int view_index) {
 		CURRENT_VIEW_INDEX = view_index;
 		setCurrentView(CURRENT_VIEW_INDEX);
-        hideCameraConfiguration();
-        MapsTab.hideConfiguration(tvMapsPop);
+        //hideCameraConfiguration();
+        
+        MapsTab.hideConfiguration(ivMapMore, tvMapsPop);
+        AlertsTab.hideConfiguration(ivAlertMore, tvAlertsPop);
+        CamerasTab.hideConfiguration(ivCameraMore, tvCamerasPop);
+        
         setCurrentTabStyle();
 		switch (CURRENT_VIEW_INDEX) {
 			case MENU_TRAFFIC:
 				CURRENT_VIEW_INDEX = INDEX_TRAFFIC;
-		        MapsTab.showConfiguration(tvMapsPop);
+		        MapsTab.showConfiguration(ivMapMore, tvMapsPop);
 				break;
 		    case MENU_ALERTS:
 		        CURRENT_VIEW_INDEX = INDEX_ALERTS;
+		        AlertsTab.showConfiguration(ivAlertMore, tvAlertsPop);
 		    	break;
 		    case MENU_CAMERAS:
 		        CURRENT_VIEW_INDEX = INDEX_CAMERAS;
 		        // Enable camera configuration
-		        showCameraConfiguration();
-		    	break;
+		        //showCameraConfiguration();
+		        CamerasTab.showConfiguration(ivCameraMore, tvCamerasPop);
+		        break;
 		}
 
 		wvMain.loadUrl("javascript: jumpTo('"+CURRENT_VIEW_INDEX+"')");
@@ -589,7 +648,7 @@ public class SeattleTraffic extends Activity {
 	    editor.commit();
 
 	    // Set text of spinner
-		tvSpinner.setText(INDEX_STRINGS[ viewIndex ]);
+		//tvCamerasPop.setText(INDEX_STRINGS[ viewIndex ]);
 
 	    return true;
 	}
@@ -606,7 +665,9 @@ public class SeattleTraffic extends Activity {
 		wvMain.loadUrl(CURRENT_WEBVIEW_URL
 						+ "?target=" + CURRENT_VIEW_INDEX
 						+ "&camera=" + PREF_CAMERA_1 
-						+ MapsTab.getReloadURLParts());
+						+ MapsTab.getReloadURLParts()
+						+ AlertsTab.getReloadURLParts()
+						+ CamerasTab.getReloadURLParts());
 		
 		// Refresh banner webview
 		wvAd.loadUrl(AD_BANNER_URL);
@@ -616,6 +677,8 @@ public class SeattleTraffic extends Activity {
 		boolean scannerAvailable = isIntentAvailable(SeattleTraffic.this,
 				SCANNER_RADIO_NAMESPACE + ".intent.action." + SCANNER_RADIO_ACTION);
 
+		// FIXME - put these strings in file and move this to own scanner radio class
+		
 		if (scannerAvailable) {
 			Intent intent = new Intent(SCANNER_RADIO_NAMESPACE + ".intent.action." + SCANNER_RADIO_ACTION);
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

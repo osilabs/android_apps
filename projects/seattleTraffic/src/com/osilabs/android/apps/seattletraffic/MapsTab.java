@@ -7,8 +7,8 @@ import android.widget.TextView;
 public class MapsTab {
 	// FIXME - these are duplicated in the main class
 	public    static final int    ALPHA_ON  = 0xFFFF;
-	public    static final int    ALPHA_OFF = 0xFFFF;
-	public    static final int    TAB_ACTIVE_COLOR = 0xFF00FF00;
+	public    static final int    ALPHA_OFF = 0xFF88;
+	public    static final int    TAB_ACTIVE_COLOR = 0xFF00FF00; // FIXME pull this from color.xml
 
 	// If never set, is set to first map.
 	public    static int    	  CURRENT_INDEX = 0;
@@ -29,10 +29,12 @@ public class MapsTab {
 		ivMaps.setColorFilter(null); 
 		ivMaps.setAlpha(ALPHA_OFF);
 	}
-	public static void hideConfiguration(TextView tvMapsPop) {
+	public static void hideConfiguration(ImageView ivMapIcon, TextView tvMapsPop) {
+		ivMapIcon.setVisibility(ImageView.GONE);
 		tvMapsPop.setVisibility(TextView.GONE);
 	}
-	public static void showConfiguration(TextView tvMapsPop) {
+	public static void showConfiguration(ImageView ivMapIcon, TextView tvMapsPop) {
+		ivMapIcon.setVisibility(ImageView.VISIBLE);
 		tvMapsPop.setVisibility(TextView.VISIBLE);
 	}
 	

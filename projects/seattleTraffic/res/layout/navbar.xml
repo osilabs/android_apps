@@ -27,12 +27,10 @@
 	  >
 	
 			<!--  Config pop up launchers -->
-			<!-- maps -->
-
 
 			<!-- camera-->
 		    <ImageView
-		  		android:id="@+id/launcher_more"
+		  		android:id="@+id/cameras_config_pop_icon"
 	 			android:src="@drawable/ic_more"
 				android:layout_width="wrap_content" 
 				android:layout_height="29dip"
@@ -41,16 +39,46 @@
 				android:visibility="gone" 
 				/>
 			<TextView 
-				android:id="@+id/camera_config_spinner"
+				android:id="@+id/cameras_config_pop"
 				android:clickable="true"
 				android:layout_width="wrap_content"
 				android:layout_height="fill_parent" 
 				android:textSize="24sp" 
 				android:textColor="#999999"
-				android:hapticFeedbackEnabled="true"
+				android:text="Cameras..."
 				android:visibility="gone" 
 				/>
 								
+			<!-- alerts -->
+		    <ImageView
+		  		android:id="@+id/alerts_config_pop_icon"
+	 			android:src="@drawable/ic_more"
+				android:layout_width="wrap_content" 
+				android:layout_height="29dip"
+				android:layout_marginTop="1dip"
+				android:layout_marginRight="2dip"
+				android:visibility="gone" 
+				/>
+			<TextView 
+				android:id="@+id/alerts_config_pop"
+				android:clickable="true"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content" 
+				android:textSize="24sp" 
+				android:text="Alerts..."
+				android:textColor="#999999" 
+				/>
+								
+			<!-- maps -->
+		    <ImageView
+		  		android:id="@+id/maps_config_pop_icon"
+	 			android:src="@drawable/ic_more"
+				android:layout_width="wrap_content" 
+				android:layout_height="29dip"
+				android:layout_marginTop="1dip"
+				android:layout_marginRight="2dip"
+				android:visibility="gone" 
+				/>
 			<TextView 
 				android:id="@+id/maps_config_pop"
 				android:clickable="true"
