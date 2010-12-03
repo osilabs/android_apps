@@ -10,14 +10,11 @@ public class CamerasTab {
 	public    static final int    ALPHA_OFF = 0xFF88;
 	public    static final int    TAB_ACTIVE_COLOR = 0xFF00FF00;
 
-	// If never set, is set to first map.
-	public    static int    	  CURRENT_INDEX = 0;
+	// If never set, is set to first camera
+	public    static int    	  CURRENT_CAMERA_ID = Config.DEFAULT_CAMERA_ID;
 	
-	public static String getActiveMapURL() {
-		return Config.alerts[CURRENT_INDEX];
-	}
 	public static String getReloadURLParts() {
-		return	"&camera=" + "FIXME";
+		return	"&camera=" + CURRENT_CAMERA_ID;
 	}
 	public static void setActive(ImageView ivCameras) {
 		ivCameras.setColorFilter(TAB_ACTIVE_COLOR, PorterDuff.Mode.SRC_ATOP);

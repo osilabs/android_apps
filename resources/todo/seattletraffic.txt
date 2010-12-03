@@ -3,7 +3,8 @@
 * Set timezone to pacific time
 * Set radios
 * Put copywright messages on maps.
-
+* Update help/about pages
+* grep for the word dallas, add to new city startup checklist to grep for the old city name.
 
 // v0.2
 * Add a boolean toggle that indicates if it is the paid version or free version.
