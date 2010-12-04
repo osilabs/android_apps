@@ -5,15 +5,19 @@
 	<!--	~~~~~~~~~~~~~ -->
 	<!--	CONFIGURE HERE-->
 	<!--	~~~~~~~~~~~~~ -->
-    <string name="pref_police_radios_default">21093</string>
-    <string name="pref_weather_radios_default">23034</string>
+    <string name="app_name">Seattle Traffic</string>
+    <string name="city_name">Seattle</string>
+    <string name="pref_police_radios_default">22577</string> <!-- FIXME - These need to go -->
+    <string name="pref_weather_radios_default">11568</string>
     <string name="session_camera_1">http://images.wsdot.wa.gov/rweather/medium_KMMountain.jpg</string>
-    <string name="session_map">0</string>
+    <string name="session_map"
+    >0</string>
     <string name="session_alert">0</string>
+    <string name="pref_police_radios_dialog_title">Set Favorite Police Scanner</string>
+    <string name="pref_weather_radios_dialog_title">Set Favorite Weather Radio</string>
 	<!--	~~~~~~~~~~~~~ -->
 	<!--	~~~~~~~~~~~~~ ~~~~~~~~~~~~~ ~~~~~~~~~~~~~ -->
 
-    <string name="app_name">Seattle Traffic</string>
 
     <string name="menu_prefs">Settings</string>
     <string name="menu_refresh">Refresh</string>
@@ -35,12 +39,10 @@
     <string name="pref_police_radios">Police Scanners</string>
     <string name="pref_police_radios_summary">Set your favorite</string>
     <string name="pref_police_radios_title">Police Scanners</string>    
-    <string name="pref_police_radios_dialog_title">Select Favorite Police Scanner</string>
     <string name="pref_police_radios_selected">pref_police_radios_selected</string>
 	<!-- weather radio prefs -->
     <string name="pref_weather_radios">Weather Radios</string>
     <string name="pref_weather_radios_summary">Set your favorite</string>
     <string name="pref_weather_radios_title">Weather Radios</string>    
-    <string name="pref_weather_radios_dialog_title">Select Favorite Weather Radio</string>
     <string name="pref_weather_radios_selected">pref_weather_radios_selected</string>
 </resources>

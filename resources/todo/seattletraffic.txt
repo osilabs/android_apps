@@ -16,6 +16,9 @@
 * The ferry map doesn't work.
 * Array to indicate which type a choice is. Like under the alerts tab, can have feeds in atom or rss, or images.
 * Change the prefs from dallas stuff to seattle.
+* Try lowering minsdk for 1.5
+* Coming back from the prefs screen, the camera becomes blank
+
 
 // v0.2
 * Make a fading vertical bar as a background image for the top and bottom nav bars
@@ -148,5 +151,18 @@ W/NotificationService( 1307): Object died trying to hide notification android.ap
 W/ActivityManager( 1307): setProcessForeground called on unknown pid: 28782
 W/NotificationService( 1307): Object died trying to show notification android.app.ITransientNotification$Stub$Proxy@4520cde8 in package com.osilabs.android.apps.seattletraffic
 W/ActivityManager( 1307): setProcessForeground called on unknown pid: 28782
+
+
+//
+//
+// JumpTo errors
+//
+//
+uid=10119 gids={3003}
+D/** osilabs.com **(29698): onCreate
+D/** osilabs.com **(29698): onStart
+D/** osilabs.com **(29698): reloadViews()
+I/ActivityManager( 1307): Displayed activity com.osilabs.android.apps.seattletraffic/.SeattleTraffic: 404 ms (total 404 ms)
+E/Web Console(29698): Uncaught ReferenceError: jumpTo is not defined at :1
 
 

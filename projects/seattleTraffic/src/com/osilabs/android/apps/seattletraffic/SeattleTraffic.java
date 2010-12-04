@@ -47,8 +47,8 @@ public class SeattleTraffic extends Activity {
 //	};
 	protected static final String NAMESPACE = "com.osilabs.android.apps.seattletraffic";
 	// Use './adb logcat |grep node' to see the scanner ids
-	private static int SCAN_NODE_POLICE  			= 21093;
-	private static int SCAN_NODE_WEATHER 			= 23034; 
+//	private static int Config.CURRENT_SCAN_NODE_POLICE  			;
+//	private static int Config.CURRENT_SCAN_NODE_WEATHER 	; 
 	//
 	// /Configuration Data
 	// --------------------------------------------------
@@ -307,22 +307,43 @@ public class SeattleTraffic extends Activity {
 	    ivRadios.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				final CharSequence[] items = {"Weather Radio", "Police Scanner"};
-				AlertDialog alert = new AlertDialog.Builder(SeattleTraffic.this)
-                .setTitle("Radios")
-                .setItems(items, new DialogInterface.OnClickListener() {
+				//final CharSequence[] items = {"Weather Radio", "Police Scanner"};
+				
+				AlertDialog alert = new AlertDialog.Builder(SeattleTraffic.this) // FIXME - dont want to hardcode this here
+                .setTitle("Radios") // FIXME - Make this a string
+                .setItems(Config.RADIOS, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                    	
     		    		// Check prefs for changed radios.
     					setCurrentRadios();
-
-    					switch(which) {
-	        		        case RADIO_OPTION_WEATHER:
-	        			        launchScanner(SCAN_NODE_WEATHER);
-	            		        break;
-	        		        case RADIO_OPTION_POLICE:
-	            		        launchScanner(SCAN_NODE_POLICE);
-	            		        break;
-        		        }
+        				
+	    				// Loop through radios and leave out what is disabled.
+						if (Config.RADIOS_CURRENT_NODE[which] == -1) {
+						    AlertDialog scannerAlert = new AlertDialog.Builder(SeattleTraffic.this).create();
+					        scannerAlert.setTitle(R.string.app_name);
+					        scannerAlert.setMessage(
+					        		"A suitable streaming service to provide a " 
+					        		+ Config.RADIOS[which] 
+					        		+ " for "
+					        		+ R.string.city_name
+					        		+ ". Please try again later.");
+					        scannerAlert.setIcon(R.drawable.ic_launcher); 
+					        scannerAlert.setButton("Ok", new DialogInterface.OnClickListener() {
+					        	public void onClick(DialogInterface dialog, int which) {
+					    			finish();
+					            } 
+					        });
+						} else {
+							launchScanner( Config.RADIOS_CURRENT_NODE[which]);
+						}
+//    					switch(which) {
+//	        		        case RADIO_OPTION_WEATHER:
+//	        			        launchScanner(Config.CURRENT_SCAN_NODE_WEATHER);
+//	            		        break;
+//	        		        case RADIO_OPTION_POLICE:
+//	            		        launchScanner(Config.CURRENT_SCAN_NODE_POLICE);
+//	            		        break;
+//        		        }
                     }
                 }).create();
 				
@@ -413,12 +434,14 @@ public class SeattleTraffic extends Activity {
     	// If this namespace path doesn't end in '_preferences' this won't work.
     	mySharedPreferences = getSharedPreferences(NAMESPACE + "_preferences", 0);
 
+    	// FIXME - these two do it differently. the police version is newer, change weather if the police way works
 		String wr_saved = getApplicationContext().getResources().getString(R.string.pref_weather_radios_selected);
 		String wr_def   = getApplicationContext().getResources().getString(R.string.pref_weather_radios_default);
-		SCAN_NODE_WEATHER = Integer.parseInt(mySharedPreferences.getString(wr_saved, wr_def));
+		Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER] = Integer.parseInt(mySharedPreferences.getString(wr_saved, wr_def));
+
 		String pr_saved = getApplicationContext().getResources().getString(R.string.pref_police_radios_selected);
-		String pr_def   = getApplicationContext().getResources().getString(R.string.pref_police_radios_default);
-		SCAN_NODE_POLICE = Integer.parseInt(mySharedPreferences.getString(pr_saved, pr_def));
+		Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE] = Integer.parseInt(mySharedPreferences
+	      .getString(pr_saved, Integer.toString(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE])));
     }
     
     // FIXME - move this into its own class for intent stuff
@@ -552,12 +575,12 @@ public class SeattleTraffic extends Activity {
 		switch (item.getItemId()) {
 			case R.id.menu_scanner_police:
 				setCurrentRadios();
-				launchScanner(SCAN_NODE_POLICE);
+				launchScanner(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE]);
 		    	return true;
 	
 			case R.id.menu_scanner_weather:
 				setCurrentRadios();
-				launchScanner(SCAN_NODE_WEATHER);
+				launchScanner(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER]);
 		    	return true;
 				
 			case R.id.menu_refresh:
@@ -645,6 +668,8 @@ public class SeattleTraffic extends Activity {
 	}
 	
 	public void launchScanner(int which_scanner) {
+		Log.d(TAG, "Scanner node: " + Integer.toString(which_scanner));
+		
 		boolean scannerAvailable = isIntentAvailable(SeattleTraffic.this,
 				SCANNER_RADIO_NAMESPACE + ".intent.action." + SCANNER_RADIO_ACTION);
 
