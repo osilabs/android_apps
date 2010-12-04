@@ -421,7 +421,14 @@ public class SeattleTraffic extends Activity {
     			    editor.putString("session_camera_1", CamerasTab.CURRENT_CAMERA_URL);
     			    editor.commit();
             }
+            break;
             
+        case 22:
+			Toast.makeText(getApplicationContext(), 
+					"Preference saved"
+					, Toast.LENGTH_LONG).show();
+			break;
+        	
 	        default:
 	            break;
 	    }
@@ -590,7 +597,7 @@ public class SeattleTraffic extends Activity {
 		    case R.id.menu_prefs:
 		    	Intent intent = new Intent();
 				intent.setClassName(this, NAMESPACE + ".Prefs");
-		    	this.startActivityForResult(intent, 22);
+		    	this.startActivityForResult(intent, 22); // FIXME = dont hardcode this
 		    	return true;
 
 		    case R.id.menu_help:
