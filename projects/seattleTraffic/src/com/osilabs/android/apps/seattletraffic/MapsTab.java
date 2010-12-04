@@ -1,5 +1,7 @@
 package com.osilabs.android.apps.seattletraffic;
 
+import java.net.URLEncoder;
+
 import android.graphics.PorterDuff;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,9 +19,7 @@ public class MapsTab {
 		return Config.maps[CURRENT_INDEX];
 	}
 	public static String getReloadURLParts() {
-		return	"&map=" + Config.maps_urls[CURRENT_INDEX] +
-				"&scrolldown=" +
-				"&scrollover=";
+		return	"&map=" + URLEncoder.encode(Config.maps_urls[CURRENT_INDEX]);
 	}
 	public static void setActive(ImageView ivTraffic) {
 		ivTraffic.setColorFilter(TAB_ACTIVE_COLOR, PorterDuff.Mode.SRC_ATOP);

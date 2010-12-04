@@ -14,26 +14,49 @@ public final class Config {
 	
 	// Maps
 	public static final String[] maps = {
-		"Traffic",
-		"North",
+		"Full Traffic Map",
+		"North Seattle",
 		"Bridges",
-		"South",
-		"Bridges Small",
+		"South Seattle",
+		"North Seattle (sm)",
+		"Bridges (sm)",
+		"South Seattle (sm)",
 		"Road Temperatures",
-		"Vessel Watch",
-		"Radar",
-		"Sattelite"
+		"Weather Radar",
+		"Sattelite",
+		"Ferries: Mukilteo/Clinton",
+		"Ferries: Edmonds/Kingston",
+		"Ferries: Seattle/Bainbridge",
+		"Ferries: Seattle",
+		"Ferries: Fauntleroy/Vashon/Southworth",
+
 	};
+	
+	
+		
+	// uri|width|height|scrollx|scrolly - Later these can be programmatically defined 
+	//  for changes in orientation and screens
 	public static final String[] maps_urls = {
-		"http://images.wsdot.wa.gov/nwflow/flowmaps/video_map_SeattleMetro.gif",
-		"http://images.wsdot.wa.gov/nwflow/flowmaps/north.gif",
-		"http://images.wsdot.wa.gov/nwflow/flowmaps/bridges.gif",
-		"http://images.wsdot.wa.gov/nwflow/flowmaps/south.gif",
-		"http://images.wsdot.wa.gov/nwflow/flowmaps/smallbridges.gif",
-		"http://images.wsdot.wa.gov/rweather/roadtemps/l2psm06.gif",
-		"http://www.wsdot.wa.gov/ferries/vesselwatch/mobileimage.ashx?bbox=-122.744867,47.445918,-122.216149,47.684062&size=S",
-		"http://sat.wrh.noaa.gov/satellite/2km/Spokane/IR2OTX.GIF", // radar
-		"http://sat.wrh.noaa.gov/satellite/1km/Seattle/VIS1SEA.GIF"
+		"http://images.wsdot.wa.gov/nwflow/flowmaps/video_map_SeattleMetro.gif|100%||||",
+		"http://images.wsdot.wa.gov/nwflow/flowmaps/north.gif|100%||||",
+		"http://images.wsdot.wa.gov/nwflow/flowmaps/bridges.gif|150%||||",
+		"http://images.wsdot.wa.gov/nwflow/flowmaps/south.gif|150%||||",
+		"http://images.wsdot.wa.gov/nwflow/flowmaps/smallnorth.gif|100%||||",
+		"http://images.wsdot.wa.gov/nwflow/flowmaps/smallbridges.gif|120%||||",
+		"http://images.wsdot.wa.gov/nwflow/flowmaps/smallsouth.gif|100%||||",
+		"http://images.wsdot.wa.gov/rweather/roadtemps/l2psm06.gif|100%||||",
+		"http://sat.wrh.noaa.gov/satellite/2km/Spokane/IR2OTX.GIF|100%||||", // radar
+		"http://sat.wrh.noaa.gov/satellite/1km/Seattle/VIS1SEA.GIF|100%||||",
+		"http://www.wsdot.wa.gov/ferries/vesselwatch/mobileimage.ashx?bbox=-122.393811,47.934308,-122.261631,47.993389&size=S"
+			+ "|120%||||The arrows and zoom icons are part of the image and do not function.",
+		"http://www.wsdot.wa.gov/ferries/vesselwatch/mobileimage.ashx?bbox=-122.570897,47.743797,-122.306539,47.862327&size=S"
+			+ "|110%||||The arrows and zoom icons are part of the image and do not function.",
+		"http://www.wsdot.wa.gov/ferries/vesselwatch/mobileimage.ashx?bbox=-122.569428,47.540795,-122.30507,47.659787&size=S"
+			+ "|110%||||The arrows and zoom icons are part of the image and do not function.",
+		"http://www.wsdot.wa.gov/ferries/vesselwatch/mobileimage.ashx?bbox=-122.744867,47.445918,-122.216149,47.684062&size=S"
+			+ "|150%||||The arrows and zoom icons are part of the image and do not function.",
+		"http://www.wsdot.wa.gov/ferries/vesselwatch/mobileimage.ashx?bbox=-122.51691,47.483819,-122.38473,47.543414&size=S"
+			+ "|120%||||The arrows and zoom icons are part of the image and do not function.",
 	};
 
 	// Alerts
