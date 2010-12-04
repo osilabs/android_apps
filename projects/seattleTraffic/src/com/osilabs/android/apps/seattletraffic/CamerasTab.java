@@ -1,5 +1,7 @@
 package com.osilabs.android.apps.seattletraffic;
 
+import java.net.URLEncoder;
+
 import android.graphics.PorterDuff;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,7 +16,7 @@ public class CamerasTab {
 	public    static       String CURRENT_CAMERA_URL = Config.DEFAULT_CAMERA_URL;
 	
 	public static String getReloadURLParts() {
-		return	"&camera=" + CURRENT_CAMERA_URL;
+		return	"&camera=" + URLEncoder.encode(CURRENT_CAMERA_URL);
 	}
 	public static void setActive(ImageView ivCameras) {
 		ivCameras.setColorFilter(TAB_ACTIVE_COLOR, PorterDuff.Mode.SRC_ATOP);
