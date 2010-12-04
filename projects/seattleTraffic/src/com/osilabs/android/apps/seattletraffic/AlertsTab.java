@@ -1,5 +1,7 @@
 package com.osilabs.android.apps.seattletraffic;
 
+import java.net.URLEncoder;
+
 import android.graphics.PorterDuff;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,7 +19,7 @@ public class AlertsTab {
 		return Config.alerts[CURRENT_INDEX];
 	}
 	public static String getReloadURLParts() {
-		return	"&alert=" + Config.alerts_src[CURRENT_INDEX];
+		return	"&alert=" + URLEncoder.encode(Config.alerts_src[CURRENT_INDEX]);
 	}
 	public static void setActive(ImageView ivAlerts) {
 		ivAlerts.setColorFilter(TAB_ACTIVE_COLOR, PorterDuff.Mode.SRC_ATOP);
