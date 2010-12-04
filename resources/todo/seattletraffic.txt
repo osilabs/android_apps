@@ -1,12 +1,24 @@
 // v0.1
 
-* Set timezone to pacific time
 * Set radios
-* Put copywright messages on maps.
 * Update help/about pages
 * grep for the word dallas, add to new city startup checklist to grep for the old city name.
+* Some cameras are empty, check them for errors
+* Check the popup menu titles. Seem dumb.
+* Put Loading... toast on alert feed load
+* Put a vert scroll on the maps. an array with howmuch for each
+* Coloring of feed text needs work. layout too
+* Test: Prefs are keeping values
+* Fix: Dying
+* Lighten the gray tabs
+* Does the camera image disappear when it sits ... maybe from switchingtabs.
+* Make feedback menu option
+* The ferry map doesn't work.
+* Array to indicate which type a choice is. Like under the alerts tab, can have feeds in atom or rss, or images.
+* Change the prefs from dallas stuff to seattle.
 
 // v0.2
+* Make a fading vertical bar as a background image for the top and bottom nav bars
 * Add a boolean toggle that indicates if it is the paid version or free version.
 * Darken the tab icons
 * Rename navbar to bottomnav
@@ -120,4 +132,21 @@ W/NotificationService( 1307): Object died trying to hide notification android.ap
 W/ActivityManager( 1307): setProcessForeground called on unknown pid: 18453
 W/NotificationService( 1307): Object died trying to show notification android.app.ITransientNotification$Stub$Proxy@450c1b98 in package com.osilabs.android.apps.seattletraffic
 W/ActivityManager( 1307): setProcessForeground called on unknown pid: 18453
+
+-----------------------------
+
+D/** osilabs.com **(28782): reloadViews()
+D/** osilabs.com **(28782): onStart
+D/** osilabs.com **(28782): reloadViews()
+I/DEBUG   (15683): pid: 28782, tid: 28789  >>> com.osilabs.android.apps.seattletraffic <<<
+I/ActivityManager( 1307): Process com.osilabs.android.apps.seattletraffic (pid 28782) has died.
+I/WindowManager( 1307): WIN DEATH: Window{4500bfa0 com.osilabs.android.apps.seattletraffic/com.osilabs.android.apps.seattletraffic.SeattleTraffic paused=false}
+I/WindowManager( 1307): WIN DEATH: Window{451acaf8 com.osilabs.android.apps.seattletraffic/com.osilabs.android.apps.seattletraffic.CameraELV paused=false}
+I/UsageStats( 1307): Unexpected resume of com.android.launcher while already resumed in com.osilabs.android.apps.seattletraffic
+W/InputManagerService( 1307): Got RemoteException sending setActive(false) notification to pid 28782 uid 10119
+W/NotificationService( 1307): Object died trying to hide notification android.app.ITransientNotification$Stub$Proxy@4520a9f8 in package com.osilabs.android.apps.seattletraffic
+W/ActivityManager( 1307): setProcessForeground called on unknown pid: 28782
+W/NotificationService( 1307): Object died trying to show notification android.app.ITransientNotification$Stub$Proxy@4520cde8 in package com.osilabs.android.apps.seattletraffic
+W/ActivityManager( 1307): setProcessForeground called on unknown pid: 28782
+
 

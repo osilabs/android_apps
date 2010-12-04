@@ -160,9 +160,11 @@ public class SeattleTraffic extends Activity {
 				NAMESPACE, Activity.MODE_PRIVATE);
         CURRENT_VIEW_INDEX = mySharedPreferences.getInt("session_current_view", 2);
         
-        CamerasTab.CURRENT_CAMERA_ID = mySharedPreferences.getInt("session_camera_1", Config.DEFAULT_CAMERA_ID);
+        //CamerasTab.CURRENT_CAMERA_URL = mySharedPreferences.getString("session_camera_1", Config.DEFAULT_CAMERA_URL);
+        CamerasTab.CURRENT_CAMERA_URL = "http://osilabs.com";
+        // FIXME - replace these two remaing pref* vars with the tab.constant like the comera one here.
         PREF_MAP = mySharedPreferences.getInt("session_map", Config.DEFAULT_MAP_INDEX);
-        PREF_ALERT = mySharedPreferences.getInt("session_alert", Config.DEFAULT_CAMERA_ID);
+        PREF_ALERT = mySharedPreferences.getInt("session_alert", Config.DEFAULT_ALERT_INDEX);
 
         
 	    // -------------------------
@@ -189,7 +191,6 @@ public class SeattleTraffic extends Activity {
 		});
 
 	    // Set up camera tab
-        CamerasTab.CURRENT_CAMERA_ID = mySharedPreferences.getInt("session_camera_1", Config.DEFAULT_CAMERA_ID); // FIXME - defaultcamid should come form config.defaultcam...
 	    ivCameras = (ImageView) findViewById(R.id.launcher_cameras);
 	    ivCameras.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -384,20 +385,19 @@ public class SeattleTraffic extends Activity {
             } 
             else {
                Bundle extras = data.getExtras();
-               int cam = extras.getInt("selected_camera");	                
             	// FIXME - this happens in a few places, consolidate it. Like the
     			//  next few lines do
-               CamerasTab.CURRENT_CAMERA_ID = cam;
+               CamerasTab.CURRENT_CAMERA_URL = extras.getString("selected_camera");
     			
     			// Reload the webview so it just shows the chosen camera
-    	    	//wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_VIEW_INDEX+"&camera="+CamerasTab.CURRENT_CAMERA_ID);
+    	    	//wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_VIEW_INDEX+"&camera="+CamerasTab.CURRENT_CAMERA_URL);
 				refreshViews();
 				
     			// Set the chosen camera in the persistent settings
     	    	SharedPreferences prefs 
     				= getSharedPreferences(NAMESPACE, Activity.MODE_PRIVATE);
     			    SharedPreferences.Editor editor = prefs.edit();
-    			    editor.putInt("session_camera_1", CamerasTab.CURRENT_CAMERA_ID);
+    			    editor.putString("session_camera_1", CamerasTab.CURRENT_CAMERA_URL);
     			    editor.commit();
             }
             
@@ -535,37 +535,8 @@ public class SeattleTraffic extends Activity {
     		//  can touch its views.
     		//
     		// setMainWebView(loadedIndex); 
-    	}
-    	
-        public void setChosenCamera(int camnum, int camid) {
-        	
-			Toast.makeText(getApplicationContext(), "Loading new camera...", Toast.LENGTH_LONG).show();
-
-			// Set the current camera
-			CURRENT_VIEW_INDEX = INDEX_CAMERAS;
-			CamerasTab.CURRENT_CAMERA_ID = camid;
-			
-			// Reload the webview so it just shows the chosen camera
-	    	//wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_VIEW_INDEX+"&camera="+CamerasTab.CURRENT_CAMERA_ID);
-			refreshViews();
-			
-			// Set the chosen camera in the persistent settings
-	    	SharedPreferences prefs 
-				= getSharedPreferences(NAMESPACE, Activity.MODE_PRIVATE);
-			    SharedPreferences.Editor editor = prefs.edit();
-			    editor.putInt("session_camera_1", CamerasTab.CURRENT_CAMERA_ID);
-			    editor.commit();
-
-			// FIXME - verify this doesn't need to be posted as a runnable.
-	    	
-        	// Post a runnable
-            //mHandler.post(new Runnable() {
-            //    public void run() {
-            //    	spinner.setSelection(0);
-            //    }
-            //});
-        }
-    } 
+    	}	
+    }
 	
 	/* Creates the menu items */
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -664,7 +635,7 @@ public class SeattleTraffic extends Activity {
 		// Refresh main content webview
 		wvMain.loadUrl(CURRENT_WEBVIEW_URL
 						+ "?target=" + CURRENT_VIEW_INDEX
-						+ "&camera=" + CamerasTab.CURRENT_CAMERA_ID 
+						+ "&camera=" + CamerasTab.CURRENT_CAMERA_URL 
 						+ MapsTab.getReloadURLParts()
 						+ AlertsTab.getReloadURLParts()
 						+ CamerasTab.getReloadURLParts());

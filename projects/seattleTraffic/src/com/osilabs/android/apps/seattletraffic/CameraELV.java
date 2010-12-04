@@ -60,7 +60,7 @@ public class CameraELV extends ExpandableListActivity implements OnChildClickLis
         Bundle extras = new Bundle();
 
         // Set the id of the selected camera
-        extras.putInt("selected_camera", Integer.parseInt(crossroads[childPosition]) );
+        extras.putString("selected_camera", crossroads[childPosition] );
         intent.putExtras(extras);
         setResult(RESULT_OK, intent);
       
