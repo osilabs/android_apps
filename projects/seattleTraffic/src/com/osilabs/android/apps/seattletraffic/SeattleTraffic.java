@@ -61,6 +61,8 @@ public class SeattleTraffic extends Activity {
 	private static final int INDEX_TRAFFIC              = 0;
 	private static final int INDEX_ALERTS               = 1;
 	private static final int INDEX_CAMERAS              = 2;
+	private static final int INTENT_RESULT_CODE_CAMERA_PICKER= 22;
+	private static final int INTENT_RESULT_CODE_PREFS   = 33;
 
 	//
 	// Globals
@@ -293,7 +295,7 @@ public class SeattleTraffic extends Activity {
 				//final CharSequence[] items = {"Weather Radio", "Police Scanner"};
 				
 				AlertDialog alert = new AlertDialog.Builder(SeattleTraffic.this) // FIXME - dont want to hardcode this here
-                .setTitle("Radios") // FIXME - Make this a string
+                .setTitle(R.string.radios_dialog_title)
                 .setItems(Config.RADIOS, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                     	
@@ -331,7 +333,7 @@ public class SeattleTraffic extends Activity {
     	//
 	    
         // It's going to take a second to load
-		Toast.makeText(this, "Loading...", Toast.LENGTH_LONG).show();
+		Toast.makeText(this, R.string.txt_loading, Toast.LENGTH_LONG).show();
 		
     	setMainWebView(CURRENT_VIEW_INDEX);
 		reloadViews();
@@ -340,11 +342,11 @@ public class SeattleTraffic extends Activity {
     protected void launchCameraPicker() { 
 		Context c = getApplicationContext();
 		Intent intent = new Intent().setClassName(c, NAMESPACE + ".CameraELV");
-		startActivityForResult(intent, 33); // FIXME - Make this a const
+		startActivityForResult(intent, INTENT_RESULT_CODE_CAMERA_PICKER); 
     }
     protected void launchMapPicker() { 
 		AlertDialog alert = new AlertDialog.Builder(SeattleTraffic.this)
-        .setTitle("Maps")
+        .setTitle(R.string.txt_map_popup_title)
         .setItems(Config.maps, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
             	MapsTab.CURRENT_INDEX = which;
@@ -359,12 +361,12 @@ public class SeattleTraffic extends Activity {
     }
     protected void launchAlertPicker() { 
 		AlertDialog alert = new AlertDialog.Builder(SeattleTraffic.this)
-        .setTitle("Info Source") // FIXME - put in strings file
+        .setTitle(R.string.txt_alert_popup_title)
         .setItems(Config.alerts, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
             	AlertsTab.CURRENT_INDEX = which;
     			Toast.makeText(getApplicationContext(), 
-    					"Loading..."
+    					R.string.txt_loading
     					, Toast.LENGTH_LONG).show();
             	reloadViews();
             }
@@ -377,12 +379,12 @@ public class SeattleTraffic extends Activity {
 		// See which child activity is calling us back.
 	    switch (requestCode) {
             
-        case 33:
+        case INTENT_RESULT_CODE_CAMERA_PICKER:
             // This is the standard resultCode that is sent back if the
             // activity crashed or didn't doesn't supply an explicit result.
             if (resultCode == RESULT_CANCELED){
     			Toast.makeText(getApplicationContext(), 
-    					"Camera may have moved, please try again"
+    					R.string.txt_camera_picker_noop
     					, Toast.LENGTH_LONG).show();
             } 
             else {
@@ -403,9 +405,9 @@ public class SeattleTraffic extends Activity {
             }
             break;
             
-        case 22:
+        case INTENT_RESULT_CODE_PREFS:
 			Toast.makeText(getApplicationContext(), 
-					"Preference saved"
+					R.string.txt_prefs_saved
 					, Toast.LENGTH_LONG).show();
 			break;
         	
@@ -555,7 +557,7 @@ public class SeattleTraffic extends Activity {
 		    case R.id.menu_prefs:
 		    	Intent intent = new Intent();
 				intent.setClassName(this, NAMESPACE + ".Prefs");
-		    	this.startActivityForResult(intent, 22); // FIXME = dont hardcode this
+		    	this.startActivityForResult(intent, INTENT_RESULT_CODE_PREFS);
 		    	return true;
 
 		    case R.id.menu_help:
@@ -577,8 +579,8 @@ public class SeattleTraffic extends Activity {
 		    case R.id.menu_about:
 		        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 		        alertDialog.setTitle(R.string.app_name);
-		        alertDialog.setMessage("You are running version " + pInfo.versionName);
-		        alertDialog.setButton("More...", new DialogInterface.OnClickListener() {
+		        alertDialog.setMessage(R.string.txt_version + pInfo.versionName);
+		        alertDialog.setButton(this.getResources().getString(R.string.txt_btn_more), new DialogInterface.OnClickListener() {
 		        	public void onClick(DialogInterface dialog, int which) {
 		        		Intent mIntent = new Intent(Intent.ACTION_VIEW, 
 		        				Uri.parse(MOBILECONTENT_URL_ABOUT)); 
@@ -599,7 +601,6 @@ public class SeattleTraffic extends Activity {
 	
 	public boolean setCurrentView(int viewIndex) {
 		// Save Settings
-        //Toast.makeText(getApplicationContext(), "set cur view: " + viewIndex, Toast.LENGTH_SHORT).show();
     	SharedPreferences prefs 
 			= getSharedPreferences(NAMESPACE, Activity.MODE_PRIVATE);
 	    SharedPreferences.Editor editor = prefs.edit();
@@ -610,7 +611,7 @@ public class SeattleTraffic extends Activity {
 	}
 	
 	public void refreshViews() {
-		Toast.makeText(getApplicationContext(), "Refreshing", Toast.LENGTH_SHORT).show();
+		Toast.makeText(getApplicationContext(), R.string.txt_refreshing, Toast.LENGTH_SHORT).show();
 		reloadViews();
 	}
 	

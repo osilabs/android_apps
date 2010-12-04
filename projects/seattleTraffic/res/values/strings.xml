@@ -10,14 +10,23 @@
     <string name="pref_police_radios_default">22577</string> <!-- FIXME - These need to go -->
     <string name="pref_weather_radios_default">11568</string>
     <string name="session_camera_1">http://images.wsdot.wa.gov/rweather/medium_KMMountain.jpg</string>
-    <string name="session_map"
-    >0</string>
+    <string name="session_map">0</string>
     <string name="session_alert">0</string>
     <string name="pref_police_radios_dialog_title">Set Favorite Police Scanner</string>
     <string name="pref_weather_radios_dialog_title">Set Favorite Weather Radio</string>
 	<!--	~~~~~~~~~~~~~ -->
 	<!--	~~~~~~~~~~~~~ ~~~~~~~~~~~~~ ~~~~~~~~~~~~~ -->
 
+	<string name="radios_dialog_title">Radios</string>
+	<string name="txt_refreshing">Refreshing...</string>
+	<string name="txt_loading">Loading...</string>
+	<string name="txt_version">You are running version </string>
+	<string name="txt_btn_ok">Ok</string>
+	<string name="txt_btn_more">More...</string>
+	<string name="txt_prefs_saved">Preferences saved</string>
+	<string name="txt_camera_picker_noop">Camera may have moved, please try again</string>
+	<string name="txt_map_popup_title">Maps</string>
+	<string name="txt_alert_popup_title">Alerts</string>
 
     <string name="menu_prefs">Settings</string>
     <string name="menu_refresh">Refresh</string>
