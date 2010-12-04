@@ -7,6 +7,7 @@ public final class Config {
 
 	// Which radios to offer
 	// These are the Defaults and they will be changed as prefs change. Set current node to -1 to disable.
+	// Use './adb logcat |grep node' to see the scanner ids
 	public static final int            INDEX_OF_WEATHER = 0;
 	public static final int            INDEX_OF_POLICE = 1;
 	public static       int[]          RADIOS_CURRENT_NODE = {11568,           22577};

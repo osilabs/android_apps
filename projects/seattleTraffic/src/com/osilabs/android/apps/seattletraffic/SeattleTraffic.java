@@ -145,11 +145,9 @@ public class SeattleTraffic extends Activity {
 				NAMESPACE, Activity.MODE_PRIVATE);
         CURRENT_VIEW_INDEX = mySharedPreferences.getInt("session_current_view", 2);
         
-        //CamerasTab.CURRENT_CAMERA_URL = mySharedPreferences.getString("session_camera_1", Config.DEFAULT_CAMERA_URL);
-        CamerasTab.CURRENT_CAMERA_URL = "http://osilabs.com";
-        // FIXME - replace these two remaing pref* vars with the tab.constant like the comera one here.
-        PREF_MAP = mySharedPreferences.getInt("session_map", Config.DEFAULT_MAP_INDEX);
-        PREF_ALERT = mySharedPreferences.getInt("session_alert", Config.DEFAULT_ALERT_INDEX);
+        MapsTab.CURRENT_INDEX = mySharedPreferences.getInt("session_map", Config.DEFAULT_MAP_INDEX);
+        AlertsTab.CURRENT_INDEX = mySharedPreferences.getInt("session_alert", Config.DEFAULT_ALERT_INDEX);
+        CamerasTab.CURRENT_CAMERA_URL = mySharedPreferences.getString("session_camera_1", Config.DEFAULT_CAMERA_URL);
 
         
 	    // -------------------------
@@ -617,7 +615,6 @@ public class SeattleTraffic extends Activity {
 		// Refresh main content webview
 		wvMain.loadUrl(CURRENT_WEBVIEW_URL
 						+ "?target=" + CURRENT_VIEW_INDEX
-						+ "&camera=" + CamerasTab.CURRENT_CAMERA_URL 
 						+ MapsTab.getReloadURLParts()
 						+ AlertsTab.getReloadURLParts()
 						+ CamerasTab.getReloadURLParts());
