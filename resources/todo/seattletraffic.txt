@@ -1,9 +1,7 @@
 // v0.1
 
 >> STM <<
-* Put Loading... toast on alert feed load
 * Fix FIXMEs
-* Whenyou pick a camera toast says refreshing then loading. don't need both.
 
 >> TASKS <<
 * Update help/about pages

@@ -348,6 +348,9 @@ public class SeattleTraffic extends Activity {
         .setItems(Config.maps, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
             	MapsTab.CURRENT_INDEX = which;
+    			Toast.makeText(getApplicationContext(), 
+    					"Loading..."
+    					, Toast.LENGTH_LONG).show();
             	reloadViews();
             }
         }).create();
@@ -360,6 +363,9 @@ public class SeattleTraffic extends Activity {
         .setItems(Config.alerts, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
             	AlertsTab.CURRENT_INDEX = which;
+    			Toast.makeText(getApplicationContext(), 
+    					"Loading..."
+    					, Toast.LENGTH_LONG).show();
             	reloadViews();
             }
         }).create();
@@ -386,8 +392,7 @@ public class SeattleTraffic extends Activity {
                CamerasTab.CURRENT_CAMERA_URL = extras.getString("selected_camera");
     			
     			// Reload the webview so it just shows the chosen camera
-    	    	//wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_VIEW_INDEX+"&camera="+CamerasTab.CURRENT_CAMERA_URL);
-				refreshViews();
+				reloadViews();
 				
     			// Set the chosen camera in the persistent settings
     	    	SharedPreferences prefs 
