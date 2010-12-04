@@ -40,15 +40,7 @@ public class SeattleTraffic extends Activity {
 	protected static String MOBILECONTENT_URL_PREFIX    = "http://osilabs.com/m/mobilecontent/seattletraffic";
 	protected static String MOBILECONTENT_URL_ABOUT     = "http://osilabs.com/m/mobilecontent/about/st_about.php";
 	protected static String MOBILECONTENT_URL_HELP      = "http://osilabs.com/m/mobilecontent/help/st_help.php";
-//	private static final String[] INDEX_STRINGS = {		
-//		"xMaps...",
-//		"xInfo...", 
-//		"xCameras..."
-//	};
 	protected static final String NAMESPACE = "com.osilabs.android.apps.seattletraffic";
-	// Use './adb logcat |grep node' to see the scanner ids
-//	private static int Config.CURRENT_SCAN_NODE_POLICE  			;
-//	private static int Config.CURRENT_SCAN_NODE_WEATHER 	; 
 	//
 	// /Configuration Data
 	// --------------------------------------------------
@@ -62,11 +54,6 @@ public class SeattleTraffic extends Activity {
 	
 	protected static final String SCANNER_RADIO_NAMESPACE = "net.gordonedwards.scannerradio"; // FIXME - move all these to class for scanner radio
 	protected static final String SCANNER_RADIO_ACTION = "ACTION_PLAY_SCANNER";
-//	public    static final int    ALPHA_ON = 0xFFFF;
-//	public    static final int    ALPHA_OFF = 0xFFFF;
-//	public    static final int    ALPHA_ON_ALERTS = 0xFFEE;
-//	public    static final int    ALPHA_OFF_ALERTS = 0xFF88;
-	public    static final int    TAB_ACTIVE_COLOR = 0xFF00FF00; // green
 
 	private static final int MENU_TRAFFIC               = 0;
 	private static final int MENU_ALERTS                = 1;
@@ -74,8 +61,6 @@ public class SeattleTraffic extends Activity {
 	private static final int INDEX_TRAFFIC              = 0;
 	private static final int INDEX_ALERTS               = 1;
 	private static final int INDEX_CAMERAS              = 2;
-	private static final int RADIO_OPTION_WEATHER       = 0;
-	private static final int RADIO_OPTION_POLICE        = 1;
 
 	//
 	// Globals
@@ -336,14 +321,6 @@ public class SeattleTraffic extends Activity {
 						} else {
 							launchScanner( Config.RADIOS_CURRENT_NODE[which]);
 						}
-//    					switch(which) {
-//	        		        case RADIO_OPTION_WEATHER:
-//	        			        launchScanner(Config.CURRENT_SCAN_NODE_WEATHER);
-//	            		        break;
-//	        		        case RADIO_OPTION_POLICE:
-//	            		        launchScanner(Config.CURRENT_SCAN_NODE_POLICE);
-//	            		        break;
-//        		        }
                     }
                 }).create();
 				
@@ -461,38 +438,19 @@ public class SeattleTraffic extends Activity {
         return list.size() > 0;
     }
 
-	
-	// FIXME - move these
-//	public void hideCameraConfiguration() {
-//		ivMore.setVisibility(ImageView.GONE);
-//		tvCamerasPop.setVisibility(TextView.GONE);
-//	}
-//	public void showCameraConfiguration() {
-//		ivMore.setVisibility(ImageView.VISIBLE);
-//		tvCamerasPop.setVisibility(TextView.VISIBLE);
-//	}
 	public void setCurrentTabStyle() {
-		//ivMaps.setColorFilter(null); ivMaps.setAlpha(ALPHA_OFF);
-		//ivAlerts.setColorFilter(null); ivAlerts.setAlpha(ALPHA_OFF_ALERTS);
-		//ivCameras.setColorFilter(null); ivCameras.setAlpha(ALPHA_OFF);
 		MapsTab.setInactive(ivMaps);
 		AlertsTab.setInactive(ivAlerts);
 		CamerasTab.setInactive(ivCameras);
 		
 		switch (CURRENT_VIEW_INDEX) {
 			case MENU_TRAFFIC: // FIXME - rename this to MENU_MAPS
-//				ivMaps.setColorFilter(TAB_ACTIVE_COLOR, PorterDuff.Mode.SRC_ATOP);
-//				ivMaps.setAlpha(ALPHA_ON);
 				MapsTab.setActive(ivMaps);
 				break;
 		    case MENU_ALERTS:
-//				ivAlerts.setColorFilter(TAB_ACTIVE_COLOR, PorterDuff.Mode.SRC_ATOP);
-//				ivAlerts.setAlpha(ALPHA_ON_ALERTS);
 				AlertsTab.setActive(ivAlerts);
 		    	break;
 		    case MENU_CAMERAS:
-				//ivCameras.setColorFilter(TAB_ACTIVE_COLOR, PorterDuff.Mode.SRC_ATOP);
-				//ivCameras.setAlpha(ALPHA_ON);
 				CamerasTab.setActive(ivCameras);
 		    	break;
 		}
@@ -501,7 +459,6 @@ public class SeattleTraffic extends Activity {
 	public void setMainWebView(int view_index) {
 		CURRENT_VIEW_INDEX = view_index;
 		setCurrentView(CURRENT_VIEW_INDEX);
-        //hideCameraConfiguration();
         
         MapsTab.hideConfiguration(ivMapMore, tvMapsPop);
         AlertsTab.hideConfiguration(ivAlertMore, tvAlertsPop);
@@ -519,8 +476,6 @@ public class SeattleTraffic extends Activity {
 		    	break;
 		    case MENU_CAMERAS:
 		        CURRENT_VIEW_INDEX = INDEX_CAMERAS;
-		        // Enable camera configuration
-		        //showCameraConfiguration();
 		        CamerasTab.showConfiguration(ivCameraMore, tvCamerasPop);
 		        break;
 		}
@@ -647,9 +602,6 @@ public class SeattleTraffic extends Activity {
 	    SharedPreferences.Editor editor = prefs.edit();
 	    editor.putInt("session_current_view", viewIndex);
 	    editor.commit();
-
-	    // Set text of spinner
-		//tvCamerasPop.setText(INDEX_STRINGS[ viewIndex ]);
 
 	    return true;
 	}
