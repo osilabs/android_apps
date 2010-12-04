@@ -1,40 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+<!--D 22577 Bellevue-Seattle and King Counties Fire and Medic-->
+<!--482 Bureau LaSalle Marshall Putnam and Stark County Fire and EMS-->
+<!--22578 City of Kent Police and King County Fire-->
+<!--484 LaSalle county sheriff fire and EMS-->
+<!--23102 Leland and Earlville police fire and EMS-->
+<!--22580 Seattle police fire and EMS-->
+<!--23934 Southeast King county police and fire-->
+<!--22597 S N and E Snohomish county sheriff Marysville police and East/North county fire-->
+<!--22590 Tacoma police-->
+
 <string-array name="pref_police_radios">
-<item>Carrollton Police and Fire</item>
-<item>Dallas County Fire, Sheriff and Constables</item>
-<item>Dallas Fire Rescue</item>
-<item>Dallas Police SE, SW, North Central, South Central, with Traffic</item>
-<item>Dallas Police Central, NE</item>
-<item>Garland Police and Fire</item>
-<item>Grand Prairie Plice and Fire Rescue</item>
-<item>Mesquite and Corkrell Hill Police and Fire</item>
-<item>Richardson Police, Fire, and EMS</item>
-<item>Sachse, Wylie, and Murphy Police and Fire</item>
+	<item>Bellevue-Seattle and King Counties Fire and Medic</item>
+	<item>Bureau LaSalle Marshall Putnam and Stark County Fire and EMS</item>
+	<item>City of Kent Police and King County Fire</item>
+	<item>LaSalle county sheriff fire and EMS</item>
+	<item>Leland and Earlville police fire and EMS</item>
+	<item>Seattle police fire and EMS</item>
+	<item>Southeast King county police and fire</item>
+	<item>S N and E Snohomish county sheriff Marysville police and East/North county fire</item>
+	<item>Tacoma police</item>
 </string-array> 
 <string-array name="pref_police_radios_values">
-<item>12529</item> 
-<item>21115</item> 
-<item>12535</item> 
-<item>21093</item> 
-<item>20352</item> 
-<item>21075</item> 
-<item>23025</item> 
-<item>21116</item> 
-<item>24138</item> 
-<item>12531</item> 
+	<item>22577</item> 
+	<item>482</item> 
+	<item>22578</item> 
+	<item>484</item> 
+	<item>23102</item> 
+	<item>22580</item> 
+	<item>23934</item> 
+	<item>22597</item> 
+	<item>22590</item> 
 </string-array> 
 
+
+
+
 <string-array name="pref_weather_radios">
-<item>Dallas Weather Radio</item> 
-<item>Crowley / Fort Worth Weather Radio</item> 
-<item>Corsicana Weather Radio</item> 
+	<item>Spokane Weather Radio</item>
+	<item>Portland Weather Radio</item>
+	<item>Eugene Weather Radio</item>
 </string-array> 
 <string-array name="pref_weather_radios_values">
-<item>2233</item> 
-<item>24109</item> 
-<item>23034</item> 
+	<item>11568</item>
+	<item>22984</item>
+	<item>20034</item>
 </string-array> 
 
 
