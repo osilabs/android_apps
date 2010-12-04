@@ -31,9 +31,6 @@ public final class Config {
 		"Ferries: Fauntleroy/Vashon/Southworth",
 
 	};
-	
-	
-		
 	// uri|width|height|scrollx|scrolly - Later these can be programmatically defined 
 	//  for changes in orientation and screens
 	public static final String[] maps_urls = {
@@ -70,13 +67,13 @@ public final class Config {
 		"White pass"
 	};
 	public static final String[] alerts_src = {
-		"http://www.weather.gov/alerts/wa.rss",
-		"http://gismaps.kingcounty.gov/roadalert/rss.aspx",
-		"http://www.wsdot.wa.gov/traffic/passes/blewett/rss/",
-		"http://www.wsdot.wa.gov/traffic/passes/satus/rss/",
-		"http://www.wsdot.wa.gov/traffic/passes/snoqualmie/rss/",
-		"http://www.wsdot.wa.gov/traffic/passes/stevens/rss/",
-		"http://www.wsdot.wa.gov/traffic/passes/white/rss/"
+		"http://www.weather.gov/alerts/wa.rss|titleonly",
+		"http://gismaps.kingcounty.gov/roadalert/rss.aspx|",
+		"http://www.wsdot.wa.gov/traffic/passes/blewett/rss/|",
+		"http://www.wsdot.wa.gov/traffic/passes/satus/rss/|",
+		"http://www.wsdot.wa.gov/traffic/passes/snoqualmie/rss/|",
+		"http://www.wsdot.wa.gov/traffic/passes/stevens/rss/|",
+		"http://www.wsdot.wa.gov/traffic/passes/white/rss/|"
 	};
 	
 

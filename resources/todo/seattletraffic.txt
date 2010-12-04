@@ -1,20 +1,17 @@
 // v0.1
 
 >> STM <<
-* The ferry map doesn't work.
-* Lighten the gray tabs
-* Try lowering minsdk for 1.5
-* Some cameras are empty, check them for errors
-* Coloring of feed text needs work. layout too
+* Put Loading... toast on alert feed load
 * Fix FIXMEs
+* Whenyou pick a camera toast says refreshing then loading. don't need both.
 
 >> TASKS <<
 * Update help/about pages
 * Check the popup menu titles. Seem dumb.
-* Put Loading... toast on alert feed load
-* Put a vert scroll on the maps. an array with howmuch for each
 * Make feedback menu option
 * Array to indicate which type a choice is. Like under the alerts tab, can have feeds in atom or rss, or images.
+* --Lighten the gray tabs
+* --Try lowering minsdk for 1.5
 
 >> BUGS << 
 * Fix the injection party in the HTML phplibs
@@ -23,7 +20,6 @@
 * Fix: Dying
 * Does the camera image disappear when it sits ... maybe from switchingtabs.
 * Coming back from the prefs screen, the camera becomes blank
-
 
 >> TESTING <<
 * Test: Prefs are keeping values
