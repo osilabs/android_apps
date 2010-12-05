@@ -1,31 +1,29 @@
 // v0.1
 
 >> STM <<
+* Check the popup menu titles. Seem dumb.
+* Change the prefs from dallas stuff to seattle.
+* Update help/about pages
 * Fix FIXMEs
+* Does the camera image disappear when it sits ... maybe from switchingtabs.
+* --Try lowering minsdk for 1.5
+* --Lighten the gray tabs
 
 >> TASKS <<
-* Update help/about pages
-* Check the popup menu titles. Seem dumb.
-* Make feedback menu option
-* Array to indicate which type a choice is. Like under the alerts tab, can have feeds in atom or rss, or images.
-* --Lighten the gray tabs
-* --Try lowering minsdk for 1.5
 
 >> BUGS << 
-* Fix the injection party in the HTML phplibs
-* Change the prefs from dallas stuff to seattle.
-* grep for the word dallas, add to new city startup checklist to grep for the old city name.
-* Fix: Dying
-* Does the camera image disappear when it sits ... maybe from switchingtabs.
-* Coming back from the prefs screen, the camera becomes blank
 
 >> TESTING <<
-* Test: Prefs are keeping values
+* Does the camera image disappear when it sits ... maybe from switchingtabs.
+* do the radio prefs save and pull up in the icon radio popup and in the options menu radio icons.
+
 
 // v0.2
+* Fix: Dying
+* Array to indicate which type a choice is. Like under the alerts tab, can have feeds in atom or rss, or images.
+* Make feedback menu option
 * Make a fading vertical bar as a background image for the top and bottom nav bars
 * Add a boolean toggle that indicates if it is the paid version or free version.
-* Darken the tab icons
 * Rename navbar to bottomnav
 * Rename Prefs class to CameraPrefs
 * bug - Hit refresh on a camera, quickly switch tab. camera will refresh but will be on the other tab. Make the html call a jsi in to set the tab to the right page.
@@ -38,6 +36,7 @@
 * Get an android widdler
 * Make incident feed pass number to overlay on incident tab icon (http://stackoverflow.com/questions/2317617/how-to-keep-text-on-imageview-in-android)
 * Close the other exp. listview items as each new group is opened
+* Remember expanded list view camera previously chosen so when it is relaunched, starts out at the previously launched camera.  Or maybe just start at the mainroad group with is closed so they can open it or scroll easily to another group.
 
 >> Cleanup code <<
 
@@ -175,3 +174,29 @@ I/ActivityManager( 1307): Displayed activity com.osilabs.android.apps.seattletra
 E/Web Console(29698): Uncaught ReferenceError: jumpTo is not defined at :1
 
 
+
+
+Scanner radio error
+--------
+D/** osilabs.com **(30857): Scanner node: 24109
+W/InputManagerService( 1307): Window already focused, ignoring focus gain of: com.android.internal.view.IInputMethodClient$Stub$Proxy@451afdf0
+W/InputManagerService( 1307): Starting input on non-focused client com.android.internal.view.IInputMethodClient$Stub$Proxy@451ed8d0 (uid=10086 pid=30888)
+W/InputManagerService( 1307): Client not active, ignoring focus gain of: com.android.internal.view.IInputMethodClient$Stub$Proxy@45293da0
+E/PlayerActivity(30888): onServiceConnected: caught exception: java.lang.NullPointerException
+W/System.err(30888): java.lang.NullPointerException
+W/System.err(30888): 	at com.scannerradio.PlayerActivity$3.onServiceConnected(PlayerActivity.java:880)
+W/System.err(30888): 	at android.app.ActivityThread$PackageInfo$ServiceDispatcher.doConnected(ActivityThread.java:1247)
+W/System.err(30888): 	at android.app.ActivityThread$PackageInfo$ServiceDispatcher$RunConnection.run(ActivityThread.java:1264)
+W/System.err(30888): 	at android.os.Handler.handleCallback(Handler.java:587)
+W/System.err(30888): 	at android.os.Handler.dispatchMessage(Handler.java:92)
+W/System.err(30888): 	at android.os.Looper.loop(Looper.java:123)
+W/System.err(30888): 	at android.app.ActivityThread.main(ActivityThread.java:4627)
+W/System.err(30888): 	at java.lang.reflect.Method.invokeNative(Native Method)
+W/System.err(30888): 	at java.lang.reflect.Method.invoke(Method.java:521)
+W/System.err(30888): 	at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:868)
+W/System.err(30888): 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:626)
+W/System.err(30888): 	at dalvik.system.NativeStart.main(Native Method)
+W/InputManagerService( 1307): Starting input on non-focused client com.android.internal.view.IInputMethodClient$Stub$Proxy@44de4418 (uid=10119 pid=30857)
+W/webcore (30888): Can't get the viewWidth after the first layout
+W/webcore (30888): Can't get the viewWidth after the first layout
+W/ActivityManager( 1307): Activity destroy timeout for HistoryRecord{44e46420 com.scannerradio/.DirectoryActivity}

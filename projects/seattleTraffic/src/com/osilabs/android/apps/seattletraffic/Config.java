@@ -1,15 +1,19 @@
 package com.osilabs.android.apps.seattletraffic;
 
 public final class Config {
-	public static final String DEFAULT_CAMERA_URL = "http://images.wsdot.wa.gov/rweather/medium_KMMountain.jpg";
-	public static final int    DEFAULT_MAP_INDEX = 0;
-	public static final int    DEFAULT_ALERT_INDEX = 0;
+	public static final    String DEFAULT_CAMERA_URL = "http://images.wsdot.wa.gov/rweather/medium_KMMountain.jpg";
+	public static final int       DEFAULT_MAP_INDEX = 0;
+	public static final int       DEFAULT_ALERT_INDEX = 0;
+	protected static       String MOBILECONTENT_URL_PREFIX = "http://osilabs.com/m/mobilecontent/seattletraffic";
+	protected static       String MOBILECONTENT_URL_ABOUT  = "http://osilabs.com/m/mobilecontent/about/st_about.php";
+	protected static       String MOBILECONTENT_URL_HELP   = "http://osilabs.com/m/mobilecontent/help/st_help.php";
+	protected static final String NAMESPACE = "com.osilabs.android.apps.seattletraffic";
 
 	// Which radios to offer
-	// These are the Defaults and they will be changed as prefs change. Set current node to -1 to disable.
 	// Use './adb logcat |grep node' to see the scanner ids
 	public static final int            INDEX_OF_WEATHER = 0;
 	public static final int            INDEX_OF_POLICE = 1;
+	// These are the Defaults and they will be changed as prefs change. Set current node to -1 to disable.
 	public static       int[]          RADIOS_CURRENT_NODE = {11568,           22577};
 	public static final CharSequence[] RADIOS              = {"Weather Radio", "Police Scanner"};
 	

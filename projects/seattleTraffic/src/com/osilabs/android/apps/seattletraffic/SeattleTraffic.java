@@ -33,19 +33,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class SeattleTraffic extends Activity {
-	
-	// --------------------------------------------------
-	// Configuration Data
-	// 
-	protected static String MOBILECONTENT_URL_PREFIX    = "http://osilabs.com/m/mobilecontent/seattletraffic";
-	protected static String MOBILECONTENT_URL_ABOUT     = "http://osilabs.com/m/mobilecontent/about/st_about.php";
-	protected static String MOBILECONTENT_URL_HELP      = "http://osilabs.com/m/mobilecontent/help/st_help.php";
-	protected static final String NAMESPACE = "com.osilabs.android.apps.seattletraffic";
-	//
-	// /Configuration Data
-	// --------------------------------------------------
 
-	
 	//
 	// Consts
 	//
@@ -69,10 +57,6 @@ public class SeattleTraffic extends Activity {
 	//
 
 	// Prefs
-	//protected static int PREF_CAMERAS;
-	protected static int PREF_MAP;
-	protected static int PREF_ALERT;
-	
 	protected static String CURRENT_WEBVIEW_URL = "";
 	protected static String TRAFFIC_MAP_URL = "";
 	protected static String AD_BANNER_URL = "";
@@ -126,15 +110,15 @@ public class SeattleTraffic extends Activity {
         
         // Read in manifest
 		try {
-			pInfo = getPackageManager().getPackageInfo(NAMESPACE, PackageManager.GET_META_DATA);
+			pInfo = getPackageManager().getPackageInfo(Config.NAMESPACE, PackageManager.GET_META_DATA);
 			//version = pInfo.versionName;
 		} catch (NameNotFoundException e) {
 			e.printStackTrace();
 		}
 
 		// Set URLs with versioncode
-		TRAFFIC_MAP_URL = MOBILECONTENT_URL_PREFIX + pInfo.versionCode + "/trafficmap.php";
-		AD_BANNER_URL = MOBILECONTENT_URL_PREFIX + pInfo.versionCode + "/adbanner.php";
+		TRAFFIC_MAP_URL = Config.MOBILECONTENT_URL_PREFIX + pInfo.versionCode + "/trafficmap.php";
+		AD_BANNER_URL = Config.MOBILECONTENT_URL_PREFIX + pInfo.versionCode + "/adbanner.php";
 		
 		// Default the current view
 		// FIXME - this should be an index not a url
@@ -144,7 +128,7 @@ public class SeattleTraffic extends Activity {
 		// Restore preferences
         //
 		mySharedPreferences = getSharedPreferences(
-				NAMESPACE, Activity.MODE_PRIVATE);
+				Config.NAMESPACE, Activity.MODE_PRIVATE);
         CURRENT_VIEW_INDEX = mySharedPreferences.getInt("session_current_view", 2);
         
         MapsTab.CURRENT_INDEX = mySharedPreferences.getInt("session_map", Config.DEFAULT_MAP_INDEX);
@@ -341,7 +325,7 @@ public class SeattleTraffic extends Activity {
 
     protected void launchCameraPicker() { 
 		Context c = getApplicationContext();
-		Intent intent = new Intent().setClassName(c, NAMESPACE + ".CameraELV");
+		Intent intent = new Intent().setClassName(c, Config.NAMESPACE + ".CameraELV");
 		startActivityForResult(intent, INTENT_RESULT_CODE_CAMERA_PICKER); 
     }
     protected void launchMapPicker() { 
@@ -398,7 +382,7 @@ public class SeattleTraffic extends Activity {
 				
     			// Set the chosen camera in the persistent settings
     	    	SharedPreferences prefs 
-    				= getSharedPreferences(NAMESPACE, Activity.MODE_PRIVATE);
+    				= getSharedPreferences(Config.NAMESPACE, Activity.MODE_PRIVATE);
     			    SharedPreferences.Editor editor = prefs.edit();
     			    editor.putString("session_camera_1", CamerasTab.CURRENT_CAMERA_URL);
     			    editor.commit();
@@ -421,7 +405,7 @@ public class SeattleTraffic extends Activity {
     protected void setCurrentRadios() {
     	// Set Global with current prefs
     	// If this namespace path doesn't end in '_preferences' this won't work.
-    	mySharedPreferences = getSharedPreferences(NAMESPACE + "_preferences", 0);
+    	mySharedPreferences = getSharedPreferences(Config.NAMESPACE + "_preferences", 0);
 
     	// FIXME - these two do it differently. the police version is newer, change weather if the police way works
 		String wr_saved = getApplicationContext().getResources().getString(R.string.pref_weather_radios_selected);
@@ -556,7 +540,7 @@ public class SeattleTraffic extends Activity {
 				
 		    case R.id.menu_prefs:
 		    	Intent intent = new Intent();
-				intent.setClassName(this, NAMESPACE + ".Prefs");
+				intent.setClassName(this, Config.NAMESPACE + ".Prefs");
 		    	this.startActivityForResult(intent, INTENT_RESULT_CODE_PREFS);
 		    	return true;
 
@@ -572,7 +556,7 @@ public class SeattleTraffic extends Activity {
 	    			Build.FINGERPRINT + ", " +
 	    			Build.PRODUCT + ", " +
 	    			Build.VERSION.RELEASE;
-        		Intent mIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(MOBILECONTENT_URL_HELP + "?phoneinfo=" + URLEncoder.encode(phoneinfo))); 
+        		Intent mIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Config.MOBILECONTENT_URL_HELP + "?phoneinfo=" + URLEncoder.encode(phoneinfo))); 
 				startActivity(mIntent); 
 		    	return true;
 
@@ -583,7 +567,7 @@ public class SeattleTraffic extends Activity {
 		        alertDialog.setButton(this.getResources().getString(R.string.txt_btn_more), new DialogInterface.OnClickListener() {
 		        	public void onClick(DialogInterface dialog, int which) {
 		        		Intent mIntent = new Intent(Intent.ACTION_VIEW, 
-		        				Uri.parse(MOBILECONTENT_URL_ABOUT)); 
+		        				Uri.parse(Config.MOBILECONTENT_URL_ABOUT)); 
         				startActivity(mIntent); 
 		            } 
 		        });
@@ -602,7 +586,7 @@ public class SeattleTraffic extends Activity {
 	public boolean setCurrentView(int viewIndex) {
 		// Save Settings
     	SharedPreferences prefs 
-			= getSharedPreferences(NAMESPACE, Activity.MODE_PRIVATE);
+			= getSharedPreferences(Config.NAMESPACE, Activity.MODE_PRIVATE);
 	    SharedPreferences.Editor editor = prefs.edit();
 	    editor.putInt("session_current_view", viewIndex);
 	    editor.commit();

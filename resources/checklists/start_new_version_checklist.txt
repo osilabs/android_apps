@@ -11,6 +11,8 @@
 
 * Edit java and xml to remove errors
 
+* Grep for the source project city name and replace with target/new.
+
 * git commit -m"ST - SEEDING FROM DT V0.2"
 
 1. Up the versionname and versioncode in the manifest.
