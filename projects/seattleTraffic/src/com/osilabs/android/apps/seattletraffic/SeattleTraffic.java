@@ -335,8 +335,16 @@ public class SeattleTraffic extends Activity {
             public void onClick(DialogInterface dialog, int which) {
             	MapsTab.CURRENT_INDEX = which;
     			Toast.makeText(getApplicationContext(), 
-    					"Loading..."
+    					R.string.txt_loading
     					, Toast.LENGTH_LONG).show();
+    			
+    			// Save current map
+    	    	SharedPreferences prefs 
+    				= getSharedPreferences(Config.NAMESPACE, Activity.MODE_PRIVATE);
+			    SharedPreferences.Editor editor = prefs.edit();
+			    editor.putInt("session_map", MapsTab.CURRENT_INDEX);
+			    editor.commit();
+    			
             	reloadViews();
             }
         }).create();
@@ -352,6 +360,14 @@ public class SeattleTraffic extends Activity {
     			Toast.makeText(getApplicationContext(), 
     					R.string.txt_loading
     					, Toast.LENGTH_LONG).show();
+    			
+    			// Save current ALERT
+    	    	SharedPreferences prefs 
+    				= getSharedPreferences(Config.NAMESPACE, Activity.MODE_PRIVATE);
+			    SharedPreferences.Editor editor = prefs.edit();
+			    editor.putInt("session_alert", AlertsTab.CURRENT_INDEX);
+			    editor.commit();
+    			
             	reloadViews();
             }
         }).create();
