@@ -179,14 +179,10 @@ public class SeattleTraffic extends Activity {
 				refreshViews();
 			}
 		});
-    }
-
-    @Override
-    public void onStart() {
-    	super.onStart();
-    	
-    	Log.d(TAG, "onStart");
-
+	    
+	    // IMPORTANT - I would get crashes when I initialized webviews in onStart. Moving
+	    //              this into onstart solved the problem.
+	    
 	    //
 		// Main Web View
 		//
@@ -210,8 +206,7 @@ public class SeattleTraffic extends Activity {
         WebSettings awebSettings = wvAd.getSettings();
         awebSettings.setJavaScriptEnabled(true);
         awebSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
-    	// wvAd.loadUrl(AD_BANNER_URL);
-    	
+
 	    // -------------------------
 	    // Bottom Navigation Bar
 	    //
@@ -311,6 +306,14 @@ public class SeattleTraffic extends Activity {
 				alert.show();
 			}
 		});
+    }
+
+    @Override
+    public void onStart() {
+    	super.onStart();
+    	
+    	Log.d(TAG, "onStart");
+    	
 
 	    //
     	// Set the current tab and load it
@@ -324,12 +327,16 @@ public class SeattleTraffic extends Activity {
     }
 
     protected void launchCameraPicker() { 
+        Log.d(TAG, "launchCameraPicker");
+
 		Context c = getApplicationContext();
 		Intent intent = new Intent().setClassName(c, Config.NAMESPACE + ".CameraELV");
 		startActivityForResult(intent, INTENT_RESULT_CODE_CAMERA_PICKER); 
     }
-    protected void launchMapPicker() { 
-		AlertDialog alert = new AlertDialog.Builder(SeattleTraffic.this)
+    protected void launchMapPicker() {
+        Log.d(TAG, "launchMapPicker");
+
+        AlertDialog alert = new AlertDialog.Builder(SeattleTraffic.this)
         .setTitle(R.string.txt_map_popup_title)
         .setItems(Config.maps, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
@@ -352,6 +359,8 @@ public class SeattleTraffic extends Activity {
 		alert.show();
     }
     protected void launchAlertPicker() { 
+        Log.d(TAG, "LaunchAlertPicker");
+
 		AlertDialog alert = new AlertDialog.Builder(SeattleTraffic.this)
         .setTitle(R.string.txt_alert_popup_title)
         .setItems(Config.alerts, new DialogInterface.OnClickListener() {
@@ -376,6 +385,8 @@ public class SeattleTraffic extends Activity {
     }
     @Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        Log.d(TAG, "onActivityResult: " + Integer.toString(requestCode));
+
 		// See which child activity is calling us back.
 	    switch (requestCode) {
             
@@ -419,6 +430,8 @@ public class SeattleTraffic extends Activity {
 
     
     protected void setCurrentRadios() {
+        Log.d(TAG, "setCurrentRadios");
+
     	// Set Global with current prefs
     	// If this namespace path doesn't end in '_preferences' this won't work.
     	mySharedPreferences = getSharedPreferences(Config.NAMESPACE + "_preferences", 0);
@@ -435,6 +448,9 @@ public class SeattleTraffic extends Activity {
     
     // FIXME - move this into its own class for intent stuff
     public static boolean isIntentAvailable(Context context, String action) {
+        Log.d(TAG, "isIntentAvailable");
+
+
         final PackageManager packageManager = context.getPackageManager();
         final Intent intent = new Intent(action);
         List<ResolveInfo> list =
@@ -444,6 +460,8 @@ public class SeattleTraffic extends Activity {
     }
 
 	public void setCurrentTabStyle() {
+        Log.d(TAG, "setCurrentTabStyle");
+
 		MapsTab.setInactive(ivMaps);
 		AlertsTab.setInactive(ivAlerts);
 		CamerasTab.setInactive(ivCameras);
@@ -462,6 +480,8 @@ public class SeattleTraffic extends Activity {
 	}
 
 	public void setMainWebView(int view_index) {
+        Log.d(TAG, "setMainWebview");
+
 		CURRENT_VIEW_INDEX = view_index;
 		setCurrentView(CURRENT_VIEW_INDEX);
         
@@ -494,10 +514,14 @@ public class SeattleTraffic extends Activity {
 
 		@Override
 		public boolean shouldOverrideUrlLoading(WebView view, String url) {
+	        Log.d(TAG, "mywebviewclient::shouldoverrideurlloading");
+
 			view.loadUrl(url);
 			return true;
 		}
 		public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+	        Log.d(TAG, "mywebviewclient::onrecievederror");
+
 			Toast.makeText(activity, "Oh no! " + description, Toast.LENGTH_SHORT).show();
 		}
 	}
@@ -505,6 +529,8 @@ public class SeattleTraffic extends Activity {
 	final class MyWebChromeClient extends WebViewClient {
         // @Override
         public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
+            Log.d(TAG, "MyWebChromeClient::onjsalert");
+
             result.confirm();
             return true;
         }
@@ -515,6 +541,7 @@ public class SeattleTraffic extends Activity {
 	}
     
     final class JsiJavaScriptInterface {
+
 		Activity activity;
     	JsiJavaScriptInterface(Activity a) { activity = a; }
 
@@ -531,6 +558,8 @@ public class SeattleTraffic extends Activity {
 	/* Creates the menu items */
 	public boolean onCreateOptionsMenu(Menu menu) {
 		
+        Log.d(TAG, "onCreateOptionsMenu");
+
 	    MenuInflater inflater = getMenuInflater();
 	    inflater.inflate(R.menu.options, menu);
 	    
@@ -539,6 +568,9 @@ public class SeattleTraffic extends Activity {
 	
 	/* Handles item selections */
 	public boolean onOptionsItemSelected(MenuItem item) {
+		
+        Log.d(TAG, "onOptionsItemSelected:" + Integer.toString(item.getItemId()));
+		
 		switch (item.getItemId()) {
 			case R.id.menu_scanner_police:
 				setCurrentRadios();
@@ -600,6 +632,8 @@ public class SeattleTraffic extends Activity {
 	}
 	
 	public boolean setCurrentView(int viewIndex) {
+        Log.d(TAG, "setCurrentView");
+
 		// Save Settings
     	SharedPreferences prefs 
 			= getSharedPreferences(Config.NAMESPACE, Activity.MODE_PRIVATE);
@@ -611,6 +645,8 @@ public class SeattleTraffic extends Activity {
 	}
 	
 	public void refreshViews() {
+        Log.d(TAG, "refreshViews");
+
 		Toast.makeText(getApplicationContext(), R.string.txt_refreshing, Toast.LENGTH_SHORT).show();
 		reloadViews();
 	}

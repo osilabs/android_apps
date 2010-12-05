@@ -4,6 +4,7 @@ import android.app.ExpandableListActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -39,6 +40,19 @@ public class CameraELV extends ExpandableListActivity implements OnChildClickLis
         registerForContextMenu(getExpandableListView());
     }
 
+    @Override
+    public void onPause() {
+    	super.onPause();
+    	Log.d("** CameraELV **", "onPause");
+    }
+
+    @Override
+    public void onResume() {
+    	super.onResume();
+    	Log.d("** CameraELV **", "onResume");
+    }
+    
+    
     @Override
     public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, 
     	int childPosition, long id) { 

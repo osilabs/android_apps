@@ -2,10 +2,9 @@
 
 >> STM <<
 * Check the popup menu titles. Seem dumb.
-* Change the prefs from dallas stuff to seattle.
 * Update help/about pages
 * Fix FIXMEs
-* Does the camera image disappear when it sits ... maybe from switchingtabs.
+* Remove the Log.d messages
 * --Try lowering minsdk for 1.5
 * --Lighten the gray tabs
 
