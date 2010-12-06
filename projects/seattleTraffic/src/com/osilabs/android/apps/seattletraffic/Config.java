@@ -2,7 +2,7 @@ package com.osilabs.android.apps.seattletraffic;
 
 public final class Config {
 	public static final    String DEFAULT_CAMERA_URL = "http://images.wsdot.wa.gov/rweather/medium_KMMountain.jpg";
-	public static final int       DEFAULT_MAP_INDEX = 0;
+	public static final int       DEFAULT_MAP_INDEX = 3;
 	public static final int       DEFAULT_ALERT_INDEX = 0;
 	public static final boolean   NO_ADS = false; // True will hide the ads
 	protected static       String MOBILECONTENT_URL_PREFIX = "http://osilabs.com/m/mobilecontent/seattletraffic";
