@@ -12,7 +12,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Build;
@@ -54,8 +53,7 @@ public class SeattleTraffic extends Activity {
 	//
 
 	// Prefs
-	protected static String CURRENT_WEBVIEW_URL = "";
-	protected static String TRAFFIC_MAP_URL = "";
+	protected static String WEBVIEW_URL = "";
 	protected static String AD_BANNER_URL = "";
 
 	// Will need to up this number if more indexes are needed.
@@ -102,9 +100,6 @@ public class SeattleTraffic extends Activity {
         // Set globals
         //
         
-        // FIXME - i think this green is set elsewhere too
-        color_tab = Color.GREEN;
-        
         // Read in manifest
 		try {
 			pInfo = getPackageManager().getPackageInfo(Config.NAMESPACE, PackageManager.GET_META_DATA);
@@ -114,12 +109,8 @@ public class SeattleTraffic extends Activity {
 		}
 
 		// Set URLs with versioncode
-		TRAFFIC_MAP_URL = Config.MOBILECONTENT_URL_PREFIX + pInfo.versionCode + "/trafficmap.php";
+		WEBVIEW_URL = Config.MOBILECONTENT_URL_PREFIX + pInfo.versionCode + "/trafficmap.php";
 		AD_BANNER_URL = Config.MOBILECONTENT_URL_PREFIX + pInfo.versionCode + "/adbanner.php";
-		
-		// Default the current view
-		// FIXME - this should be an index not a url
-        CURRENT_WEBVIEW_URL = TRAFFIC_MAP_URL;
 		
         //
 		// Restore preferences
@@ -268,35 +259,14 @@ public class SeattleTraffic extends Activity {
 	    ivRadios.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//final CharSequence[] items = {"Weather Radio", "Police Scanner"};
-				
-				AlertDialog alert = new AlertDialog.Builder(SeattleTraffic.this) // FIXME - dont want to hardcode this here
+				AlertDialog alert = new AlertDialog.Builder(v.getContext())
                 .setTitle(R.string.radios_dialog_title)
                 .setItems(Config.RADIOS, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                    	
     		    		// Check prefs for changed radios.
     					setCurrentRadios();
-        				
-	    				// Loop through radios and leave out what is disabled.
-						if (Config.RADIOS_CURRENT_NODE[which] == -1) {
-						    AlertDialog scannerAlert = new AlertDialog.Builder(SeattleTraffic.this).create();
-					        scannerAlert.setTitle(R.string.app_name);
-					        scannerAlert.setMessage(
-					        		"A suitable streaming service to provide a " 
-					        		+ Config.RADIOS[which] 
-					        		+ " for "
-					        		+ R.string.city_name
-					        		+ ". Please try again later.");
-					        scannerAlert.setIcon(R.drawable.ic_launcher); 
-					        scannerAlert.setButton("Ok", new DialogInterface.OnClickListener() {
-					        	public void onClick(DialogInterface dialog, int which) {
-					    			finish();
-					            } 
-					        });
-						} else {
-							launchScanner( Config.RADIOS_CURRENT_NODE[which]);
-						}
+
+						launchScanner( Config.RADIOS_CURRENT_NODE[which]);
                     }
                 }).create();
 				
@@ -310,7 +280,6 @@ public class SeattleTraffic extends Activity {
     	super.onStart();
     	
     	Log.d(TAG, "onStart");
-    	
 
 	    //
     	// Set the current tab and load it
@@ -396,10 +365,8 @@ public class SeattleTraffic extends Activity {
     					, Toast.LENGTH_LONG).show();
             } 
             else {
-               Bundle extras = data.getExtras();
-            	// FIXME - this happens in a few places, consolidate it. Like the
-    			//  next few lines do
-               CamerasTab.CURRENT_CAMERA_URL = extras.getString("selected_camera");
+            	Bundle extras = data.getExtras();
+                CamerasTab.CURRENT_CAMERA_URL = extras.getString("selected_camera");
     			
     			// Reload the webview so it just shows the chosen camera
 				reloadViews();
@@ -451,7 +418,7 @@ public class SeattleTraffic extends Activity {
 		CamerasTab.setInactive(ivCameras);
 		
 		switch (CURRENT_VIEW_INDEX) {
-			case MENU_TRAFFIC: // FIXME - rename this to MENU_MAPS
+			case MENU_TRAFFIC:
 				MapsTab.setActive(ivMaps);
 				break;
 		    case MENU_ALERTS:
@@ -639,7 +606,7 @@ public class SeattleTraffic extends Activity {
 		Log.d(TAG, "reloadViews()");
 		
 		// Refresh main content webview
-		wvMain.loadUrl(CURRENT_WEBVIEW_URL
+		wvMain.loadUrl(WEBVIEW_URL
 						+ "?target=" + CURRENT_VIEW_INDEX
 						+ MapsTab.getReloadURLParts()
 						+ AlertsTab.getReloadURLParts()
@@ -653,6 +620,10 @@ public class SeattleTraffic extends Activity {
 	//
 	// Scanner Radio stuff
 	// 
+	
+	// I tried moving it to it's own class but need to watch for having pass
+	//  context and creating memory leaks. see"
+	// http://developer.android.com/resources/articles/avoiding-memory-leaks.html
 	
 	public static final String SCANNER_RADIO_NAMESPACE = "net.gordonedwards.scannerradio";
 	public static final String SCANNER_RADIO_ACTION = "ACTION_PLAY_SCANNER";
