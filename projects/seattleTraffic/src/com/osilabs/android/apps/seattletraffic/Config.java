@@ -20,15 +20,15 @@ public final class Config {
 	// Maps
 	public static final String[] maps = {
 		"Full Traffic Map",
-		"North Seattle",
+		"North of Seattle",
+		"North of Seattle (sm)",
 		"Bridges",
-		"South Seattle",
-		"North Seattle (sm)",
 		"Bridges (sm)",
-		"South Seattle (sm)",
-		"Road Temperatures",
-		"Weather Radar",
-		"Sattelite",
+		"South of Seattle",
+		"South of Seattle (sm)",
+		"Weather: Road Temperatures",
+		"Weather: Weather Radar",
+		"Weather: Sattelite",
 		"Ferries: Mukilteo/Clinton",
 		"Ferries: Edmonds/Kingston",
 		"Ferries: Seattle/Bainbridge",
@@ -39,13 +39,13 @@ public final class Config {
 	// uri|width|height|scrollx|scrolly - Later these can be programmatically defined 
 	//  for changes in orientation and screens
 	public static final String[] maps_urls = {
-		"http://images.wsdot.wa.gov/nwflow/flowmaps/video_map_SeattleMetro.gif|100%||||",
-		"http://images.wsdot.wa.gov/nwflow/flowmaps/north.gif|100%||||",
-		"http://images.wsdot.wa.gov/nwflow/flowmaps/bridges.gif|150%||||",
-		"http://images.wsdot.wa.gov/nwflow/flowmaps/south.gif|150%||||",
-		"http://images.wsdot.wa.gov/nwflow/flowmaps/smallnorth.gif|100%||||",
-		"http://images.wsdot.wa.gov/nwflow/flowmaps/smallbridges.gif|120%||||",
-		"http://images.wsdot.wa.gov/nwflow/flowmaps/smallsouth.gif|100%||||",
+		"http://images.wsdot.wa.gov/nwflow/flowmaps/video_map_SeattleMetro.gif|100%||||", //full
+		"http://images.wsdot.wa.gov/nwflow/flowmaps/north.gif|100%||||", // north
+		"http://images.wsdot.wa.gov/nwflow/flowmaps/smallnorth.gif|100%||||", // north sm
+		"http://images.wsdot.wa.gov/nwflow/flowmaps/bridges.gif|150%||||", // bridges
+		"http://images.wsdot.wa.gov/nwflow/flowmaps/smallbridges.gif|120%||||", // bridges sm
+		"http://images.wsdot.wa.gov/nwflow/flowmaps/south.gif|150%||||", // south
+		"http://images.wsdot.wa.gov/nwflow/flowmaps/smallsouth.gif|100%||||", // south sm
 		"http://images.wsdot.wa.gov/rweather/roadtemps/l2psm06.gif|100%||||",
 		"http://sat.wrh.noaa.gov/satellite/2km/Spokane/IR2OTX.GIF|100%||||", // radar
 		"http://sat.wrh.noaa.gov/satellite/1km/Seattle/VIS1SEA.GIF|100%||||",
