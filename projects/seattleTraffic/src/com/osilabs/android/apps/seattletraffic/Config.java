@@ -4,6 +4,7 @@ public final class Config {
 	public static final    String DEFAULT_CAMERA_URL = "http://images.wsdot.wa.gov/rweather/medium_KMMountain.jpg";
 	public static final int       DEFAULT_MAP_INDEX = 0;
 	public static final int       DEFAULT_ALERT_INDEX = 0;
+	public static final boolean   NO_ADS = false; // True will hide the ads
 	protected static       String MOBILECONTENT_URL_PREFIX = "http://osilabs.com/m/mobilecontent/seattletraffic";
 	protected static       String MOBILECONTENT_URL_ABOUT  = "http://osilabs.com/m/mobilecontent/about/st_about.php";
 	protected static       String MOBILECONTENT_URL_HELP   = "http://osilabs.com/m/mobilecontent/help/st_help.php";
@@ -63,6 +64,7 @@ public final class Config {
 
 	// Alerts
 	public static final String[] alerts = {
+		"Weather",
 		"Weather Alerts",
 		"Road Alerts",
 		"Blewett pass",
@@ -71,7 +73,9 @@ public final class Config {
 		"Stevens pass",
 		"White pass"
 	};
+	// Second param can be 'titleonly'
 	public static final String[] alerts_src = {
+		"http://rss.weather.com/weather/rss/local/USWA0395?cm_ven=LWO&cm_cat=rss&par=LWO_rss|",
 		"http://www.weather.gov/alerts/wa.rss|titleonly",
 		"http://gismaps.kingcounty.gov/roadalert/rss.aspx|",
 		"http://www.wsdot.wa.gov/traffic/passes/blewett/rss/|",

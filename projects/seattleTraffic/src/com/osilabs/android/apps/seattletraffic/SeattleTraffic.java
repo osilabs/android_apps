@@ -94,7 +94,7 @@ public class SeattleTraffic extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        Log.d(TAG, "onCreate");
+        // Log.d(TAG, "onCreate");
 
         //
         // Set globals
@@ -194,7 +194,9 @@ public class SeattleTraffic extends Activity {
         WebSettings awebSettings = wvAd.getSettings();
         awebSettings.setJavaScriptEnabled(true);
         awebSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
-
+        if (Config.NO_ADS) {
+        	wvAd.setVisibility(View.GONE);
+        }
 	    // -------------------------
 	    // Bottom Navigation Bar
 	    //
@@ -279,7 +281,7 @@ public class SeattleTraffic extends Activity {
     public void onStart() {
     	super.onStart();
     	
-    	Log.d(TAG, "onStart");
+    	// Log.d(TAG, "onStart");
 
 	    //
     	// Set the current tab and load it
@@ -293,14 +295,14 @@ public class SeattleTraffic extends Activity {
     }
 
     protected void launchCameraPicker() { 
-        Log.d(TAG, "launchCameraPicker");
+        // Log.d(TAG, "launchCameraPicker");
 
 		Context c = getApplicationContext();
 		Intent intent = new Intent().setClassName(c, Config.NAMESPACE + ".CameraELV");
 		startActivityForResult(intent, INTENT_RESULT_CODE_CAMERA_PICKER); 
     }
     protected void launchMapPicker() {
-        Log.d(TAG, "launchMapPicker");
+        // Log.d(TAG, "launchMapPicker");
 
         AlertDialog alert = new AlertDialog.Builder(SeattleTraffic.this)
         .setTitle(R.string.txt_map_popup_title)
@@ -325,7 +327,7 @@ public class SeattleTraffic extends Activity {
 		alert.show();
     }
     protected void launchAlertPicker() { 
-        Log.d(TAG, "LaunchAlertPicker");
+        // Log.d(TAG, "LaunchAlertPicker");
 
 		AlertDialog alert = new AlertDialog.Builder(SeattleTraffic.this)
         .setTitle(R.string.txt_alert_popup_title)
@@ -351,7 +353,7 @@ public class SeattleTraffic extends Activity {
     }
     @Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        Log.d(TAG, "onActivityResult: " + Integer.toString(requestCode));
+        // Log.d(TAG, "onActivityResult: " + Integer.toString(requestCode));
 
 		// See which child activity is calling us back.
 	    switch (requestCode) {
@@ -394,16 +396,15 @@ public class SeattleTraffic extends Activity {
 
     
     protected void setCurrentRadios() {
-        Log.d(TAG, "setCurrentRadios");
+        // Log.d(TAG, "setCurrentRadios");
 
     	// Set Global with current prefs
     	// If this namespace path doesn't end in '_preferences' this won't work.
     	mySharedPreferences = getSharedPreferences(Config.NAMESPACE + "_preferences", 0);
 
-    	// FIXME - these two do it differently. the police version is newer, change weather if the police way works
 		String wr_saved = getApplicationContext().getResources().getString(R.string.pref_weather_radios_selected);
-		String wr_def   = getApplicationContext().getResources().getString(R.string.pref_weather_radios_default);
-		Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER] = Integer.parseInt(mySharedPreferences.getString(wr_saved, wr_def));
+		Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER] = Integer.parseInt(mySharedPreferences
+	      .getString(wr_saved, Integer.toString(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER])));
 
 		String pr_saved = getApplicationContext().getResources().getString(R.string.pref_police_radios_selected);
 		Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE] = Integer.parseInt(mySharedPreferences
@@ -411,7 +412,7 @@ public class SeattleTraffic extends Activity {
     }
     
 	public void setCurrentTabStyle() {
-        Log.d(TAG, "setCurrentTabStyle");
+        // Log.d(TAG, "setCurrentTabStyle");
 
 		MapsTab.setInactive(ivMaps);
 		AlertsTab.setInactive(ivAlerts);
@@ -431,7 +432,7 @@ public class SeattleTraffic extends Activity {
 	}
 
 	public void setMainWebView(int view_index) {
-        Log.d(TAG, "setMainWebview");
+        // Log.d(TAG, "setMainWebview");
 
 		CURRENT_VIEW_INDEX = view_index;
 		setCurrentView(CURRENT_VIEW_INDEX);
@@ -465,13 +466,13 @@ public class SeattleTraffic extends Activity {
 
 		@Override
 		public boolean shouldOverrideUrlLoading(WebView view, String url) {
-	        Log.d(TAG, "mywebviewclient::shouldoverrideurlloading");
+	        // Log.d(TAG, "mywebviewclient::shouldoverrideurlloading");
 
 			view.loadUrl(url);
 			return true;
 		}
 		public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-	        Log.d(TAG, "mywebviewclient::onrecievederror");
+	        // Log.d(TAG, "mywebviewclient::onrecievederror");
 
 			Toast.makeText(activity, "Oh no! " + description, Toast.LENGTH_SHORT).show();
 		}
@@ -480,14 +481,14 @@ public class SeattleTraffic extends Activity {
 	final class MyWebChromeClient extends WebViewClient {
         // @Override
         public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
-            Log.d(TAG, "MyWebChromeClient::onjsalert");
+            // Log.d(TAG, "MyWebChromeClient::onjsalert");
 
             result.confirm();
             return true;
         }
         // Javascript in webview can call colsole.log('the message') to log messages.
 		public void onConsoleMessage(String message, int lineNumber, String sourceID) {
-			Log.d(TAG, message + " -- From line " + lineNumber + " of " + sourceID);
+			// Log.d(TAG, message + " -- From line " + lineNumber + " of " + sourceID);
 		}
 	}
     
@@ -509,7 +510,7 @@ public class SeattleTraffic extends Activity {
 	/* Creates the menu items */
 	public boolean onCreateOptionsMenu(Menu menu) {
 		
-        Log.d(TAG, "onCreateOptionsMenu");
+        // Log.d(TAG, "onCreateOptionsMenu");
 
 	    MenuInflater inflater = getMenuInflater();
 	    inflater.inflate(R.menu.options, menu);
@@ -520,7 +521,7 @@ public class SeattleTraffic extends Activity {
 	/* Handles item selections */
 	public boolean onOptionsItemSelected(MenuItem item) {
 		
-        Log.d(TAG, "onOptionsItemSelected:" + Integer.toString(item.getItemId()));
+        // Log.d(TAG, "onOptionsItemSelected:" + Integer.toString(item.getItemId()));
 		
 		switch (item.getItemId()) {
 			case R.id.menu_scanner_police:
@@ -562,7 +563,7 @@ public class SeattleTraffic extends Activity {
 		    case R.id.menu_about:
 		        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 		        alertDialog.setTitle(R.string.app_name);
-		        alertDialog.setMessage(R.string.txt_version + pInfo.versionName);
+		        alertDialog.setMessage(getApplicationContext().getResources().getString(R.string.txt_version) + " " + pInfo.versionName);
 		        alertDialog.setButton(this.getResources().getString(R.string.txt_btn_more), new DialogInterface.OnClickListener() {
 		        	public void onClick(DialogInterface dialog, int which) {
 		        		Intent mIntent = new Intent(Intent.ACTION_VIEW, 
@@ -583,7 +584,7 @@ public class SeattleTraffic extends Activity {
 	}
 	
 	public boolean setCurrentView(int viewIndex) {
-        Log.d(TAG, "setCurrentView");
+        // Log.d(TAG, "setCurrentView");
 
 		// Save Settings
     	SharedPreferences prefs 
@@ -596,14 +597,14 @@ public class SeattleTraffic extends Activity {
 	}
 	
 	public void refreshViews() {
-        Log.d(TAG, "refreshViews");
+        // Log.d(TAG, "refreshViews");
 
 		Toast.makeText(getApplicationContext(), R.string.txt_refreshing, Toast.LENGTH_SHORT).show();
 		reloadViews();
 	}
 	
 	public void reloadViews() {
-		Log.d(TAG, "reloadViews()");
+		// Log.d(TAG, "reloadViews()");
 		
 		// Refresh main content webview
 		wvMain.loadUrl(WEBVIEW_URL
@@ -638,7 +639,7 @@ public class SeattleTraffic extends Activity {
 	}
 	
 	public void launchScanner(int which_scanner) {
-		Log.d(TAG, "Scanner node: " + Integer.toString(which_scanner));
+		// Log.d(TAG, "Scanner node: " + Integer.toString(which_scanner));
 		
 		boolean scannerAvailable = isIntentAvailable(SeattleTraffic.this,
 				SCANNER_RADIO_NAMESPACE + ".intent.action." + SCANNER_RADIO_ACTION);

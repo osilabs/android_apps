@@ -1,12 +1,15 @@
 // v0.1
 
 >> STM <<
-* Check the popup menu titles. Seem dumb.
-* Update help/about pages
-* Fix FIXMEs
+* Fix about popup message. your arerunning version...
 * Remove the Log.d messages
 * --Try lowering minsdk for 1.5
 * --Lighten the gray tabs
+
+
+Fast and stable
+
+
 
 >> TASKS <<
 
@@ -18,7 +21,7 @@
 
 
 // v0.2
-* Fix: Dying
+* Move feedback to it's own options menu item
 * Array to indicate which type a choice is. Like under the alerts tab, can have feeds in atom or rss, or images.
 * Make feedback menu option
 * Make a fading vertical bar as a background image for the top and bottom nav bars
