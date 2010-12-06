@@ -39,9 +39,6 @@ public class SeattleTraffic extends Activity {
 	//
 
 	private static final String TAG = "** osilabs.com **";
-	
-	protected static final String SCANNER_RADIO_NAMESPACE = "net.gordonedwards.scannerradio"; // FIXME - move all these to class for scanner radio
-	protected static final String SCANNER_RADIO_ACTION = "ACTION_PLAY_SCANNER";
 
 	private static final int MENU_TRAFFIC               = 0;
 	private static final int MENU_ALERTS                = 1;
@@ -446,19 +443,6 @@ public class SeattleTraffic extends Activity {
 	      .getString(pr_saved, Integer.toString(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE])));
     }
     
-    // FIXME - move this into its own class for intent stuff
-    public static boolean isIntentAvailable(Context context, String action) {
-        Log.d(TAG, "isIntentAvailable");
-
-
-        final PackageManager packageManager = context.getPackageManager();
-        final Intent intent = new Intent(action);
-        List<ResolveInfo> list =
-            packageManager.queryIntentActivities(intent,
-                    PackageManager.MATCH_DEFAULT_ONLY);
-        return list.size() > 0;
-    }
-
 	public void setCurrentTabStyle() {
         Log.d(TAG, "setCurrentTabStyle");
 
@@ -663,6 +647,23 @@ public class SeattleTraffic extends Activity {
 		
 		// Refresh banner webview
 		wvAd.loadUrl(AD_BANNER_URL);
+	}
+	
+	
+	//
+	// Scanner Radio stuff
+	// 
+	
+	public static final String SCANNER_RADIO_NAMESPACE = "net.gordonedwards.scannerradio";
+	public static final String SCANNER_RADIO_ACTION = "ACTION_PLAY_SCANNER";
+	
+	public static boolean isIntentAvailable(Context context, String action) {
+	    final PackageManager packageManager = context.getPackageManager();
+	    final Intent intent = new Intent(action);
+	    List<ResolveInfo> list =
+	        packageManager.queryIntentActivities(intent,
+	                PackageManager.MATCH_DEFAULT_ONLY);
+	    return list.size() > 0;
 	}
 	
 	public void launchScanner(int which_scanner) {
