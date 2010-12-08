@@ -1,6 +1,6 @@
-
 package com.osilabs.android.apps;
 
+import java.net.URLEncoder;
 import java.util.List;
 
 import android.app.Activity;
@@ -13,111 +13,89 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.content.res.Configuration;
+import android.graphics.PorterDuff;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemSelectedListener;
 
 public class TCT extends Activity {
+
 	//
 	// Consts
 	//
-	// VIEW_INDEX's
-	// 0 = traffic
-	// 1 = incidents
-	// 2 = alerts
-	// 3 = incidentlist
-	// 4 = camera
-	//
-	protected static final String MNDOT_MOBILE_URL = "http://www.dot.state.mn.us/tmc/trafficinfo/mobile/freeways.html";
-	//protected static final String TRAFFIC_MAP_URL = "http://osilabs.com/m/mobilecontent/tctraffic/trafficmap.php";
-	//protected static final String INCIDENT_FEED = "http://www.dot.state.mn.us/tmc/trafficinfo/incidents.xml";
-	
+
 	private static final String TAG = "** osilabs.com **";
-	
+
 	private static final int MENU_TRAFFIC               = 0;
-	private static final int MENU_CONGESTION             = 1;
-	private static final int MENU_ALERTS                = 2;
-	private static final int MENU_INCIDENTLIST          = 3;
-	private static final int MENU_CAMERAS               = 4;
-	private static final int MENU_REFRESH               = 100;
-	private static final int MENU_QUIT                  = 101;
-	private static final int MENU_SCANNER               = 102;
-	//private static final int MENU_MNDOT_MOBILE_FREEWAYS = 102;
-	//private static final int MENU_PREFS                 = 103;
-	private static final int MENU_ABOUT                 = 104;
-
-	private static final int SCAN_NODE_POLICE  = 16004; // FIXME - put these scanner values in an array. Use ./adb logcat |grep node to see the scanner ids
-	private static final int SCAN_NODE_WEATHER = 24058; 
-	private static final int SCAN_NODE_WEATHER2 = 19405; // Clearwater Weather Radio (WunderGround.com)
-
+	private static final int MENU_ALERTS                = 1;
+	private static final int MENU_CAMERAS               = 2;
 	private static final int INDEX_TRAFFIC              = 0;
-	private static final int INDEX_CONGESTION           = 1;
-	private static final int INDEX_ALERTS               = 2;
-	private static final int INDEX_INCIDENTLIST         = 3;
-	private static final int INDEX_CAMERAS              = 4;
-
-	protected static final String NAMESPACE = "com.osilabs.android.apps";
-	protected static final String SCANNER_RADIO_NAMESPACE = "net.gordonedwards.scannerradio";
-	protected static final String SCANNER_RADIO_ACTION = "ACTION_PLAY_SCANNER";
-	private static final String[] 
-        INDEX_STRINGS = {"Traffic", "Congestion", "Alert Map", "Incident Report", "Camera"};
+	private static final int INDEX_ALERTS               = 1;
+	private static final int INDEX_CAMERAS              = 2;
+	private static final int INTENT_RESULT_CODE_CAMERA_PICKER= 22;
+	private static final int INTENT_RESULT_CODE_PREFS   = 33;
 
 	//
 	// Globals
 	//
 
 	// Prefs
-	protected static int PREF_CAMERA_1;
-	
-	protected static String CURRENT_WEBVIEW_URL = "";
-	protected static String TRAFFIC_MAP_URL = "";
+	protected static String WEBVIEW_URL = "";
 	protected static String AD_BANNER_URL = "";
 
 	// Will need to up this number if more indexes are needed.
-	protected static String[] VIEW_URLS = new String[8]; 
 	protected static int CURRENT_VIEW_INDEX = 0;
-	protected static String MOBILECONTENT_URL_PREFIX = "http://osilabs.com/m/mobilecontent/tctraffic";
-	protected static String MOBILECONTENT_URL_ABOUT = "http://osilabs.com/m/mobilecontent/about/tct_about.php";
 
 	protected static PackageInfo pInfo = null;
 	protected static Spinner spViewChoices;
 	protected static WebView wvAd;
 	protected static WebView wvMain;
+	protected static SharedPreferences mySharedPreferences;
 
 	// Navbar components
-	protected ImageView refresh;
-	protected ImageView ivMore;
-	//protected ImageView launcherScannerWeather;
-	protected TextView tvSpinner;
+
+	// Tabs
+	protected ImageView ivMaps;
+	protected ImageView ivAlerts;
+	protected ImageView ivCameras;
 	
-	// For posting runnables
-	private Handler mHandler = new Handler();
+	// Configs
+	protected ImageView ivMapMore;
+	protected TextView  tvMapsPop;
+	
+	protected ImageView ivAlertMore;
+	protected TextView  tvAlertsPop;
+	
+	protected ImageView ivCameraMore;
+	protected TextView  tvCamerasPop;
+
+	// Misc icons
+	protected ImageView ivRefresh;
+	protected ImageView ivRadios;
+	
+	// Tints and paints
+	protected int color_tab;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        Log.d(TAG, "onCreate");
+        // Log.d(TAG, "onCreate");
 
         //
         // Set globals
@@ -125,94 +103,76 @@ public class TCT extends Activity {
         
         // Read in manifest
 		try {
-			pInfo = getPackageManager().getPackageInfo(NAMESPACE, PackageManager.GET_META_DATA);
+			pInfo = getPackageManager().getPackageInfo(Config.NAMESPACE, PackageManager.GET_META_DATA);
 			//version = pInfo.versionName;
 		} catch (NameNotFoundException e) {
 			e.printStackTrace();
-			// FIXME 0.4 - Add toast message here.
 		}
 
 		// Set URLs with versioncode
-		TRAFFIC_MAP_URL = MOBILECONTENT_URL_PREFIX + pInfo.versionCode + "/trafficmap.php";
-		AD_BANNER_URL = MOBILECONTENT_URL_PREFIX + pInfo.versionCode + "/adbanner.php";
-
-		// The order of these needs to match the order of the VIEW_INDEXes. It is used to determine
-		//  which webview URI to use for the view.
-		//
-		// This is intialized with a finite number of indexes, if you exceed them,
-		//  up that number or get array out of bounds exception
-		VIEW_URLS[0] = TRAFFIC_MAP_URL;
-		VIEW_URLS[1] = TRAFFIC_MAP_URL;
-		VIEW_URLS[2] = TRAFFIC_MAP_URL;
-		VIEW_URLS[3] = TRAFFIC_MAP_URL;
-		VIEW_URLS[4] = TRAFFIC_MAP_URL;
+		WEBVIEW_URL = Config.MOBILECONTENT_URL_PREFIX + pInfo.versionCode + "/trafficmap.php";
+		AD_BANNER_URL = Config.MOBILECONTENT_URL_PREFIX + pInfo.versionCode + "/adbanner.php";
 		
         //
-		// Restore view
+		// Restore preferences
         //
-		SharedPreferences mySharedPreferences = getSharedPreferences(
-				NAMESPACE, Activity.MODE_PRIVATE);
-        CURRENT_VIEW_INDEX = mySharedPreferences.getInt("pref_current_view", 2);
-        CURRENT_WEBVIEW_URL = VIEW_URLS[CURRENT_VIEW_INDEX];
+		mySharedPreferences = getSharedPreferences(
+				Config.NAMESPACE, Activity.MODE_PRIVATE);
+        CURRENT_VIEW_INDEX = mySharedPreferences.getInt("session_current_view", 2);
         
-        // Restore camera 1
-        PREF_CAMERA_1 = mySharedPreferences.getInt("pref_camera_1", 1);
-    }
+        MapsTab.CURRENT_INDEX = mySharedPreferences.getInt("session_map", Config.DEFAULT_MAP_INDEX);
+        AlertsTab.CURRENT_INDEX = mySharedPreferences.getInt("session_alert", Config.DEFAULT_ALERT_INDEX);
+        CamerasTab.CURRENT_CAMERA_URL = mySharedPreferences.getString("session_camera_1", Config.DEFAULT_CAMERA_URL);
 
-    @Override
-    public void onStart() {
-    	super.onStart();
-    	
-        Log.d(TAG, "onStart");
-
-        //
-	    // Set up Navigation Bar
+        
+	    // -------------------------
+	    // Top Nav bar
 	    //
-	    
-	    // Refresh
-	    refresh = (ImageView) findViewById(R.id.navbar_refresh);
-	    refresh.setOnClickListener(new View.OnClickListener() {
+
+	    ivMaps = (ImageView) findViewById(R.id.launcher_traffic);
+	    ivMaps.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				setMainWebView(INDEX_TRAFFIC);
+			}
+		});
+
+	    ivAlerts = (ImageView) findViewById(R.id.launcher_alerts);
+	    // This particular icon is much whiter than the others so i am making it darker
+	    //  with the alpha.
+	    ivAlerts.setAlpha(AlertsTab.ALPHA_OFF);
+	    ivAlerts.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				setMainWebView(INDEX_ALERTS);
+			}
+		});
+
+	    // Set up camera tab
+	    ivCameras = (ImageView) findViewById(R.id.launcher_cameras);
+	    ivCameras.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				setMainWebView(INDEX_CAMERAS);
+			}
+		});
+
+	    ivRefresh = (ImageView) findViewById(R.id.navbar_refresh);
+	    // Give it a nice blue color. SRC_ATOP means color the icon, not
+	    //  the background.
+	    ivRefresh.setColorFilter(getResources().getColor(R.color.darkPowderBlue), PorterDuff.Mode.SRC_ATOP); // same as tint
+	    ivRefresh.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				//setMainWebView(CURRENT_VIEW_INDEX);
 				refreshViews();
 			}
 		});
-
+	    
+	    // IMPORTANT - I would get crashes when I initialized webviews in onStart. Moving
+	    //              this into onstart solved the problem.
+	    
 	    //
-		// Spinner Choices
-		// 
-        spViewChoices = (Spinner) findViewById(R.id.view_choice_spinner);
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-			this, R.array.view_choices, android.R.layout.simple_spinner_item);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spViewChoices.setOnItemSelectedListener(new QuickViewOnItemSelectedListener());
-		spViewChoices.setAdapter(adapter);
-		spViewChoices.setHapticFeedbackEnabled(true); // fixme - doesn't seem to work
-		spViewChoices.setSelection(CURRENT_VIEW_INDEX);
-		
-	    //
-		// View Choice Expand Icon
-	    //
-		ivMore = (ImageView) findViewById(R.id.launcher_more);
-		ivMore.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				spViewChoices.performClick();
-			}
-		});
-
-	    //
-		// View Choice Spinner
-	    //
-		tvSpinner = (TextView) findViewById(R.id.view_spinner);
-	    tvSpinner.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				spViewChoices.performClick();
-			}
-		});
-
-		//
 		// Main Web View
 		//
 		wvMain = (WebView) findViewById(R.id.mainWebView);
@@ -227,10 +187,6 @@ public class TCT extends Activity {
         wvMain.setWebChromeClient(new WebChromeClient());
         // Enable jsi
         wvMain.addJavascriptInterface(new JsiJavaScriptInterface(this), "jsi");
-    	// It's going to take a second to load
-		Toast.makeText(this, "Loading...", Toast.LENGTH_LONG).show();
-		// Load the webview
-    	wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_VIEW_INDEX+"&camera="+PREF_CAMERA_1);
 
 		//
 		// Ad banner Web View
@@ -239,82 +195,270 @@ public class TCT extends Activity {
         WebSettings awebSettings = wvAd.getSettings();
         awebSettings.setJavaScriptEnabled(true);
         awebSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
-    	wvAd.loadUrl(AD_BANNER_URL);
-    }
-
-//    public void onConfigurationChanged(Configuration newConfig) {
-//        super.onConfigurationChanged(newConfig);
-//        
-//        Toast.makeText(this, "FLIPPED", Toast.LENGTH_SHORT).show();
-//        
-//        // Checks the orientation of the screen
-//        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-//            Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
-//        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-//            Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
-//        }
-//    }
-    
-    public static boolean isIntentAvailable(Context context, String action) {
-        final PackageManager packageManager = context.getPackageManager();
-        final Intent intent = new Intent(action);
-        List<ResolveInfo> list =
-            packageManager.queryIntentActivities(intent,
-                    PackageManager.MATCH_DEFAULT_ONLY);
-        return list.size() > 0;
-    }
-    
-    //
-	// Quick View Spinner
-	// 
-	public class QuickViewOnItemSelectedListener implements OnItemSelectedListener {
-	
-		public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-			CURRENT_VIEW_INDEX = pos;
-			setCurrentView(CURRENT_VIEW_INDEX);
-			switch (CURRENT_VIEW_INDEX) {
-			    case MENU_TRAFFIC:
-			        CURRENT_VIEW_INDEX = INDEX_TRAFFIC;
-			    	break;
-			    case MENU_CONGESTION:
-			        CURRENT_VIEW_INDEX = INDEX_CONGESTION;
-			    	break;		        
-			    case MENU_ALERTS:
-			        CURRENT_VIEW_INDEX = INDEX_ALERTS;
-			    	break;
-			    case MENU_INCIDENTLIST:
-			        CURRENT_VIEW_INDEX = INDEX_INCIDENTLIST;
-			    	break;
-			    case MENU_CAMERAS:
-			        CURRENT_VIEW_INDEX = INDEX_CAMERAS;
-			    	break;
+        if (Config.NO_ADS) {
+        	wvAd.setVisibility(View.GONE);
+        }
+	    // -------------------------
+	    // Bottom Navigation Bar
+	    //
+        
+        // Maps config...
+		ivMapMore = (ImageView) findViewById(R.id.maps_config_pop_icon);
+		ivMapMore.setColorFilter(getResources().getColor(R.color.lighterDarkPowderBlue), PorterDuff.Mode.SRC_ATOP);
+		ivMapMore.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				launchMapPicker();
 			}
+		});
+    	tvMapsPop = (TextView) findViewById(R.id.maps_config_pop);
+    	tvMapsPop.setTextColor(getResources().getColor(R.color.lighterDarkPowderBlue));
+    	tvMapsPop.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				launchMapPicker();
+			}
+		});
+        
+        // Alerts config...
+		ivAlertMore = (ImageView) findViewById(R.id.alerts_config_pop_icon);
+		ivAlertMore.setColorFilter(getResources().getColor(R.color.lighterDarkPowderBlue), PorterDuff.Mode.SRC_ATOP);
+		ivAlertMore.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				launchAlertPicker();
+			}
+		});
+    	tvAlertsPop = (TextView) findViewById(R.id.alerts_config_pop);
+    	tvAlertsPop.setTextColor(getResources().getColor(R.color.lighterDarkPowderBlue));
+    	tvAlertsPop.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				launchAlertPicker();
+			}
+		});
 
-			// CURRENT_WEBVIEW_URL is still what the last view was, 
-			//  VIEW_URLS[CURRENT_VIEW_INDEX] has the new view which
-			//  has a different URL (This was used when the cameras
-			//  view had to reload the webview with a different url).
-	    	if (CURRENT_WEBVIEW_URL != VIEW_URLS[CURRENT_VIEW_INDEX]) {
-	    		// Set the new Current URL
-		    	CURRENT_WEBVIEW_URL = VIEW_URLS[CURRENT_VIEW_INDEX];
+        // Cameras config...
+		ivCameraMore = (ImageView) findViewById(R.id.cameras_config_pop_icon);
+		ivCameraMore.setColorFilter(getResources().getColor(R.color.lighterDarkPowderBlue), PorterDuff.Mode.SRC_ATOP);
+		ivCameraMore.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				launchCameraPicker();
+			}
+		});
+		tvCamerasPop = (TextView) findViewById(R.id.cameras_config_pop);
+		tvCamerasPop.setTextColor(getResources().getColor(R.color.lighterDarkPowderBlue));
+	    tvCamerasPop.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				launchCameraPicker();
+			}
+		});
 
-		    	// It's going to take a second to reload a new webview,
-		    	//  state the obvious
-				Toast.makeText(	parent.getContext(), 
-								"Loading...", Toast.LENGTH_LONG).show();
+	    // Radios Icon Click
+	    ivRadios = (ImageView) findViewById(R.id.navbar_radios);
+	    ivRadios.setColorFilter(getResources().getColor(R.color.lightRed), PorterDuff.Mode.SRC_ATOP); // same as tint
+	    ivRadios.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				AlertDialog alert = new AlertDialog.Builder(v.getContext())
+                .setTitle(R.string.radios_dialog_title)
+                .setItems(Config.RADIOS, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+    		    		// Check prefs for changed radios.
+    					setCurrentRadios();
 
-		    	// Load the other URL into the webview
-	    		wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_VIEW_INDEX);
-	    	} else {
-		    	// Just switch div - This stays fast because we don't have to
-	    		//  reload the webview a lot, only for camera switching.
-	    		wvMain.loadUrl("javascript: jumpTo('"+CURRENT_VIEW_INDEX+"')");
-	    	}
+						launchScanner( Config.RADIOS_CURRENT_NODE[which]);
+                    }
+                }).create();
+				
+				alert.show();
+			}
+		});
+    }
+
+    @Override
+    public void onStart() {
+    	super.onStart();
+    	
+    	// Log.d(TAG, "onStart");
+
+	    //
+    	// Set the current tab and load it
+    	//
+	    
+        // It's going to take a second to load
+		Toast.makeText(this, R.string.txt_loading, Toast.LENGTH_LONG).show();
+		
+    	setMainWebView(CURRENT_VIEW_INDEX);
+		reloadViews();
+    }
+
+    protected void launchCameraPicker() { 
+        // Log.d(TAG, "launchCameraPicker");
+
+		Context c = getApplicationContext();
+		Intent intent = new Intent().setClassName(c, Config.NAMESPACE + ".CameraELV");
+		startActivityForResult(intent, INTENT_RESULT_CODE_CAMERA_PICKER); 
+    }
+    protected void launchMapPicker() {
+        // Log.d(TAG, "launchMapPicker");
+
+        AlertDialog alert = new AlertDialog.Builder(this)
+        .setTitle(R.string.txt_map_popup_title)
+        .setItems(Config.maps, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+            	MapsTab.CURRENT_INDEX = which;
+    			Toast.makeText(getApplicationContext(), 
+    					R.string.txt_loading
+    					, Toast.LENGTH_LONG).show();
+    			
+    			// Save current map
+    	    	SharedPreferences prefs 
+    				= getSharedPreferences(Config.NAMESPACE, Activity.MODE_PRIVATE);
+			    SharedPreferences.Editor editor = prefs.edit();
+			    editor.putInt("session_map", MapsTab.CURRENT_INDEX);
+			    editor.commit();
+    			
+            	reloadViews();
+            }
+        }).create();
+		
+		alert.show();
+    }
+    protected void launchAlertPicker() { 
+        // Log.d(TAG, "LaunchAlertPicker");
+
+		AlertDialog alert = new AlertDialog.Builder(this)
+        .setTitle(R.string.txt_alert_popup_title)
+        .setItems(Config.alerts, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+            	AlertsTab.CURRENT_INDEX = which;
+    			Toast.makeText(getApplicationContext(), 
+    					R.string.txt_loading
+    					, Toast.LENGTH_LONG).show();
+    			
+    			// Save current ALERT
+    	    	SharedPreferences prefs 
+    				= getSharedPreferences(Config.NAMESPACE, Activity.MODE_PRIVATE);
+			    SharedPreferences.Editor editor = prefs.edit();
+			    editor.putInt("session_alert", AlertsTab.CURRENT_INDEX);
+			    editor.commit();
+    			
+            	reloadViews();
+            }
+        }).create();
+		
+		alert.show();
+    }
+    @Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        // Log.d(TAG, "onActivityResult: " + Integer.toString(requestCode));
+
+		// See which child activity is calling us back.
+	    switch (requestCode) {
+            
+        case INTENT_RESULT_CODE_CAMERA_PICKER:
+            // This is the standard resultCode that is sent back if the
+            // activity crashed or didn't doesn't supply an explicit result.
+            if (resultCode == RESULT_CANCELED){
+    			Toast.makeText(getApplicationContext(), 
+    					R.string.txt_camera_picker_noop
+    					, Toast.LENGTH_LONG).show();
+            } 
+            else {
+            	Bundle extras = data.getExtras();
+                CamerasTab.CURRENT_CAMERA_URL = extras.getString("selected_camera");
+    			
+    			// Reload the webview so it just shows the chosen camera
+				reloadViews();
+				
+    			// Set the chosen camera in the persistent settings
+    	    	SharedPreferences prefs 
+    				= getSharedPreferences(Config.NAMESPACE, Activity.MODE_PRIVATE);
+    			    SharedPreferences.Editor editor = prefs.edit();
+    			    editor.putString("session_camera_1", CamerasTab.CURRENT_CAMERA_URL);
+    			    editor.commit();
+            }
+            break;
+            
+        case INTENT_RESULT_CODE_PREFS:
+			Toast.makeText(getApplicationContext(), 
+					R.string.txt_prefs_saved
+					, Toast.LENGTH_LONG).show();
+			break;
+        	
+	        default:
+	            break;
+	    }
+	}
+
+
+    
+    protected void setCurrentRadios() {
+        // Log.d(TAG, "setCurrentRadios");
+
+    	// Set Global with current prefs
+    	// If this namespace path doesn't end in '_preferences' this won't work.
+    	mySharedPreferences = getSharedPreferences(Config.NAMESPACE + "_preferences", 0);
+
+		String wr_saved = getApplicationContext().getResources().getString(R.string.pref_weather_radios_selected);
+		Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER] = Integer.parseInt(mySharedPreferences
+	      .getString(wr_saved, Integer.toString(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER])));
+
+		String pr_saved = getApplicationContext().getResources().getString(R.string.pref_police_radios_selected);
+		Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE] = Integer.parseInt(mySharedPreferences
+	      .getString(pr_saved, Integer.toString(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE])));
+    }
+    
+	public void setCurrentTabStyle() {
+        // Log.d(TAG, "setCurrentTabStyle");
+
+		MapsTab.setInactive(ivMaps);
+		AlertsTab.setInactive(ivAlerts);
+		CamerasTab.setInactive(ivCameras);
+		
+		switch (CURRENT_VIEW_INDEX) {
+			case MENU_TRAFFIC:
+				MapsTab.setActive(ivMaps);
+				break;
+		    case MENU_ALERTS:
+				AlertsTab.setActive(ivAlerts);
+		    	break;
+		    case MENU_CAMERAS:
+				CamerasTab.setActive(ivCameras);
+		    	break;
 		}
-	
-		public void onNothingSelected(AdapterView parent) {
-		  // Do nothing.
+	}
+
+	public void setMainWebView(int view_index) {
+        // Log.d(TAG, "setMainWebview");
+
+		CURRENT_VIEW_INDEX = view_index;
+		setCurrentView(CURRENT_VIEW_INDEX);
+        
+        MapsTab.hideConfiguration(ivMapMore, tvMapsPop);
+        AlertsTab.hideConfiguration(ivAlertMore, tvAlertsPop);
+        CamerasTab.hideConfiguration(ivCameraMore, tvCamerasPop);
+        
+        setCurrentTabStyle();
+		switch (CURRENT_VIEW_INDEX) {
+			case MENU_TRAFFIC:
+				CURRENT_VIEW_INDEX = INDEX_TRAFFIC;
+		        MapsTab.showConfiguration(ivMapMore, tvMapsPop);
+				break;
+		    case MENU_ALERTS:
+		        CURRENT_VIEW_INDEX = INDEX_ALERTS;
+		        AlertsTab.showConfiguration(ivAlertMore, tvAlertsPop);
+		    	break;
+		    case MENU_CAMERAS:
+		        CURRENT_VIEW_INDEX = INDEX_CAMERAS;
+		        CamerasTab.showConfiguration(ivCameraMore, tvCamerasPop);
+		        break;
 		}
+
+		wvMain.loadUrl("javascript: jumpTo('"+CURRENT_VIEW_INDEX+"')");
 	}
 	
 	private class MyWebViewClient extends WebViewClient {
@@ -323,10 +467,14 @@ public class TCT extends Activity {
 
 		@Override
 		public boolean shouldOverrideUrlLoading(WebView view, String url) {
+	        // Log.d(TAG, "mywebviewclient::shouldoverrideurlloading");
+
 			view.loadUrl(url);
 			return true;
 		}
 		public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+	        // Log.d(TAG, "mywebviewclient::onrecievederror");
+
 			Toast.makeText(activity, "Oh no! " + description, Toast.LENGTH_SHORT).show();
 		}
 	}
@@ -334,80 +482,37 @@ public class TCT extends Activity {
 	final class MyWebChromeClient extends WebViewClient {
         // @Override
         public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
+            // Log.d(TAG, "MyWebChromeClient::onjsalert");
+
             result.confirm();
             return true;
         }
         // Javascript in webview can call colsole.log('the message') to log messages.
 		public void onConsoleMessage(String message, int lineNumber, String sourceID) {
-			Log.d("tct application", message + " -- From line " + lineNumber + " of " + sourceID);
+			// Log.d(TAG, message + " -- From line " + lineNumber + " of " + sourceID);
 		}
 	}
     
     final class JsiJavaScriptInterface {
+
 		Activity activity;
     	JsiJavaScriptInterface(Activity a) { activity = a; }
 
-        /**
-         * 
-         * @param camnum quick view camera number
-         * @param camid id used in URI paths
-         */
-        public void setChosenCamera(int camnum, int camid) {
-        	
-			Toast.makeText(getApplicationContext(), "Loading new camera...", Toast.LENGTH_LONG).show();
-
-			// Set the current camera
-			CURRENT_VIEW_INDEX = INDEX_CAMERAS;
-			PREF_CAMERA_1 = camid;
-			
-			// Reload the webview so it just shows the chosen camera
-	    	wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_VIEW_INDEX+"&camera="+PREF_CAMERA_1);
-	    	
-			// Set the chosen camera in the persistent settings
-	    	SharedPreferences prefs 
-				= getSharedPreferences(NAMESPACE, Activity.MODE_PRIVATE);
-			    SharedPreferences.Editor editor = prefs.edit();
-			    editor.putInt("pref_camera_1", PREF_CAMERA_1);
-			    editor.commit();
-
-			// FIXME - verify this doesn't need to be posted as a runnable.
-	    	
-        	// Post a runnable
-            //mHandler.post(new Runnable() {
-            //    public void run() {
-            //    	spinner.setSelection(0);
-            //    }
-            //});
-        }
-        
-        
-        public void chooseCamera(int oldcamid) {
-        	
-			Toast.makeText(getApplicationContext(), "Loading camera settings...", Toast.LENGTH_LONG).show();
-
-			CURRENT_VIEW_INDEX = INDEX_CAMERAS;
-			
-			// Reload the webview, currently viewing camera so just call again 
-			//  and leave camera emtpy
-	    	wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_VIEW_INDEX);
-	    	
-	    	// FIXME - verify this doesn't need to be posted as a runnable.
-	    	
-        	// Post a runnable
-            //mHandler.post(new Runnable() {
-            //    public void run() {
-            //    	spinner.setSelection(0);
-            //    }
-            //});
-        }
-        
-        
-    } 
-
+    	public void setLoadedTab(int loadedIndex) {
+    		// This can't set current tab for the following reason:
+    		//  android.view.ViewRoot$CalledFromWrongThreadException: 
+    		//  Only the original thread that created a view hierarchy 
+    		//  can touch its views.
+    		//
+    		// setMainWebView(loadedIndex); 
+    	}	
+    }
 	
 	/* Creates the menu items */
 	public boolean onCreateOptionsMenu(Menu menu) {
 		
+        // Log.d(TAG, "onCreateOptionsMenu");
+
 	    MenuInflater inflater = getMenuInflater();
 	    inflater.inflate(R.menu.options, menu);
 	    
@@ -416,106 +521,153 @@ public class TCT extends Activity {
 	
 	/* Handles item selections */
 	public boolean onOptionsItemSelected(MenuItem item) {
+		
+        // Log.d(TAG, "onOptionsItemSelected:" + Integer.toString(item.getItemId()));
+		
 		switch (item.getItemId()) {
 			case R.id.menu_scanner_police:
-				launchScanner(SCAN_NODE_POLICE);
+				setCurrentRadios();
+				launchScanner(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE]);
 		    	return true;
 	
 			case R.id.menu_scanner_weather:
-				launchScanner(SCAN_NODE_WEATHER2);
+				setCurrentRadios();
+				launchScanner(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER]);
 		    	return true;
 				
 			case R.id.menu_refresh:
 				refreshViews();
 				return true;
-			        
-	//		    case MENU_MNDOT_MOBILE_FREEWAYS:
-	//		    	setCurrentView(INDEX_CAMERAS);
-	//		    	// CURRENT_WEBVIEW_URL = MNDOT_MOBILE_URL;
-	//		    	// CURRENT_VIEW_INDEX  = INDEX_CAMERAS;
-	//		    	wvMain.loadUrl(VIEW_URLS[INDEX_CAMERAS]);
-	//	    		return true;
-	//		        
-	//		    case MENU_PREFS:
-	//		    	//Toast.makeText(getApplicationContext(), "Prefs", Toast.LENGTH_SHORT).show();
-	//		    	Intent intent = new Intent()
-	//		    		.setClass(this, com.osilabs.android.apps.Prefs.class);
-	//		    	this.startActivityForResult(intent, 0);
-	//		    	return true;
-	
-				case R.id.menu_help:
-					
-			        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-			        alertDialog.setTitle("Twin Cities Traffic");
-			        alertDialog.setMessage("You are running version " + pInfo.versionName);
-			        alertDialog.setButton("More...", new DialogInterface.OnClickListener() {
-			        	public void onClick(DialogInterface dialog, int which) {
-			        		Intent mIntent = new Intent(Intent.ACTION_VIEW, 
-			        				Uri.parse(MOBILECONTENT_URL_ABOUT)); 
-	        				startActivity(mIntent); 
-			            } 
-			        });
-			        alertDialog.setIcon(R.drawable.ic_launcher);
-			        alertDialog.show();
-			    	return true;
-	
-			    case R.id.menu_exit:
-			        finish();
-			        return true;
+				
+		    case R.id.menu_prefs:
+		    	Intent intent = new Intent();
+				intent.setClassName(this, Config.NAMESPACE + ".Prefs");
+		    	this.startActivityForResult(intent, INTENT_RESULT_CODE_PREFS);
+		    	return true;
+
+		    case R.id.menu_help:
+		    	String phoneinfo = 
+		    		getApplicationContext().getResources().getString(R.string.app_name ) + 
+		    		" v" + pInfo.versionName + ", " +
+		    		Build.MANUFACTURER + ", " +
+	    			Build.MODEL + ", " +
+	    			Build.BRAND + ", " +
+	    			Build.DEVICE + ", " +
+	    			Build.DISPLAY + ", " +
+	    			Build.FINGERPRINT + ", " +
+	    			Build.PRODUCT + ", " +
+	    			Build.VERSION.RELEASE;
+        		Intent mIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Config.MOBILECONTENT_URL_HELP + "?phoneinfo=" + URLEncoder.encode(phoneinfo))); 
+				startActivity(mIntent); 
+		    	return true;
+
+		    case R.id.menu_about:
+		        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+		        alertDialog.setTitle(R.string.app_name);
+		        alertDialog.setMessage(getApplicationContext().getResources().getString(R.string.txt_version) + " " + pInfo.versionName);
+		        alertDialog.setButton(this.getResources().getString(R.string.txt_btn_more), new DialogInterface.OnClickListener() {
+		        	public void onClick(DialogInterface dialog, int which) {
+		        		Intent mIntent = new Intent(Intent.ACTION_VIEW, 
+		        				Uri.parse(Config.MOBILECONTENT_URL_ABOUT)); 
+        				startActivity(mIntent); 
+		            } 
+		        });
+		        alertDialog.setIcon(R.drawable.ic_launcher);
+		        alertDialog.show();
+		    	return true;
+
+		    case R.id.menu_exit:
+		        finish();
+		        return true;
 	    }
 		
 	    return false;
 	}
 	
 	public boolean setCurrentView(int viewIndex) {
-		// Save Settings
-        //Toast.makeText(getApplicationContext(), "set cur view: " + viewIndex, Toast.LENGTH_SHORT).show();
-    	SharedPreferences prefs 
-			= getSharedPreferences(NAMESPACE, Activity.MODE_PRIVATE);
-	    SharedPreferences.Editor editor = prefs.edit();
-	    editor.putInt("pref_current_view", viewIndex);
-	    editor.commit();
+        // Log.d(TAG, "setCurrentView");
 
-	    // Set text of spinner
-		tvSpinner = (TextView) findViewById(R.id.view_spinner);
-		tvSpinner.setText(INDEX_STRINGS[ viewIndex ]);
+		// Save Settings
+    	SharedPreferences prefs 
+			= getSharedPreferences(Config.NAMESPACE, Activity.MODE_PRIVATE);
+	    SharedPreferences.Editor editor = prefs.edit();
+	    editor.putInt("session_current_view", viewIndex);
+	    editor.commit();
 
 	    return true;
 	}
 	
 	public void refreshViews() {
-		Toast.makeText(getApplicationContext(), "Refreshing", Toast.LENGTH_SHORT).show();
+        // Log.d(TAG, "refreshViews");
+
+		Toast.makeText(getApplicationContext(), R.string.txt_refreshing, Toast.LENGTH_SHORT).show();
+		reloadViews();
+	}
+	
+	public void reloadViews() {
+		// Log.d(TAG, "reloadViews()");
+		
 		// Refresh main content webview
-		wvMain.loadUrl(CURRENT_WEBVIEW_URL+"?target="+CURRENT_VIEW_INDEX+"&camera="+PREF_CAMERA_1);
+		wvMain.loadUrl(WEBVIEW_URL
+						+ "?target=" + CURRENT_VIEW_INDEX
+						+ MapsTab.getReloadURLParts()
+						+ AlertsTab.getReloadURLParts()
+						+ CamerasTab.getReloadURLParts());
+		
 		// Refresh banner webview
 		wvAd.loadUrl(AD_BANNER_URL);
 	}
 	
+	
+	//
+	// Scanner Radio stuff
+	// 
+	
+	// I tried moving it to it's own class but need to watch for having pass
+	//  context and creating memory leaks. see"
+	// http://developer.android.com/resources/articles/avoiding-memory-leaks.html
+	
+	public static final String SCANNER_RADIO_NAMESPACE = "net.gordonedwards.scannerradio";
+	public static final String SCANNER_RADIO_ACTION = "ACTION_PLAY_SCANNER";
+	
+	public static boolean isIntentAvailable(Context context, String action) {
+	    final PackageManager packageManager = context.getPackageManager();
+	    final Intent intent = new Intent(action);
+	    List<ResolveInfo> list =
+	        packageManager.queryIntentActivities(intent,
+	                PackageManager.MATCH_DEFAULT_ONLY);
+	    return list.size() > 0;
+	}
+	
 	public void launchScanner(int which_scanner) {
-		boolean scannerAvailable = isIntentAvailable(TCT.this,
+		// Log.d(TAG, "Scanner node: " + Integer.toString(which_scanner));
+		
+		boolean scannerAvailable = isIntentAvailable(this,
 				SCANNER_RADIO_NAMESPACE + ".intent.action." + SCANNER_RADIO_ACTION);
 
+		// FIXME - put these strings in file and move this to own scanner radio class
+		
 		if (scannerAvailable) {
 			Intent intent = new Intent(SCANNER_RADIO_NAMESPACE + ".intent.action." + SCANNER_RADIO_ACTION);
-			intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			intent.putExtra("node", which_scanner);
 			startActivity(intent);
 		} else {
-		    AlertDialog scannerAlert = new AlertDialog.Builder(TCT.this).create();
+		    AlertDialog scannerAlert = new AlertDialog.Builder(this).create();
 	        scannerAlert.setTitle(R.string.app_name);
 	        scannerAlert.setMessage("To use this feature, install the \"Scanner Radio\" app from the market");
-	        scannerAlert.setIcon(R.drawable.ic_launcher);
+	        scannerAlert.setIcon(R.drawable.ic_launcher); 
 	        scannerAlert.setButton("Get the plugin", new DialogInterface.OnClickListener() {
 	        	public void onClick(DialogInterface dialog, int which) {
 	    			Intent intent = new Intent(
 	    					Intent.ACTION_VIEW,
 	    					Uri.parse("market://details?id=com.scannerradio"));
-	    			intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
+	    			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 	    			startActivity(intent);
 	            } 
 	        });
 	        scannerAlert.show();
 		}
-
 	}
+
 }
