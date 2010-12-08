@@ -2,7 +2,7 @@ package com.osilabs.android.apps;
 
 public final class Config {
 	public static final    String DEFAULT_CAMERA_URL = "http://images.wsdot.wa.gov/rweather/medium_KMMountain.jpg";
-	public static final int       DEFAULT_MAP_INDEX = 3;
+	public static final int       DEFAULT_MAP_INDEX = 0; // !!! Can't be above array size-1
 	public static final int       DEFAULT_ALERT_INDEX = 0;
 	public static final boolean   NO_ADS = false; // True will hide the ads
 	protected static       String MOBILECONTENT_URL_PREFIX = "http://osilabs.com/m/mobilecontent/tctraffic";
@@ -20,69 +20,34 @@ public final class Config {
 	
 	// Maps
 	public static final String[] maps = {
-		"Full Traffic Map",
-		"North of Seattle",
-		"North of Seattle (sm)",
-		"Bridges",
-		"Bridges (sm)",
-		"South of Seattle",
-		"South of Seattle (sm)",
-		"Weather: Road Temperatures",
-		"Weather: Weather Radar",
-		"Weather: Sattelite",
-		"Ferries: Mukilteo/Clinton",
-		"Ferries: Edmonds/Kingston",
-		"Ferries: Seattle/Bainbridge",
-		"Ferries: Seattle",
-		"Ferries: Fauntleroy/Vashon/Southworth",
-
+		"Traffic",
+		"Traffic 2",
+		"Traffic 3"
 	};
+	
 	// uri|width|height|scrollx|scrolly - Later these can be programmatically defined 
 	//  for changes in orientation and screens
 	public static final String[] maps_urls = {
-		"http://images.wsdot.wa.gov/nwflow/flowmaps/video_map_SeattleMetro.gif|100%||||", //full
-		"http://images.wsdot.wa.gov/nwflow/flowmaps/north.gif|100%||||", // north
-		"http://images.wsdot.wa.gov/nwflow/flowmaps/smallnorth.gif|100%||||", // north sm
-		"http://images.wsdot.wa.gov/nwflow/flowmaps/bridges.gif|150%||||", // bridges
-		"http://images.wsdot.wa.gov/nwflow/flowmaps/smallbridges.gif|120%||||", // bridges sm
-		"http://images.wsdot.wa.gov/nwflow/flowmaps/south.gif|150%||||", // south
-		"http://images.wsdot.wa.gov/nwflow/flowmaps/smallsouth.gif|100%||||", // south sm
-		"http://images.wsdot.wa.gov/rweather/roadtemps/l2psm06.gif|100%||||",
-		"http://sat.wrh.noaa.gov/satellite/2km/Spokane/IR2OTX.GIF|100%||||", // radar
-		"http://sat.wrh.noaa.gov/satellite/1km/Seattle/VIS1SEA.GIF|100%||||",
-		"http://www.wsdot.wa.gov/ferries/vesselwatch/mobileimage.ashx?bbox=-122.393811,47.934308,-122.261631,47.993389&size=S"
-			+ "|120%||||The arrows and zoom icons are part of the image and do not function.",
-		"http://www.wsdot.wa.gov/ferries/vesselwatch/mobileimage.ashx?bbox=-122.570897,47.743797,-122.306539,47.862327&size=S"
-			+ "|110%||||The arrows and zoom icons are part of the image and do not function.",
-		"http://www.wsdot.wa.gov/ferries/vesselwatch/mobileimage.ashx?bbox=-122.569428,47.540795,-122.30507,47.659787&size=S"
-			+ "|110%||||The arrows and zoom icons are part of the image and do not function.",
-		"http://www.wsdot.wa.gov/ferries/vesselwatch/mobileimage.ashx?bbox=-122.744867,47.445918,-122.216149,47.684062&size=S"
-			+ "|150%||||The arrows and zoom icons are part of the image and do not function.",
-		"http://www.wsdot.wa.gov/ferries/vesselwatch/mobileimage.ashx?bbox=-122.51691,47.483819,-122.38473,47.543414&size=S"
-			+ "|120%||||The arrows and zoom icons are part of the image and do not function.",
+		"http://www.dot.state.mn.us/tmc/trafficinfo/map/d_map.png|100%||||",
+		"http://www.dot.state.mn.us/tmc/trafficinfo/map/d_map_alt.png|100%||||",
+		"http://www.511mn.org/primary/images/all/TC_Metro.gif|100%||||"
 	};
 
 	// Alerts
 	public static final String[] alerts = {
-		"Weather",
-		"Weather Alerts",
-		"Road Alerts",
-		"Blewett pass",
-		"Satus pass",
-		"Snoqualmie pass",
-		"Stevens pass",
-		"White pass"
+		"Alerts",
+		"Events",
+		"Weather 1",
+		"Weather 2",
+		"Weather 3"
 	};
 	// Second param can be 'titleonly'
 	public static final String[] alerts_src = {
-		"http://rss.weather.com/weather/rss/local/USWA0395?cm_ven=LWO&cm_cat=rss&par=LWO_rss|",
-		"http://www.weather.gov/alerts/wa.rss|titleonly",
-		"http://gismaps.kingcounty.gov/roadalert/rss.aspx|",
-		"http://www.wsdot.wa.gov/traffic/passes/blewett/rss/|",
-		"http://www.wsdot.wa.gov/traffic/passes/satus/rss/|",
-		"http://www.wsdot.wa.gov/traffic/passes/snoqualmie/rss/|",
-		"http://www.wsdot.wa.gov/traffic/passes/stevens/rss/|",
-		"http://www.wsdot.wa.gov/traffic/passes/white/rss/|"
+		"http://www.dot.state.mn.us/tmc/trafficinfo/incidents.xml|",
+		"http://www.citypages.com/syndication/events/|",
+		"http://rss.accuweather.com/rss/liveweather_rss.asp?metric=0&locCode=55401|",
+		"http://rss.weather.com/weather/rss/local/USMN0503?cm_ven=LWO&cm_cat=rss&par=LWO_rss|",
+		"http://feeds.weatherbug.com/rss.aspx?zipcode=55401&feed=currtxt,fcsttxt&zcode=z4641|"
 	};
 	
 

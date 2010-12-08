@@ -19,6 +19,10 @@ public class MapsTab {
 		return Config.maps[CURRENT_INDEX];
 	}
 	public static String getReloadURLParts() {
+		// Verify the index exists before trying to use it. This can happen if url's are
+		//  removed and the prefs save an index above the max.
+		
+		
 		return	"&map=" + URLEncoder.encode(Config.maps_urls[CURRENT_INDEX]);
 	}
 	public static void setActive(ImageView ivTraffic) {
