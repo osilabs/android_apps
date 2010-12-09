@@ -5,11 +5,11 @@
 	<!--	~~~~~~~~~~~~~ -->
 	<!--	CONFIGURE HERE-->
 	<!--	~~~~~~~~~~~~~ -->
-    <string name="app_name">Seattle Traffic</string>
-    <string name="city_name">Seattle</string>
-    <string name="pref_police_radios_default">22577</string> <!-- FIXME - These need to go -->
-    <string name="pref_weather_radios_default">11568</string>
-    <string name="session_camera_1">http://images.wsdot.wa.gov/rweather/medium_KMMountain.jpg</string>
+    <string name="app_name">Twin Cities Traffic</string>
+    <string name="city_name">Twin Cities</string>
+    <string name="pref_police_radios_default">24429</string> <!-- FIXME - These need to go -->
+    <string name="pref_weather_radios_default">24761</string>
+    <string name="session_camera_1">http://osilabs.com/m/mobilecontent/tctraffic5/trafficmap.php?target=4&amp;camera=832</string>
     <string name="session_map">0</string>
     <string name="session_alert">0</string>
     <string name="pref_police_radios_dialog_title">Set Favorite Police Scanner</string>

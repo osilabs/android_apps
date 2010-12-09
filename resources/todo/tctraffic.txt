@@ -1,12 +1,19 @@
 // Release 0.6
 
-* Add hepatic feedback
+* Radios defaulting to spokane -- This seems fixed now.
 
-* Use a more standard "Refresh" icon
+* Clear out all data and it starts on the camera tab and no camera shows up.
+
+* Set zoom level on maps
+
+
+
+// Release 0.7
+
+* Add hepatic feedback
 
 * When the "Oh No, the internet connectin ..." message comes up, instead, give a big retry icon and tell them to try again when they are near a connection.
 
-* Feedback tool
 // FIXME - check if intent exists
 Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
 emailIntent .setType("plain/text");

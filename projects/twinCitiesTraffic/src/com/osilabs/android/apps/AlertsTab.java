@@ -9,16 +9,18 @@ import android.widget.TextView;
 public class AlertsTab {
 	// FIXME - these are duplicated in the main class
 	public    static final int    ALPHA_ON  = 0xFFFF;
-	public    static final int    ALPHA_OFF = 0xFF66;
+	public    static final int    ALPHA_OFF = 0xFF55;
 	public    static final int    TAB_ACTIVE_COLOR = 0xFF00FF00;
 
 	// If never set, is set to first map.
 	public    static       int    CURRENT_INDEX = 0;
 	
 	public static String getActiveMapURL() {
+		if (CURRENT_INDEX > (Config.alerts.length - 1)) CURRENT_INDEX = 0;
 		return Config.alerts[CURRENT_INDEX];
 	}
 	public static String getReloadURLParts() {
+		if (CURRENT_INDEX > (Config.alerts_src.length - 1)) CURRENT_INDEX = 0;
 		return	"&alert=" + URLEncoder.encode(Config.alerts_src[CURRENT_INDEX]);
 	}
 	public static void setActive(ImageView ivAlerts) {

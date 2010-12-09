@@ -16,13 +16,11 @@ public class MapsTab {
 	public    static int    	  CURRENT_INDEX = 0;
 	
 	public static String getActiveMapURL() {
+		if (CURRENT_INDEX > (Config.maps.length - 1)) CURRENT_INDEX = 0;
 		return Config.maps[CURRENT_INDEX];
 	}
 	public static String getReloadURLParts() {
-		// Verify the index exists before trying to use it. This can happen if url's are
-		//  removed and the prefs save an index above the max.
-		
-		
+		if (CURRENT_INDEX > (Config.maps_urls.length - 1)) CURRENT_INDEX = 0;
 		return	"&map=" + URLEncoder.encode(Config.maps_urls[CURRENT_INDEX]);
 	}
 	public static void setActive(ImageView ivTraffic) {
