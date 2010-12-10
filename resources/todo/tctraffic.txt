@@ -1,12 +1,10 @@
 // Release 0.6
 
-* Radios defaulting to spokane -- This seems fixed now.
-
 * Clear out all data and it starts on the camera tab and no camera shows up.
 
-* Set zoom level on maps
+* Get rid of defaults in strings.xml. put in config.
 
-
+* Wire up help and about.
 
 // Release 0.7
 

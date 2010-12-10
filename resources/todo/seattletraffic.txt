@@ -1,4 +1,6 @@
 >> STM <<
+* Switch to same weather feed as tc traffic.  weather bug.
+
 
 >> TASKS <<
 

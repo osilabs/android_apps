@@ -433,6 +433,9 @@ public class TCT extends Activity {
 
 	public void setMainWebView(int view_index) {
         // Log.d(TAG, "setMainWebview");
+		
+		String scrollx = "0";
+		String scrolly = "0";
 
 		CURRENT_VIEW_INDEX = view_index;
 		setCurrentView(CURRENT_VIEW_INDEX);
@@ -446,20 +449,65 @@ public class TCT extends Activity {
 			case MENU_TRAFFIC:
 				CURRENT_VIEW_INDEX = INDEX_TRAFFIC;
 		        MapsTab.showConfiguration(ivMapMore, tvMapsPop);
+		        scrollx = MapsTab.getScrollX();
+		        scrolly = MapsTab.getScrollY();
 				break;
 		    case MENU_ALERTS:
 		        CURRENT_VIEW_INDEX = INDEX_ALERTS;
 		        AlertsTab.showConfiguration(ivAlertMore, tvAlertsPop);
+//		        scrollx = AlertsTab.getScrollX();
+//		        scrolly = AlertsTab.getScrollY();
 		    	break;
 		    case MENU_CAMERAS:
 		        CURRENT_VIEW_INDEX = INDEX_CAMERAS;
 		        CamerasTab.showConfiguration(ivCameraMore, tvCamerasPop);
+//		        scrollx = CamerasTab.getScrollX();
+//		        scrolly = CamerasTab.getScrollY();
 		        break;
 		}
 
-		wvMain.loadUrl("javascript: jumpTo('"+CURRENT_VIEW_INDEX+"')");
+		wvMain.loadUrl("javascript: jumpTo("	+ CURRENT_VIEW_INDEX
+												+ ","
+												+ scrollx
+												+ ","
+												+ scrolly
+												+ ")");
 	}
 	
+	public boolean setCurrentView(int viewIndex) {
+        // Log.d(TAG, "setCurrentView");
+
+		// Save Settings
+    	SharedPreferences prefs 
+			= getSharedPreferences(Config.NAMESPACE, Activity.MODE_PRIVATE);
+	    SharedPreferences.Editor editor = prefs.edit();
+	    editor.putInt("session_current_view", viewIndex);
+	    editor.commit();
+
+	    return true;
+	}
+	
+	public void refreshViews() {
+        // Log.d(TAG, "refreshViews");
+
+		Toast.makeText(getApplicationContext(), R.string.txt_refreshing, Toast.LENGTH_SHORT).show();
+		reloadViews();
+	}
+	
+	public void reloadViews() {
+		// Log.d(TAG, "reloadViews()");
+		
+		// Refresh main content webview
+		wvMain.loadUrl(WEBVIEW_URL
+						+ "?target=" + CURRENT_VIEW_INDEX
+						+ MapsTab.getReloadURLParts()
+						+ AlertsTab.getReloadURLParts()
+						+ CamerasTab.getReloadURLParts());
+		
+		// Refresh banner webview
+		wvAd.loadUrl(AD_BANNER_URL);
+	}
+
 	private class MyWebViewClient extends WebViewClient {
 		Activity activity;
 		public MyWebViewClient(Activity a) { activity = a; }
@@ -583,39 +631,6 @@ public class TCT extends Activity {
 	    return false;
 	}
 	
-	public boolean setCurrentView(int viewIndex) {
-        // Log.d(TAG, "setCurrentView");
-
-		// Save Settings
-    	SharedPreferences prefs 
-			= getSharedPreferences(Config.NAMESPACE, Activity.MODE_PRIVATE);
-	    SharedPreferences.Editor editor = prefs.edit();
-	    editor.putInt("session_current_view", viewIndex);
-	    editor.commit();
-
-	    return true;
-	}
-	
-	public void refreshViews() {
-        // Log.d(TAG, "refreshViews");
-
-		Toast.makeText(getApplicationContext(), R.string.txt_refreshing, Toast.LENGTH_SHORT).show();
-		reloadViews();
-	}
-	
-	public void reloadViews() {
-		// Log.d(TAG, "reloadViews()");
-		
-		// Refresh main content webview
-		wvMain.loadUrl(WEBVIEW_URL
-						+ "?target=" + CURRENT_VIEW_INDEX
-						+ MapsTab.getReloadURLParts()
-						+ AlertsTab.getReloadURLParts()
-						+ CamerasTab.getReloadURLParts());
-		
-		// Refresh banner webview
-		wvAd.loadUrl(AD_BANNER_URL);
-	}
 	
 	
 	//

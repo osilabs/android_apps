@@ -20,17 +20,19 @@ public final class Config {
 	
 	// Maps
 	public static final String[] maps = {
-		"Traffic",
-		"Traffic 2",
-		"Traffic 3"
+		"Color Traffic Map",
+		"Hi-Contrast Traffic map",
+		"Alternate Map"
 	};
 	
 	// uri|width|height|scrollx|scrolly - Later these can be programmatically defined 
 	//  for changes in orientation and screens
 	public static final String[] maps_urls = {
-		"http://www.dot.state.mn.us/tmc/trafficinfo/map/d_map.png|100%||||",
-		"http://www.dot.state.mn.us/tmc/trafficinfo/map/d_map_alt.png|100%||||",
-		"http://www.511mn.org/primary/images/all/TC_Metro.gif|100%||||"
+		// Must not use '|' it won't work with javas split(). Must also have
+		//  a space for missing chars.
+		"http://www.dot.state.mn.us/tmc/trafficinfo/map/d_map.png~500~ ~55~145",
+		"http://www.dot.state.mn.us/tmc/trafficinfo/map/d_map_alt.png~500~ ~55~70",
+		"http://www.511mn.org/primary/images/all/TC_Metro.gif~ ~ ~260~105"
 	};
 
 	// Alerts
@@ -39,11 +41,11 @@ public final class Config {
 	public static final String[] alerts = {
 		"Alerts",
 		"Events",
-		"Weather 3"
+		"Weather"
 	};
 	// Second param can be 'titleonly'
 	public static final String[] alerts_src = {
-		"http://www.dot.state.mn.us/tmc/trafficinfo/incidents.xml|",
+		"http://www.dot.state.mn.us/tmc/trafficinfo/incidents.rss|",
 		"http://www.citypages.com/syndication/events/|",
 		"http://feeds.weatherbug.com/rss.aspx?zipcode=55401&feed=currtxt,fcsttxt&zcode=z4641|"
 	};
