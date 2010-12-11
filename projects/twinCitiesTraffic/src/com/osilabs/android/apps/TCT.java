@@ -515,8 +515,22 @@ public class TCT extends Activity {
 		@Override
 		public boolean shouldOverrideUrlLoading(WebView view, String url) {
 	        // Log.d(TAG, "mywebviewclient::shouldoverrideurlloading");
-
-			view.loadUrl(url);
+			
+			// 0=in webview, 1=in system browser
+			int launchmode = 1;
+			
+			switch ( launchmode ) {
+				case 0:
+					view.loadUrl(url);
+					break;
+					
+				case 1:
+					Intent i = new Intent(Intent.ACTION_VIEW);
+					i.setData(Uri.parse(url));
+					startActivity(i);
+					break;
+			}
+			
 			return true;
 		}
 		public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {

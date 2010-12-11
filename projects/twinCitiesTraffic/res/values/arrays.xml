@@ -2,10 +2,10 @@
 <resources>
 
 <string-array name="pref_police_radios">
-	<item>Anoka Ramsey Hennepin and Washington Co. Sherrif and fire</item>
-	<item>Hennepin Scott Carver Dakota and Anoka Co fire and state police</item>
-	<item>Minneapolis St. Paul police fire and EMS</item>
-	<item>St. Paul police and fire and Ramsey Co. sheriff</item>
+	<item>Anka Rmsy Hnpn &amp; Wshtn sheriff &amp; fire</item>
+	<item>Hnpn Scot Crvr Dkta &amp; Anka fire &amp; police</item>
+	<item>Minneapolis St. Paul police fire &amp; EMS</item>
+	<item>St. Paul police &amp; fire &amp; Ramsey sheriff</item>
 </string-array> 
 <string-array name="pref_police_radios_values">
 	<item>22115</item> 

@@ -9,8 +9,9 @@
 	- comment out logging code
 	- put nice toast messages in exception handlers
 4. Screenshots
-	- wvAd.setVisibility(View.GONE);
-	- When done w screenshots, comment line out.
+	- Config.no_ads = true;
+	- Take screen shots
+	- Config.no_ads = false;
 5. compile "export" live version of apk
 	- name: theappname-0.2-prod.apk
 	- verify works on phone

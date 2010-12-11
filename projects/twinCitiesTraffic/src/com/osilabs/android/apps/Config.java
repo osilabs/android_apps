@@ -43,11 +43,11 @@ public final class Config {
 		"Events",
 		"Weather"
 	};
-	// Second param can be 'titleonly'
+	// Second param can be 'uri|(titleonly)|(link)'
 	public static final String[] alerts_src = {
-		"http://www.dot.state.mn.us/tmc/trafficinfo/incidents.rss|",
-		"http://www.citypages.com/syndication/events/|",
-		"http://feeds.weatherbug.com/rss.aspx?zipcode=55401&feed=currtxt,fcsttxt&zcode=z4641|"
+		"http://www.dot.state.mn.us/tmc/trafficinfo/incidents.rss||",
+		"http://www.citypages.com/syndication/events/||link",
+		"http://feeds.weatherbug.com/rss.aspx?zipcode=55401&feed=currtxt,fcsttxt&zcode=z4641||"
 	};
 	//"http://rss.accuweather.com/rss/liveweather_rss.asp?metric=0&locCode=55401|",
 	//"http://rss.weather.com/weather/rss/local/USMN0503?cm_ven=LWO&cm_cat=rss&par=LWO_rss|",
