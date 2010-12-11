@@ -1,3 +1,26 @@
+// Release 0.7
+
+* put gradient on navbars
+
+* popup to launch the radios that tells you how to back up back to tct and more info on radios not working
+
+* pinch zoom. put in free version, it helps.
+
+* Make scrollbar on webview so it shows while scrolling then hides when not, when looking at rss feeds.
+
+* Make shared help
+** Add icons and how to use em.
+** Explain how to add shortcut to desktop: Open the app drawer. Find TCT. Long press the icon. Drag to desktop. Let go.
+
+//-- Paid version --//
+
+* What the paid version has: 
+** Set a different favorite rss feed in place of city pages A list.
+** More weather data (make a second feed in the weather bug rss generator)
+
+
+
+
 // Release 0.6
 
 * Clear out all data and it starts on the camera tab and no camera shows up.
