@@ -1,0 +1,11 @@
+// See
+http://code.google.com/android/add-ons/google-apis/mapkey.html
+
+[dezurik@sofia keys]$ keytool -list -alias osilabs_key -keystore keystore 
+Enter keystore password:  
+osilabs_key, Oct 4, 2010, PrivateKeyEntry, 
+Certificate fingerprint (MD5): 49:EB:CA:1B:1D:28:A1:85:10:01:3E:69:48:FD:78:F8
+
+// Common keytool commands
+http://www.sslshopper.com/article-most-common-java-keytool-keystore-commands.html
+
