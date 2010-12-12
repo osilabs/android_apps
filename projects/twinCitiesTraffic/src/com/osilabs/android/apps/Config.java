@@ -22,26 +22,28 @@ public final class Config {
 	public static final String[] maps = {
 		"Color Traffic Map",
 		"Hi-Contrast Traffic map",
-		"Alternate Map"
+		"Alternate Map",
+		"Interactive Map"
 	};
 	
-	// uri|width|height|scrollx|scrolly - Later these can be programmatically defined 
+	// viewtype|uri|width|height|scrollx|scrolly - Later these can be programmatically defined 
 	//  for changes in orientation and screens
 	public static final String[] maps_urls = {
 		// Must not use '|' it won't work with javas split(). Must also have
 		//  a space for missing chars.
-		"http://www.dot.state.mn.us/tmc/trafficinfo/map/d_map.png~500~ ~55~145",
-		"http://www.dot.state.mn.us/tmc/trafficinfo/map/d_map_alt.png~500~ ~55~70",
-		"http://www.511mn.org/primary/images/all/TC_Metro.gif~ ~ ~260~105"
+		"web~http://www.dot.state.mn.us/tmc/trafficinfo/map/d_map.png~500~ ~55~145",
+		"web~http://www.dot.state.mn.us/tmc/trafficinfo/map/d_map_alt.png~500~ ~55~70",
+		"web~http://www.511mn.org/primary/images/all/TC_Metro.gif~ ~ ~260~105",
+		"map~trafficmap~ ~ ~ ~ "
 	};
 
 	// Alerts
 	// "Weather 1",
 	// "Weather 2",
 	public static final String[] alerts = {
-		"Alerts",
-		"Events",
-		"Weather"
+		"Driving Alerts",
+		"Events Today",
+		"Weather Report"
 	};
 	// Second param can be 'uri|(titleonly)|(link)'
 	public static final String[] alerts_src = {

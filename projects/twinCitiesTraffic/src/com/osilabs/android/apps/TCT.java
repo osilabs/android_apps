@@ -1,7 +1,15 @@
 package com.osilabs.android.apps;
 
+import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.List;
+import java.util.Locale;
+
+import com.google.android.maps.GeoPoint;
+import com.google.android.maps.MapActivity;
+import com.google.android.maps.MapController;
+import com.google.android.maps.MapView;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -13,7 +21,10 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.PorterDuff;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
+import android.opengl.Visibility;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,7 +42,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class TCT extends Activity {
+public class TCT extends MapActivity {
 
 	//
 	// Consts
@@ -85,7 +96,13 @@ public class TCT extends Activity {
 	// Misc icons
 	protected ImageView ivRefresh;
 	protected ImageView ivRadios;
-	
+
+	// Mapview stuff
+	protected static MapView mvMain;
+    protected static MapController mcMain;
+    protected static GeoPoint gpMain;
+    //protected static Geocoder gcMain;
+    
 	// Tints and paints
 	protected int color_tab;
 	
@@ -132,7 +149,7 @@ public class TCT extends Activity {
 	    ivMaps.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				setMainWebView(INDEX_TRAFFIC);
+				setViewForCurrentTab(INDEX_TRAFFIC);
 			}
 		});
 
@@ -143,7 +160,7 @@ public class TCT extends Activity {
 	    ivAlerts.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				setMainWebView(INDEX_ALERTS);
+				setViewForCurrentTab(INDEX_ALERTS);
 			}
 		});
 
@@ -152,7 +169,7 @@ public class TCT extends Activity {
 	    ivCameras.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				setMainWebView(INDEX_CAMERAS);
+				setViewForCurrentTab(INDEX_CAMERAS);
 			}
 		});
 
@@ -163,7 +180,7 @@ public class TCT extends Activity {
 	    ivRefresh.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//setMainWebView(CURRENT_VIEW_INDEX);
+				//setViewForCurrentTab(CURRENT_VIEW_INDEX);
 				refreshViews();
 			}
 		});
@@ -186,6 +203,7 @@ public class TCT extends Activity {
         wvMain.setWebChromeClient(new WebChromeClient());
         // Enable jsi
         wvMain.addJavascriptInterface(new JsiJavaScriptInterface(this), "jsi");
+    	wvMain.setVisibility(View.VISIBLE);
 
 		//
 		// Ad banner Web View
@@ -197,6 +215,32 @@ public class TCT extends Activity {
         if (Config.NO_ADS) {
         	wvAd.setVisibility(View.GONE);
         }
+        
+    	//
+    	// Main Map View
+    	//
+    	mvMain = (MapView) findViewById(R.id.mainMapView);
+    	mvMain.setBuiltInZoomControls(true);
+		mcMain = mvMain.getController();
+        //gcMain = new Geocoder(this, Locale.getDefault());    
+        Geocoder ass = new Geocoder(this, Locale.getDefault());    
+        try {
+        	// FIXME - move to config
+            List<Address> addresses = ass.getFromLocationName("Minneapolis, MN", 5);
+            if (addresses.size() > 0) {
+                gpMain = new GeoPoint(
+                        (int) (addresses.get(0).getLatitude() * 1E6), 
+                        (int) (addresses.get(0).getLongitude() * 1E6));
+                mcMain.animateTo(gpMain);
+                mcMain.setZoom(11);
+            	mvMain.setTraffic(true);
+                mvMain.invalidate();
+            }    
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    	mvMain.setVisibility(View.GONE);
+
 	    // -------------------------
 	    // Bottom Navigation Bar
 	    //
@@ -290,9 +334,18 @@ public class TCT extends Activity {
         // It's going to take a second to load
 		Toast.makeText(this, R.string.txt_loading, Toast.LENGTH_LONG).show();
 		
-    	setMainWebView(CURRENT_VIEW_INDEX);
+    	setViewForCurrentTab(CURRENT_VIEW_INDEX);
 		reloadViews();
     }
+
+    //
+    // Map View Methods
+    //
+	@Override
+	protected boolean isRouteDisplayed() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
     protected void launchCameraPicker() { 
         // Log.d(TAG, "launchCameraPicker");
@@ -411,8 +464,8 @@ public class TCT extends Activity {
 	      .getString(pr_saved, Integer.toString(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE])));
     }
     
-	public void setCurrentTabStyle() {
-        // Log.d(TAG, "setCurrentTabStyle");
+	public void colorTheCurrentTab() {
+        // Log.d(TAG, "colorTheCurrentTab");
 
 		MapsTab.setInactive(ivMaps);
 		AlertsTab.setInactive(ivAlerts);
@@ -431,8 +484,8 @@ public class TCT extends Activity {
 		}
 	}
 
-	public void setMainWebView(int view_index) {
-        // Log.d(TAG, "setMainWebview");
+	public void setViewForCurrentTab(int view_index) {
+        Log.d(TAG, "setViewForCurrentTab index" + Integer.toString(view_index));
 		
 		String scrollx = "0";
 		String scrolly = "0";
@@ -444,34 +497,52 @@ public class TCT extends Activity {
         AlertsTab.hideConfiguration(ivAlertMore, tvAlertsPop);
         CamerasTab.hideConfiguration(ivCameraMore, tvCamerasPop);
         
-        setCurrentTabStyle();
+        // Makes the current tab green
+        colorTheCurrentTab();
+        
 		switch (CURRENT_VIEW_INDEX) {
 			case MENU_TRAFFIC:
 				CURRENT_VIEW_INDEX = INDEX_TRAFFIC;
 		        MapsTab.showConfiguration(ivMapMore, tvMapsPop);
 		        scrollx = MapsTab.getScrollX();
 		        scrolly = MapsTab.getScrollY();
+		        
+		        String viewtype = MapsTab.getViewType();
+
+	    		//Toast.makeText(getApplicationContext(), "Traffic tab selected. type is: " + type, Toast.LENGTH_SHORT).show();
+		        //Log.e(TAG, "Type:" + );
+
+		        if (viewtype.equals("map")) {
+		        	// Show map
+		        	Log.e(TAG, "Map");
+		        	wvMain.setVisibility(View.GONE);
+		        	mvMain.setVisibility(View.VISIBLE);
+		    		Toast.makeText(getApplicationContext(), "map", Toast.LENGTH_SHORT).show();
+		        } else if (viewtype.equals("web")) {
+		        	// Show webview
+		        	Log.e(TAG, "Web");
+		    		Toast.makeText(getApplicationContext(), "web", Toast.LENGTH_SHORT).show();
+		        	mvMain.setVisibility(View.GONE);
+		        	wvMain.setVisibility(View.VISIBLE);
+					wvMain.loadUrl("javascript: jumpTo("+CURRENT_VIEW_INDEX+ "," +scrollx+ "," +scrolly+ ")");
+		        }
 				break;
 		    case MENU_ALERTS:
 		        CURRENT_VIEW_INDEX = INDEX_ALERTS;
 		        AlertsTab.showConfiguration(ivAlertMore, tvAlertsPop);
-//		        scrollx = AlertsTab.getScrollX();
-//		        scrolly = AlertsTab.getScrollY();
+	        	mvMain.setVisibility(View.GONE);
+	        	wvMain.setVisibility(View.VISIBLE);
+				wvMain.loadUrl("javascript: jumpTo("+CURRENT_VIEW_INDEX+ "," +scrollx+ "," +scrolly+ ")");
 		    	break;
 		    case MENU_CAMERAS:
 		        CURRENT_VIEW_INDEX = INDEX_CAMERAS;
 		        CamerasTab.showConfiguration(ivCameraMore, tvCamerasPop);
-//		        scrollx = CamerasTab.getScrollX();
-//		        scrolly = CamerasTab.getScrollY();
+	        	mvMain.setVisibility(View.GONE);
+	        	wvMain.setVisibility(View.VISIBLE);
+				wvMain.loadUrl("javascript: jumpTo("+CURRENT_VIEW_INDEX+ "," +scrollx+ "," +scrolly+ ")");
 		        break;
 		}
 
-		wvMain.loadUrl("javascript: jumpTo("	+ CURRENT_VIEW_INDEX
-												+ ","
-												+ scrollx
-												+ ","
-												+ scrolly
-												+ ")");
 	}
 	
 	public boolean setCurrentView(int viewIndex) {
@@ -507,6 +578,17 @@ public class TCT extends Activity {
 		// Refresh banner webview
 		wvAd.loadUrl(AD_BANNER_URL);
 	}
+
+    
+	
+	
+	
+	
+	
+	
+	// -----------------------------------------------
+    // Web browser
+    //
 
 	private class MyWebViewClient extends WebViewClient {
 		Activity activity;
@@ -565,11 +647,22 @@ public class TCT extends Activity {
     		//  Only the original thread that created a view hierarchy 
     		//  can touch its views.
     		//
-    		// setMainWebView(loadedIndex); 
+    		// setViewForCurrentTab(loadedIndex); 
     	}	
     }
 	
-	/* Creates the menu items */
+
+    //
+    // Web browser
+    // -----------------------------------------------
+
+    
+    
+    // -----------------------------------------------
+    // Options Menu
+    //
+
+    /* Creates the menu items */
 	public boolean onCreateOptionsMenu(Menu menu) {
 		
         // Log.d(TAG, "onCreateOptionsMenu");
@@ -645,12 +738,20 @@ public class TCT extends Activity {
 	    return false;
 	}
 	
+    //
+    // Options Menu
+    // -----------------------------------------------
+
 	
 	
-	//
-	// Scanner Radio stuff
+    
+	
+	
+	
+	// -----------------------------------------------
+	// Scanner Radio
 	// 
-	
+		
 	// I tried moving it to it's own class but need to watch for having pass
 	//  context and creating memory leaks. see"
 	// http://developer.android.com/resources/articles/avoiding-memory-leaks.html
@@ -697,5 +798,9 @@ public class TCT extends Activity {
 	        scannerAlert.show();
 		}
 	}
+
+	// 
+	// Scanner Radio
+    // -----------------------------------------------
 
 }

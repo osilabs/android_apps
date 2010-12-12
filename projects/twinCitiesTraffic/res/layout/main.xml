@@ -20,13 +20,34 @@
 		android:layout_weight=".5" 
 		android:layout_gravity="bottom" />
 
-	<WebView 
-		android:id="@+id/mainWebView" 
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent" 
+	<FrameLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:orientation="vertical" android:layout_width="fill_parent"
 		android:layout_weight=".5"
-		android:scrollbars="none" />
+		android:layout_height="fill_parent">
 		
+		<WebView 
+			android:id="@+id/mainWebView" 
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent" 
+			android:layout_weight=".5"
+			android:scrollbars="none" />
+					
+		<!-- debug key -->
+		<!-- 0WgwZVAoUfH3ScZyVGmByjGtZKSWaZFrGO1c4Mg -->
+		<!-- Prod key -->
+		<!-- 0WgwZVAoUfH3ueNOnHUNfUSYzDdEUtbgLc4rbaw -->
+		<com.google.android.maps.MapView
+			android:id="@+id/mainMapView" 
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+			android:layout_weight=".5"
+			android:visibility="gone"
+			android:clickable="true"
+	        android:apiKey="0WgwZVAoUfH3ScZyVGmByjGtZKSWaZFrGO1c4Mg"
+	        />
+		</FrameLayout>
+	
 	<include 
 		layout="@layout/navbar" 
 		android:layout_height="180dip" 

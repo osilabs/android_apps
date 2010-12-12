@@ -15,10 +15,10 @@ public class AlertsTab {
 	// If never set, is set to first map.
 	public    static       int    CURRENT_INDEX = 0;
 	
-	public static String getActiveMapURL() {
-		if (CURRENT_INDEX > (Config.alerts.length - 1)) CURRENT_INDEX = 0;
-		return Config.alerts[CURRENT_INDEX];
-	}
+//	public static String getActiveMapURL() {
+//		if (CURRENT_INDEX > (Config.alerts.length - 1)) CURRENT_INDEX = 0;
+//		return Config.alerts[CURRENT_INDEX];
+//	}
 	public static String getReloadURLParts() {
 		if (CURRENT_INDEX > (Config.alerts_src.length - 1)) CURRENT_INDEX = 0;
 		return	"&alert=" + URLEncoder.encode(Config.alerts_src[CURRENT_INDEX]);
