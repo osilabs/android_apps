@@ -115,7 +115,7 @@ public class TCT extends MapActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        // Log.d(TAG, "onCreate");
+        Log.d(TAG, "onCreate");
 
         //
         // Set globals
@@ -187,6 +187,7 @@ public class TCT extends MapActivity {
 			@Override
 			public void onClick(View v) {
 				refreshViews();
+				refreshTrafficMap(); // FIXME - make sure the menu option does the same.
 			}
 		});
 	    
@@ -226,7 +227,9 @@ public class TCT extends MapActivity {
     	//
     	mvMain = (MapView) findViewById(R.id.mainMapView);
     	mvMain.setBuiltInZoomControls(true);
+    	mvMain.setTraffic(true);
 		mcMain = mvMain.getController();
+        //drawTrafficMap();
         //gcMain = new Geocoder(this, Locale.getDefault());    
 //        Geocoder ass = new Geocoder(this, Locale.getDefault());    
 //        try {
@@ -244,8 +247,6 @@ public class TCT extends MapActivity {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-        drawTrafficMap();
-    	mvMain.setVisibility(View.INVISIBLE);
 
 	    // -------------------------
 	    // Bottom Navigation Bar
@@ -332,6 +333,29 @@ public class TCT extends MapActivity {
     	super.onStart();
     	
     	// Log.d(TAG, "onStart");
+
+        mvMain.postDelayed(new Runnable() {
+            public void run() {
+                refreshTrafficMap();
+            }        	
+        }, 4000);
+
+        mvMain.postDelayed(new Runnable() {
+            public void run() {
+                refreshTrafficMap();
+            }        	
+        }, 10000);
+
+        mvMain.postDelayed(new Runnable() {
+            public void run() {
+                refreshTrafficMap();
+            }        	
+        }, 22000);
+
+//    	mvMain.postInvalidateDelayed(2000);
+    	drawTrafficMap();
+    	mvMain.postInvalidateDelayed(5000);
+//    	mvMain.postInvalidateDelayed(8000);
 
 	    //
     	// Set the current tab and load it
@@ -534,7 +558,7 @@ public class TCT extends MapActivity {
 		        //  if it is already set.
 		        if (viewtype.equals("map")) {
 		        	// Show map
-		    		Toast.makeText(getApplicationContext(), "Loading map", Toast.LENGTH_SHORT).show();
+		    		//Toast.makeText(getApplicationContext(), "Loading map", Toast.LENGTH_SHORT).show();
 		        	mvMain.invalidate();
 		        	mvMain.setVisibility(View.VISIBLE);
 		        	refreshTrafficMap();
@@ -564,10 +588,14 @@ public class TCT extends MapActivity {
 	
 	
 	
+	
+	
+	
 	//----------------------------------------------------------
 	// Map view map
 	//
 	public void drawTrafficMap() {
+        //mvMain.invalidate();
         try {
             Geocoder ass = new Geocoder(this, Locale.getDefault());    
         	// FIXME - move to config
@@ -577,21 +605,19 @@ public class TCT extends MapActivity {
                 gpMain = new GeoPoint(
                         (int) (addresses.get(0).getLatitude() * 1E6), 
                         (int) (addresses.get(0).getLongitude() * 1E6));
-                mcMain.animateTo(gpMain);
-                mcMain.setZoom(11);
-            	mvMain.setTraffic(true);
-                mvMain.invalidate();
             }    
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
+        refreshTrafficMap();
 	}
 	
+	
 	public void refreshTrafficMap() {
+        mvMain.invalidate();
         mcMain.animateTo(gpMain);
         mcMain.setZoom(11);
-    	mvMain.setTraffic(true);
-        mvMain.invalidate();
 	}
 	//
 	// Map view map
