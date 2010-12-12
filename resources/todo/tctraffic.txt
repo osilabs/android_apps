@@ -1,5 +1,7 @@
 // Release 0.7
 
+* Name weather rss feed "Weather report"
+
 * put gradient on navbars
 
 * popup to launch the radios that tells you how to back up back to tct and more info on radios not working

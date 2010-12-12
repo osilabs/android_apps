@@ -9,3 +9,22 @@ Certificate fingerprint (MD5): 49:EB:CA:1B:1D:28:A1:85:10:01:3E:69:48:FD:78:F8
 // Common keytool commands
 http://www.sslshopper.com/article-most-common-java-keytool-keystore-commands.html
 
+
+//
+// Generate debug key
+//
+// LEAVE PASSWORD BLANK !
+//
+
+[dezurik@sofia android-sdk-linux_86]$ keytool -list -alias androiddebugkey -keystore ~/.android/debug.keystore 
+Enter keystore password:  
+
+*****************  WARNING WARNING WARNING  *****************
+* The integrity of the information stored in your keystore  *
+* has NOT been verified!  In order to verify its integrity, *
+* you must provide your keystore password.                  *
+*****************  WARNING WARNING WARNING  *****************
+
+androiddebugkey, May 5, 2010, PrivateKeyEntry, 
+Certificate fingerprint (MD5): 43:61:AD:AA:71:70:36:F4:12:7A:8E:6C:88:97:A8:99
+
