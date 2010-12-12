@@ -186,7 +186,6 @@ public class TCT extends MapActivity {
 	    ivRefresh.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//setViewForCurrentTab(CURRENT_VIEW_INDEX);
 				refreshViews();
 			}
 		});
@@ -493,15 +492,29 @@ public class TCT extends MapActivity {
 	}
 
 	public void setViewForCurrentTab(int view_index) {
-        Log.d(TAG, "setViewForCurrentTab index" + Integer.toString(view_index));
-		
+		//Log.d(TAG, "setViewForCurrentTab index" + Integer.toString(view_index));
+
 		String scrollx = "0";
 		String scrolly = "0";
 
 		CURRENT_VIEW_INDEX = view_index;
 		setCurrentView(CURRENT_VIEW_INDEX);
-        
-        MapsTab.hideConfiguration(ivMapMore, tvMapsPop);
+
+		/**
+		 * OnTab switch
+ 		 * 1. Make current view invisible
+		 * 2. Make the tab clicked green
+		 * 3. Swap in loading message
+         * 4. Do all the expensive work, trap errors, if errors, ? pop up config picker to pick another map?
+		 */
+
+		// Hide stuff
+    	mvMain.setVisibility(View.INVISIBLE);
+    	wvMain.setVisibility(View.INVISIBLE);
+    	
+    	mvMain.forceLayout();
+
+    	MapsTab.hideConfiguration(ivMapMore, tvMapsPop);
         AlertsTab.hideConfiguration(ivAlertMore, tvAlertsPop);
         CamerasTab.hideConfiguration(ivCameraMore, tvCamerasPop);
         
@@ -517,47 +530,31 @@ public class TCT extends MapActivity {
 		        
 		        String viewtype = MapsTab.getViewType();
 
-	    		//Toast.makeText(getApplicationContext(), "Traffic tab selected. type is: " + type, Toast.LENGTH_SHORT).show();
-		        //Log.e(TAG, "Type:" + );
-
-		        
 		        // FIXME - use a global to track the current view type and don't do anything
 		        //  if it is already set.
 		        if (viewtype.equals("map")) {
 		        	// Show map
-		        	Log.e(TAG, "Map");
+		    		Toast.makeText(getApplicationContext(), "Loading map", Toast.LENGTH_SHORT).show();
 		        	mvMain.invalidate();
-		        	wvMain.setVisibility(View.INVISIBLE);
 		        	mvMain.setVisibility(View.VISIBLE);
-		        	drawTrafficMap();
-//		        	mvMain.bringToFront();
-//		        	mvMain.refreshDrawableState();
-//		        	mvMain.preLoad();
-//		        	mvMain.requestLayout();
-//		        	mvMain.setTraffic(true);
-		    		Toast.makeText(getApplicationContext(), "map", Toast.LENGTH_SHORT).show();
+		        	refreshTrafficMap();
 		        } else if (viewtype.equals("web")) {
 		        	// Show webview
-		        	Log.e(TAG, "Web");
-		    		Toast.makeText(getApplicationContext(), "web", Toast.LENGTH_SHORT).show();
-		        	mvMain.setVisibility(View.INVISIBLE);
 		        	wvMain.setVisibility(View.VISIBLE);
+					wvMain.loadUrl("javascript: jumpTo("+CURRENT_VIEW_INDEX+ "," +scrollx+ "," +scrolly+ ")");
 		        }
-				wvMain.loadUrl("javascript: jumpTo("+CURRENT_VIEW_INDEX+ "," +scrollx+ "," +scrolly+ ")");
 		        //reloadViews();
 		        
 				break;
 		    case MENU_ALERTS:
 		        CURRENT_VIEW_INDEX = INDEX_ALERTS;
 		        AlertsTab.showConfiguration(ivAlertMore, tvAlertsPop);
-	        	mvMain.setVisibility(View.INVISIBLE);
 	        	wvMain.setVisibility(View.VISIBLE);
 				wvMain.loadUrl("javascript: jumpTo("+CURRENT_VIEW_INDEX+ "," +scrollx+ "," +scrolly+ ")");
 		    	break;
 		    case MENU_CAMERAS:
 		        CURRENT_VIEW_INDEX = INDEX_CAMERAS;
 		        CamerasTab.showConfiguration(ivCameraMore, tvCamerasPop);
-	        	mvMain.setVisibility(View.INVISIBLE);
 	        	wvMain.setVisibility(View.VISIBLE);
 				wvMain.loadUrl("javascript: jumpTo("+CURRENT_VIEW_INDEX+ "," +scrollx+ "," +scrolly+ ")");
 		        break;
@@ -565,6 +562,11 @@ public class TCT extends MapActivity {
 
 	}
 	
+	
+	
+	//----------------------------------------------------------
+	// Map view map
+	//
 	public void drawTrafficMap() {
         try {
             Geocoder ass = new Geocoder(this, Locale.getDefault());    
@@ -584,6 +586,21 @@ public class TCT extends MapActivity {
             e.printStackTrace();
         }
 	}
+	
+	public void refreshTrafficMap() {
+        mcMain.animateTo(gpMain);
+        mcMain.setZoom(11);
+    	mvMain.setTraffic(true);
+        mvMain.invalidate();
+	}
+	//
+	// Map view map
+	//----------------------------------------------------------
+
+	
+	
+	
+	
 	
 	public boolean setCurrentView(int viewIndex) {
         Log.d(TAG, "setCurrentView");

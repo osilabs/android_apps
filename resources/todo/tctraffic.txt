@@ -1,19 +1,33 @@
 // Release 0.7
 
+>> STM <<
+* Add double-tap to zoom, pinch zoom. (spent 20 mins on this, was seeming like I need to override touch event and very manually handle these. maybe look into it again later since i already have zoom)
+* Use imageviews for all images
+
+>> TEST <<
+* Check how refresh works with maps
+* When you start the app, make sure the current map comes up and doesnt load mapview if doesn't have to.
+
+>> Enhancements <<
+* Preset zoom sites (Intnl airport, downtown mpls, downtown st paul) for interactive map
 * OnTab switch
 ** 1. Make current view invisible
 ** 2. Swap in loading message
 ** 3. Make the tab clicked green
 ** 4. Do all the expensive work, trap errors, if errors, ? pop up config picker to pick another map?
-
-
-* Add double-tap to zoom
-
+* Do not load any map anything until it is known that the Map is what's about to be displayed. maybe use a flat to say neverloaded and until tripped never load it.
+* Look at how often I am reloading the mapview when I don't need to be.
 * put gradient on navbars
-
 * popup to launch the radios that tells you how to back up back to tct and more info on radios not working
+* Dynamically load the different views so they can be defined solely from the Config.array.
 
-* pinch zoom. put in free version, it helps.
+>> BUGS <<
+* Map is re-centering when i retrn to the tab. also doesn't paint traffic until i tap or move it
+
+
+>> MISC <<
+* See proandrod2 book p274 for geocoding with threads
+* See proandrod2 book p275/6 for progress dialog
 
 * Make scrollbar on webview so it shows while scrolling then hides when not, when looking at rss feeds.
 
@@ -21,22 +35,25 @@
 ** Add icons and how to use em.
 ** Explain how to add shortcut to desktop: Open the app drawer. Find TCT. Long press the icon. Drag to desktop. Let go.
 
+* Add phone numbers (511) somewhere
+
+* Remove camera anything from webview, use imageviews
+
+
 //-- Paid version --//
 
 * What the paid version has: 
+
 ** Set a different favorite rss feed in place of city pages A list.
+
 ** More weather data (make a second feed in the weather bug rss generator)
 
-
-
-
-// Release 0.6
+** Add cameras to favorites. Maybe only 1 in free version and paid version can have many.
 
 * Clear out all data and it starts on the camera tab and no camera shows up.
 
 * Get rid of defaults in strings.xml. put in config.
 
-* Wire up help and about.
 
 // Release 0.7
 
@@ -62,14 +79,7 @@ getApplicationContext().startActivity(Intent.createChooser(emailIntent, "Send ma
 
 * Toast messages in try catach
 
-* Add phone numbers (511) somewhere
-
 * choose region (west, northwest,...) then maps center onload to your area
-
-
-??????
-
-* Choosing to configure cameras, or saving a camera, or loading all can take a long time after the toast message goes away
 
 // Ideas
 
@@ -83,20 +93,9 @@ getApplicationContext().startActivity(Intent.createChooser(emailIntent, "Send ma
 
 * Incident list screen has cameras in xml feed. Use those to pull up a view of the accident
 
-* Tilt screen to switch view.  configure what view you get when vert and horriz. Default is 'traffic' for vert, camera for horriz.
-
-* Save settings: choose and save default camera shot for quick view
-
 * On incident map, have a setting that says what one tap of an incident icon does. 1. to incident description or 2. Nearest camera. Long press offers either.
 
-// todo
-
-
-* in onstart or oncreate throw up a toast saying shit is loading.
-
 * Build a route: All boils down to telling you if you should avoid the route this morning or not.
-
-* Shake phone to refresh maps (settings to set sensitivity of this or disable)
 
 
 
