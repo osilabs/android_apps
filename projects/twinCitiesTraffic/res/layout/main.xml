@@ -26,6 +26,11 @@
 		android:layout_weight=".5"
 		android:layout_height="fill_parent">
 		
+<!--    <ViewFlipper-->
+<!--    	android:id="@+id/mainViewFlipper"-->
+<!--        android:layout_width="wrap_content" -->
+<!--        android:layout_height="wrap_content">-->
+		
 		<WebView 
 			android:id="@+id/mainWebView" 
 			android:layout_width="fill_parent"
@@ -42,12 +47,12 @@
 	        android:layout_width="fill_parent"
 	        android:layout_height="fill_parent"
 			android:layout_weight=".5"
-			android:visibility="gone"
 			android:clickable="true"
 	        android:apiKey="0WgwZVAoUfH3ScZyVGmByjGtZKSWaZFrGO1c4Mg"
 	        />
 		</FrameLayout>
-	
+<!--	</ViewFlipper>-->
+		
 	<include 
 		layout="@layout/navbar" 
 		android:layout_height="180dip" 

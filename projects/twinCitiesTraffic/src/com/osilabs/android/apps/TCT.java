@@ -41,6 +41,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 public class TCT extends MapActivity {
 
@@ -97,6 +98,9 @@ public class TCT extends MapActivity {
 	protected ImageView ivRefresh;
 	protected ImageView ivRadios;
 
+	// View flipper
+	protected ViewFlipper vfMain;
+
 	// Mapview stuff
 	protected static MapView mvMain;
     protected static MapController mcMain;
@@ -116,6 +120,8 @@ public class TCT extends MapActivity {
         //
         // Set globals
         //
+//        vfMain = (ViewFlipper) findViewById(R.id.mainViewFlipper);
+//        vfMain.
         
         // Read in manifest
 		try {
@@ -223,23 +229,24 @@ public class TCT extends MapActivity {
     	mvMain.setBuiltInZoomControls(true);
 		mcMain = mvMain.getController();
         //gcMain = new Geocoder(this, Locale.getDefault());    
-        Geocoder ass = new Geocoder(this, Locale.getDefault());    
-        try {
-        	// FIXME - move to config
-            List<Address> addresses = ass.getFromLocationName("Minneapolis, MN", 5);
-            if (addresses.size() > 0) {
-                gpMain = new GeoPoint(
-                        (int) (addresses.get(0).getLatitude() * 1E6), 
-                        (int) (addresses.get(0).getLongitude() * 1E6));
-                mcMain.animateTo(gpMain);
-                mcMain.setZoom(11);
-            	mvMain.setTraffic(true);
-                mvMain.invalidate();
-            }    
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    	mvMain.setVisibility(View.GONE);
+//        Geocoder ass = new Geocoder(this, Locale.getDefault());    
+//        try {
+//        	// FIXME - move to config
+//            List<Address> addresses = ass.getFromLocationName("Minneapolis, MN", 5);
+//            if (addresses.size() > 0) {
+//                gpMain = new GeoPoint(
+//                        (int) (addresses.get(0).getLatitude() * 1E6), 
+//                        (int) (addresses.get(0).getLongitude() * 1E6));
+//                mcMain.animateTo(gpMain);
+//                mcMain.setZoom(11);
+//            	mvMain.setTraffic(true);
+//                mvMain.invalidate();
+//            }    
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        drawTrafficMap();
+    	mvMain.setVisibility(View.INVISIBLE);
 
 	    // -------------------------
 	    // Bottom Navigation Bar
@@ -373,7 +380,8 @@ public class TCT extends MapActivity {
 			    editor.putInt("session_map", MapsTab.CURRENT_INDEX);
 			    editor.commit();
     			
-            	reloadViews();
+			    setViewForCurrentTab(INDEX_TRAFFIC);
+			    reloadViews();
             }
         }).create();
 		
@@ -512,32 +520,44 @@ public class TCT extends MapActivity {
 	    		//Toast.makeText(getApplicationContext(), "Traffic tab selected. type is: " + type, Toast.LENGTH_SHORT).show();
 		        //Log.e(TAG, "Type:" + );
 
+		        
+		        // FIXME - use a global to track the current view type and don't do anything
+		        //  if it is already set.
 		        if (viewtype.equals("map")) {
 		        	// Show map
 		        	Log.e(TAG, "Map");
-		        	wvMain.setVisibility(View.GONE);
+		        	mvMain.invalidate();
+		        	wvMain.setVisibility(View.INVISIBLE);
 		        	mvMain.setVisibility(View.VISIBLE);
+		        	drawTrafficMap();
+//		        	mvMain.bringToFront();
+//		        	mvMain.refreshDrawableState();
+//		        	mvMain.preLoad();
+//		        	mvMain.requestLayout();
+//		        	mvMain.setTraffic(true);
 		    		Toast.makeText(getApplicationContext(), "map", Toast.LENGTH_SHORT).show();
 		        } else if (viewtype.equals("web")) {
 		        	// Show webview
 		        	Log.e(TAG, "Web");
 		    		Toast.makeText(getApplicationContext(), "web", Toast.LENGTH_SHORT).show();
-		        	mvMain.setVisibility(View.GONE);
+		        	mvMain.setVisibility(View.INVISIBLE);
 		        	wvMain.setVisibility(View.VISIBLE);
-					wvMain.loadUrl("javascript: jumpTo("+CURRENT_VIEW_INDEX+ "," +scrollx+ "," +scrolly+ ")");
 		        }
+				wvMain.loadUrl("javascript: jumpTo("+CURRENT_VIEW_INDEX+ "," +scrollx+ "," +scrolly+ ")");
+		        //reloadViews();
+		        
 				break;
 		    case MENU_ALERTS:
 		        CURRENT_VIEW_INDEX = INDEX_ALERTS;
 		        AlertsTab.showConfiguration(ivAlertMore, tvAlertsPop);
-	        	mvMain.setVisibility(View.GONE);
+	        	mvMain.setVisibility(View.INVISIBLE);
 	        	wvMain.setVisibility(View.VISIBLE);
 				wvMain.loadUrl("javascript: jumpTo("+CURRENT_VIEW_INDEX+ "," +scrollx+ "," +scrolly+ ")");
 		    	break;
 		    case MENU_CAMERAS:
 		        CURRENT_VIEW_INDEX = INDEX_CAMERAS;
 		        CamerasTab.showConfiguration(ivCameraMore, tvCamerasPop);
-	        	mvMain.setVisibility(View.GONE);
+	        	mvMain.setVisibility(View.INVISIBLE);
 	        	wvMain.setVisibility(View.VISIBLE);
 				wvMain.loadUrl("javascript: jumpTo("+CURRENT_VIEW_INDEX+ "," +scrollx+ "," +scrolly+ ")");
 		        break;
@@ -545,8 +565,28 @@ public class TCT extends MapActivity {
 
 	}
 	
+	public void drawTrafficMap() {
+        try {
+            Geocoder ass = new Geocoder(this, Locale.getDefault());    
+        	// FIXME - move to config
+            // FIXME - Use coordinates for efficitency
+            List<Address> addresses = ass.getFromLocationName("Minneapolis, MN", 5);
+            if (addresses.size() > 0) {
+                gpMain = new GeoPoint(
+                        (int) (addresses.get(0).getLatitude() * 1E6), 
+                        (int) (addresses.get(0).getLongitude() * 1E6));
+                mcMain.animateTo(gpMain);
+                mcMain.setZoom(11);
+            	mvMain.setTraffic(true);
+                mvMain.invalidate();
+            }    
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	
 	public boolean setCurrentView(int viewIndex) {
-        // Log.d(TAG, "setCurrentView");
+        Log.d(TAG, "setCurrentView");
 
 		// Save Settings
     	SharedPreferences prefs 
@@ -559,14 +599,14 @@ public class TCT extends MapActivity {
 	}
 	
 	public void refreshViews() {
-        // Log.d(TAG, "refreshViews");
+        Log.d(TAG, "refreshViews");
 
 		Toast.makeText(getApplicationContext(), R.string.txt_refreshing, Toast.LENGTH_SHORT).show();
 		reloadViews();
 	}
 	
 	public void reloadViews() {
-		// Log.d(TAG, "reloadViews()");
+		Log.d(TAG, "reloadViews()");
 		
 		// Refresh main content webview
 		wvMain.loadUrl(WEBVIEW_URL

@@ -1,6 +1,13 @@
 // Release 0.7
 
-* Name weather rss feed "Weather report"
+* OnTab switch
+** 1. Make current view invisible
+** 2. Swap in loading message
+** 3. Make the tab clicked green
+** 4. Do all the expensive work, trap errors, if errors, ? pop up config picker to pick another map?
+
+
+* Add double-tap to zoom
 
 * put gradient on navbars
 
