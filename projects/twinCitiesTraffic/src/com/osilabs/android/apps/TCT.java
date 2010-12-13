@@ -69,7 +69,7 @@ public class TCT extends MapActivity {
 	protected static String AD_BANNER_URL = "";
 
 	// Will need to up this number if more indexes are needed.
-	protected static int CURRENT_VIEW_INDEX = 0;
+	protected static int CURRENT_TAB_INDEX = 0;
 
 	protected static PackageInfo pInfo = null;
 	protected static Spinner spViewChoices;
@@ -138,7 +138,7 @@ public class TCT extends MapActivity {
         //
 		mySharedPreferences = getSharedPreferences(
 				Config.NAMESPACE, Activity.MODE_PRIVATE);
-        CURRENT_VIEW_INDEX = mySharedPreferences.getInt("session_current_view", 2);
+        CURRENT_TAB_INDEX = mySharedPreferences.getInt("session_current_view", 2);
         
         MapsTab.CURRENT_INDEX = mySharedPreferences.getInt("session_map", Config.DEFAULT_MAP_INDEX);
         AlertsTab.CURRENT_INDEX = mySharedPreferences.getInt("session_alert", Config.DEFAULT_ALERT_INDEX);
@@ -327,7 +327,7 @@ public class TCT extends MapActivity {
         // It's going to take a second to load
 		Toast.makeText(this, R.string.txt_loading, Toast.LENGTH_LONG).show();
 		
-    	setViewForCurrentTab(CURRENT_VIEW_INDEX);
+    	setViewForCurrentTab(CURRENT_TAB_INDEX);
 		reloadViews();
     }
 
@@ -465,7 +465,7 @@ public class TCT extends MapActivity {
 		AlertsTab.setInactive(ivAlerts);
 		CamerasTab.setInactive(ivCameras);
 		
-		switch (CURRENT_VIEW_INDEX) {
+		switch (CURRENT_TAB_INDEX) {
 			case MENU_TRAFFIC:
 				MapsTab.setActive(ivMaps);
 				break;
@@ -478,14 +478,14 @@ public class TCT extends MapActivity {
 		}
 	}
 
-	public void setViewForCurrentTab(int view_index) {
-		//Log.d(TAG, "setViewForCurrentTab index" + Integer.toString(view_index));
+	public void setViewForCurrentTab(int tab_index) {
+		//Log.d(TAG, "setViewForCurrentTab index" + Integer.toString(tab_index));
 
 		String scrollx = "0";
 		String scrolly = "0";
 
-		CURRENT_VIEW_INDEX = view_index;
-		setCurrentView(CURRENT_VIEW_INDEX);
+		CURRENT_TAB_INDEX = tab_index;
+		setCurrentTab(CURRENT_TAB_INDEX);
 
 		/**
 		 * OnTab switch
@@ -508,9 +508,9 @@ public class TCT extends MapActivity {
         // Makes the current tab green
         colorTheCurrentTab();
         
-		switch (CURRENT_VIEW_INDEX) {
+		switch (CURRENT_TAB_INDEX) {
 			case MENU_TRAFFIC:
-				CURRENT_VIEW_INDEX = INDEX_TRAFFIC;
+				CURRENT_TAB_INDEX = INDEX_TRAFFIC;
 		        MapsTab.showConfiguration(ivMapMore, tvMapsPop);
 		        scrollx = MapsTab.getScrollX();
 		        scrolly = MapsTab.getScrollY();
@@ -528,22 +528,22 @@ public class TCT extends MapActivity {
 		        } else if (viewtype.equals("web")) {
 		        	// Show webview
 		        	wvMain.setVisibility(View.VISIBLE);
-					wvMain.loadUrl("javascript: jumpTo("+CURRENT_VIEW_INDEX+ "," +scrollx+ "," +scrolly+ ")");
+					wvMain.loadUrl("javascript: jumpTo("+CURRENT_TAB_INDEX+ "," +scrollx+ "," +scrolly+ ")");
 		        }
 		        //reloadViews();
 		        
 				break;
 		    case MENU_ALERTS:
-		        CURRENT_VIEW_INDEX = INDEX_ALERTS;
+		        CURRENT_TAB_INDEX = INDEX_ALERTS;
 		        AlertsTab.showConfiguration(ivAlertMore, tvAlertsPop);
 	        	wvMain.setVisibility(View.VISIBLE);
-				wvMain.loadUrl("javascript: jumpTo("+CURRENT_VIEW_INDEX+ "," +scrollx+ "," +scrolly+ ")");
+				wvMain.loadUrl("javascript: jumpTo("+CURRENT_TAB_INDEX+ "," +scrollx+ "," +scrolly+ ")");
 		    	break;
 		    case MENU_CAMERAS:
-		        CURRENT_VIEW_INDEX = INDEX_CAMERAS;
+		        CURRENT_TAB_INDEX = INDEX_CAMERAS;
 		        CamerasTab.showConfiguration(ivCameraMore, tvCamerasPop);
 	        	wvMain.setVisibility(View.VISIBLE);
-				wvMain.loadUrl("javascript: jumpTo("+CURRENT_VIEW_INDEX+ "," +scrollx+ "," +scrolly+ ")");
+				wvMain.loadUrl("javascript: jumpTo("+CURRENT_TAB_INDEX+ "," +scrollx+ "," +scrolly+ ")");
 		        break;
 		}
 
@@ -597,8 +597,8 @@ public class TCT extends MapActivity {
 	
 	
 	
-	public boolean setCurrentView(int viewIndex) {
-        Log.d(TAG, "setCurrentView");
+	public boolean setCurrentTab(int viewIndex) {
+        Log.d(TAG, "setCurrentTab");
 
 		// Save Settings
     	SharedPreferences prefs 
@@ -622,7 +622,7 @@ public class TCT extends MapActivity {
 		
 		// Refresh main content webview
 		wvMain.loadUrl(WEBVIEW_URL
-						+ "?target=" + CURRENT_VIEW_INDEX
+						+ "?target=" + CURRENT_TAB_INDEX
 						+ MapsTab.getReloadURLParts()
 						+ AlertsTab.getReloadURLParts()
 						+ CamerasTab.getReloadURLParts());
