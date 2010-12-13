@@ -28,15 +28,18 @@ import android.opengl.Visibility;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -80,9 +83,12 @@ public class TCT extends MapActivity {
 	// Navbar components
 
 	// Tabs
-	protected ImageView ivMaps;
-	protected ImageView ivAlerts;
-	protected ImageView ivCameras;
+	protected ImageView ivMapsTab;
+	protected ImageView ivAlertsTab;
+	protected ImageView ivCamerasTab;
+	
+	// Tab Views
+	protected ImageView ivTraffic;
 	
 	// Configs
 	protected ImageView ivMapMore;
@@ -98,11 +104,8 @@ public class TCT extends MapActivity {
 	protected ImageView ivRefresh;
 	protected ImageView ivRadios;
 
-	// View flipper
-	protected ViewFlipper vfMain;
-
 	// Mapview stuff
-	protected static MapView mvMain;
+	protected static MapView mvTraffic;
     protected static MapController mcMain;
     protected static GeoPoint gpMain;
     //protected static Geocoder gcMain;
@@ -116,6 +119,20 @@ public class TCT extends MapActivity {
         setContentView(R.layout.main);
         
         Log.d(TAG, "onCreate");
+        
+	    ivTraffic = (ImageView) findViewById(R.id.trafficImageView);
+	    ivTraffic.setVisibility(View.VISIBLE);
+
+//        
+//        FrameLayout frame = (FrameLayout)findViewById(R.id.trafficFrame);
+//        LayoutInflater li = (LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        ImageView iv = new ImageView(getApplicationContext());
+//        iv.setLayoutParams(new LayoutParams(
+//        		LayoutParams.FILL_PARENT,
+//        		LayoutParams.FILL_PARENT
+//            ));
+//        frame.addView( li.inflate(R.layout.view2, null) );
+//        
 
         //
         // Set globals
@@ -148,19 +165,19 @@ public class TCT extends MapActivity {
 	    // Top Nav bar
 	    //
 
-	    ivMaps = (ImageView) findViewById(R.id.launcher_traffic);
-	    ivMaps.setOnClickListener(new View.OnClickListener() {
+	    ivMapsTab = (ImageView) findViewById(R.id.launcher_traffic);
+	    ivMapsTab.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				setViewForCurrentTab(INDEX_TRAFFIC);
 			}
 		});
 
-	    ivAlerts = (ImageView) findViewById(R.id.launcher_alerts);
+	    ivAlertsTab = (ImageView) findViewById(R.id.launcher_alerts);
 	    // This particular icon is much whiter than the others so i am making it darker
 	    //  with the alpha.
-	    ivAlerts.setAlpha(AlertsTab.ALPHA_OFF);
-	    ivAlerts.setOnClickListener(new View.OnClickListener() {
+	    ivAlertsTab.setAlpha(AlertsTab.ALPHA_OFF);
+	    ivAlertsTab.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				setViewForCurrentTab(INDEX_ALERTS);
@@ -168,8 +185,8 @@ public class TCT extends MapActivity {
 		});
 
 	    // Set up camera tab
-	    ivCameras = (ImageView) findViewById(R.id.launcher_cameras);
-	    ivCameras.setOnClickListener(new View.OnClickListener() {
+	    ivCamerasTab = (ImageView) findViewById(R.id.launcher_cameras);
+	    ivCamerasTab.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				setViewForCurrentTab(INDEX_CAMERAS);
@@ -206,7 +223,7 @@ public class TCT extends MapActivity {
         wvMain.setWebChromeClient(new WebChromeClient());
         // Enable jsi
         wvMain.addJavascriptInterface(new JsiJavaScriptInterface(this), "jsi");
-    	wvMain.setVisibility(View.VISIBLE);
+    	wvMain.setVisibility(View.INVISIBLE);
 
 		//
 		// Ad banner Web View
@@ -222,10 +239,10 @@ public class TCT extends MapActivity {
     	//
     	// Main Map View
     	//
-    	mvMain = (MapView) findViewById(R.id.mainMapView);
-    	mvMain.setBuiltInZoomControls(true);
-    	mvMain.setTraffic(true);
-		mcMain = mvMain.getController();
+    	mvTraffic = (MapView) findViewById(R.id.mainMapView);
+    	mvTraffic.setBuiltInZoomControls(true);
+    	mvTraffic.setTraffic(true);
+		mcMain = mvTraffic.getController();
 
 	    // -------------------------
 	    // Bottom Navigation Bar
@@ -313,11 +330,13 @@ public class TCT extends MapActivity {
     	
     	// Log.d(TAG, "onStart");
 
+    	//
+        // FIXME - This should only happen if mapview is currently active
+    	//
     	// Force the mapview to draw it's traffic layer when it's ready. Progressive approach.
-        mvMain.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 3000);
-        mvMain.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 5000);
-        mvMain.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 15000);
-
+        mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 3000);
+        mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 5000);
+        mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 15000);
     	drawTrafficMap();
 
 	    //
@@ -461,19 +480,19 @@ public class TCT extends MapActivity {
 	public void colorTheCurrentTab() {
         // Log.d(TAG, "colorTheCurrentTab");
 
-		MapsTab.setInactive(ivMaps);
-		AlertsTab.setInactive(ivAlerts);
-		CamerasTab.setInactive(ivCameras);
+		MapsTab.setInactive(ivMapsTab);
+		AlertsTab.setInactive(ivAlertsTab);
+		CamerasTab.setInactive(ivCamerasTab);
 		
 		switch (CURRENT_TAB_INDEX) {
 			case MENU_TRAFFIC:
-				MapsTab.setActive(ivMaps);
+				MapsTab.setActive(ivMapsTab);
 				break;
 		    case MENU_ALERTS:
-				AlertsTab.setActive(ivAlerts);
+				AlertsTab.setActive(ivAlertsTab);
 		    	break;
 		    case MENU_CAMERAS:
-				CamerasTab.setActive(ivCameras);
+				CamerasTab.setActive(ivCamerasTab);
 		    	break;
 		}
 	}
@@ -496,10 +515,11 @@ public class TCT extends MapActivity {
 		 */
 
 		// Hide stuff
-    	mvMain.setVisibility(View.INVISIBLE);
-    	wvMain.setVisibility(View.INVISIBLE);
-    	
-    	mvMain.forceLayout();
+		ivTraffic.setVisibility(View.INVISIBLE);
+		mvTraffic.setVisibility(View.INVISIBLE);
+		wvMain.setVisibility(View.INVISIBLE);
+		ivTraffic.setVisibility(View.VISIBLE);
+    	//mvTraffic.forceLayout();
 
     	MapsTab.hideConfiguration(ivMapMore, tvMapsPop);
         AlertsTab.hideConfiguration(ivAlertMore, tvAlertsPop);
@@ -510,30 +530,56 @@ public class TCT extends MapActivity {
         
 		switch (CURRENT_TAB_INDEX) {
 			case MENU_TRAFFIC:
-				CURRENT_TAB_INDEX = INDEX_TRAFFIC;
-		        MapsTab.showConfiguration(ivMapMore, tvMapsPop);
-		        scrollx = MapsTab.getScrollX();
-		        scrolly = MapsTab.getScrollY();
-		        
-		        String viewtype = MapsTab.getViewType();
+				//CURRENT_TAB_INDEX = INDEX_TRAFFIC; // This can go
+		  
 
-		        // FIXME - use a global to track the current view type and don't do anything
-		        //  if it is already set.
-		        if (viewtype.equals("map")) {
-		        	// Show map
-		    		//Toast.makeText(getApplicationContext(), "Loading map", Toast.LENGTH_SHORT).show();
-		        	mvMain.invalidate();
-		        	mvMain.setVisibility(View.VISIBLE);
-		        	refreshTrafficMap();
-		        } else if (viewtype.equals("web")) {
-		        	// Show webview
-		        	wvMain.setVisibility(View.VISIBLE);
-					wvMain.loadUrl("javascript: jumpTo("+CURRENT_TAB_INDEX+ "," +scrollx+ "," +scrolly+ ")");
-		        }
+				
+				MapsTab.showConfiguration(ivMapMore, tvMapsPop);
+				
+				switch(Config.traffic_viewtypes[ MapsTab.CURRENT_INDEX ]) {
+					case Config.IMAGE:
+						Toast.makeText(getApplicationContext(), "ivTraffic:" + Config.traffic_urls[ MapsTab.CURRENT_INDEX ], Toast.LENGTH_SHORT).show();
+						ivTraffic.setImageURI( Uri.parse(Config.traffic_urls[ MapsTab.CURRENT_INDEX ]) );
+						ivTraffic.setVisibility(View.VISIBLE);
+						break;
+					case Config.MAP:
+			        	mvTraffic.invalidate();
+			        	mvTraffic.setVisibility(View.VISIBLE);
+//						mvTraffic.setImageURI( Uri.parse(Config.traffic_urls[ MapsTab.CURRENT_INDEX ]) );
+//						mvTraffic.setVisibility(View.VISIBLE);
+						break;
+					case Config.WEB:
+						// FIXME - rename to wvTraffic
+			        	wvMain.setVisibility(View.VISIBLE);
+						wvMain.loadUrl("javascript: jumpTo("+CURRENT_TAB_INDEX+ "," +scrollx+ "," +scrolly+ ")");
+//						wvMain.setImageURI( Uri.parse(Config.traffic_urls[ MapsTab.CURRENT_INDEX ]) );
+//						wvMain.setVisibility(View.VISIBLE);
+						break;
+				}
+				
+//		        scrollx = MapsTab.getScrollX();
+//		        scrolly = MapsTab.getScrollY();
+//		        
+//		        String viewtype = MapsTab.getViewType();
+//
+//		        // FIXME - use a global to track the current view type and don't do anything
+//		        //  if it is already set.
+//		        if (viewtype.equals("map")) {
+//		        	// Show map
+//		    		//Toast.makeText(getApplicationContext(), "Loading map", Toast.LENGTH_SHORT).show();
+//		        	mvTraffic.invalidate();
+//		        	mvTraffic.setVisibility(View.VISIBLE);
+//		        	refreshTrafficMap();
+//		        } else if (viewtype.equals("web")) {
+//		        	// Show webview
+//		        	wvMain.setVisibility(View.VISIBLE);
+//					wvMain.loadUrl("javascript: jumpTo("+CURRENT_TAB_INDEX+ "," +scrollx+ "," +scrolly+ ")");
+//		        }
 		        //reloadViews();
 		        
 				break;
 		    case MENU_ALERTS:
+		    	// FIXME - i think these are already set above
 		        CURRENT_TAB_INDEX = INDEX_ALERTS;
 		        AlertsTab.showConfiguration(ivAlertMore, tvAlertsPop);
 	        	wvMain.setVisibility(View.VISIBLE);
@@ -546,7 +592,6 @@ public class TCT extends MapActivity {
 				wvMain.loadUrl("javascript: jumpTo("+CURRENT_TAB_INDEX+ "," +scrollx+ "," +scrolly+ ")");
 		        break;
 		}
-
 	}
 	
 	
@@ -558,7 +603,7 @@ public class TCT extends MapActivity {
 	// Map view map
 	//
 	public void drawTrafficMap() {
-        //mvMain.invalidate();
+        //mvTraffic.invalidate();
 //        try {
 //            Geocoder ass = new Geocoder(this, Locale.getDefault());    
 //        	// FIXME - move to config
@@ -586,7 +631,7 @@ public class TCT extends MapActivity {
 	
 	
 	public void refreshTrafficMap() {
-        mvMain.invalidate();
+        mvTraffic.invalidate();
 	}
 	//
 	// Map view map

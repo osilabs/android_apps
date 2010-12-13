@@ -4,6 +4,8 @@
 
 * Use imageviews for all images
 
+* Switching from color map (image view) to mapview map doesn't cause traffic overlay to force draw.
+
 >> TEST <<
 * Check how refresh works with maps
 * When you start the app, make sure the current map comes up and doesnt load mapview if doesn't have to.

@@ -22,20 +22,16 @@
 
 	<FrameLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
-		android:orientation="vertical" android:layout_width="fill_parent"
+		android:id="@+id/trafficFrame" 
+		android:orientation="vertical" 
+		android:layout_width="fill_parent"
 		android:layout_weight=".5"
 		android:layout_height="fill_parent">
-		
-<!--    <ViewFlipper-->
-<!--    	android:id="@+id/mainViewFlipper"-->
-<!--        android:layout_width="wrap_content" -->
-<!--        android:layout_height="wrap_content">-->
 		
 		<WebView 
 			android:id="@+id/mainWebView" 
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent" 
-			android:layout_weight=".5"
 			android:scrollbars="none" />
 					
 		<!-- debug key -->
@@ -46,13 +42,20 @@
 			android:id="@+id/mainMapView" 
 	        android:layout_width="fill_parent"
 	        android:layout_height="fill_parent"
-			android:layout_weight=".5"
 			android:clickable="true"
 	        android:apiKey="0WgwZVAoUfH3ScZyVGmByjGtZKSWaZFrGO1c4Mg"
 	        />
+
+		<ImageView 
+			android:id="@+id/trafficImageView" 
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" 
+	 			android:visibility="visible"
+	 			android:layout_weight=".9"
+	 			android:layout_gravity="center_vertical|center" />
+
+
 		</FrameLayout>
-<!--	</ViewFlipper>-->
-		
 	<include 
 		layout="@layout/navbar" 
 		android:layout_height="180dip" 

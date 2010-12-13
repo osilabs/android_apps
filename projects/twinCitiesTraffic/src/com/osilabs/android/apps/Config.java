@@ -46,7 +46,43 @@ public final class Config {
 		"web~http://www.511mn.org/primary/images/all/TC_Metro.gif~ ~ ~260~105",
 		"map~trafficmap~ ~ ~ ~ "
 	};
+	
 
+	
+	// Traffic Tab
+	public static final int WEB   = 0;
+	public static final int MAP   = 1;
+	public static final int IMAGE = 2;
+	public static final String [] traffic = {
+		"Color Traffic Map",
+		"Hi-Contrast Traffic map",
+		"Alternate Map",
+		"Interactive Map"
+	};
+	public static final String [] traffic_urls = {
+		"http://www.dot.state.mn.us/tmc/trafficinfo/map/d_map.png",
+		"http://www.dot.state.mn.us/tmc/trafficinfo/map/d_map_alt.png",
+		"http://www.511mn.org/primary/images/all/TC_Metro.gif",
+		""
+	};
+	// View Types: WEB, IMAGE, MAP
+	public static final int [] traffic_viewtypes = {
+		IMAGE,
+		IMAGE,
+		IMAGE,
+		MAP
+	};
+	// Args for types:
+	// IMAGE = ()
+	// MAP = ()
+	// Web = ()
+	public static final String [][] traffic_args = {
+		{},
+		{},
+		{},
+		{}
+	};
+	
 	// Alerts
 	// "Weather 1",
 	// "Weather 2",
