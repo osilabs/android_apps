@@ -120,8 +120,6 @@ public class TCT extends MapActivity {
         //
         // Set globals
         //
-//        vfMain = (ViewFlipper) findViewById(R.id.mainViewFlipper);
-//        vfMain.
         
         // Read in manifest
 		try {
@@ -145,7 +143,6 @@ public class TCT extends MapActivity {
         MapsTab.CURRENT_INDEX = mySharedPreferences.getInt("session_map", Config.DEFAULT_MAP_INDEX);
         AlertsTab.CURRENT_INDEX = mySharedPreferences.getInt("session_alert", Config.DEFAULT_ALERT_INDEX);
         CamerasTab.CURRENT_CAMERA_URL = mySharedPreferences.getString("session_camera_1", Config.DEFAULT_CAMERA_URL);
-
         
 	    // -------------------------
 	    // Top Nav bar
@@ -229,24 +226,6 @@ public class TCT extends MapActivity {
     	mvMain.setBuiltInZoomControls(true);
     	mvMain.setTraffic(true);
 		mcMain = mvMain.getController();
-        //drawTrafficMap();
-        //gcMain = new Geocoder(this, Locale.getDefault());    
-//        Geocoder ass = new Geocoder(this, Locale.getDefault());    
-//        try {
-//        	// FIXME - move to config
-//            List<Address> addresses = ass.getFromLocationName("Minneapolis, MN", 5);
-//            if (addresses.size() > 0) {
-//                gpMain = new GeoPoint(
-//                        (int) (addresses.get(0).getLatitude() * 1E6), 
-//                        (int) (addresses.get(0).getLongitude() * 1E6));
-//                mcMain.animateTo(gpMain);
-//                mcMain.setZoom(11);
-//            	mvMain.setTraffic(true);
-//                mvMain.invalidate();
-//            }    
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
 
 	    // -------------------------
 	    // Bottom Navigation Bar
@@ -334,28 +313,12 @@ public class TCT extends MapActivity {
     	
     	// Log.d(TAG, "onStart");
 
-        mvMain.postDelayed(new Runnable() {
-            public void run() {
-                refreshTrafficMap();
-            }        	
-        }, 4000);
+    	// Force the mapview to draw it's traffic layer when it's ready. Progressive approach.
+        mvMain.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 3000);
+        mvMain.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 5000);
+        mvMain.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 15000);
 
-        mvMain.postDelayed(new Runnable() {
-            public void run() {
-                refreshTrafficMap();
-            }        	
-        }, 10000);
-
-        mvMain.postDelayed(new Runnable() {
-            public void run() {
-                refreshTrafficMap();
-            }        	
-        }, 22000);
-
-//    	mvMain.postInvalidateDelayed(2000);
     	drawTrafficMap();
-    	mvMain.postInvalidateDelayed(5000);
-//    	mvMain.postInvalidateDelayed(8000);
 
 	    //
     	// Set the current tab and load it
@@ -596,19 +559,27 @@ public class TCT extends MapActivity {
 	//
 	public void drawTrafficMap() {
         //mvMain.invalidate();
-        try {
-            Geocoder ass = new Geocoder(this, Locale.getDefault());    
-        	// FIXME - move to config
-            // FIXME - Use coordinates for efficitency
-            List<Address> addresses = ass.getFromLocationName("Minneapolis, MN", 5);
-            if (addresses.size() > 0) {
-                gpMain = new GeoPoint(
-                        (int) (addresses.get(0).getLatitude() * 1E6), 
-                        (int) (addresses.get(0).getLongitude() * 1E6));
-            }    
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Geocoder ass = new Geocoder(this, Locale.getDefault());    
+//        	// FIXME - move to config
+//            // FIXME - Use coordinates for efficitency
+//            List<Address> addresses = ass.getFromLocationName("Minneapolis, MN", 5);
+//            if (addresses.size() > 0) {
+//                gpMain = new GeoPoint(
+//                        (int) (addresses.get(0).getLatitude() * 1E6), 
+//                        (int) (addresses.get(0).getLongitude() * 1E6));
+//                mcMain.animateTo(gpMain);
+//                mcMain.setZoom(11);
+//            }    
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+        gpMain = new GeoPoint(
+        		Config.GEO_POINTS[0][0], 
+        		Config.GEO_POINTS[0][1]);
+        mcMain.animateTo(gpMain);
+        mcMain.setZoom(11);
         
         refreshTrafficMap();
 	}
@@ -616,8 +587,6 @@ public class TCT extends MapActivity {
 	
 	public void refreshTrafficMap() {
         mvMain.invalidate();
-        mcMain.animateTo(gpMain);
-        mcMain.setZoom(11);
 	}
 	//
 	// Map view map

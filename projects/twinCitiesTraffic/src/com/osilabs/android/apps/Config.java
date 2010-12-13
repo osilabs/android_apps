@@ -1,5 +1,7 @@
 package com.osilabs.android.apps;
 
+import com.google.android.maps.GeoPoint;
+
 public final class Config {
 	public static final    String DEFAULT_CAMERA_URL = "http://osilabs.com/m/mobilecontent/tctraffic5/trafficmap.php?target=4&camera=832";
 	public static final int       DEFAULT_MAP_INDEX = 0; // !!! Can't be above array size-1
@@ -17,6 +19,14 @@ public final class Config {
 	// These are the Defaults and they will be changed as prefs change. Set current node to -1 to disable.
 	public static       int[]          RADIOS_CURRENT_NODE = {24761,           24429};
 	public static final CharSequence[] RADIOS              = {"Weather Radio", "Police Scanner"};
+	
+	// Geo points
+	//lat=44.787144
+	//lon=-92.834472
+	public static		int [][] GEO_POINTS = {
+		{ 44980000, -93200000 } // Minneapolis
+	};
+//		new GeoPoint((int) (44.787144 * 1E6), (int) (-92.834472 * 1E6)),
 	
 	// Maps
 	public static final String[] maps = {
@@ -53,7 +63,24 @@ public final class Config {
 	};
 	//"http://rss.accuweather.com/rss/liveweather_rss.asp?metric=0&locCode=55401|",
 	//"http://rss.weather.com/weather/rss/local/USMN0503?cm_ven=LWO&cm_cat=rss&par=LWO_rss|",
-	
+//  //gcMain = new Geocoder(this, Locale.getDefault());    
+//  Geocoder ass = new Geocoder(this, Locale.getDefault());    
+//  try {
+//  	// FIXME - move to config
+//      List<Address> addresses = ass.getFromLocationName("Minneapolis, MN", 5);
+//      if (addresses.size() > 0) {
+//          gpMain = new GeoPoint(
+//                  (int) (addresses.get(0).getLatitude() * 1E6), 
+//                  (int) (addresses.get(0).getLongitude() * 1E6));
+//          mcMain.animateTo(gpMain);
+//          mcMain.setZoom(11);
+//      	mvMain.setTraffic(true);
+//          mvMain.invalidate();
+//      }    
+//  } catch (IOException e) {
+//      e.printStackTrace();
+//  }
+
 
 	//
 	//
