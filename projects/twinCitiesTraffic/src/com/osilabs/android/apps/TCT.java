@@ -51,6 +51,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -99,6 +100,7 @@ public class TCT extends MapActivity {
 	
 	// Tab Views
 	protected ImageView ivTraffic;
+	protected ScrollView damien;
 	
 	// Configs
 	protected ImageView ivMapMore;
@@ -129,20 +131,6 @@ public class TCT extends MapActivity {
         setContentView(R.layout.main);
         
         Log.d(TAG, "onCreate");
-        
-	    ivTraffic = (ImageView) findViewById(R.id.trafficImageView);
-	    ivTraffic.setVisibility(View.VISIBLE);
-
-//        
-//        FrameLayout frame = (FrameLayout)findViewById(R.id.trafficFrame);
-//        LayoutInflater li = (LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        ImageView iv = new ImageView(getApplicationContext());
-//        iv.setLayoutParams(new LayoutParams(
-//        		LayoutParams.FILL_PARENT,
-//        		LayoutParams.FILL_PARENT
-//            ));
-//        frame.addView( li.inflate(R.layout.view2, null) );
-//        
 
         //
         // Set globals
@@ -254,7 +242,17 @@ public class TCT extends MapActivity {
     	mvTraffic.setTraffic(true);
 		mcMain = mvTraffic.getController();
 
-	    // -------------------------
+		//
+		// Main Image View
+		//
+	    ivTraffic = (ImageView) findViewById(R.id.trafficImageView);
+	    ivTraffic.setVerticalScrollBarEnabled(true);
+	    ivTraffic.setHorizontalScrollBarEnabled(true);
+	    ivTraffic.setScaleType(ImageView.ScaleType.CENTER);
+	    damien = (ScrollView) findViewById(R.id.trafficImageViewScroll);
+	    //sv.removeAllViews();
+		
+		// -------------------------
 	    // Bottom Navigation Bar
 	    //
         
@@ -550,77 +548,18 @@ public class TCT extends MapActivity {
 				
 				switch(Config.traffic_viewtypes[ MapsTab.CURRENT_INDEX ]) {
 					case Config.IMAGE:
-						Toast.makeText(getApplicationContext(), "ivTraffic:" + Config.traffic_urls[ MapsTab.CURRENT_INDEX ], Toast.LENGTH_SHORT).show();
-						
-						ivTraffic.setVisibility(View.VISIBLE);
-						//ivTraffic.setImageURI( Uri.parse(Config.traffic_urls[ MapsTab.CURRENT_INDEX ]) );
-						//ivTraffic.setImageURI( Uri.parse("http://www.dot.state.mn.us/tmc/trafficinfo/map/d_map.png") );
-						
 						new DownloadImageTask().execute(Config.traffic_urls[ MapsTab.CURRENT_INDEX ]);
-
-						// WORKS
-//					    Bitmap bmImg;
-//			          URL myFileUrl =null;          
-//			          try {
-//			               myFileUrl= new URL(Config.traffic_urls[ MapsTab.CURRENT_INDEX ]);
-//			          } catch (MalformedURLException e) {
-//			               // TODO Auto-generated catch block
-//			               e.printStackTrace();
-//			          }
-//			          try {
-//			               HttpURLConnection conn= (HttpURLConnection)myFileUrl.openConnection();
-//			               conn.setDoInput(true);
-//			               conn.connect();
-//			               int length = conn.getContentLength();
-//			               InputStream is = conn.getInputStream();
-//			               
-//			               bmImg = BitmapFactory.decodeStream(is);
-//			               ivTraffic.setImageBitmap(bmImg);
-//			          } catch (IOException e) {
-//			               // TODO Auto-generated catch block
-//			               e.printStackTrace();
-//			          }
-					
-						
-						
-						//Bitmap bm = null;
-						//new DownloadImageTask().execute(ivTraffic, Config.traffic_urls[ MapsTab.CURRENT_INDEX ], bm);
-
 						break;
 					case Config.MAP:
 			        	mvTraffic.invalidate();
 			        	mvTraffic.setVisibility(View.VISIBLE);
-//						mvTraffic.setImageURI( Uri.parse(Config.traffic_urls[ MapsTab.CURRENT_INDEX ]) );
-//						mvTraffic.setVisibility(View.VISIBLE);
 						break;
 					case Config.WEB:
 						// FIXME - rename to wvTraffic
 			        	wvMain.setVisibility(View.VISIBLE);
 						wvMain.loadUrl("javascript: jumpTo("+CURRENT_TAB_INDEX+ "," +scrollx+ "," +scrolly+ ")");
-//						wvMain.setImageURI( Uri.parse(Config.traffic_urls[ MapsTab.CURRENT_INDEX ]) );
-//						wvMain.setVisibility(View.VISIBLE);
 						break;
 				}
-				
-//		        scrollx = MapsTab.getScrollX();
-//		        scrolly = MapsTab.getScrollY();
-//		        
-//		        String viewtype = MapsTab.getViewType();
-//
-//		        // FIXME - use a global to track the current view type and don't do anything
-//		        //  if it is already set.
-//		        if (viewtype.equals("map")) {
-//		        	// Show map
-//		    		//Toast.makeText(getApplicationContext(), "Loading map", Toast.LENGTH_SHORT).show();
-//		        	mvTraffic.invalidate();
-//		        	mvTraffic.setVisibility(View.VISIBLE);
-//		        	refreshTrafficMap();
-//		        } else if (viewtype.equals("web")) {
-//		        	// Show webview
-//		        	wvMain.setVisibility(View.VISIBLE);
-//					wvMain.loadUrl("javascript: jumpTo("+CURRENT_TAB_INDEX+ "," +scrollx+ "," +scrolly+ ")");
-//		        }
-		        //reloadViews();
 		        
 				break;
 		    case MENU_ALERTS:
@@ -641,80 +580,54 @@ public class TCT extends MapActivity {
 	
 	
 	class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-		//private ImageView iv = null;
-		//private Object[] par;
 		protected void onPreExecute() {
-			//here you can manipulate with UI like adding progressdialog
+			// add progressdialog
 		}
 
 		public Bitmap doInBackground(String... url) {
 		    Bitmap bmImg = null;
-	          URL myFileUrl =null;          
-	          try {
-	               myFileUrl= new URL( (String) url[0] );
-	          } catch (MalformedURLException e) {
-	               // TODO Auto-generated catch block
-	               e.printStackTrace();
-	          }
-	          try {
-	               HttpURLConnection conn= (HttpURLConnection)myFileUrl.openConnection();
-	               conn.setDoInput(true);
-	               conn.connect();
-	               int length = conn.getContentLength();
-	               InputStream is = conn.getInputStream();
+	        URL myFileUrl =null;          
+	        try {
+	            myFileUrl= new URL( (String) url[0] );
+	        } catch (MalformedURLException e) {
+	            e.printStackTrace();
+	        }
+	        try {
+	        	  
+	            HttpURLConnection conn= (HttpURLConnection)myFileUrl.openConnection();
+	            conn.setDoInput(true);
+	            conn.connect();
+	            int length = conn.getContentLength();
+	            InputStream is = conn.getInputStream();	               
+	            bmImg = BitmapFactory.decodeStream(is);
 	               
-	               bmImg = BitmapFactory.decodeStream(is);
-	               //ivTraffic.setImageBitmap(bmImg);
-	               //bmImg;
-	          } catch (IOException e) {
-	               // TODO Auto-generated catch block
-	               e.printStackTrace();
-	               //par = null;
-	          }
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
 	          
-	          return bmImg;
+	        return bmImg;
 			
-				/*Here you can add your image caching like storing fetched image to sd card*/
-				//par = params;
-
-	          //			try {
-//				/*
-//				par[0] //ImageView
-//				par[1] //image url
-//				par[2] //Bitmap variable
-//				*/
-//		
-//				URL aURL = new URL((String) params[1]);
-//				URLConnection conn = aURL.openConnection();
-//				conn.connect();
-//				InputStream is = conn.getInputStream();
-//				BufferedInputStream bis = new BufferedInputStream(is, 20);
-//				Bitmap bm = BitmapFactory.decodeStream(bis);
-//				params[3] = bm;
-//
-//				/*Here you can add your image caching like storing fetched image to sd card*/
-//				par = params;
-//				bis.close();
-//				is.close();
-//				return null;
-//			} catch (IOException e) {
-//				Log.e("imagetask", e.toString());
-//				return null;
-//			} catch(Exception e){
-//				Log.e("imagetask", e.toString());
-//				return null;
-//			}
-	          
+	        //Here you can add your image caching like storing fetched image to sd card
 		}
 
 		protected void onPostExecute(Bitmap bm) {
-			//here you mainpulate with ui showing image or tell user that image has been fetched if you added progressdialog
-			// now is a time to call ProgressDialogVariable.dismiss();
-			try{
-				//if(par[0] != null && par[3] != null){
-				if(bm != null){
-					//iv = (ImageView) par[0];
+			// if added progressdialog now is a time to call ProgressDialogVariable.dismiss();
+
+			try {
+				if(bm != null) {
+					ivTraffic.setVisibility(View.VISIBLE);
 					ivTraffic.setImageBitmap((Bitmap) bm);
+					damien.removeAllViews();
+					damien.addView(ivTraffic);
+					damien.invalidate();
+					
+					Toast.makeText(	getApplicationContext(), 
+							"DEBUG> Image has been reloaded", 
+							Toast.LENGTH_SHORT).show();
+				} else {
+					Toast.makeText(	getApplicationContext(), 
+									"Could not make connection, please try again.", 
+									Toast.LENGTH_SHORT).show();
 				}
 			}catch(Exception e){
 				Log.e("e", e.toString());
