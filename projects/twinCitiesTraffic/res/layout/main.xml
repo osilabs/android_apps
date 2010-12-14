@@ -13,6 +13,14 @@
 		android:layout_gravity="top"
 		android:scrollbars="none" />
 
+			
+<!--		<ImageView -->
+<!--			android:id="@+id/splash" -->
+<!--			android:layout_width="fill_parent"-->
+<!--			android:layout_height="fill_parent" -->
+<!--			android:visibility="visible"-->
+<!--			android:src="@drawable/ic_weather"/>-->
+
 	<include 
 		layout="@layout/topnav" 
 		android:layout_height="188dip" 
@@ -20,19 +28,32 @@
 		android:layout_weight=".5" 
 		android:layout_gravity="bottom" />
 
+
+
 	<FrameLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		android:id="@+id/trafficFrame" 
 		android:orientation="vertical" 
-		android:layout_width="fill_parent"
 		android:layout_weight=".5"
+		android:layout_width="fill_parent"
 		android:layout_height="fill_parent">
 		
+		<ImageView 
+			android:id="@+id/trafficImageView"
+			android:scaleType="fitStart"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent" 
+			android:visibility="visible"
+			android:src="@drawable/ic_weather"
+ 			android:layout_gravity="center_vertical|center" />
+
 		<WebView 
 			android:id="@+id/mainWebView" 
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent" 
-			android:scrollbars="none" />
+			android:scrollbars="none" 
+			android:visibility="gone"
+			/>
 					
 		<!-- debug key -->
 		<!-- 0WgwZVAoUfH3ScZyVGmByjGtZKSWaZFrGO1c4Mg -->
@@ -44,18 +65,12 @@
 	        android:layout_height="fill_parent"
 			android:clickable="true"
 	        android:apiKey="0WgwZVAoUfH3ScZyVGmByjGtZKSWaZFrGO1c4Mg"
+			android:visibility="gone"
 	        />
 
-		<ImageView 
-			android:id="@+id/trafficImageView" 
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content" 
-	 			android:visibility="visible"
-	 			android:layout_weight=".9"
-	 			android:layout_gravity="center_vertical|center" />
-
-
-		</FrameLayout>
+	</FrameLayout>
+	
+	
 	<include 
 		layout="@layout/navbar" 
 		android:layout_height="180dip" 

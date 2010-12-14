@@ -1,6 +1,13 @@
 package com.osilabs.android.apps;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.List;
 import java.util.Locale;
@@ -20,11 +27,14 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
 import android.opengl.Visibility;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -329,6 +339,10 @@ public class TCT extends MapActivity {
     	super.onStart();
     	
     	// Log.d(TAG, "onStart");
+    	
+    	// Hide the splash
+    	//ImageView splash = (ImageView) findViewById(R.id.splash);
+    	//splash.setVisibility(View.GONE);
 
     	//
         // FIXME - This should only happen if mapview is currently active
@@ -518,9 +532,7 @@ public class TCT extends MapActivity {
 		ivTraffic.setVisibility(View.INVISIBLE);
 		mvTraffic.setVisibility(View.INVISIBLE);
 		wvMain.setVisibility(View.INVISIBLE);
-		ivTraffic.setVisibility(View.VISIBLE);
-    	//mvTraffic.forceLayout();
-
+    	
     	MapsTab.hideConfiguration(ivMapMore, tvMapsPop);
         AlertsTab.hideConfiguration(ivAlertMore, tvAlertsPop);
         CamerasTab.hideConfiguration(ivCameraMore, tvCamerasPop);
@@ -539,8 +551,41 @@ public class TCT extends MapActivity {
 				switch(Config.traffic_viewtypes[ MapsTab.CURRENT_INDEX ]) {
 					case Config.IMAGE:
 						Toast.makeText(getApplicationContext(), "ivTraffic:" + Config.traffic_urls[ MapsTab.CURRENT_INDEX ], Toast.LENGTH_SHORT).show();
-						ivTraffic.setImageURI( Uri.parse(Config.traffic_urls[ MapsTab.CURRENT_INDEX ]) );
+						
 						ivTraffic.setVisibility(View.VISIBLE);
+						//ivTraffic.setImageURI( Uri.parse(Config.traffic_urls[ MapsTab.CURRENT_INDEX ]) );
+						//ivTraffic.setImageURI( Uri.parse("http://www.dot.state.mn.us/tmc/trafficinfo/map/d_map.png") );
+						
+						new DownloadImageTask().execute(Config.traffic_urls[ MapsTab.CURRENT_INDEX ]);
+
+						// WORKS
+//					    Bitmap bmImg;
+//			          URL myFileUrl =null;          
+//			          try {
+//			               myFileUrl= new URL(Config.traffic_urls[ MapsTab.CURRENT_INDEX ]);
+//			          } catch (MalformedURLException e) {
+//			               // TODO Auto-generated catch block
+//			               e.printStackTrace();
+//			          }
+//			          try {
+//			               HttpURLConnection conn= (HttpURLConnection)myFileUrl.openConnection();
+//			               conn.setDoInput(true);
+//			               conn.connect();
+//			               int length = conn.getContentLength();
+//			               InputStream is = conn.getInputStream();
+//			               
+//			               bmImg = BitmapFactory.decodeStream(is);
+//			               ivTraffic.setImageBitmap(bmImg);
+//			          } catch (IOException e) {
+//			               // TODO Auto-generated catch block
+//			               e.printStackTrace();
+//			          }
+					
+						
+						
+						//Bitmap bm = null;
+						//new DownloadImageTask().execute(ivTraffic, Config.traffic_urls[ MapsTab.CURRENT_INDEX ], bm);
+
 						break;
 					case Config.MAP:
 			        	mvTraffic.invalidate();
@@ -595,8 +640,87 @@ public class TCT extends MapActivity {
 	}
 	
 	
-	
-	
+	class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+		//private ImageView iv = null;
+		//private Object[] par;
+		protected void onPreExecute() {
+			//here you can manipulate with UI like adding progressdialog
+		}
+
+		public Bitmap doInBackground(String... url) {
+		    Bitmap bmImg = null;
+	          URL myFileUrl =null;          
+	          try {
+	               myFileUrl= new URL( (String) url[0] );
+	          } catch (MalformedURLException e) {
+	               // TODO Auto-generated catch block
+	               e.printStackTrace();
+	          }
+	          try {
+	               HttpURLConnection conn= (HttpURLConnection)myFileUrl.openConnection();
+	               conn.setDoInput(true);
+	               conn.connect();
+	               int length = conn.getContentLength();
+	               InputStream is = conn.getInputStream();
+	               
+	               bmImg = BitmapFactory.decodeStream(is);
+	               //ivTraffic.setImageBitmap(bmImg);
+	               //bmImg;
+	          } catch (IOException e) {
+	               // TODO Auto-generated catch block
+	               e.printStackTrace();
+	               //par = null;
+	          }
+	          
+	          return bmImg;
+			
+				/*Here you can add your image caching like storing fetched image to sd card*/
+				//par = params;
+
+	          //			try {
+//				/*
+//				par[0] //ImageView
+//				par[1] //image url
+//				par[2] //Bitmap variable
+//				*/
+//		
+//				URL aURL = new URL((String) params[1]);
+//				URLConnection conn = aURL.openConnection();
+//				conn.connect();
+//				InputStream is = conn.getInputStream();
+//				BufferedInputStream bis = new BufferedInputStream(is, 20);
+//				Bitmap bm = BitmapFactory.decodeStream(bis);
+//				params[3] = bm;
+//
+//				/*Here you can add your image caching like storing fetched image to sd card*/
+//				par = params;
+//				bis.close();
+//				is.close();
+//				return null;
+//			} catch (IOException e) {
+//				Log.e("imagetask", e.toString());
+//				return null;
+//			} catch(Exception e){
+//				Log.e("imagetask", e.toString());
+//				return null;
+//			}
+	          
+		}
+
+		protected void onPostExecute(Bitmap bm) {
+			//here you mainpulate with ui showing image or tell user that image has been fetched if you added progressdialog
+			// now is a time to call ProgressDialogVariable.dismiss();
+			try{
+				//if(par[0] != null && par[3] != null){
+				if(bm != null){
+					//iv = (ImageView) par[0];
+					ivTraffic.setImageBitmap((Bitmap) bm);
+				}
+			}catch(Exception e){
+				Log.e("e", e.toString());
+			}
+		}
+	}	
 	
 	
 	//----------------------------------------------------------
