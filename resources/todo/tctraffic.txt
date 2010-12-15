@@ -2,9 +2,15 @@
 
 >> STM <<
 
-* Use imageviews for all images
+* make light gray shading behind selected tabs
 
-* Switching from color map (image view) to mapview map doesn't cause traffic overlay to force draw.
+* Add those nice fade away scrollbars to webview
+
+* Change out alert icon for calendar, move traffic alerts to traffic tab and make it work with webview and rss.
+
+* All the rss feeds say "Nothing to report" when nothing. Make it so weather/alert/information feeds use different messages.
+
+* Go thorugh and make sure the refresh button refreshes all incarnations of all views.
 
 >> TEST <<
 * Check how refresh works with maps
@@ -25,7 +31,8 @@
 
 >> BUGS <<
 * Map is re-centering when i retrn to the tab. also doesn't paint traffic until i tap or move it
-
+* Was on traffic tab:color map index. Selected interactive map index, did not ever paint the traffic layer. May need a longer timer or invalidate upon leaving the view or invalidate upon selecting the tab or upon showing the view.
+* Switching from color map (image view) to mapview map doesn't cause traffic overlay to force draw.
 
 >> MISC <<
 * See proandrod2 book p274 for geocoding with threads

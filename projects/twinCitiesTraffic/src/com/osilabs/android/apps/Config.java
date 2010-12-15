@@ -83,9 +83,6 @@ public final class Config {
 		{}
 	};
 	
-	// Alerts
-	// "Weather 1",
-	// "Weather 2",
 	public static final String[] alerts = {
 		"Driving Alerts",
 		"Events Today",
@@ -93,30 +90,32 @@ public final class Config {
 	};
 	// Second param can be 'uri|(titleonly)|(link)'
 	public static final String[] alerts_src = {
-		"http://www.dot.state.mn.us/tmc/trafficinfo/incidents.rss||",
-		"http://www.citypages.com/syndication/events/||link",
-		"http://feeds.weatherbug.com/rss.aspx?zipcode=55401&feed=currtxt,fcsttxt&zcode=z4641||"
+		"rss|http://www.dot.state.mn.us/tmc/trafficinfo/incidents.rss||",
+		"{TODAY}",
+		"{WEATHER}",
 	};
-	//"http://rss.accuweather.com/rss/liveweather_rss.asp?metric=0&locCode=55401|",
-	//"http://rss.weather.com/weather/rss/local/USMN0503?cm_ven=LWO&cm_cat=rss&par=LWO_rss|",
-//  //gcMain = new Geocoder(this, Locale.getDefault());    
-//  Geocoder ass = new Geocoder(this, Locale.getDefault());    
-//  try {
-//  	// FIXME - move to config
-//      List<Address> addresses = ass.getFromLocationName("Minneapolis, MN", 5);
-//      if (addresses.size() > 0) {
-//          gpMain = new GeoPoint(
-//                  (int) (addresses.get(0).getLatitude() * 1E6), 
-//                  (int) (addresses.get(0).getLongitude() * 1E6));
-//          mcMain.animateTo(gpMain);
-//          mcMain.setZoom(11);
-//      	mvMain.setTraffic(true);
-//          mvMain.invalidate();
-//      }    
-//  } catch (IOException e) {
-//      e.printStackTrace();
-//  }
 
+//	public static final String[] today = {
+//		"City Pages A List",
+//		"Star Tribune Dining"
+//	};
+	// '(rss,atom)|uri|(titleonly)|(link)'
+	public static final String[] today_values = {
+		"rss|http://www.citypages.com/syndication/events/||link",
+		"rss|http://www.startribune.com/entertainment/dining/index.rss2||link"
+	};
+
+//	public static final String[] weather = {
+//		"Weather Bug",
+//		"Accuweather",
+//		"Weather.com"
+//	};
+	// '(rss,atom)|uri|(titleonly)|(link)'
+	public static final String[] weather_values = {
+		"rss|http://feeds.weatherbug.com/rss.aspx?zipcode=55401&feed=currtxt,fcsttxt&zcode=z4641||",
+		"rss|http://rss.accuweather.com/rss/liveweather_rss.asp?metric=0&locCode=55401||",
+		"rss|http://rss.weather.com/weather/rss/local/USMN0503?cm_ven=LWO&cm_cat=rss&par=LWO_rss||"
+	};
 
 	//
 	//

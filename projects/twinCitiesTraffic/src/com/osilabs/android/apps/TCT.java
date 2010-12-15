@@ -60,9 +60,13 @@ import android.widget.ViewFlipper;
 public class TCT extends MapActivity {
 
 	//
+	// Global context - used by static classes to get at context
+	//
+	public static Activity me = null;
+	
+	//
 	// Consts
 	//
-
 	private static final String TAG = "** osilabs.com **";
 
 	private static final int MENU_TRAFFIC               = 0;
@@ -132,6 +136,9 @@ public class TCT extends MapActivity {
         
         Log.d(TAG, "onCreate");
 
+        // Set global context;
+        me = this;
+        
         //
         // Set globals
         //
@@ -321,7 +328,7 @@ public class TCT extends MapActivity {
                 .setItems(Config.RADIOS, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
     		    		// Check prefs for changed radios.
-    					setCurrentRadios();
+    					//setCurrentRadios();
 
 						launchScanner( Config.RADIOS_CURRENT_NODE[which]);
                     }
@@ -358,6 +365,7 @@ public class TCT extends MapActivity {
         // It's going to take a second to load
 		Toast.makeText(this, R.string.txt_loading, Toast.LENGTH_LONG).show();
 		
+		setCurrentFavorites();
     	setViewForCurrentTab(CURRENT_TAB_INDEX);
 		reloadViews();
     }
@@ -461,6 +469,8 @@ public class TCT extends MapActivity {
             break;
             
         case INTENT_RESULT_CODE_PREFS:
+        	setCurrentFavorites();
+        	
 			Toast.makeText(getApplicationContext(), 
 					R.string.txt_prefs_saved
 					, Toast.LENGTH_LONG).show();
@@ -471,23 +481,57 @@ public class TCT extends MapActivity {
 	    }
 	}
 
-
-    
-    protected void setCurrentRadios() {
+    /**
+     * This gets called in onStart and when the prefs intent returns. 
+     * Should cover making sure the local globals always have the current
+     * prefs.
+     */
+    protected void setCurrentFavorites() {
         // Log.d(TAG, "setCurrentRadios");
 
     	// Set Global with current prefs
     	// If this namespace path doesn't end in '_preferences' this won't work.
     	mySharedPreferences = getSharedPreferences(Config.NAMESPACE + "_preferences", 0);
 
-		String wr_saved = getApplicationContext().getResources().getString(R.string.pref_weather_radios_selected);
+    	Context c = getApplicationContext();
+    	
+		String wr_saved = c.getResources().getString(R.string.pref_weather_radios_selected);
 		Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER] = Integer.parseInt(mySharedPreferences
 	      .getString(wr_saved, Integer.toString(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER])));
 
-		String pr_saved = getApplicationContext().getResources().getString(R.string.pref_police_radios_selected);
+		String pr_saved = c.getResources().getString(R.string.pref_police_radios_selected);
 		Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE] = Integer.parseInt(mySharedPreferences
 	      .getString(pr_saved, Integer.toString(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE])));
+
+		// today feed
+		String tf_saved = c.getResources().getString(R.string.pref_today_feed_selected);
+		AlertsTab.CURRENT_TODAY_FEED_INDEX = Integer.parseInt(mySharedPreferences
+			.getString(tf_saved, "0"));
+
+		// weather feed
+		//String wf_saved = c.getResources().getString(R.string.pref_weather_feed_selected);
+		//AlertsTab.CURRENT_WEATHER_FEED_INDEX = mySharedPreferences.getInt(wf_saved, 0);
+		String wf_saved = c.getResources().getString(R.string.pref_weather_feed_selected);
+		AlertsTab.CURRENT_WEATHER_FEED_INDEX = Integer.parseInt(mySharedPreferences
+			.getString(wf_saved, "0"));
+
     }
+    
+//    protected void setCurrentRadios() {
+//        // Log.d(TAG, "setCurrentRadios");
+//
+//    	// Set Global with current prefs
+//    	// If this namespace path doesn't end in '_preferences' this won't work.
+//    	mySharedPreferences = getSharedPreferences(Config.NAMESPACE + "_preferences", 0);
+//
+//		String wr_saved = getApplicationContext().getResources().getString(R.string.pref_weather_radios_selected);
+//		Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER] = Integer.parseInt(mySharedPreferences
+//	      .getString(wr_saved, Integer.toString(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER])));
+//
+//		String pr_saved = getApplicationContext().getResources().getString(R.string.pref_police_radios_selected);
+//		Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE] = Integer.parseInt(mySharedPreferences
+//	      .getString(pr_saved, Integer.toString(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE])));
+//    }
     
 	public void colorTheCurrentTab() {
         // Log.d(TAG, "colorTheCurrentTab");
@@ -640,23 +684,6 @@ public class TCT extends MapActivity {
 	// Map view map
 	//
 	public void drawTrafficMap() {
-        //mvTraffic.invalidate();
-//        try {
-//            Geocoder ass = new Geocoder(this, Locale.getDefault());    
-//        	// FIXME - move to config
-//            // FIXME - Use coordinates for efficitency
-//            List<Address> addresses = ass.getFromLocationName("Minneapolis, MN", 5);
-//            if (addresses.size() > 0) {
-//                gpMain = new GeoPoint(
-//                        (int) (addresses.get(0).getLatitude() * 1E6), 
-//                        (int) (addresses.get(0).getLongitude() * 1E6));
-//                mcMain.animateTo(gpMain);
-//                mcMain.setZoom(11);
-//            }    
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
         gpMain = new GeoPoint(
         		Config.GEO_POINTS[0][0], 
         		Config.GEO_POINTS[0][1]);
@@ -814,12 +841,12 @@ public class TCT extends MapActivity {
 		
 		switch (item.getItemId()) {
 			case R.id.menu_scanner_police:
-				setCurrentRadios();
+				//setCurrentRadios();
 				launchScanner(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE]);
 		    	return true;
 	
 			case R.id.menu_scanner_weather:
-				setCurrentRadios();
+				//setCurrentRadios();
 				launchScanner(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER]);
 		    	return true;
 				
@@ -938,3 +965,37 @@ public class TCT extends MapActivity {
     // -----------------------------------------------
 
 }
+
+
+
+
+
+
+
+
+
+
+
+//
+// Geocodes
+//
+////gcMain = new Geocoder(this, Locale.getDefault());    
+//Geocoder ass = new Geocoder(this, Locale.getDefault());    
+//try {
+//	// FIXME - move to config
+//  List<Address> addresses = ass.getFromLocationName("Minneapolis, MN", 5);
+//  if (addresses.size() > 0) {
+//      gpMain = new GeoPoint(
+//              (int) (addresses.get(0).getLatitude() * 1E6), 
+//              (int) (addresses.get(0).getLongitude() * 1E6));
+//      mcMain.animateTo(gpMain);
+//      mcMain.setZoom(11);
+//  	mvMain.setTraffic(true);
+//      mvMain.invalidate();
+//  }    
+//} catch (IOException e) {
+//  e.printStackTrace();
+//}
+
+
+
