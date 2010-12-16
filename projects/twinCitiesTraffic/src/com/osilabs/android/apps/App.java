@@ -360,9 +360,13 @@ public class App extends MapActivity {
     	// Force the mapview to draw it's traffic layer when it's ready. Progressive approach.
         mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 3000);
         mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 5000);
+        mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 10000);
         mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 15000);
     	drawTrafficMap();
 
+    	// Redraw mapview
+    	mvTraffic.invalidate();
+    	
 	    //
     	// Set the current tab and load it
     	//
@@ -601,6 +605,7 @@ public class App extends MapActivity {
 						break;
 					case Config.MAP:
 			        	mvTraffic.invalidate();
+			        	drawTrafficMap();
 			        	mvTraffic.setVisibility(View.VISIBLE);
 						break;
 					case Config.WEB:
