@@ -335,7 +335,7 @@ public class App extends MapActivity {
     		    		// Check prefs for changed radios.
     					//setCurrentRadios();
 
-						launchScanner( Config.RADIOS_CURRENT_NODE[which]);
+                    	ScannerRadio.launchScanner( Config.RADIOS_CURRENT_NODE[which]);
                     }
                 }).create();
 				
@@ -847,12 +847,12 @@ public class App extends MapActivity {
 		switch (item.getItemId()) {
 			case R.id.menu_scanner_police:
 				//setCurrentRadios();
-				launchScanner(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE]);
+				ScannerRadio.launchScanner(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE]);
 		    	return true;
 	
 			case R.id.menu_scanner_weather:
 				//setCurrentRadios();
-				launchScanner(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER]);
+				ScannerRadio.launchScanner(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER]);
 		    	return true;
 				
 			case R.id.menu_refresh:
@@ -912,72 +912,6 @@ public class App extends MapActivity {
 	
     
 	
-	
-	
-	// -----------------------------------------------
-	// Scanner Radio
-	// 
-		
-	// I tried moving it to it's own class but need to watch for having pass
-	//  context and creating memory leaks. see"
-	// http://developer.android.com/resources/articles/avoiding-memory-leaks.html
-	
-	public static final String SCANNER_RADIO_NAMESPACE = "net.gordonedwards.scannerradio";
-	public static final String SCANNER_RADIO_ACTION = "ACTION_PLAY_SCANNER";
-	
-	public static boolean isIntentAvailable(Context context, String action) {
-	    final PackageManager packageManager = context.getPackageManager();
-	    final Intent intent = new Intent(action);
-	    List<ResolveInfo> list =
-	        packageManager.queryIntentActivities(intent,
-	                PackageManager.MATCH_DEFAULT_ONLY);
-	    return list.size() > 0;
-	}
-	
-	public void launchScanner(int which_scanner) {
-		// Log.d(TAG, "Scanner node: " + Integer.toString(which_scanner));
-		
-		boolean scannerAvailable = isIntentAvailable(this,
-				SCANNER_RADIO_NAMESPACE + ".intent.action." + SCANNER_RADIO_ACTION);
-
-		// FIXME - put these strings in file and move this to own scanner radio class
-		
-		if (scannerAvailable) {
-			Intent intent = new Intent(SCANNER_RADIO_NAMESPACE + ".intent.action." + SCANNER_RADIO_ACTION);
-			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			intent.putExtra("node", which_scanner);
-			startActivity(intent);
-		} else {
-		    AlertDialog scannerAlert = new AlertDialog.Builder(this).create();
-	        scannerAlert.setTitle(R.string.app_name);
-	        scannerAlert.setMessage("To use this feature, install the \"Scanner Radio\" app from the market");
-	        scannerAlert.setIcon(R.drawable.ic_launcher); 
-	        scannerAlert.setButton("Get the plugin", new DialogInterface.OnClickListener() {
-	        	public void onClick(DialogInterface dialog, int which) {
-	    			Intent intent = new Intent(
-	    					Intent.ACTION_VIEW,
-	    					Uri.parse("market://details?id=com.scannerradio"));
-	    			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-	    			startActivity(intent);
-	            } 
-	        });
-	        scannerAlert.show();
-		}
-	}
-
-	// 
-	// Scanner Radio
-    // -----------------------------------------------
-
-}
-
-
-
-
-
-
-
-
 
 
 
