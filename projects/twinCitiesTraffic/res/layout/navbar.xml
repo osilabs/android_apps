@@ -45,7 +45,7 @@
 				android:layout_height="fill_parent" 
 				android:textSize="24sp" 
 				android:textColor="#999999"
-				android:text="Cameras..."
+				android:text="Cameras"
 				android:visibility="gone" 
 				/>
 								
@@ -65,7 +65,7 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content" 
 				android:textSize="24sp" 
-				android:text="Alerts..."
+				android:text="Today"
 				android:textColor="#999999" 
 				/>
 								
@@ -85,7 +85,7 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content" 
 				android:textSize="24sp" 
-				android:text="Maps..."
+				android:text="Traffic"
 				android:textColor="#999999" 
 				/>
 

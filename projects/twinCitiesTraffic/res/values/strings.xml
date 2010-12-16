@@ -29,8 +29,8 @@
 	<string name="txt_btn_more">More...</string>
 	<string name="txt_prefs_saved">Preferences saved</string>
 	<string name="txt_camera_picker_noop">Camera may have moved, please try again</string>
-	<string name="txt_map_popup_title">Maps</string>
-	<string name="txt_calendar_popup_title">Calendars</string>
+	<string name="txt_map_popup_title">Traffic</string>
+	<string name="txt_calendar_popup_title">Right Now</string>
 
     <string name="menu_prefs">Settings</string>
     <string name="menu_refresh">Refresh</string>

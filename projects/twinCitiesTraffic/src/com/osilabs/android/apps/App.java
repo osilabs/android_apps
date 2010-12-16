@@ -396,7 +396,8 @@ public class App extends MapActivity {
 
         AlertDialog alert = new AlertDialog.Builder(this)
         .setTitle(R.string.txt_map_popup_title)
-        .setItems(Config.maps, new DialogInterface.OnClickListener() {
+        .setIcon(R.drawable.ic_police)
+        .setItems(Config.traffic, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
             	MapsTab.CURRENT_INDEX = which;
     			Toast.makeText(getApplicationContext(), 
@@ -422,6 +423,7 @@ public class App extends MapActivity {
 
 		AlertDialog alert = new AlertDialog.Builder(this)
         .setTitle(R.string.txt_calendar_popup_title)
+        .setIcon(R.drawable.ic_menu_today)
         .setItems(Config.calendar, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
             	CalendarTab.CURRENT_INDEX = which;
@@ -590,8 +592,6 @@ public class App extends MapActivity {
 		switch (CURRENT_TAB_INDEX) {
 			case MENU_TRAFFIC:
 				//CURRENT_TAB_INDEX = INDEX_TRAFFIC; // This can go
-		  
-
 				
 				MapsTab.showConfiguration();
 				
@@ -908,7 +908,7 @@ public class App extends MapActivity {
     // Options Menu
     // -----------------------------------------------
 
-	
+}
 	
     
 	

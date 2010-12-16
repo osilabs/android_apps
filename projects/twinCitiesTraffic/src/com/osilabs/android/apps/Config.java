@@ -55,7 +55,7 @@ public final class Config {
 	public static final int IMAGE = 2;
 	public static final String [] traffic = {
 		"Color Traffic Map",
-		"Hi-Contrast Traffic map",
+		"Hi-Contrast Traffic Map",
 		"Alternate Map",
 		"Interactive Map"
 	};

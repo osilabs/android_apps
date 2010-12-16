@@ -20,17 +20,17 @@
 				/>
 
 			<ImageView
-		  		android:id="@+id/launcher_calendar"
-	 			android:src="@drawable/ic_menu_today"
+		  		android:id="@+id/launcher_cameras"
+	 			android:src="@drawable/ic_menu_camera"
 				android:layout_width="wrap_content" 
 				android:layout_height="wrap_content"
 				android:layout_marginBottom="-2dip" 
 				android:layout_gravity="bottom"
 				/>
-				
+
 			<ImageView
-		  		android:id="@+id/launcher_cameras"
-	 			android:src="@drawable/ic_menu_camera"
+		  		android:id="@+id/launcher_calendar"
+	 			android:src="@drawable/ic_menu_today"
 				android:layout_width="wrap_content" 
 				android:layout_height="wrap_content"
 				android:layout_marginBottom="-2dip" 

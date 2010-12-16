@@ -2,7 +2,9 @@
 
 >> STM <<
 
-* Add those nice fade away scrollbars to webview
+* Make sure refresh icon works.
+
+* Fis scrollview variable name of damien
 
 * Change out alert icon for calendar, move traffic alerts to traffic tab and make it work with webview and rss.
 
@@ -10,6 +12,7 @@
 
 * Go thorugh and make sure the refresh button refreshes all incarnations of all views.
 
+* Add phone numbers tab. phone icon. 
 >> TEST <<
 * Check how refresh works with maps
 * When you start the app, make sure the current map comes up and doesnt load mapview if doesn't have to.
@@ -35,7 +38,7 @@
 >> MISC <<
 * See proandrod2 book p274 for geocoding with threads
 * See proandrod2 book p275/6 for progress dialog
-
+* Longpress map menu: 'Navigate to Here', 'Search Near Here'
 * Make scrollbar on webview so it shows while scrolling then hides when not, when looking at rss feeds.
 
 * Make shared help
