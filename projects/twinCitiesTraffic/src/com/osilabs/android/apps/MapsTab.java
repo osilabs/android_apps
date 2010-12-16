@@ -43,7 +43,7 @@ public class MapsTab {
 //		return Config.maps[CURRENT_INDEX];
 //	}
 	public static String getReloadURLParts() {
-		if (CURRENT_INDEX > (Config.maps_urls.length - 1)) CURRENT_INDEX = 0;
+		if (CURRENT_INDEX > (Config.traffic_urls.length - 1)) CURRENT_INDEX = 0;
 		
 		String query_string= "";
 		String viewtype = MapsTab.getViewType();
@@ -55,7 +55,7 @@ public class MapsTab {
 		else if (viewtype.equals("web")) {
 			// Webveiew needs map passed in
 			query_string 
-				= "&map=" + URLEncoder.encode(Config.maps_urls[CURRENT_INDEX])
+				= "&map=" + URLEncoder.encode(Config.traffic_urls[CURRENT_INDEX])
 				+ "&mapscrollx="
 				+ MapsTab.getScrollX()
 				+ "&mapscrolly="
@@ -83,16 +83,16 @@ public class MapsTab {
 		App.tvMapsPop.setVisibility(TextView.VISIBLE);
 	}
 	public static String getViewType() {
-		String[] as = Config.maps_urls[CURRENT_INDEX].split("~");
+		String[] as = Config.traffic_urls[CURRENT_INDEX].split("~");
 		return as[TYPE];
 	}
 	public static String getScrollX() {
 		// FIXME - cache these so they are calc'd all the time
-		String[] as = Config.maps_urls[CURRENT_INDEX].split("~");
+		String[] as = Config.traffic_urls[CURRENT_INDEX].split("~");
 		return as[SCROLLX];
 	}
 	public static String getScrollY() {
-		String[] as = Config.maps_urls[CURRENT_INDEX].split("~");
+		String[] as = Config.traffic_urls[CURRENT_INDEX].split("~");
 		return as[SCROLLY];
 	}
 }

@@ -27,25 +27,25 @@ public final class Config {
 		{ 44980000, -93200000 } // Minneapolis
 	};
 //		new GeoPoint((int) (44.787144 * 1E6), (int) (-92.834472 * 1E6)),
-	
-	// Maps
-	public static final String[] maps = {
-		"Color Traffic Map",
-		"Hi-Contrast Traffic map",
-		"Alternate Map",
-		"Interactive Map"
-	};
-	
-	// viewtype|uri|width|height|scrollx|scrolly - Later these can be programmatically defined 
-	//  for changes in orientation and screens
-	public static final String[] maps_urls = {
-		// Must not use '|' it won't work with javas split(). Must also have
-		//  a space for missing chars.
-		"web~http://www.dot.state.mn.us/tmc/trafficinfo/map/d_map.png~500~ ~55~145",
-		"web~http://www.dot.state.mn.us/tmc/trafficinfo/map/d_map_alt.png~500~ ~55~70",
-		"web~http://www.511mn.org/primary/images/all/TC_Metro.gif~ ~ ~260~105",
-		"map~trafficmap~ ~ ~ ~ "
-	};
+//	
+//	// Maps
+//	public static final String[] maps = {
+//		"Color Traffic Map",
+//		"Hi-Contrast Traffic map",
+//		"Alternate Map",
+//		"Interactive Map"
+//	};
+//	
+//	// viewtype|uri|width|height|scrollx|scrolly - Later these can be programmatically defined 
+//	//  for changes in orientation and screens
+//	public static final String[] maps_urls = {
+//		// Must not use '|' it won't work with javas split(). Must also have
+//		//  a space for missing chars.
+//		"web~http://www.dot.state.mn.us/tmc/trafficinfo/map/d_map.png~500~ ~55~145",
+//		"web~http://www.dot.state.mn.us/tmc/trafficinfo/map/d_map_alt.png~500~ ~55~70",
+//		"web~http://www.511mn.org/primary/images/all/TC_Metro.gif~ ~ ~260~105",
+//		"map~trafficmap~ ~ ~ ~ "
+//	};
 	
 
 	
@@ -85,14 +85,18 @@ public final class Config {
 	
 	public static final String[] calendar = {
 		"Driving Alerts",
-		"Today I May ...", // FIXME - For different themes this can use a different wording
-		"Weather Report"
+		"Weather Report",
+		"Food",
+		"Music",
+		"Things To Do", // FIXME - For different themes this can use a different wording
 	};
 	// Second param can be 'uri|(titleonly)|(link)'
 	public static final String[] calendar_src = {
 		"rss|http://www.dot.state.mn.us/tmc/trafficinfo/incidents.rss||",
-		"{TODAY}",
 		"{WEATHER}",
+		"rss|http://twincities.metromix.com/rss/popup/restaurants_daily_picks||",
+		"rss|http://twincities.metromix.com/rss/popup/music_headlines||",
+		"{TODAY}",
 	};
 
 //	public static final String[] today = {
