@@ -2,8 +2,6 @@
 
 >> STM <<
 
-* make light gray shading behind selected tabs
-
 * Add those nice fade away scrollbars to webview
 
 * Change out alert icon for calendar, move traffic alerts to traffic tab and make it work with webview and rss.

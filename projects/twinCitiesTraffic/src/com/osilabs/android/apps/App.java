@@ -42,6 +42,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.webkit.JsResult;
@@ -230,6 +231,9 @@ public class App extends MapActivity {
         // Enable jsi
         wvMain.addJavascriptInterface(new JsiJavaScriptInterface(this), "jsi");
     	wvMain.setVisibility(View.INVISIBLE);
+		wvMain.setScrollBarStyle(WebView.SCROLLBARS_INSIDE_OVERLAY);
+    	wvMain.setVerticalScrollBarEnabled(true);
+    	wvMain.setVerticalFadingEdgeEnabled(true);
 
 		//
 		// Ad banner Web View
