@@ -13,7 +13,7 @@
     <string name="pref_weather_feed_default">0</string>
     <string name="session_camera_1">http://osilabs.com/m/mobilecontent/tctraffic5/trafficmap.php?target=4&amp;camera=832</string>
     <string name="session_map">0</string>
-    <string name="session_alert">0</string>
+    <string name="session_calendar">0</string>
     <string name="pref_police_radios_dialog_title">Set Favorite Police Scanner</string>
     <string name="pref_weather_radios_dialog_title">Set Favorite Weather Radio</string>
     <string name="pref_today_feed_dialog_title">Set Today\'s Events Source</string>
@@ -30,7 +30,7 @@
 	<string name="txt_prefs_saved">Preferences saved</string>
 	<string name="txt_camera_picker_noop">Camera may have moved, please try again</string>
 	<string name="txt_map_popup_title">Maps</string>
-	<string name="txt_alert_popup_title">Alerts</string>
+	<string name="txt_calendar_popup_title">Calendars</string>
 
     <string name="menu_prefs">Settings</string>
     <string name="menu_refresh">Refresh</string>

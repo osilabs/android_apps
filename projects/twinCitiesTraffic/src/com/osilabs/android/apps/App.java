@@ -57,7 +57,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
-public class TCT extends MapActivity {
+public class App extends MapActivity {
 
 	//
 	// Global context - used by static classes to get at context
@@ -70,10 +70,10 @@ public class TCT extends MapActivity {
 	private static final String TAG = "** osilabs.com **";
 
 	private static final int MENU_TRAFFIC               = 0;
-	private static final int MENU_ALERTS                = 1;
+	private static final int MENU_CALENDAR                = 1;
 	private static final int MENU_CAMERAS               = 2;
 	private static final int INDEX_TRAFFIC              = 0;
-	private static final int INDEX_ALERTS               = 1;
+	protected static final int INDEX_CALENDAR               = 1;
 	private static final int INDEX_CAMERAS              = 2;
 	private static final int INTENT_RESULT_CODE_CAMERA_PICKER= 22;
 	private static final int INTENT_RESULT_CODE_PREFS   = 33;
@@ -98,23 +98,23 @@ public class TCT extends MapActivity {
 	// Navbar components
 
 	// Tabs
-	protected ImageView ivMapsTab;
-	protected ImageView ivAlertsTab;
-	protected ImageView ivCamerasTab;
+	protected static ImageView ivMapsTab;
+	protected static ImageView ivCalendarTab;
+	protected static ImageView ivCamerasTab;
 	
 	// Tab Views
 	protected ImageView ivTraffic;
 	protected ScrollView damien;
 	
 	// Configs
-	protected ImageView ivMapMore;
-	protected TextView  tvMapsPop;
+	protected static ImageView ivMapsMore;
+	protected static TextView  tvMapsPop;
 	
-	protected ImageView ivAlertMore;
-	protected TextView  tvAlertsPop;
+	protected static ImageView ivCalendarMore;
+	protected static TextView  tvCalendarPop;
 	
-	protected ImageView ivCameraMore;
-	protected TextView  tvCamerasPop;
+	protected static ImageView ivCamerasMore;
+	protected static TextView  tvCamerasPop;
 
 	// Misc icons
 	protected ImageView ivRefresh;
@@ -163,7 +163,7 @@ public class TCT extends MapActivity {
         CURRENT_TAB_INDEX = mySharedPreferences.getInt("session_current_view", 2);
         
         MapsTab.CURRENT_INDEX = mySharedPreferences.getInt("session_map", Config.DEFAULT_MAP_INDEX);
-        AlertsTab.CURRENT_INDEX = mySharedPreferences.getInt("session_alert", Config.DEFAULT_ALERT_INDEX);
+        CalendarTab.CURRENT_INDEX = mySharedPreferences.getInt("session_calendar", Config.DEFAULT_CALENDAR_INDEX);
         CamerasTab.CURRENT_CAMERA_URL = mySharedPreferences.getString("session_camera_1", Config.DEFAULT_CAMERA_URL);
         
 	    // -------------------------
@@ -177,18 +177,17 @@ public class TCT extends MapActivity {
 				setViewForCurrentTab(INDEX_TRAFFIC);
 			}
 		});
+		MapsTab.init();
 
-	    ivAlertsTab = (ImageView) findViewById(R.id.launcher_alerts);
-	    // This particular icon is much whiter than the others so i am making it darker
-	    //  with the alpha.
-	    ivAlertsTab.setAlpha(AlertsTab.ALPHA_OFF);
-	    ivAlertsTab.setOnClickListener(new View.OnClickListener() {
+		ivCalendarTab = (ImageView) findViewById(R.id.launcher_calendar);
+		App.ivCalendarTab.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				setViewForCurrentTab(INDEX_ALERTS);
+				setViewForCurrentTab(INDEX_CALENDAR);
 			}
 		});
-
+		CalendarTab.init();
+		
 	    // Set up camera tab
 	    ivCamerasTab = (ImageView) findViewById(R.id.launcher_cameras);
 	    ivCamerasTab.setOnClickListener(new View.OnClickListener() {
@@ -197,6 +196,8 @@ public class TCT extends MapActivity {
 				setViewForCurrentTab(INDEX_CAMERAS);
 			}
 		});
+		CamerasTab.init();
+
 
 	    ivRefresh = (ImageView) findViewById(R.id.navbar_refresh);
 	    // Give it a nice blue color. SRC_ATOP means color the icon, not
@@ -264,9 +265,9 @@ public class TCT extends MapActivity {
 	    //
         
         // Maps config...
-		ivMapMore = (ImageView) findViewById(R.id.maps_config_pop_icon);
-		ivMapMore.setColorFilter(getResources().getColor(R.color.lighterDarkPowderBlue), PorterDuff.Mode.SRC_ATOP);
-		ivMapMore.setOnClickListener(new View.OnClickListener() {
+		ivMapsMore = (ImageView) findViewById(R.id.maps_config_pop_icon);
+		ivMapsMore.setColorFilter(getResources().getColor(R.color.lighterDarkPowderBlue), PorterDuff.Mode.SRC_ATOP);
+		ivMapsMore.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				launchMapPicker();
@@ -281,28 +282,28 @@ public class TCT extends MapActivity {
 			}
 		});
         
-        // Alerts config...
-		ivAlertMore = (ImageView) findViewById(R.id.alerts_config_pop_icon);
-		ivAlertMore.setColorFilter(getResources().getColor(R.color.lighterDarkPowderBlue), PorterDuff.Mode.SRC_ATOP);
-		ivAlertMore.setOnClickListener(new View.OnClickListener() {
+        // Calendar config...
+		ivCalendarMore = (ImageView) findViewById(R.id.calendar_config_pop_icon);
+		ivCalendarMore.setColorFilter(getResources().getColor(R.color.lighterDarkPowderBlue), PorterDuff.Mode.SRC_ATOP);
+		ivCalendarMore.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				launchAlertPicker();
+				launchCalendarPicker();
 			}
 		});
-    	tvAlertsPop = (TextView) findViewById(R.id.alerts_config_pop);
-    	tvAlertsPop.setTextColor(getResources().getColor(R.color.lighterDarkPowderBlue));
-    	tvAlertsPop.setOnClickListener(new View.OnClickListener() {
+    	tvCalendarPop = (TextView) findViewById(R.id.calendar_config_pop);
+    	tvCalendarPop.setTextColor(getResources().getColor(R.color.lighterDarkPowderBlue));
+    	tvCalendarPop.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				launchAlertPicker();
+				launchCalendarPicker();
 			}
 		});
 
         // Cameras config...
-		ivCameraMore = (ImageView) findViewById(R.id.cameras_config_pop_icon);
-		ivCameraMore.setColorFilter(getResources().getColor(R.color.lighterDarkPowderBlue), PorterDuff.Mode.SRC_ATOP);
-		ivCameraMore.setOnClickListener(new View.OnClickListener() {
+		ivCamerasMore = (ImageView) findViewById(R.id.cameras_config_pop_icon);
+		ivCamerasMore.setColorFilter(getResources().getColor(R.color.lighterDarkPowderBlue), PorterDuff.Mode.SRC_ATOP);
+		ivCamerasMore.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				launchCameraPicker();
@@ -412,23 +413,23 @@ public class TCT extends MapActivity {
 		
 		alert.show();
     }
-    protected void launchAlertPicker() { 
-        // Log.d(TAG, "LaunchAlertPicker");
+    protected void launchCalendarPicker() { 
+        // Log.d(TAG, "LaunchCalendarPicker");
 
 		AlertDialog alert = new AlertDialog.Builder(this)
-        .setTitle(R.string.txt_alert_popup_title)
-        .setItems(Config.alerts, new DialogInterface.OnClickListener() {
+        .setTitle(R.string.txt_calendar_popup_title)
+        .setItems(Config.calendar, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-            	AlertsTab.CURRENT_INDEX = which;
+            	CalendarTab.CURRENT_INDEX = which;
     			Toast.makeText(getApplicationContext(), 
     					R.string.txt_loading
     					, Toast.LENGTH_LONG).show();
     			
-    			// Save current ALERT
+    			// Save current CALENDAR
     	    	SharedPreferences prefs 
     				= getSharedPreferences(Config.NAMESPACE, Activity.MODE_PRIVATE);
 			    SharedPreferences.Editor editor = prefs.edit();
-			    editor.putInt("session_alert", AlertsTab.CURRENT_INDEX);
+			    editor.putInt("session_calendar", CalendarTab.CURRENT_INDEX);
 			    editor.commit();
     			
             	reloadViews();
@@ -505,14 +506,14 @@ public class TCT extends MapActivity {
 
 		// today feed
 		String tf_saved = c.getResources().getString(R.string.pref_today_feed_selected);
-		AlertsTab.CURRENT_TODAY_FEED_INDEX = Integer.parseInt(mySharedPreferences
+		CalendarTab.CURRENT_TODAY_FEED_INDEX = Integer.parseInt(mySharedPreferences
 			.getString(tf_saved, "0"));
 
 		// weather feed
 		//String wf_saved = c.getResources().getString(R.string.pref_weather_feed_selected);
-		//AlertsTab.CURRENT_WEATHER_FEED_INDEX = mySharedPreferences.getInt(wf_saved, 0);
+		//CalendarTab.CURRENT_WEATHER_FEED_INDEX = mySharedPreferences.getInt(wf_saved, 0);
 		String wf_saved = c.getResources().getString(R.string.pref_weather_feed_selected);
-		AlertsTab.CURRENT_WEATHER_FEED_INDEX = Integer.parseInt(mySharedPreferences
+		CalendarTab.CURRENT_WEATHER_FEED_INDEX = Integer.parseInt(mySharedPreferences
 			.getString(wf_saved, "0"));
 
     }
@@ -536,19 +537,19 @@ public class TCT extends MapActivity {
 	public void colorTheCurrentTab() {
         // Log.d(TAG, "colorTheCurrentTab");
 
-		MapsTab.setInactive(ivMapsTab);
-		AlertsTab.setInactive(ivAlertsTab);
-		CamerasTab.setInactive(ivCamerasTab);
+		MapsTab.setInactive();
+		CalendarTab.setInactive();
+		CamerasTab.setInactive();
 		
 		switch (CURRENT_TAB_INDEX) {
 			case MENU_TRAFFIC:
-				MapsTab.setActive(ivMapsTab);
+				MapsTab.setActive();
 				break;
-		    case MENU_ALERTS:
-				AlertsTab.setActive(ivAlertsTab);
+		    case MENU_CALENDAR:
+				CalendarTab.setActive();
 		    	break;
 		    case MENU_CAMERAS:
-				CamerasTab.setActive(ivCamerasTab);
+				CamerasTab.setActive();
 		    	break;
 		}
 	}
@@ -575,9 +576,9 @@ public class TCT extends MapActivity {
 		mvTraffic.setVisibility(View.INVISIBLE);
 		wvMain.setVisibility(View.INVISIBLE);
     	
-    	MapsTab.hideConfiguration(ivMapMore, tvMapsPop);
-        AlertsTab.hideConfiguration(ivAlertMore, tvAlertsPop);
-        CamerasTab.hideConfiguration(ivCameraMore, tvCamerasPop);
+    	MapsTab.hideConfiguration();
+        CalendarTab.hideConfiguration();
+        CamerasTab.hideConfiguration();
         
         // Makes the current tab green
         colorTheCurrentTab();
@@ -588,7 +589,7 @@ public class TCT extends MapActivity {
 		  
 
 				
-				MapsTab.showConfiguration(ivMapMore, tvMapsPop);
+				MapsTab.showConfiguration();
 				
 				switch(Config.traffic_viewtypes[ MapsTab.CURRENT_INDEX ]) {
 					case Config.IMAGE:
@@ -606,16 +607,16 @@ public class TCT extends MapActivity {
 				}
 		        
 				break;
-		    case MENU_ALERTS:
+		    case MENU_CALENDAR:
 		    	// FIXME - i think these are already set above
-		        CURRENT_TAB_INDEX = INDEX_ALERTS;
-		        AlertsTab.showConfiguration(ivAlertMore, tvAlertsPop);
+		        CURRENT_TAB_INDEX = INDEX_CALENDAR;
+		        CalendarTab.showConfiguration();
 	        	wvMain.setVisibility(View.VISIBLE);
 				wvMain.loadUrl("javascript: jumpTo("+CURRENT_TAB_INDEX+ "," +scrollx+ "," +scrolly+ ")");
 		    	break;
 		    case MENU_CAMERAS:
 		        CURRENT_TAB_INDEX = INDEX_CAMERAS;
-		        CamerasTab.showConfiguration(ivCameraMore, tvCamerasPop);
+		        CamerasTab.showConfiguration();
 	        	wvMain.setVisibility(View.VISIBLE);
 				wvMain.loadUrl("javascript: jumpTo("+CURRENT_TAB_INDEX+ "," +scrollx+ "," +scrolly+ ")");
 		        break;
@@ -733,7 +734,7 @@ public class TCT extends MapActivity {
 		wvMain.loadUrl(WEBVIEW_URL
 						+ "?target=" + CURRENT_TAB_INDEX
 						+ MapsTab.getReloadURLParts()
-						+ AlertsTab.getReloadURLParts()
+						+ CalendarTab.getReloadURLParts()
 						+ CamerasTab.getReloadURLParts());
 		
 		// Refresh banner webview
@@ -785,7 +786,7 @@ public class TCT extends MapActivity {
 
 	final class MyWebChromeClient extends WebViewClient {
         // @Override
-        public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
+        public boolean onJsCalendar(WebView view, String url, String message, JsResult result) {
             // Log.d(TAG, "MyWebChromeClient::onjsalert");
 
             result.confirm();

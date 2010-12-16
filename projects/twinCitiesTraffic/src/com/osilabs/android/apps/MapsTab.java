@@ -2,6 +2,7 @@ package com.osilabs.android.apps;
 
 import java.net.URLEncoder;
 
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.util.Log;
 import android.widget.ImageView;
@@ -11,8 +12,10 @@ public class MapsTab {
 	// FIXME - these are duplicated in the main class
 	public    static final int    ALPHA_ON  = 0xFFFF;
 	public    static final int    ALPHA_OFF = 0xFF88;
-	public    static final int    TAB_ACTIVE_COLOR = 0xFF00FF00; // FIXME pull this from color.xml
-
+	public    static final int    TAB_ACTIVE_COLOR = 0xFFAACCAA; // FIXME pull this from color.xml
+	public    static final int    BG_OFF = 0xFF333333;
+	public    static final int    BG_ON  = Color.BLACK;
+	
 	// CONSTS
 	private   static final int    MAP = 0;
 	private   static final int    WEB = 1;
@@ -28,6 +31,12 @@ public class MapsTab {
 	// If never set, is set to first map.
 	public    static int    	  CURRENT_INDEX = 0;
 	
+	public static void init() {
+		App.ivMapsTab.setPadding(15, 0, 15, 0);
+		App.ivMapsTab.setAlpha(ALPHA_OFF);
+		App.ivMapsTab.setBackgroundColor(BG_OFF);
+
+	}
 //	public static String getActiveMapURL() {
 //		// Keep from exceeding the size of the array
 //		if (CURRENT_INDEX > (Config.maps.length - 1)) CURRENT_INDEX = 0;
@@ -55,21 +64,23 @@ public class MapsTab {
 
 		return	query_string;
 	}
-	public static void setActive(ImageView ivTraffic) {
-		ivTraffic.setColorFilter(TAB_ACTIVE_COLOR, PorterDuff.Mode.SRC_ATOP);
-		ivTraffic.setAlpha(ALPHA_ON);	
+	public static void setActive() {
+		App.ivMapsTab.setColorFilter(TAB_ACTIVE_COLOR, PorterDuff.Mode.SRC_ATOP);
+		App.ivMapsTab.setAlpha(ALPHA_ON);
+		App.ivMapsTab.setBackgroundColor(BG_ON);
 	}
-	public static void setInactive(ImageView ivMaps) {
-		ivMaps.setColorFilter(null); 
-		ivMaps.setAlpha(ALPHA_OFF);
+	public static void setInactive() {
+		App.ivMapsTab.setColorFilter(null); 
+		App.ivMapsTab.setAlpha(ALPHA_OFF);
+		App.ivMapsTab.setBackgroundColor(BG_OFF);
 	}
-	public static void hideConfiguration(ImageView ivMapIcon, TextView tvMapsPop) {
-		ivMapIcon.setVisibility(ImageView.GONE);
-		tvMapsPop.setVisibility(TextView.GONE);
+	public static void hideConfiguration() {
+		App.ivMapsMore.setVisibility(ImageView.GONE);
+		App.tvMapsPop.setVisibility(TextView.GONE);
 	}
-	public static void showConfiguration(ImageView ivMapIcon, TextView tvMapsPop) {
-		ivMapIcon.setVisibility(ImageView.VISIBLE);
-		tvMapsPop.setVisibility(TextView.VISIBLE);
+	public static void showConfiguration() {
+		App.ivMapsMore.setVisibility(ImageView.VISIBLE);
+		App.tvMapsPop.setVisibility(TextView.VISIBLE);
 	}
 	public static String getViewType() {
 		String[] as = Config.maps_urls[CURRENT_INDEX].split("~");

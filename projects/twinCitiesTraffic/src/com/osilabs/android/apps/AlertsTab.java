@@ -19,7 +19,7 @@ public class AlertsTab {
 	public    static       int    CURRENT_WEATHER_FEED_INDEX = 0;
 	
 	public static String getReloadURLParts() {
-		if (CURRENT_INDEX > (Config.alerts_src.length - 1)) CURRENT_INDEX = 0;
+//		if (CURRENT_INDEX > (Config.alerts_src.length - 1)) CURRENT_INDEX = 0;
 		
 		// Get Saved feed sources
     	//mySharedPreferences.getInt
@@ -27,18 +27,18 @@ public class AlertsTab {
 		//String wr_saved = getContext().getResources().getString(R.string.pref_weather_radios_selected);
 		
 		String uri = "";
-		
-		// Trap special configurable items
-		if (Config.alerts_src[CURRENT_INDEX].equals("{TODAY}")) {
-			// Set configured TODAY feed
-			uri = Config.today_values[ CURRENT_TODAY_FEED_INDEX ];
-		} else if (Config.alerts_src[CURRENT_INDEX].equals("{WEATHER}")) {
-			// Set configured WEATHER feed
-			uri = Config.weather_values[ CURRENT_WEATHER_FEED_INDEX ];
-		} else {
-			// Set the feed from alerts_src
-			uri = Config.alerts_src[CURRENT_INDEX];
-		}
+//		
+//		// Trap special configurable items
+//		if (Config.alerts_src[CURRENT_INDEX].equals("{TODAY}")) {
+//			// Set configured TODAY feed
+//			uri = Config.today_values[ CURRENT_TODAY_FEED_INDEX ];
+//		} else if (Config.alerts_src[CURRENT_INDEX].equals("{WEATHER}")) {
+//			// Set configured WEATHER feed
+//			uri = Config.weather_values[ CURRENT_WEATHER_FEED_INDEX ];
+//		} else {
+//			// Set the feed from alerts_src
+//			uri = Config.alerts_src[CURRENT_INDEX];
+//		}
 
 		return	"&calendar=" + URLEncoder.encode(uri);
 	}

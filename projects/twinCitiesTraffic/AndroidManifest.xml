@@ -5,7 +5,7 @@
       android:versionName="0.7">
     <application android:icon="@drawable/ic_launcher" android:label="@string/app_name">
 
-        <activity android:name=".TCT"
+        <activity android:name=".App"
                   android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

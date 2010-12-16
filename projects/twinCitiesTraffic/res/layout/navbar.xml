@@ -49,9 +49,9 @@
 				android:visibility="gone" 
 				/>
 								
-			<!-- alerts -->
+			<!-- calendar -->
 		    <ImageView
-		  		android:id="@+id/alerts_config_pop_icon"
+		  		android:id="@+id/calendar_config_pop_icon"
 	 			android:src="@drawable/ic_more"
 				android:layout_width="wrap_content" 
 				android:layout_height="29dip"
@@ -60,7 +60,7 @@
 				android:visibility="gone" 
 				/>
 			<TextView 
-				android:id="@+id/alerts_config_pop"
+				android:id="@+id/calendar_config_pop"
 				android:clickable="true"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content" 

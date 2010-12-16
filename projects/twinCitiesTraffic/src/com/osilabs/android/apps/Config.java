@@ -5,7 +5,7 @@ import com.google.android.maps.GeoPoint;
 public final class Config {
 	public static final    String DEFAULT_CAMERA_URL = "http://osilabs.com/m/mobilecontent/tctraffic5/trafficmap.php?target=4&camera=832";
 	public static final int       DEFAULT_MAP_INDEX = 0; // !!! Can't be above array size-1
-	public static final int       DEFAULT_ALERT_INDEX = 0;
+	public static final int       DEFAULT_CALENDAR_INDEX = 0;
 	public static final boolean   NO_ADS = false; // True will hide the ads
 	protected static       String MOBILECONTENT_URL_PREFIX = "http://osilabs.com/m/mobilecontent/tctraffic";
 	protected static       String MOBILECONTENT_URL_ABOUT  = "http://osilabs.com/m/mobilecontent/about/tct_about.php";
@@ -83,13 +83,13 @@ public final class Config {
 		{}
 	};
 	
-	public static final String[] alerts = {
+	public static final String[] calendar = {
 		"Driving Alerts",
-		"Events Today",
+		"Today I May ...", // FIXME - For different themes this can use a different wording
 		"Weather Report"
 	};
 	// Second param can be 'uri|(titleonly)|(link)'
-	public static final String[] alerts_src = {
+	public static final String[] calendar_src = {
 		"rss|http://www.dot.state.mn.us/tmc/trafficinfo/incidents.rss||",
 		"{TODAY}",
 		"{WEATHER}",
