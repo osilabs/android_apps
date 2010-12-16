@@ -57,12 +57,14 @@ public final class Config {
 		"Color Traffic Map",
 		"Hi-Contrast Traffic Map",
 		"Alternate Map",
+		"Traffic Alerts",
 		"Interactive Map"
 	};
 	public static final String [] traffic_urls = {
 		"http://www.dot.state.mn.us/tmc/trafficinfo/map/d_map.png",
 		"http://www.dot.state.mn.us/tmc/trafficinfo/map/d_map_alt.png",
 		"http://www.511mn.org/primary/images/all/TC_Metro.gif",
+		"rss|http://www.dot.state.mn.us/tmc/trafficinfo/incidents.rss||",
 		""
 	};
 	// View Types: WEB, IMAGE, MAP
@@ -70,6 +72,7 @@ public final class Config {
 		IMAGE,
 		IMAGE,
 		IMAGE,
+		WEB,
 		MAP
 	};
 	// Args for types:
