@@ -26,33 +26,14 @@ public final class Config {
 	public static		int [][] GEO_POINTS = {
 		{ 44980000, -93200000 } // Minneapolis
 	};
-//		new GeoPoint((int) (44.787144 * 1E6), (int) (-92.834472 * 1E6)),
-//	
-//	// Maps
-//	public static final String[] maps = {
-//		"Color Traffic Map",
-//		"Hi-Contrast Traffic map",
-//		"Alternate Map",
-//		"Interactive Map"
-//	};
-//	
-//	// viewtype|uri|width|height|scrollx|scrolly - Later these can be programmatically defined 
-//	//  for changes in orientation and screens
-//	public static final String[] maps_urls = {
-//		// Must not use '|' it won't work with javas split(). Must also have
-//		//  a space for missing chars.
-//		"web~http://www.dot.state.mn.us/tmc/trafficinfo/map/d_map.png~500~ ~55~145",
-//		"web~http://www.dot.state.mn.us/tmc/trafficinfo/map/d_map_alt.png~500~ ~55~70",
-//		"web~http://www.511mn.org/primary/images/all/TC_Metro.gif~ ~ ~260~105",
-//		"map~trafficmap~ ~ ~ ~ "
-//	};
-	
 
-	
+	//		new GeoPoint((int) (44.787144 * 1E6), (int) (-92.834472 * 1E6)),
+		
 	// Traffic Tab
 	public static final int WEB   = 0;
 	public static final int MAP   = 1;
 	public static final int IMAGE = 2;
+	public static final int FEED  = 3;
 	public static final String [] traffic = {
 		"Color Traffic Map",
 		"Hi-Contrast Traffic Map",
@@ -61,31 +42,35 @@ public final class Config {
 		"Interactive Map"
 	};
 	public static final String [] traffic_urls = {
-		"http://www.dot.state.mn.us/tmc/trafficinfo/map/d_map.png",
-		"http://www.dot.state.mn.us/tmc/trafficinfo/map/d_map_alt.png",
-		"http://www.511mn.org/primary/images/all/TC_Metro.gif",
-		"rss|http://www.dot.state.mn.us/tmc/trafficinfo/incidents.rss||",
-		""
+		"map~http://www.dot.state.mn.us/tmc/trafficinfo/map/d_map.png~120%~ ~100~ ",
+		"map~http://www.dot.state.mn.us/tmc/trafficinfo/map/d_map_alt.png~110%~ ~ ~ ",
+		"map~http://www.511mn.org/primary/images/all/TC_Metro.gif~ ~ ~ ~ ",
+		"rss~http://www.dot.state.mn.us/tmc/trafficinfo/incidents.rss~ ~ ",
+		"MAP"
 	};
 	// View Types: WEB, IMAGE, MAP
 	public static final int [] traffic_viewtypes = {
 		IMAGE,
 		IMAGE,
 		IMAGE,
-		WEB,
+		FEED,
 		MAP
 	};
-	// Args for types:
-	// IMAGE = ()
-	// MAP = ()
-	// Web = ()
-	public static final String [][] traffic_args = {
-		{},
-		{},
-		{},
-		{}
-	};
+//	// Args for types:
+//	// IMAGE = ()
+//	// MAP = ()
+//	// Web = ()
+//	public static final String [][] traffic_args = {
+//		{},
+//		{},
+//		{},
+//		{}
+//	};
+//	
 	
+	//
+	// calendar/today
+	//
 	public static final String[] calendar = {
 		"Driving Alerts",
 		"Weather Report",
@@ -95,10 +80,10 @@ public final class Config {
 	};
 	// Second param can be 'uri|(titleonly)|(link)'
 	public static final String[] calendar_src = {
-		"rss|http://www.dot.state.mn.us/tmc/trafficinfo/incidents.rss||",
+		"rss~http://www.dot.state.mn.us/tmc/trafficinfo/incidents.rss~ ~ ",
 		"{WEATHER}",
-		"rss|http://twincities.metromix.com/rss/popup/restaurants_daily_picks||",
-		"rss|http://twincities.metromix.com/rss/popup/music_headlines||",
+		"rss~http://twincities.metromix.com/rss/popup/restaurants_daily_picks~ ~ ",
+		"rss~http://twincities.metromix.com/rss/popup/music_headlines~ ~ ",
 		"{TODAY}",
 	};
 
@@ -108,8 +93,8 @@ public final class Config {
 //	};
 	// '(rss,atom)|uri|(titleonly)|(link)'
 	public static final String[] today_values = {
-		"rss|http://www.citypages.com/syndication/events/||link",
-		"rss|http://www.startribune.com/entertainment/dining/index.rss2||link"
+		"rss~http://www.citypages.com/syndication/events/~ ~link",
+		"rss~http://www.startribune.com/entertainment/dining/index.rss2~ ~link"
 	};
 
 //	public static final String[] weather = {
@@ -119,9 +104,9 @@ public final class Config {
 //	};
 	// '(rss,atom)|uri|(titleonly)|(link)'
 	public static final String[] weather_values = {
-		"rss|http://feeds.weatherbug.com/rss.aspx?zipcode=55401&feed=currtxt,fcsttxt&zcode=z4641||",
-		"rss|http://rss.accuweather.com/rss/liveweather_rss.asp?metric=0&locCode=55401||",
-		"rss|http://rss.weather.com/weather/rss/local/USMN0503?cm_ven=LWO&cm_cat=rss&par=LWO_rss||"
+		"rss~http://feeds.weatherbug.com/rss.aspx?zipcode=55401&feed=currtxt,fcsttxt&zcode=z4641~ ~ ",
+		"rss~http://rss.accuweather.com/rss/liveweather_rss.asp?metric=0&locCode=55401~ ~ ",
+		"rss~http://rss.weather.com/weather/rss/local/USMN0503?cm_ven=LWO&cm_cat=rss&par=LWO_rss~ ~ "
 	};
 
 	//

@@ -24,7 +24,7 @@ public class CamerasTab {
 		App.ivCamerasTab.setBackgroundColor(BG_OFF);
 	}
 	public static String getReloadURLParts() {
-		return	"&camera=" + URLEncoder.encode(CURRENT_CAMERA_URL);
+		return	"&camera=camera%7E" + URLEncoder.encode(CURRENT_CAMERA_URL);
 	}
 	public static void setActive() {
 		App.ivCamerasTab.setColorFilter(TAB_ACTIVE_COLOR, PorterDuff.Mode.SRC_ATOP);

@@ -17,8 +17,8 @@ public class MapsTab {
 	public    static final int    BG_ON  = Color.BLACK;
 	
 	// CONSTS
-	private   static final int    MAP = 0;
-	private   static final int    WEB = 1;
+//	private   static final int    MAP = 0;
+//	private   static final int    WEB = 1;
 
 	// Indexes for URL stings
 	private   static final int    TYPE    = 0;
@@ -46,20 +46,19 @@ public class MapsTab {
 		if (CURRENT_INDEX > (Config.traffic_urls.length - 1)) CURRENT_INDEX = 0;
 		
 		String query_string= "";
-		String viewtype = MapsTab.getViewType();
 		
-		if (viewtype.equals("map")) {
-			// If using a mapview, no map is used in the webview
-			query_string = "&map=0&mapscrollx=0&mapscrolly=0";
-		}
-		else if (viewtype.equals("web")) {
-			// Webveiew needs map passed in
+		if (Config.traffic_viewtypes[CURRENT_INDEX] == Config.IMAGE) {
 			query_string 
-				= "&map=" + URLEncoder.encode(Config.traffic_urls[CURRENT_INDEX])
+				= "&traffic=" + URLEncoder.encode(Config.traffic_urls[CURRENT_INDEX])
 				+ "&mapscrollx="
 				+ MapsTab.getScrollX()
 				+ "&mapscrolly="
 				+ MapsTab.getScrollY();
+		} else if (Config.traffic_viewtypes[CURRENT_INDEX] == Config.FEED) {
+			query_string 
+				= "&traffic=" + URLEncoder.encode(Config.traffic_urls[CURRENT_INDEX]);
+		} else {
+			query_string = "&traffic=";			
 		}
 
 		return	query_string;

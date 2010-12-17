@@ -71,11 +71,11 @@ public class App extends MapActivity {
 	private static final String TAG = "** osilabs.com **";
 
 	private static final int MENU_TRAFFIC               = 0;
-	private static final int MENU_CALENDAR                = 1;
-	private static final int MENU_CAMERAS               = 2;
+	private static final int MENU_CAMERAS               = 1;
+	private static final int MENU_CALENDAR              = 2;
 	private static final int INDEX_TRAFFIC              = 0;
-	protected static final int INDEX_CALENDAR               = 1;
-	private static final int INDEX_CAMERAS              = 2;
+	private static final int INDEX_CAMERAS              = 1;
+	private static final int INDEX_CALENDAR             = 2;
 	private static final int INTENT_RESULT_CODE_CAMERA_PICKER= 22;
 	private static final int INTENT_RESULT_CODE_PREFS   = 33;
 
@@ -172,7 +172,8 @@ public class App extends MapActivity {
 	    //
 
 	    ivMapsTab = (ImageView) findViewById(R.id.launcher_traffic);
-	    ivMapsTab.setOnClickListener(new View.OnClickListener() {
+//		ivMapsTab.setBackgroundResource(R.drawable.bg_topnav_vgradient);
+		ivMapsTab.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				setViewForCurrentTab(INDEX_TRAFFIC);
@@ -609,14 +610,16 @@ public class App extends MapActivity {
 				MapsTab.showConfiguration();
 				
 				switch(Config.traffic_viewtypes[ MapsTab.CURRENT_INDEX ]) {
-					case Config.IMAGE:
-						new DownloadImageTask().execute(Config.traffic_urls[ MapsTab.CURRENT_INDEX ]);
-						break;
+//					case Config.IMAGE:
+//						//new DownloadImageTask().execute(Config.traffic_urls[ MapsTab.CURRENT_INDEX ]);
+//						break;
 					case Config.MAP:
 			        	mvTraffic.invalidate();
 			        	drawTrafficMap();
 			        	mvTraffic.setVisibility(View.VISIBLE);
 						break;
+					case Config.IMAGE:
+					case Config.FEED:
 					case Config.WEB:
 						// FIXME - rename to wvTraffic
 			        	wvMain.setVisibility(View.VISIBLE);
@@ -745,7 +748,15 @@ public class App extends MapActivity {
 	}
 	
 	public void reloadViews() {
-		Log.d(TAG, "reloadViews()");
+//		Log.d(TAG, "reloadViews()");
+//		Log.d(TAG, "?target=" + CURRENT_TAB_INDEX
+//		+ MapsTab.getReloadURLParts()
+//		+ CalendarTab.getReloadURLParts()
+//		+ CamerasTab.getReloadURLParts());
+//		Toast.makeText(getApplicationContext(), "?target=" + CURRENT_TAB_INDEX
+//				+ MapsTab.getReloadURLParts()
+//				+ CalendarTab.getReloadURLParts()
+//				+ CamerasTab.getReloadURLParts(), Toast.LENGTH_SHORT).show();
 		
 		// Refresh main content webview
 		wvMain.loadUrl(WEBVIEW_URL
