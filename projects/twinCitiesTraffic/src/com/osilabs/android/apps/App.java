@@ -90,6 +90,9 @@ public class App extends MapActivity {
 	// Will need to up this number if more indexes are needed.
 	protected static int CURRENT_TAB_INDEX = 0;
 
+	// Tracks when the MapView is showing
+	protected static boolean MAP_VIEW_IS_VISIBLE = false;
+
 	protected static PackageInfo pInfo = null;
 	protected static Spinner spViewChoices;
 	protected static WebView wvAd;
@@ -359,7 +362,7 @@ public class App extends MapActivity {
         // FIXME - This should only happen if mapview is currently active
     	//
     	// Force the mapview to draw it's traffic layer when it's ready. Progressive approach.
-        mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 3000);
+    	mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 3000);
         mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 5000);
         mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 10000);
         mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 15000);
@@ -592,7 +595,7 @@ public class App extends MapActivity {
 		 */
 
 		// Hide stuff
-//		ivTraffic.setVisibility(View.INVISIBLE);
+    	MAP_VIEW_IS_VISIBLE = false;
 		mvTraffic.setVisibility(View.INVISIBLE);
 		wvMain.setVisibility(View.INVISIBLE);
     	
@@ -605,7 +608,6 @@ public class App extends MapActivity {
         
 		switch (CURRENT_TAB_INDEX) {
 			case MENU_TRAFFIC:
-				//CURRENT_TAB_INDEX = INDEX_TRAFFIC; // This can go
 				
 				MapsTab.showConfiguration();
 				
@@ -617,6 +619,11 @@ public class App extends MapActivity {
 			        	mvTraffic.invalidate();
 			        	drawTrafficMap();
 			        	mvTraffic.setVisibility(View.VISIBLE);
+			        	
+			        	// Set flag indicating this thing is visible.
+			        	MAP_VIEW_IS_VISIBLE = true;
+			        	pulseMapView();
+			        	
 						break;
 					case Config.IMAGE:
 					case Config.FEED:
@@ -643,64 +650,7 @@ public class App extends MapActivity {
 		        break;
 		}
 	}
-	
-//	class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-//		protected void onPreExecute() {
-//			// add progressdialog
-//		}
-//
-//		public Bitmap doInBackground(String... url) {
-//		    Bitmap bmImg = null;
-//	        URL myFileUrl =null;          
-//	        try {
-//	            myFileUrl= new URL( (String) url[0] );
-//	        } catch (MalformedURLException e) {
-//	            e.printStackTrace();
-//	        }
-//	        try {
-//	        	  
-//	            HttpURLConnection conn= (HttpURLConnection)myFileUrl.openConnection();
-//	            conn.setDoInput(true);
-//	            conn.connect();
-//	            int length = conn.getContentLength();
-//	            InputStream is = conn.getInputStream();	               
-//	            bmImg = BitmapFactory.decodeStream(is);
-//	               
-//	        } catch (IOException e) {
-//	            e.printStackTrace();
-//	        }
-//	          
-//	        return bmImg;
-//			
-//	        //Here you can add your image caching like storing fetched image to sd card
-//		}
-//
-//		protected void onPostExecute(Bitmap bm) {
-//			// if added progressdialog now is a time to call ProgressDialogVariable.dismiss();
-//
-//			try {
-//				if(bm != null) {
-//					ivTraffic.setVisibility(View.VISIBLE);
-//					ivTraffic.setImageBitmap((Bitmap) bm);
-//					damien.removeAllViews();
-//					damien.addView(ivTraffic);
-//					damien.invalidate();
-//					
-//					Toast.makeText(	getApplicationContext(), 
-//							"DEBUG> Image has been reloaded", 
-//							Toast.LENGTH_SHORT).show();
-//				} else {
-//					Toast.makeText(	getApplicationContext(), 
-//									"Could not make connection, please try again.", 
-//									Toast.LENGTH_SHORT).show();
-//				}
-//			}catch(Exception e){
-//				Log.e("e", e.toString());
-//			}
-//		}
-//	}	
-	
-	
+		
 	//----------------------------------------------------------
 	// Map view map
 	//
@@ -719,6 +669,16 @@ public class App extends MapActivity {
 
         mvTraffic.invalidate();
 	}
+	
+	public void pulseMapView() {
+    	if (MAP_VIEW_IS_VISIBLE) {
+    		// If showing, invalidates every 30 seconds
+    		refreshTrafficMap();
+    		
+    		mvTraffic.postDelayed(new Runnable() { public void run() { pulseMapView(); } }, 20000);
+    	}
+	}
+
 	//
 	// Map view map
 	//----------------------------------------------------------
@@ -740,24 +700,20 @@ public class App extends MapActivity {
 
 	    return true;
 	}
-	
+		
 	public void refreshViews() {
         Log.d(TAG, "refreshViews");
 
 		Toast.makeText(getApplicationContext(), R.string.txt_refreshing, Toast.LENGTH_SHORT).show();
+
+		if (MAP_VIEW_IS_VISIBLE) {
+        	mvTraffic.invalidate();
+        }
+        
 		reloadViews();
 	}
 	
 	public void reloadViews() {
-//		Log.d(TAG, "reloadViews()");
-//		Log.d(TAG, "?target=" + CURRENT_TAB_INDEX
-//		+ MapsTab.getReloadURLParts()
-//		+ CalendarTab.getReloadURLParts()
-//		+ CamerasTab.getReloadURLParts());
-//		Toast.makeText(getApplicationContext(), "?target=" + CURRENT_TAB_INDEX
-//				+ MapsTab.getReloadURLParts()
-//				+ CalendarTab.getReloadURLParts()
-//				+ CamerasTab.getReloadURLParts(), Toast.LENGTH_SHORT).show();
 		
 		// Refresh main content webview
 		wvMain.loadUrl(WEBVIEW_URL
