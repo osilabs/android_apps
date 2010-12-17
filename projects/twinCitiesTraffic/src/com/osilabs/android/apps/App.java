@@ -714,8 +714,9 @@ public class App extends MapActivity {
         refreshTrafficMap();
 	}
 	
-	
 	public void refreshTrafficMap() {
+		Toast.makeText(getApplicationContext(), "Reloading Interactive Map", Toast.LENGTH_SHORT).show();
+
         mvTraffic.invalidate();
 	}
 	//
