@@ -38,19 +38,19 @@
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent">
 
-		<ScrollView
-			android:id="@+id/trafficImageViewScroll"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			>
-			<ImageView 
-				android:id="@+id/trafficImageView"
-				android:layout_width="fill_parent"
-				android:layout_height="fill_parent" 
-				android:visibility="visible"
-				android:scaleType="center"
-	 			android:layout_gravity="center_vertical|center" />
-		</ScrollView>
+<!--		<ScrollView-->
+<!--			android:id="@+id/trafficImageViewScroll"-->
+<!--			android:layout_width="wrap_content"-->
+<!--			android:layout_height="wrap_content"-->
+<!--			>-->
+<!--			<ImageView -->
+<!--				android:id="@+id/trafficImageView"-->
+<!--				android:layout_width="fill_parent"-->
+<!--				android:layout_height="fill_parent" -->
+<!--				android:visibility="visible"-->
+<!--				android:scaleType="center"-->
+<!--	 			android:layout_gravity="center_vertical|center" />-->
+<!--		</ScrollView>-->
 		
 		<WebView 
 			android:id="@+id/mainWebView" 

@@ -2,6 +2,8 @@
 
 >> STM <<
 
+* replace tct_*() functions with a config variable in html/php stuff.
+
 * Fix Traffic-> Traffic Alerts. Needs to load up webview as rss.
 
 * Make sure refresh icon works.
@@ -18,6 +20,8 @@
 >> TEST <<
 * Check how refresh works with maps
 * When you start the app, make sure the current map comes up and doesnt load mapview if doesn't have to.
+* Check that favorites are used and saved.
+
 
 >> Enhancements <<
 * Preset zoom sites (Intnl airport, downtown mpls, downtown st paul) for interactive map

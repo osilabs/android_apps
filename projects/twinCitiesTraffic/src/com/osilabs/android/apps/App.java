@@ -103,9 +103,9 @@ public class App extends MapActivity {
 	protected static ImageView ivCalendarTab;
 	protected static ImageView ivCamerasTab;
 	
-	// Tab Views
-	protected ImageView ivTraffic;
-	protected ScrollView damien;
+//	// Tab Views
+//	protected ImageView ivTraffic;
+//	protected ScrollView damien;
 	
 	// Configs
 	protected static ImageView ivMapsMore;
@@ -257,12 +257,12 @@ public class App extends MapActivity {
 		//
 		// Main Image View
 		//
-	    ivTraffic = (ImageView) findViewById(R.id.trafficImageView);
-	    ivTraffic.setVerticalScrollBarEnabled(true);
-	    ivTraffic.setHorizontalScrollBarEnabled(true);
-	    ivTraffic.setScaleType(ImageView.ScaleType.CENTER);
-	    damien = (ScrollView) findViewById(R.id.trafficImageViewScroll);
-	    //sv.removeAllViews();
+//	    ivTraffic = (ImageView) findViewById(R.id.trafficImageView);
+//	    ivTraffic.setVerticalScrollBarEnabled(true);
+//	    ivTraffic.setHorizontalScrollBarEnabled(true);
+//	    ivTraffic.setScaleType(ImageView.ScaleType.CENTER);
+//	    damien = (ScrollView) findViewById(R.id.trafficImageViewScroll);
+//	    //sv.removeAllViews();
 		
 		// -------------------------
 	    // Bottom Navigation Bar
@@ -378,6 +378,15 @@ public class App extends MapActivity {
     	setViewForCurrentTab(CURRENT_TAB_INDEX);
 		reloadViews();
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     //
     // Map View Methods
@@ -582,7 +591,7 @@ public class App extends MapActivity {
 		 */
 
 		// Hide stuff
-		ivTraffic.setVisibility(View.INVISIBLE);
+//		ivTraffic.setVisibility(View.INVISIBLE);
 		mvTraffic.setVisibility(View.INVISIBLE);
 		wvMain.setVisibility(View.INVISIBLE);
     	
@@ -632,62 +641,61 @@ public class App extends MapActivity {
 		}
 	}
 	
-	
-	class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-		protected void onPreExecute() {
-			// add progressdialog
-		}
-
-		public Bitmap doInBackground(String... url) {
-		    Bitmap bmImg = null;
-	        URL myFileUrl =null;          
-	        try {
-	            myFileUrl= new URL( (String) url[0] );
-	        } catch (MalformedURLException e) {
-	            e.printStackTrace();
-	        }
-	        try {
-	        	  
-	            HttpURLConnection conn= (HttpURLConnection)myFileUrl.openConnection();
-	            conn.setDoInput(true);
-	            conn.connect();
-	            int length = conn.getContentLength();
-	            InputStream is = conn.getInputStream();	               
-	            bmImg = BitmapFactory.decodeStream(is);
-	               
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-	          
-	        return bmImg;
-			
-	        //Here you can add your image caching like storing fetched image to sd card
-		}
-
-		protected void onPostExecute(Bitmap bm) {
-			// if added progressdialog now is a time to call ProgressDialogVariable.dismiss();
-
-			try {
-				if(bm != null) {
-					ivTraffic.setVisibility(View.VISIBLE);
-					ivTraffic.setImageBitmap((Bitmap) bm);
-					damien.removeAllViews();
-					damien.addView(ivTraffic);
-					damien.invalidate();
-					
-					Toast.makeText(	getApplicationContext(), 
-							"DEBUG> Image has been reloaded", 
-							Toast.LENGTH_SHORT).show();
-				} else {
-					Toast.makeText(	getApplicationContext(), 
-									"Could not make connection, please try again.", 
-									Toast.LENGTH_SHORT).show();
-				}
-			}catch(Exception e){
-				Log.e("e", e.toString());
-			}
-		}
-	}	
+//	class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+//		protected void onPreExecute() {
+//			// add progressdialog
+//		}
+//
+//		public Bitmap doInBackground(String... url) {
+//		    Bitmap bmImg = null;
+//	        URL myFileUrl =null;          
+//	        try {
+//	            myFileUrl= new URL( (String) url[0] );
+//	        } catch (MalformedURLException e) {
+//	            e.printStackTrace();
+//	        }
+//	        try {
+//	        	  
+//	            HttpURLConnection conn= (HttpURLConnection)myFileUrl.openConnection();
+//	            conn.setDoInput(true);
+//	            conn.connect();
+//	            int length = conn.getContentLength();
+//	            InputStream is = conn.getInputStream();	               
+//	            bmImg = BitmapFactory.decodeStream(is);
+//	               
+//	        } catch (IOException e) {
+//	            e.printStackTrace();
+//	        }
+//	          
+//	        return bmImg;
+//			
+//	        //Here you can add your image caching like storing fetched image to sd card
+//		}
+//
+//		protected void onPostExecute(Bitmap bm) {
+//			// if added progressdialog now is a time to call ProgressDialogVariable.dismiss();
+//
+//			try {
+//				if(bm != null) {
+//					ivTraffic.setVisibility(View.VISIBLE);
+//					ivTraffic.setImageBitmap((Bitmap) bm);
+//					damien.removeAllViews();
+//					damien.addView(ivTraffic);
+//					damien.invalidate();
+//					
+//					Toast.makeText(	getApplicationContext(), 
+//							"DEBUG> Image has been reloaded", 
+//							Toast.LENGTH_SHORT).show();
+//				} else {
+//					Toast.makeText(	getApplicationContext(), 
+//									"Could not make connection, please try again.", 
+//									Toast.LENGTH_SHORT).show();
+//				}
+//			}catch(Exception e){
+//				Log.e("e", e.toString());
+//			}
+//		}
+//	}	
 	
 	
 	//----------------------------------------------------------
@@ -821,8 +829,6 @@ public class App extends MapActivity {
     		// setViewForCurrentTab(loadedIndex); 
     	}	
     }
-	
-
     //
     // Web browser
     // -----------------------------------------------
