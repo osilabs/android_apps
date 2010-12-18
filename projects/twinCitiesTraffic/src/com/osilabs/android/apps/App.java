@@ -579,9 +579,9 @@ public class App extends MapActivity {
 
 	public void setViewForCurrentTab(int tab_index) {
 		//Log.d(TAG, "setViewForCurrentTab index" + Integer.toString(tab_index));
-
-		String scrollx = "0";
-		String scrolly = "0";
+//
+//		String scrollx = "0";
+//		String scrolly = "0";
 
 		CURRENT_TAB_INDEX = tab_index;
 		setCurrentTab(CURRENT_TAB_INDEX);
@@ -612,9 +612,6 @@ public class App extends MapActivity {
 				MapsTab.showConfiguration();
 				
 				switch(Config.traffic_viewtypes[ MapsTab.CURRENT_INDEX ]) {
-//					case Config.IMAGE:
-//						//new DownloadImageTask().execute(Config.traffic_urls[ MapsTab.CURRENT_INDEX ]);
-//						break;
 					case Config.MAP:
 			        	mvTraffic.invalidate();
 			        	drawTrafficMap();
@@ -630,7 +627,8 @@ public class App extends MapActivity {
 					case Config.WEB:
 						// FIXME - rename to wvTraffic
 			        	wvMain.setVisibility(View.VISIBLE);
-						wvMain.loadUrl("javascript: jumpTo("+CURRENT_TAB_INDEX+ "," +scrollx+ "," +scrolly+ ")");
+						//wvMain.loadUrl("javascript: jumpTo("+CURRENT_TAB_INDEX+ "," +scrollx+ "," +scrolly+ ")");
+						wvMain.loadUrl("javascript: jumpTo("+CURRENT_TAB_INDEX+ ")");
 						break;
 				}
 		        
@@ -640,13 +638,15 @@ public class App extends MapActivity {
 		        CURRENT_TAB_INDEX = INDEX_CALENDAR;
 		        CalendarTab.showConfiguration();
 	        	wvMain.setVisibility(View.VISIBLE);
-				wvMain.loadUrl("javascript: jumpTo("+CURRENT_TAB_INDEX+ "," +scrollx+ "," +scrolly+ ")");
+				//wvMain.loadUrl("javascript: jumpTo("+CURRENT_TAB_INDEX+ "," +scrollx+ "," +scrolly+ ")");
+				wvMain.loadUrl("javascript: jumpTo("+CURRENT_TAB_INDEX+ ")");
 		    	break;
 		    case MENU_CAMERAS:
 		        CURRENT_TAB_INDEX = INDEX_CAMERAS;
 		        CamerasTab.showConfiguration();
 	        	wvMain.setVisibility(View.VISIBLE);
-				wvMain.loadUrl("javascript: jumpTo("+CURRENT_TAB_INDEX+ "," +scrollx+ "," +scrolly+ ")");
+				//wvMain.loadUrl("javascript: jumpTo("+CURRENT_TAB_INDEX+ "," +scrollx+ "," +scrolly+ ")");
+				wvMain.loadUrl("javascript: jumpTo("+CURRENT_TAB_INDEX+ ")");
 		        break;
 		}
 	}
@@ -665,7 +665,7 @@ public class App extends MapActivity {
 	}
 	
 	public void refreshTrafficMap() {
-		Toast.makeText(getApplicationContext(), "Reloading Interactive Map", Toast.LENGTH_SHORT).show();
+		Toast.makeText(getApplicationContext(), "++ Reloading Interactive Map", Toast.LENGTH_SHORT).show();
 
         mvTraffic.invalidate();
 	}
@@ -714,7 +714,6 @@ public class App extends MapActivity {
 	}
 	
 	public void reloadViews() {
-		
 		// Refresh main content webview
 		wvMain.loadUrl(WEBVIEW_URL
 						+ "?target=" + CURRENT_TAB_INDEX

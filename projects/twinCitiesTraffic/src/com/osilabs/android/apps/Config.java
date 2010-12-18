@@ -42,9 +42,9 @@ public final class Config {
 		"Interactive Map"
 	};
 	public static final String [] traffic_urls = {
-		"map~http://www.dot.state.mn.us/tmc/trafficinfo/map/d_map.png~120%~ ~100~ ",
-		"map~http://www.dot.state.mn.us/tmc/trafficinfo/map/d_map_alt.png~110%~ ~ ~ ",
-		"map~http://www.511mn.org/primary/images/all/TC_Metro.gif~ ~ ~ ~ ",
+		"map~http://www.dot.state.mn.us/tmc/trafficinfo/map/d_map.png~128%~ ~20~66",
+		"map~http://www.dot.state.mn.us/tmc/trafficinfo/map/d_map_alt.png~138%~ ~22~0",
+		"map~http://www.511mn.org/primary/images/all/TC_Metro.gif~138%~ ~92~60",
 		"rss~http://www.dot.state.mn.us/tmc/trafficinfo/incidents.rss~ ~ ",
 		"MAP"
 	};
