@@ -16,6 +16,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Build;
@@ -201,7 +202,7 @@ public class App extends MapActivity {
 	    
 	    // IMPORTANT - I would get crashes when I initialized webviews in onStart. Moving
 	    //              this into onstart solved the problem.
-	    
+		
 	    //
 		// Main Web View
 		//
@@ -221,6 +222,7 @@ public class App extends MapActivity {
 		wvMain.setScrollBarStyle(WebView.SCROLLBARS_INSIDE_OVERLAY);
     	wvMain.setVerticalScrollBarEnabled(true);
     	wvMain.setVerticalFadingEdgeEnabled(true);
+    	wvMain.setBackgroundColor(R.color.backgroundGray);
 
 		//
 		// Ad banner Web View
@@ -229,6 +231,7 @@ public class App extends MapActivity {
         WebSettings awebSettings = wvAd.getSettings();
         awebSettings.setJavaScriptEnabled(true);
         awebSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+    	wvAd.setBackgroundColor(Color.BLACK);
         if (Config.NO_ADS) {
         	wvAd.setVisibility(View.GONE);
         }

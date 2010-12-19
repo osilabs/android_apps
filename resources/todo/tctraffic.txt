@@ -2,6 +2,7 @@
 
 >> STM <<
 
+* The background color of the webwiews shold be set to black to when loading 
 * Check that help works and make shared
 * in Help, talk about how you can redraw the traffic by moving the screen.
 * Check that favorites are used and saved.

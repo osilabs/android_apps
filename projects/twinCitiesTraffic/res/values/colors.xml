@@ -3,4 +3,5 @@
     <color name="lightRed">#FFFF9999</color>
     <color name="darkPowderBlue">#FF6B7594</color>
     <color name="lighterDarkPowderBlue">#FF7C86A5</color>
+<color name="backgroundGray">#FF333333</color>
 </resources>

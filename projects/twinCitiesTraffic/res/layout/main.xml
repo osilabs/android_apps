@@ -13,14 +13,6 @@
 		android:layout_gravity="top"
 		android:scrollbars="none" />
 
-			
-<!--		<ImageView -->
-<!--			android:id="@+id/splash" -->
-<!--			android:layout_width="fill_parent"-->
-<!--			android:layout_height="fill_parent" -->
-<!--			android:visibility="visible"-->
-<!--			android:src="@drawable/ic_weather"/>-->
-
 	<include 
 		layout="@layout/topnav" 
 		android:layout_height="188dip" 
@@ -28,30 +20,15 @@
 		android:layout_weight=".5" 
 		android:layout_gravity="bottom" />
 
-
-
 	<FrameLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		android:id="@+id/trafficFrame" 
 		android:orientation="vertical" 
 		android:layout_weight=".5"
 		android:layout_width="fill_parent"
-		android:layout_height="fill_parent">
+		android:layout_height="fill_parent"
+		android:background="@drawable/ic_weather" >
 
-<!--		<ScrollView-->
-<!--			android:id="@+id/trafficImageViewScroll"-->
-<!--			android:layout_width="wrap_content"-->
-<!--			android:layout_height="wrap_content"-->
-<!--			>-->
-<!--			<ImageView -->
-<!--				android:id="@+id/trafficImageView"-->
-<!--				android:layout_width="fill_parent"-->
-<!--				android:layout_height="fill_parent" -->
-<!--				android:visibility="visible"-->
-<!--				android:scaleType="center"-->
-<!--	 			android:layout_gravity="center_vertical|center" />-->
-<!--		</ScrollView>-->
-		
 		<WebView 
 			android:id="@+id/mainWebView" 
 			android:layout_width="fill_parent"
@@ -73,7 +50,6 @@
 	        />
 
 	</FrameLayout>
-	
 	
 	<include 
 		layout="@layout/navbar" 
