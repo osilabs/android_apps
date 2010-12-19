@@ -4,8 +4,6 @@
 
 * E/Web Console(32486): Uncaught ReferenceError: jumpTo is not defined at :1
 
-* Mapview wont reload 
-
 * Mapview keeps loading even though not showing.
 
 * Check that help works and make shared
@@ -25,9 +23,14 @@
 * Add phone numbers tab. phone icon. 
 
 * Get "Camera may have moved, please try again" error when I go to camchooser, then go back right away.
-** Add icons and how to use em.
 
+* Add icons to help and how to use em.
 
+* in Help, talk about how you can redraw the traffic by moving the screen.
+
+* Use styles.xml on webviews of feedback and about and help.
+
+* Put icons on settings popups
 
 >> TEST <<
 

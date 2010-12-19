@@ -323,25 +323,17 @@ public class App extends MapActivity {
 
     @Override
     public void onStart() {
+    	// Log.d(TAG, "onStart");
     	super.onStart();
     	
-    	// Log.d(TAG, "onStart");
-
-    	//
-        // FIXME - This should only happen if mapview is currently active
-    	//
-    	// Force the mapview to draw it's traffic layer when it's ready. Progressive approach.
-    	mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 3000);
-        mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 5000);
-        mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 10000);
+    	// Set some long term "pulse" timers to redraw the traffic lines after enough time
+    	//  that they may have changed.
         mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 60000);
         mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 180000);
-    	drawTrafficMap();
 
-    	// Redraw mapview
-    	mvTraffic.invalidate();
-    	
-	    //
+        if (MAP_VIEW_IS_VISIBLE) { drawTrafficMap(); }
+        
+    	//
     	// Set the current tab and load it
     	//
 	    
@@ -570,12 +562,12 @@ public class App extends MapActivity {
 				
 				switch(Config.traffic_viewtypes[ MapsTab.CURRENT_INDEX ]) {
 					case Config.MAP:
-			        	drawTrafficMap();
 				    	activateViewType(MAPVIEW);
 			        	
 			        	// Set flag indicating this thing is visible.
 			        	MAP_VIEW_IS_VISIBLE = true;
-
+			        	drawTrafficMap();
+			        	
 						break;
 						
 					case Config.IMAGE:
@@ -603,9 +595,9 @@ public class App extends MapActivity {
 		        break;
 		}
 		
+		// Feedback was just showing and need to refresh the views
+		//  to make it go away.
 		if (FEEDBACK_IS_VISIBLE) {
-			// Feedback was just showing and need to refresh the views
-			//  to make it go away.
 			FEEDBACK_IS_VISIBLE = false;
 			refreshViews();
 		}
@@ -615,19 +607,31 @@ public class App extends MapActivity {
 	// Map view map
 	//
 	public void drawTrafficMap() {
+		// Animate to a view.
         gpMain = new GeoPoint(
         		Config.GEO_POINTS[0][0], 
         		Config.GEO_POINTS[0][1]);
         mcMain.animateTo(gpMain);
         mcMain.setZoom(11);
-        
-        refreshTrafficMap();
+
+        // Redraw traffic
+        mvTraffic.invalidate();
+
+        // Put in some catch all redraws to play out after all the map tiles have loaded.
+        mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } },  1000);
+        mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } },  3000);
+        mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } },  5000);
+        mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 10000);
 	}
 	
+	/**
+	 * Called by Runnables multiple times to draw 
+	 */
 	public void refreshTrafficMap() {
-		Toast.makeText(getApplicationContext(), "Reloading Interactive Map", Toast.LENGTH_SHORT).show();
-
-        mvTraffic.invalidate();
+		Toast.makeText(getApplicationContext(), "+ + +", Toast.LENGTH_SHORT).show();
+		if (MAP_VIEW_IS_VISIBLE) {
+	        mvTraffic.invalidate();
+		}
 	}
 
 	//
@@ -651,19 +655,21 @@ public class App extends MapActivity {
 
 	    return true;
 	}
-		
+	
+	/**
+	 * Like reload views but displays a toast about it.
+	 */
 	public void refreshViews() {
         Log.d(TAG, "refreshViews");
-
 		Toast.makeText(getApplicationContext(), R.string.txt_loading, Toast.LENGTH_SHORT).show();
 
-		if (MAP_VIEW_IS_VISIBLE) {
-        	mvTraffic.invalidate();
-        }
-        
 		reloadViews();
+		refreshTrafficMap();
 	}
-	
+
+	/**
+	 * No toast message
+	 */
 	public void reloadViews() {
 		// Refresh main content webview
 		wvMain.loadUrl(WEBVIEW_URL
@@ -675,7 +681,7 @@ public class App extends MapActivity {
 		// Refresh banner webview
 		wvAd.loadUrl(AD_BANNER_URL);
 	}
-	
+
 	public void activateViewType(int v) {
 		mvTraffic.setVisibility(View.INVISIBLE);
 		wvMain.setVisibility(View.INVISIBLE);
