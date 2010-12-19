@@ -10,6 +10,7 @@
 	- Take screen shots
 	- Config.no_ads = false;
 4. compile "export" live version of apk
+	- Swtich Map Key to production version
 	- name: theappname-0.2-prod.apk
 	- verify works on phone
 5. app market site

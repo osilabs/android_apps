@@ -263,16 +263,6 @@ public class App extends MapActivity {
     	mvTraffic.setBuiltInZoomControls(true);
     	mvTraffic.setTraffic(true);
 		mcMain = mvTraffic.getController();
-
-		//
-		// Main Image View
-		//
-//	    ivTraffic = (ImageView) findViewById(R.id.trafficImageView);
-//	    ivTraffic.setVerticalScrollBarEnabled(true);
-//	    ivTraffic.setHorizontalScrollBarEnabled(true);
-//	    ivTraffic.setScaleType(ImageView.ScaleType.CENTER);
-//	    damien = (ScrollView) findViewById(R.id.trafficImageViewScroll);
-//	    //sv.removeAllViews();
 		
 		// -------------------------
 	    // Bottom Navigation Bar
@@ -359,10 +349,6 @@ public class App extends MapActivity {
     	super.onStart();
     	
     	// Log.d(TAG, "onStart");
-    	
-    	// Hide the splash
-    	//ImageView splash = (ImageView) findViewById(R.id.splash);
-    	//splash.setVisibility(View.GONE);
 
     	//
         // FIXME - This should only happen if mapview is currently active
@@ -371,11 +357,12 @@ public class App extends MapActivity {
     	mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 3000);
         mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 5000);
         mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 10000);
-        mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 15000);
+        mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 60000);
+        mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 180000);
     	drawTrafficMap();
 
     	// Redraw mapview
-    	mvTraffic.invalidate();
+//    	mvTraffic.invalidate();
     	
 	    //
     	// Set the current tab and load it
@@ -389,6 +376,16 @@ public class App extends MapActivity {
 		reloadViews();
     }
     
+    @Override
+    public void onPause() {
+    	super.onPause();
+    	MAP_VIEW_IS_VISIBLE = false;
+    }
+    
+    @Override
+    public void onResume() {
+    	super.onPause();
+    }
     
     
     
@@ -539,29 +536,11 @@ public class App extends MapActivity {
 			.getString(tf_saved, "0"));
 
 		// weather feed
-		//String wf_saved = c.getResources().getString(R.string.pref_weather_feed_selected);
-		//CalendarTab.CURRENT_WEATHER_FEED_INDEX = mySharedPreferences.getInt(wf_saved, 0);
 		String wf_saved = c.getResources().getString(R.string.pref_weather_feed_selected);
 		CalendarTab.CURRENT_WEATHER_FEED_INDEX = Integer.parseInt(mySharedPreferences
 			.getString(wf_saved, "0"));
 
     }
-    
-//    protected void setCurrentRadios() {
-//        // Log.d(TAG, "setCurrentRadios");
-//
-//    	// Set Global with current prefs
-//    	// If this namespace path doesn't end in '_preferences' this won't work.
-//    	mySharedPreferences = getSharedPreferences(Config.NAMESPACE + "_preferences", 0);
-//
-//		String wr_saved = getApplicationContext().getResources().getString(R.string.pref_weather_radios_selected);
-//		Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER] = Integer.parseInt(mySharedPreferences
-//	      .getString(wr_saved, Integer.toString(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER])));
-//
-//		String pr_saved = getApplicationContext().getResources().getString(R.string.pref_police_radios_selected);
-//		Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE] = Integer.parseInt(mySharedPreferences
-//	      .getString(pr_saved, Integer.toString(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE])));
-//    }
     
 	public void colorTheCurrentTab() {
         // Log.d(TAG, "colorTheCurrentTab");
@@ -585,9 +564,6 @@ public class App extends MapActivity {
 
 	public void setViewForCurrentTab(int tab_index) {
 		//Log.d(TAG, "setViewForCurrentTab index" + Integer.toString(tab_index));
-//
-//		String scrollx = "0";
-//		String scrolly = "0";
 
 		CURRENT_TAB_INDEX = tab_index;
 		setCurrentTab(CURRENT_TAB_INDEX);
@@ -679,15 +655,6 @@ public class App extends MapActivity {
 		Toast.makeText(getApplicationContext(), "++ Reloading Interactive Map", Toast.LENGTH_SHORT).show();
 
         mvTraffic.invalidate();
-	}
-	
-	public void pulseMapView() {
-    	if (MAP_VIEW_IS_VISIBLE) {
-    		// If showing, invalidates every 30 seconds
-    		refreshTrafficMap();
-    		
-    		mvTraffic.postDelayed(new Runnable() { public void run() { pulseMapView(); } }, 20000);
-    	}
 	}
 
 	//

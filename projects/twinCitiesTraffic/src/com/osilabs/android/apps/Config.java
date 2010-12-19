@@ -64,23 +64,11 @@ public final class Config {
 		FEED,
 		MAP
 	};
-//	// Args for types:
-//	// IMAGE = ()
-//	// MAP = ()
-//	// Web = ()
-//	public static final String [][] traffic_args = {
-//		{},
-//		{},
-//		{},
-//		{}
-//	};
-//	
 	
 	//
 	// calendar/today
 	//
 	public static final String[] calendar = {
-		"Driving Alerts",
 		"Weather Report",
 		"Food",
 		"Music",
@@ -88,34 +76,26 @@ public final class Config {
 	};
 	// Second param can be 'uri|(titleonly)|(link)'
 	public static final String[] calendar_src = {
-		"rss~http://www.dot.state.mn.us/tmc/trafficinfo/incidents.rss~ ~ ",
 		"{WEATHER}",
 		"rss~http://twincities.metromix.com/rss/popup/restaurants_daily_picks~ ~ ",
 		"rss~http://twincities.metromix.com/rss/popup/music_headlines~ ~ ",
 		"{TODAY}",
 	};
-
-//	public static final String[] today = {
-//		"City Pages A List",
-//		"Star Tribune Dining"
-//	};
 	// '(rss,atom)|uri|(titleonly)|(link)'
 	public static final String[] today_values = {
 		"rss~http://www.citypages.com/syndication/events/~ ~link",
 		"rss~http://www.startribune.com/entertainment/dining/index.rss2~ ~link"
 	};
-
-//	public static final String[] weather = {
-//		"Weather Bug",
-//		"Accuweather",
-//		"Weather.com"
-//	};
 	// '(rss,atom)|uri|(titleonly)|(link)'
 	public static final String[] weather_values = {
 		"rss~http://feeds.weatherbug.com/rss.aspx?zipcode=55401&feed=currtxt,fcsttxt&zcode=z4641~ ~ ",
 		"rss~http://rss.accuweather.com/rss/liveweather_rss.asp?metric=0&locCode=55401~ ~ ",
 		"rss~http://rss.weather.com/weather/rss/local/USMN0503?cm_ven=LWO&cm_cat=rss&par=LWO_rss~ ~ "
 	};
+	
+	
+	
+	
 
 	//
 	//
