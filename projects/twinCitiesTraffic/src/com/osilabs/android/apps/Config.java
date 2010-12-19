@@ -1,15 +1,18 @@
 package com.osilabs.android.apps;
 
-import com.google.android.maps.GeoPoint;
+//import com.google.android.maps.GeoPoint;
 
 public final class Config {
 	public static final    String DEFAULT_CAMERA_URL = "http://osilabs.com/m/mobilecontent/tctraffic5/trafficmap.php?target=4&camera=832";
 	public static final int       DEFAULT_MAP_INDEX = 0; // !!! Can't be above array size-1
 	public static final int       DEFAULT_CALENDAR_INDEX = 0;
 	public static final boolean   NO_ADS = false; // True will hide the ads
-	protected static       String MOBILECONTENT_URL_PREFIX = "http://osilabs.com/m/mobilecontent/tctraffic";
-	protected static       String MOBILECONTENT_URL_ABOUT  = "http://osilabs.com/m/mobilecontent/about/tct_about.php";
-	protected static       String MOBILECONTENT_URL_HELP   = "http://osilabs.com/m/mobilecontent/help/tct_help.php";
+	protected static       String MOBILECONTENT_URL_PREFIX   = "http://osilabs.com/m/mobilecontent/tctraffic";
+	protected static       String MOBILECONTENT_URL_ABOUT    = "http://osilabs.com/m/mobilecontent/about/tct_about.php";
+	// FIXME - make like feedback in structure
+	protected static       String MOBILECONTENT_URL_HELP     = "http://osilabs.com/m/mobilecontent/help/shared_help.php";
+	protected static       String MOBILECONTENT_URL_FEEDBACK = "http://osilabs.com/m/mobilecontent/feedback/shared.php";
+	
 	protected static final String NAMESPACE = "com.osilabs.android.apps";
 
 	// Which radios to offer
@@ -28,12 +31,17 @@ public final class Config {
 	};
 
 	//		new GeoPoint((int) (44.787144 * 1E6), (int) (-92.834472 * 1E6)),
-		
-	// Traffic Tab
+	
+	//
+	// Non config studd
+	//
 	public static final int WEB   = 0;
 	public static final int MAP   = 1;
 	public static final int IMAGE = 2;
 	public static final int FEED  = 3;
+
+		
+	// Traffic Tab
 	public static final String [] traffic = {
 		"Color Traffic Map",
 		"Hi-Contrast Traffic Map",

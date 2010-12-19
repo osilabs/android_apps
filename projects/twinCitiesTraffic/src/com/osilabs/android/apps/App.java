@@ -37,6 +37,7 @@ import android.opengl.Visibility;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -76,6 +77,8 @@ public class App extends MapActivity {
 	private static final int INDEX_TRAFFIC              = 0;
 	private static final int INDEX_CAMERAS              = 1;
 	private static final int INDEX_CALENDAR             = 2;
+	private static final int WEBVIEW	                = 0;
+	private static final int MAPVIEW                    = 1;
 	private static final int INTENT_RESULT_CODE_CAMERA_PICKER= 22;
 	private static final int INTENT_RESULT_CODE_PREFS   = 33;
 
@@ -92,6 +95,7 @@ public class App extends MapActivity {
 
 	// Tracks when the MapView is showing
 	protected static boolean MAP_VIEW_IS_VISIBLE = false;
+	protected static boolean FEEDBACK_IS_VISIBLE = false;
 
 	protected static PackageInfo pInfo = null;
 	protected static Spinner spViewChoices;
@@ -131,8 +135,11 @@ public class App extends MapActivity {
     //protected static Geocoder gcMain;
     
 	// Tints and paints
-	protected int color_tab;
+	//protected int color_tab;
 	
+	 // For posting runnables
+    private Handler mHandler = new Handler();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -175,7 +182,6 @@ public class App extends MapActivity {
 	    //
 
 	    ivMapsTab = (ImageView) findViewById(R.id.launcher_traffic);
-//		ivMapsTab.setBackgroundResource(R.drawable.bg_topnav_vgradient);
 		ivMapsTab.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -596,8 +602,8 @@ public class App extends MapActivity {
 
 		// Hide stuff
     	MAP_VIEW_IS_VISIBLE = false;
-		mvTraffic.setVisibility(View.INVISIBLE);
-		wvMain.setVisibility(View.INVISIBLE);
+//		mvTraffic.setVisibility(View.INVISIBLE);
+//		wvMain.setVisibility(View.INVISIBLE);
     	
     	MapsTab.hideConfiguration();
         CalendarTab.hideConfiguration();
@@ -615,19 +621,19 @@ public class App extends MapActivity {
 					case Config.MAP:
 			        	mvTraffic.invalidate();
 			        	drawTrafficMap();
-			        	mvTraffic.setVisibility(View.VISIBLE);
+			        	//mvTraffic.setVisibility(View.VISIBLE);
+				    	activateViewType(MAPVIEW);
 			        	
 			        	// Set flag indicating this thing is visible.
 			        	MAP_VIEW_IS_VISIBLE = true;
-			        	pulseMapView();
-			        	
+
 						break;
+						
 					case Config.IMAGE:
 					case Config.FEED:
 					case Config.WEB:
 						// FIXME - rename to wvTraffic
-			        	wvMain.setVisibility(View.VISIBLE);
-						//wvMain.loadUrl("javascript: jumpTo("+CURRENT_TAB_INDEX+ "," +scrollx+ "," +scrolly+ ")");
+				    	activateViewType(WEBVIEW);
 						wvMain.loadUrl("javascript: jumpTo("+CURRENT_TAB_INDEX+ ")");
 						break;
 				}
@@ -637,17 +643,22 @@ public class App extends MapActivity {
 		    	// FIXME - i think these are already set above
 		        CURRENT_TAB_INDEX = INDEX_CALENDAR;
 		        CalendarTab.showConfiguration();
-	        	wvMain.setVisibility(View.VISIBLE);
-				//wvMain.loadUrl("javascript: jumpTo("+CURRENT_TAB_INDEX+ "," +scrollx+ "," +scrolly+ ")");
+		    	activateViewType(WEBVIEW);
 				wvMain.loadUrl("javascript: jumpTo("+CURRENT_TAB_INDEX+ ")");
 		    	break;
 		    case MENU_CAMERAS:
 		        CURRENT_TAB_INDEX = INDEX_CAMERAS;
 		        CamerasTab.showConfiguration();
-	        	wvMain.setVisibility(View.VISIBLE);
-				//wvMain.loadUrl("javascript: jumpTo("+CURRENT_TAB_INDEX+ "," +scrollx+ "," +scrolly+ ")");
+		    	activateViewType(WEBVIEW);
 				wvMain.loadUrl("javascript: jumpTo("+CURRENT_TAB_INDEX+ ")");
 		        break;
+		}
+		
+		if (FEEDBACK_IS_VISIBLE) {
+			// Feedback was just showing and need to refresh the views
+			//  to make it go away.
+			FEEDBACK_IS_VISIBLE = false;
+			refreshViews();
 		}
 	}
 		
@@ -704,7 +715,7 @@ public class App extends MapActivity {
 	public void refreshViews() {
         Log.d(TAG, "refreshViews");
 
-		Toast.makeText(getApplicationContext(), R.string.txt_refreshing, Toast.LENGTH_SHORT).show();
+		Toast.makeText(getApplicationContext(), R.string.txt_loading, Toast.LENGTH_SHORT).show();
 
 		if (MAP_VIEW_IS_VISIBLE) {
         	mvTraffic.invalidate();
@@ -724,6 +735,20 @@ public class App extends MapActivity {
 		// Refresh banner webview
 		wvAd.loadUrl(AD_BANNER_URL);
 	}
+	
+	public void activateViewType(int v) {
+		mvTraffic.setVisibility(View.INVISIBLE);
+		wvMain.setVisibility(View.INVISIBLE);
+		
+		switch(v) {
+			case WEBVIEW:
+				wvMain.setVisibility(View.VISIBLE);			
+				break;
+			case MAPVIEW:
+				mvTraffic.setVisibility(View.VISIBLE);			
+				break;
+		};
+	}
 
     
 	
@@ -732,10 +757,114 @@ public class App extends MapActivity {
 	
 	
 	
+
+    
+    
+    // -----------------------------------------------
+    // Options Menu
+    //
+
+    /* Creates the menu items */
+	public boolean onCreateOptionsMenu(Menu menu) {
+		
+        // Log.d(TAG, "onCreateOptionsMenu");
+
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.options, menu);
+	    
+	    return true;
+	}
+	
+	/* Handles item selections */
+	public boolean onOptionsItemSelected(MenuItem item) {
+		
+        // Log.d(TAG, "onOptionsItemSelected:" + Integer.toString(item.getItemId()));
+		
+		switch (item.getItemId()) {
+			case R.id.menu_scanner_police:
+				//setCurrentRadios();
+				ScannerRadio.launchScanner(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE]);
+		    	return true;
+	
+			case R.id.menu_scanner_weather:
+				//setCurrentRadios();
+				ScannerRadio.launchScanner(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER]);
+		    	return true;
+				
+			case R.id.menu_refresh:
+				refreshViews();
+				return true;
+				
+		    case R.id.menu_prefs:
+		    	Intent intent = new Intent();
+				intent.setClassName(this, Config.NAMESPACE + ".Prefs");
+		    	this.startActivityForResult(intent, INTENT_RESULT_CODE_PREFS);
+		    	return true;
+
+		    case R.id.menu_help:
+        		Intent mIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Config.MOBILECONTENT_URL_HELP));
+				startActivity(mIntent); 
+		    	return true;
+
+		    case R.id.menu_about:
+		        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+		        alertDialog.setTitle(R.string.app_name);
+		        alertDialog.setMessage(getApplicationContext().getResources().getString(R.string.txt_version) + " " + pInfo.versionName);
+		        alertDialog.setButton(this.getResources().getString(R.string.txt_btn_more), new DialogInterface.OnClickListener() {
+		        	public void onClick(DialogInterface dialog, int which) {
+		        		Intent mIntent = new Intent(Intent.ACTION_VIEW, 
+		        				Uri.parse(Config.MOBILECONTENT_URL_ABOUT)); 
+        				startActivity(mIntent); 
+		            } 
+		        });
+		        alertDialog.setIcon(R.drawable.ic_launcher);
+		        alertDialog.show();
+		    	return true;
+
+		    case R.id.menu_feedback:
+		    	String phoneinfo = 
+		    		getApplicationContext().getResources().getString(R.string.app_name ) + 
+		    		" v" + pInfo.versionName + ", " +
+		    		Build.MANUFACTURER + ", " +
+	    			Build.MODEL + ", " +
+	    			Build.BRAND + ", " +
+	    			Build.DEVICE + ", " +
+	    			Build.DISPLAY + ", " +
+	    			Build.FINGERPRINT + ", " +
+	    			Build.PRODUCT + ", " +
+	    			Build.VERSION.RELEASE;
+		    	
+		    	activateViewType(WEBVIEW);
+		    	FEEDBACK_IS_VISIBLE = true;
+				Toast.makeText(this, R.string.txt_loading, Toast.LENGTH_LONG).show();
+		    	wvMain.loadUrl(Config.MOBILECONTENT_URL_FEEDBACK + "?phoneinfo=" + URLEncoder.encode(phoneinfo));
+		    	wvMain.requestFocus(View.FOCUS_DOWN); // Necessary or the input boxes may not take input.
+		        return true;
+
+		    case R.id.menu_exit:
+		        finish();
+		        return true;
+	    }
+		
+	    return false;
+	}
+    //
+    // Options Menu
+    // -----------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
 	// -----------------------------------------------
     // Web browser
     //
-
 	private class MyWebViewClient extends WebViewClient {
 		Activity activity;
 		public MyWebViewClient(Activity a) { activity = a; }
@@ -783,9 +912,8 @@ public class App extends MapActivity {
 	}
     
     final class JsiJavaScriptInterface {
-
-		Activity activity;
-    	JsiJavaScriptInterface(Activity a) { activity = a; }
+    	App parent;
+    	JsiJavaScriptInterface(App parent) { this.parent = parent; }
 
     	public void setLoadedTab(int loadedIndex) {
     		// This can't set current tab for the following reason:
@@ -794,98 +922,22 @@ public class App extends MapActivity {
     		//  can touch its views.
     		//
     		// setViewForCurrentTab(loadedIndex); 
+    	}
+    	
+    	public void feedbackSaved() {
+			Toast.makeText(getApplicationContext(), "Thank you for your feedback", Toast.LENGTH_LONG).show();
+			
+		    final Runnable r = new Runnable() { 
+		        public void run () { 
+		            reloadViews(); // Here you can modify UI 
+		        }
+		    }; 
+		    parent.mHandler.post(r);  // adding this to queue 
     	}	
     }
     //
     // Web browser
     // -----------------------------------------------
-
-    
-    
-    // -----------------------------------------------
-    // Options Menu
-    //
-
-    /* Creates the menu items */
-	public boolean onCreateOptionsMenu(Menu menu) {
-		
-        // Log.d(TAG, "onCreateOptionsMenu");
-
-	    MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.options, menu);
-	    
-	    return true;
-	}
-	
-	/* Handles item selections */
-	public boolean onOptionsItemSelected(MenuItem item) {
-		
-        // Log.d(TAG, "onOptionsItemSelected:" + Integer.toString(item.getItemId()));
-		
-		switch (item.getItemId()) {
-			case R.id.menu_scanner_police:
-				//setCurrentRadios();
-				ScannerRadio.launchScanner(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE]);
-		    	return true;
-	
-			case R.id.menu_scanner_weather:
-				//setCurrentRadios();
-				ScannerRadio.launchScanner(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER]);
-		    	return true;
-				
-			case R.id.menu_refresh:
-				refreshViews();
-				return true;
-				
-		    case R.id.menu_prefs:
-		    	Intent intent = new Intent();
-				intent.setClassName(this, Config.NAMESPACE + ".Prefs");
-		    	this.startActivityForResult(intent, INTENT_RESULT_CODE_PREFS);
-		    	return true;
-
-		    case R.id.menu_help:
-		    	String phoneinfo = 
-		    		getApplicationContext().getResources().getString(R.string.app_name ) + 
-		    		" v" + pInfo.versionName + ", " +
-		    		Build.MANUFACTURER + ", " +
-	    			Build.MODEL + ", " +
-	    			Build.BRAND + ", " +
-	    			Build.DEVICE + ", " +
-	    			Build.DISPLAY + ", " +
-	    			Build.FINGERPRINT + ", " +
-	    			Build.PRODUCT + ", " +
-	    			Build.VERSION.RELEASE;
-        		Intent mIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Config.MOBILECONTENT_URL_HELP + "?phoneinfo=" + URLEncoder.encode(phoneinfo))); 
-				startActivity(mIntent); 
-		    	return true;
-
-		    case R.id.menu_about:
-		        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-		        alertDialog.setTitle(R.string.app_name);
-		        alertDialog.setMessage(getApplicationContext().getResources().getString(R.string.txt_version) + " " + pInfo.versionName);
-		        alertDialog.setButton(this.getResources().getString(R.string.txt_btn_more), new DialogInterface.OnClickListener() {
-		        	public void onClick(DialogInterface dialog, int which) {
-		        		Intent mIntent = new Intent(Intent.ACTION_VIEW, 
-		        				Uri.parse(Config.MOBILECONTENT_URL_ABOUT)); 
-        				startActivity(mIntent); 
-		            } 
-		        });
-		        alertDialog.setIcon(R.drawable.ic_launcher);
-		        alertDialog.show();
-		    	return true;
-
-		    case R.id.menu_exit:
-		        finish();
-		        return true;
-	    }
-		
-	    return false;
-	}
-	
-    //
-    // Options Menu
-    // -----------------------------------------------
-
 }
 	
     

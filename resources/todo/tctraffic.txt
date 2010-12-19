@@ -2,58 +2,56 @@
 
 >> STM <<
 
-* replace tct_*() functions with a config variable in html/php stuff.
+* Put "loading" message in when you pull up feedback.
 
-* Fix Traffic-> Traffic Alerts. Needs to load up webview as rss.
+* Add banner has a gap at it's top
 
-* Make sure refresh icon works.
+* Mapview wont reload 
 
-* Fis scrollview variable name of damien
+* Mapview keeps loading even though not showing.
 
-* Change out alert icon for calendar, move traffic alerts to traffic tab and make it work with webview and rss.
+* Finish seperating help and feedback. left off: shared files, need to add new button to options menu.
+
+* Make shared help
+
+* See If I can get maps to just center so I don't have to do a scrollx/y
+
+* When you start the app, make sure the current map comes up and doesnt load mapview if doesn't have to.
+
+* Check that favorites are used and saved.
 
 * All the rss feeds say "Nothing to report" when nothing. Make it so weather/alert/information feeds use different messages.
+
+* popup to launch the radios that tells you how to back up back to tct and more info on radios not working
 
 * Go thorugh and make sure the refresh button refreshes all incarnations of all views.
 
 * Add phone numbers tab. phone icon. 
->> TEST <<
-* Check how refresh works with maps
-* When you start the app, make sure the current map comes up and doesnt load mapview if doesn't have to.
-* Check that favorites are used and saved.
 
+* Get "Camera may have moved, please try again" error when I go to camchooser, then go back right away.
+** Add icons and how to use em.
+
+
+
+>> TEST <<
 
 >> Enhancements <<
 * Preset zoom sites (Intnl airport, downtown mpls, downtown st paul) for interactive map
-* OnTab switch
-** 1. Make current view invisible
-** 2. Swap in loading message
-** 3. Make the tab clicked green
-** 4. Do all the expensive work, trap errors, if errors, ? pop up config picker to pick another map?
-* Do not load any map anything until it is known that the Map is what's about to be displayed. maybe use a flat to say neverloaded and until tripped never load it.
-* Look at how often I am reloading the mapview when I don't need to be.
 * put gradient on navbars
-* popup to launch the radios that tells you how to back up back to tct and more info on radios not working
-* Dynamically load the different views so they can be defined solely from the Config.array.
+* Add phone numbers (511) somewhere
+** Explain how to add shortcut to desktop: Open the app drawer. Find TCT. Long press the icon. Drag to desktop. Let go.
 
 >> BUGS <<
-* Map is re-centering when i retrn to the tab. also doesn't paint traffic until i tap or move it
 * Was on traffic tab:color map index. Selected interactive map index, did not ever paint the traffic layer. May need a longer timer or invalidate upon leaving the view or invalidate upon selecting the tab or upon showing the view.
 * Switching from color map (image view) to mapview map doesn't cause traffic overlay to force draw.
 
 >> MISC <<
 * See proandrod2 book p274 for geocoding with threads
 * See proandrod2 book p275/6 for progress dialog
-* Longpress map menu: 'Navigate to Here', 'Search Near Here'
-* Make scrollbar on webview so it shows while scrolling then hides when not, when looking at rss feeds.
+* Longpress map menu: 'Navigate to Here', 'Search Near Here', 'Jump to different city views (airport, north, southewest,...)
 
-* Make shared help
-** Add icons and how to use em.
-** Explain how to add shortcut to desktop: Open the app drawer. Find TCT. Long press the icon. Drag to desktop. Let go.
 
-* Add phone numbers (511) somewhere
 
-* Remove camera anything from webview, use imageviews
 
 
 //-- Paid version --//
