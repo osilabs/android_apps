@@ -331,11 +331,11 @@ public class App extends MapActivity {
         // FIXME - This should only happen if mapview is currently active
     	//
     	// Force the mapview to draw it's traffic layer when it's ready. Progressive approach.
-//    	mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 3000);
-//        mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 5000);
-//        mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 10000);
-//        mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 60000);
-//        mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 180000);
+    	mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 3000);
+        mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 5000);
+        mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 10000);
+        mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 60000);
+        mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 180000);
     	drawTrafficMap();
 
     	// Redraw mapview
@@ -361,7 +361,7 @@ public class App extends MapActivity {
     
     @Override
     public void onResume() {
-    	super.onPause();
+    	super.onResume();
     }
     
     
@@ -555,8 +555,6 @@ public class App extends MapActivity {
 
 		// Hide stuff
     	MAP_VIEW_IS_VISIBLE = false;
-//		mvTraffic.setVisibility(View.INVISIBLE);
-//		wvMain.setVisibility(View.INVISIBLE);
     	
     	MapsTab.hideConfiguration();
         CalendarTab.hideConfiguration();
@@ -572,9 +570,7 @@ public class App extends MapActivity {
 				
 				switch(Config.traffic_viewtypes[ MapsTab.CURRENT_INDEX ]) {
 					case Config.MAP:
-			        	//mvTraffic.invalidate();
 			        	drawTrafficMap();
-			        	//mvTraffic.setVisibility(View.VISIBLE);
 				    	activateViewType(MAPVIEW);
 			        	
 			        	// Set flag indicating this thing is visible.
