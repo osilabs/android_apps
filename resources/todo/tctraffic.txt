@@ -2,10 +2,6 @@
 
 >> STM <<
 
-* Check that help works and make shared
-* in Help, talk about how you can redraw the traffic by moving the screen.
-* Add icons to help and how to use em.
-
 * Check that favorites are used and saved.
 
 * Hit refresh and it triggers updating the mapview even when it isn't showing. fix.
@@ -15,13 +11,12 @@
 
 * See If I can get maps to just center so I don't have to do a scrollx/y
 
-* Use styles.xml on webviews of feedback and about and help.
+
+
 
 * Put icons on settings popups
 
-
-
-* popup to launch the radios that tells you how to back up back to tct and more info on radios not working
+* Use styles.xml on webviews of feedback and about and help. - May not be possible. Swear I did it in imednetmobile tho...
 
 * Add phone numbers tab. phone icon. 
 
