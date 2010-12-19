@@ -81,8 +81,10 @@ public class App extends MapActivity {
 	protected static WebView wvMain;
 	protected static SharedPreferences mySharedPreferences;
 
+	//
 	// Navbar components
-
+	//
+	
 	// Tabs
 	protected static ImageView ivMapsTab;
 	protected static ImageView ivCalendarTab;
@@ -351,6 +353,8 @@ public class App extends MapActivity {
     @Override
     public void onPause() {
     	super.onPause();
+    	// Prevents the already posted runnables to redraw traffic 
+    	//  from causing the map to redraw after we leave
     	MAP_VIEW_IS_VISIBLE = false;
     }
     
@@ -631,7 +635,6 @@ public class App extends MapActivity {
 	 * Called by Runnables multiple times to draw 
 	 */
 	public void refreshTrafficMap() {
-		Toast.makeText(getApplicationContext(), "+ + +", Toast.LENGTH_SHORT).show();
 		if (MAP_VIEW_IS_VISIBLE) {
 	        mvTraffic.invalidate();
 		}
