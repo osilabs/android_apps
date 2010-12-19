@@ -629,7 +629,7 @@ public class App extends MapActivity {
 	}
 	
 	public void refreshTrafficMap() {
-		Toast.makeText(getApplicationContext(), "++ Reloading Interactive Map", Toast.LENGTH_SHORT).show();
+		Toast.makeText(getApplicationContext(), "Reloading Interactive Map", Toast.LENGTH_SHORT).show();
 
         mvTraffic.invalidate();
 	}
