@@ -451,10 +451,8 @@ public class App extends MapActivity {
             // This is the standard resultCode that is sent back if the
             // activity crashed or didn't doesn't supply an explicit result.
             if (resultCode == RESULT_CANCELED){
-    			Toast.makeText(getApplicationContext(), 
-    					R.string.txt_camera_picker_noop
-    					, Toast.LENGTH_LONG).show();
-            } 
+    			//Toast.makeText(getApplicationContext(), R.string.txt_camera_picker_noop, Toast.LENGTH_LONG).show();
+            }
             else {
             	Bundle extras = data.getExtras();
                 CamerasTab.CURRENT_CAMERA_URL = extras.getString("selected_camera");

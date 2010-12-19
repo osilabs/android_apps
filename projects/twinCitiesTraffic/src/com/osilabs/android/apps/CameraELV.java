@@ -43,13 +43,13 @@ public class CameraELV extends ExpandableListActivity implements OnChildClickLis
     @Override
     public void onPause() {
     	super.onPause();
-    	Log.d("** CameraELV **", "onPause");
+    	//Log.d("** CameraELV **", "onPause");
     }
 
     @Override
     public void onResume() {
     	super.onResume();
-    	Log.d("** CameraELV **", "onResume");
+    	//Log.d("** CameraELV **", "onResume");
     }
     
     
@@ -110,12 +110,12 @@ public class CameraELV extends ExpandableListActivity implements OnChildClickLis
         if (type == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
             int groupPos = ExpandableListView.getPackedPositionGroup(info.packedPosition); 
             int childPos = ExpandableListView.getPackedPositionChild(info.packedPosition); 
-            Toast.makeText(this, title + ": Child " + childPos + " clicked in group " + groupPos,
-                    Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, title + ": Child " + childPos + " clicked in group " + groupPos,
+            //        Toast.LENGTH_SHORT).show();
             return true;
         } else if (type == ExpandableListView.PACKED_POSITION_TYPE_GROUP) {
             int groupPos = ExpandableListView.getPackedPositionGroup(info.packedPosition); 
-            Toast.makeText(this, title + ": Group " + groupPos + " clicked", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, title + ": Group " + groupPos + " clicked", Toast.LENGTH_SHORT).show();
             return true;
         }
 
