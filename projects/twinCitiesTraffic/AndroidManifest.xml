@@ -28,9 +28,8 @@
                 <category android:name="android.intent.category.PREFERENCE" />
             </intent-filter>
         </activity>
-                  
+
 		<uses-library android:name="com.google.android.maps" />
-		
     </application>
     
     <supports-screens

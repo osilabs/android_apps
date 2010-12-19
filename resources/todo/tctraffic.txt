@@ -2,17 +2,13 @@
 
 >> STM <<
 
-* Put "loading" message in when you pull up feedback.
-
-* Add banner has a gap at it's top
+* E/Web Console(32486): Uncaught ReferenceError: jumpTo is not defined at :1
 
 * Mapview wont reload 
 
 * Mapview keeps loading even though not showing.
 
-* Finish seperating help and feedback. left off: shared files, need to add new button to options menu.
-
-* Make shared help
+* Check that help works and make shared
 
 * See If I can get maps to just center so I don't have to do a scrollx/y
 

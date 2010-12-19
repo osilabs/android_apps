@@ -1,16 +1,6 @@
 package com.osilabs.android.apps;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.net.URLEncoder;
-import java.util.List;
-import java.util.Locale;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
@@ -25,39 +15,26 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
-import android.location.Address;
-import android.location.Geocoder;
 import android.net.Uri;
-import android.opengl.Visibility;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ViewFlipper;
 
 public class App extends MapActivity {
 
@@ -354,11 +331,11 @@ public class App extends MapActivity {
         // FIXME - This should only happen if mapview is currently active
     	//
     	// Force the mapview to draw it's traffic layer when it's ready. Progressive approach.
-    	mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 3000);
-        mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 5000);
-        mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 10000);
-        mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 60000);
-        mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 180000);
+//    	mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 3000);
+//        mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 5000);
+//        mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 10000);
+//        mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 60000);
+//        mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 180000);
     	drawTrafficMap();
 
     	// Redraw mapview
@@ -595,7 +572,7 @@ public class App extends MapActivity {
 				
 				switch(Config.traffic_viewtypes[ MapsTab.CURRENT_INDEX ]) {
 					case Config.MAP:
-			        	mvTraffic.invalidate();
+			        	//mvTraffic.invalidate();
 			        	drawTrafficMap();
 			        	//mvTraffic.setVisibility(View.VISIBLE);
 				    	activateViewType(MAPVIEW);
