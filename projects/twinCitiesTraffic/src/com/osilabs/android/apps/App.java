@@ -339,7 +339,7 @@ public class App extends MapActivity {
     	drawTrafficMap();
 
     	// Redraw mapview
-//    	mvTraffic.invalidate();
+    	mvTraffic.invalidate();
     	
 	    //
     	// Set the current tab and load it
