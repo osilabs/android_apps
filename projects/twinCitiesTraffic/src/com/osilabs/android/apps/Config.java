@@ -9,9 +9,6 @@ public final class Config {
 	public static final boolean   NO_ADS = false; // True will hide the ads
 	protected static       String MOBILECONTENT_URL_PREFIX   = "http://osilabs.com/m/mobilecontent/tctraffic";
 	protected static       String MOBILECONTENT_URL_ABOUT    = "http://osilabs.com/m/mobilecontent/about/tct_about.php";
-	// FIXME - make like feedback in structure
-	protected static       String MOBILECONTENT_URL_HELP     = "http://osilabs.com/m/mobilecontent/help/shared_help.php";
-	protected static       String MOBILECONTENT_URL_FEEDBACK = "http://osilabs.com/m/mobilecontent/feedback/shared.php";
 	
 	protected static final String NAMESPACE = "com.osilabs.android.apps";
 

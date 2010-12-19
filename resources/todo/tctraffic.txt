@@ -2,33 +2,28 @@
 
 >> STM <<
 
-* The background color of the webwiews shold be set to black to when loading 
 * Check that help works and make shared
 * in Help, talk about how you can redraw the traffic by moving the screen.
-* Check that favorites are used and saved.
 * Add icons to help and how to use em.
 
+* Check that favorites are used and saved.
+
 * Hit refresh and it triggers updating the mapview even when it isn't showing. fix.
+* When you start the app, make sure the current map comes up and doesnt load mapview if doesn't have to.
 
 * E/Web Console(32486): Uncaught ReferenceError: jumpTo is not defined at :1
 
-* Mapview keeps loading even though not showing.
-
 * See If I can get maps to just center so I don't have to do a scrollx/y
-
-* When you start the app, make sure the current map comes up and doesnt load mapview if doesn't have to.
-
-* All the rss feeds say "Nothing to report" when nothing. Make it so weather/alert/information feeds use different messages.
-
-* popup to launch the radios that tells you how to back up back to tct and more info on radios not working
-
-* Add phone numbers tab. phone icon. 
-
-* Get "Camera may have moved, please try again" error when I go to camchooser, then go back right away.
 
 * Use styles.xml on webviews of feedback and about and help.
 
 * Put icons on settings popups
+
+
+
+* popup to launch the radios that tells you how to back up back to tct and more info on radios not working
+
+* Add phone numbers tab. phone icon. 
 
 >> TEST <<
 

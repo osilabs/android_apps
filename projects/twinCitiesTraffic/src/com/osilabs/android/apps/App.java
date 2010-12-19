@@ -60,6 +60,11 @@ public class App extends MapActivity {
 	private static final int INTENT_RESULT_CODE_CAMERA_PICKER= 22;
 	private static final int INTENT_RESULT_CODE_PREFS   = 33;
 
+	// URI's
+	//protected static final String MOBILECONTENT_URL_HELP     = "http://osilabs.com/m/mobilecontent/help/shared_help.php";
+	protected static final String MOBILECONTENT_URL_HELP     = "http://osilabs.com/m/mobilecontent/help/shared.php";
+	protected static final String MOBILECONTENT_URL_FEEDBACK = "http://osilabs.com/m/mobilecontent/feedback/shared.php";
+
 	//
 	// Globals
 	//
@@ -74,7 +79,8 @@ public class App extends MapActivity {
 	// Tracks when the MapView is showing
 	protected static boolean MAP_VIEW_IS_VISIBLE = false;
 	protected static boolean FEEDBACK_IS_VISIBLE = false;
-
+	protected static boolean HELP_IS_VISIBLE     = false;
+	
 	protected static PackageInfo pInfo = null;
 	protected static Spinner spViewChoices;
 	protected static WebView wvAd;
@@ -606,6 +612,11 @@ public class App extends MapActivity {
 			FEEDBACK_IS_VISIBLE = false;
 			refreshViews();
 		}
+		
+		if (HELP_IS_VISIBLE) {
+			HELP_IS_VISIBLE = false;
+			refreshViews();
+		}
 	}
 		
 	//----------------------------------------------------------
@@ -752,8 +763,10 @@ public class App extends MapActivity {
 		    	return true;
 
 		    case R.id.menu_help:
-        		Intent mIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Config.MOBILECONTENT_URL_HELP));
-				startActivity(mIntent); 
+		    	activateViewType(WEBVIEW);
+		    	HELP_IS_VISIBLE = true;
+				Toast.makeText(this, R.string.txt_loading, Toast.LENGTH_LONG).show();
+		    	wvMain.loadUrl(MOBILECONTENT_URL_HELP);
 		    	return true;
 
 		    case R.id.menu_about:
@@ -787,7 +800,7 @@ public class App extends MapActivity {
 		    	activateViewType(WEBVIEW);
 		    	FEEDBACK_IS_VISIBLE = true;
 				Toast.makeText(this, R.string.txt_loading, Toast.LENGTH_LONG).show();
-		    	wvMain.loadUrl(Config.MOBILECONTENT_URL_FEEDBACK + "?phoneinfo=" + URLEncoder.encode(phoneinfo));
+		    	wvMain.loadUrl(MOBILECONTENT_URL_FEEDBACK + "?phoneinfo=" + URLEncoder.encode(phoneinfo));
 		    	wvMain.requestFocus(View.FOCUS_DOWN); // Necessary or the input boxes may not take input.
 		        return true;
 
