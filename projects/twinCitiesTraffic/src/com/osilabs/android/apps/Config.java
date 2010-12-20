@@ -6,10 +6,10 @@ public final class Config {
 	public static final    String DEFAULT_CAMERA_URL = "http://osilabs.com/m/mobilecontent/tctraffic5/trafficmap.php?target=4&camera=832";
 	public static final int       DEFAULT_MAP_INDEX = 0; // !!! Can't be above array size-1
 	public static final int       DEFAULT_CALENDAR_INDEX = 0;
+	public static final int       DEFAULT_TAB_INDEX = 0;
 	public static final boolean   NO_ADS = false; // True will hide the ads
 	protected static       String MOBILECONTENT_URL_PREFIX   = "http://osilabs.com/m/mobilecontent/tctraffic";
 	protected static       String MOBILECONTENT_URL_ABOUT    = "http://osilabs.com/m/mobilecontent/about/tct_about.php";
-	
 	protected static final String NAMESPACE = "com.osilabs.android.apps";
 
 	// Which radios to offer
