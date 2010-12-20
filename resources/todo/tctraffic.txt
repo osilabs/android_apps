@@ -1,5 +1,11 @@
 // Release 0.8
 
+* New install doesn't select a camera for you
+
+
+
+
+
 >> STM <<
 
 >> TEST <<
