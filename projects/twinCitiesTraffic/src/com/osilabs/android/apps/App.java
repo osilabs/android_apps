@@ -860,9 +860,7 @@ public class App extends MapActivity {
 			return true;
 		}
 		public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-	        // Log.d(TAG, "mywebviewclient::onrecievederror");
-
-			Toast.makeText(activity, "Oh no! " + description, Toast.LENGTH_SHORT).show();
+			Toast.makeText(activity, "Could not connect. Please try again when the internet is available.", Toast.LENGTH_SHORT).show();
 		}
 	}
 
