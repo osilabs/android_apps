@@ -61,7 +61,6 @@ public class App extends MapActivity {
 	private static final int INTENT_RESULT_CODE_PREFS   = 33;
 
 	// URI's
-	//protected static final String MOBILECONTENT_URL_HELP     = "http://osilabs.com/m/mobilecontent/help/shared_help.php";
 	protected static final String MOBILECONTENT_URL_HELP     = "http://osilabs.com/m/mobilecontent/help/shared.php";
 	protected static final String MOBILECONTENT_URL_FEEDBACK = "http://osilabs.com/m/mobilecontent/feedback/shared.php";
 
@@ -80,6 +79,7 @@ public class App extends MapActivity {
 	protected static boolean MAP_VIEW_IS_VISIBLE = false;
 	protected static boolean FEEDBACK_IS_VISIBLE = false;
 	protected static boolean HELP_IS_VISIBLE     = false;
+	protected static boolean ABOUT_IS_VISIBLE    = false;
 	
 	protected static PackageInfo pInfo = null;
 	protected static Spinner spViewChoices;
@@ -157,7 +157,7 @@ public class App extends MapActivity {
         //
 		mySharedPreferences = getSharedPreferences(
 				Config.NAMESPACE, Activity.MODE_PRIVATE);
-        CURRENT_TAB_INDEX = mySharedPreferences.getInt("session_current_view", 2);
+        CURRENT_TAB_INDEX = mySharedPreferences.getInt("session_current_view", Config.DEFAULT_TAB_INDEX);
         
         MapsTab.CURRENT_INDEX = mySharedPreferences.getInt("session_map", Config.DEFAULT_MAP_INDEX);
         CalendarTab.CURRENT_INDEX = mySharedPreferences.getInt("session_calendar", Config.DEFAULT_CALENDAR_INDEX);
@@ -617,6 +617,11 @@ public class App extends MapActivity {
 			HELP_IS_VISIBLE = false;
 			refreshViews();
 		}
+		
+		if (ABOUT_IS_VISIBLE) {
+			ABOUT_IS_VISIBLE = false;
+			refreshViews();
+		}
 	}
 		
 	//----------------------------------------------------------
@@ -775,9 +780,10 @@ public class App extends MapActivity {
 		        alertDialog.setMessage(getApplicationContext().getResources().getString(R.string.txt_version) + " " + pInfo.versionName);
 		        alertDialog.setButton(this.getResources().getString(R.string.txt_btn_more), new DialogInterface.OnClickListener() {
 		        	public void onClick(DialogInterface dialog, int which) {
-		        		Intent mIntent = new Intent(Intent.ACTION_VIEW, 
-		        				Uri.parse(Config.MOBILECONTENT_URL_ABOUT)); 
-        				startActivity(mIntent); 
+				    	activateViewType(WEBVIEW);
+				    	ABOUT_IS_VISIBLE = true;
+						Toast.makeText(getApplicationContext(), R.string.txt_loading, Toast.LENGTH_LONG).show();
+				    	wvMain.loadUrl(Config.MOBILECONTENT_URL_ABOUT);
 		            } 
 		        });
 		        alertDialog.setIcon(R.drawable.ic_launcher);

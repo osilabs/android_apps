@@ -1,41 +1,27 @@
-// Release 0.7
+// Release 0.8
 
 >> STM <<
-
-* Check that favorites are used and saved.
-
-* Hit refresh and it triggers updating the mapview even when it isn't showing. fix.
-* When you start the app, make sure the current map comes up and doesnt load mapview if doesn't have to.
-
-* E/Web Console(32486): Uncaught ReferenceError: jumpTo is not defined at :1
-
-* See If I can get maps to just center so I don't have to do a scrollx/y
-
-
-
-
-* Put icons on settings popups
-
-* Use styles.xml on webviews of feedback and about and help. - May not be possible. Swear I did it in imednetmobile tho...
-
-* Add phone numbers tab. phone icon. 
 
 >> TEST <<
 
 >> Enhancements <<
 * Preset zoom sites (Intnl airport, downtown mpls, downtown st paul) for interactive map
 * put gradient on navbars
-* Add phone numbers (511) somewhere
-** Explain how to add shortcut to desktop: Open the app drawer. Find TCT. Long press the icon. Drag to desktop. Let go.
+* Add phone numbers (511) somewhere. tab. phone icon. 
+* Normal, big, huge text sizes.
+* Put icons on settings popups
+* Longpress map menu: 'Navigate to Here', 'Search Near Here', 'Jump to different city views (airport, north, southewest,...)
+* Use styles.xml on webviews of feedback and about and help. - May not be possible. Swear I did it in imednetmobile tho...
 
 >> BUGS <<
-* Was on traffic tab:color map index. Selected interactive map index, did not ever paint the traffic layer. May need a longer timer or invalidate upon leaving the view or invalidate upon selecting the tab or upon showing the view.
+* When you start the app, make sure the current map comes up and doesnt load mapview if doesn't have to.
+* E/Web Console(32486): Uncaught ReferenceError: jumpTo is not defined at :1
+* See If I can get maps to just center so I don't have to do a scrollx/y
 * Switching from color map (image view) to mapview map doesn't cause traffic overlay to force draw.
 
 >> MISC <<
 * See proandrod2 book p274 for geocoding with threads
 * See proandrod2 book p275/6 for progress dialog
-* Longpress map menu: 'Navigate to Here', 'Search Near Here', 'Jump to different city views (airport, north, southewest,...)
 
 
 
