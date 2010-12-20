@@ -128,11 +128,11 @@ public class App extends MapActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        // Log.d(TAG, "onCreate");
+
+    	super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        Log.d(TAG, "onCreate");
-
         // Set global context;
         me = this;
         
@@ -664,7 +664,7 @@ public class App extends MapActivity {
 	
 	
 	public boolean setCurrentTab(int viewIndex) {
-        Log.d(TAG, "setCurrentTab");
+        // Log.d(TAG, "setCurrentTab");
 
 		// Save Settings
     	SharedPreferences prefs 
@@ -680,7 +680,7 @@ public class App extends MapActivity {
 	 * Like reload views but displays a toast about it.
 	 */
 	public void refreshViews() {
-        Log.d(TAG, "refreshViews");
+        // Log.d(TAG, "refreshViews");
 		Toast.makeText(getApplicationContext(), R.string.txt_loading, Toast.LENGTH_SHORT).show();
 
 		reloadViews();

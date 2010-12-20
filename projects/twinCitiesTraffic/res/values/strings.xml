@@ -16,8 +16,8 @@
     <string name="session_calendar">0</string>
     <string name="pref_police_radios_dialog_title">Set Favorite Police Scanner</string>
     <string name="pref_weather_radios_dialog_title">Set Favorite Weather Radio</string>
-    <string name="pref_today_feed_dialog_title">Set Today\'s Events Source</string>
-    <string name="pref_weather_feed_dialog_title">Set Weather Source</string>
+    <string name="pref_today_feed_dialog_title">Things To Do</string>
+    <string name="pref_weather_feed_dialog_title">Choose Weather Source</string>
 	<!--	~~~~~~~~~~~~~ -->
 	<!--	~~~~~~~~~~~~~ ~~~~~~~~~~~~~ ~~~~~~~~~~~~~ -->
 
@@ -62,12 +62,12 @@
     <string name="pref_weather_radios_selected">pref_weather_radios_selected</string>
 	<!-- today feed prefs -->
     <string name="pref_today_feed">Today</string>
-    <string name="pref_today_feed_summary">Set your favorite</string>
-    <string name="pref_today_feed_title">Today</string>    
+    <string name="pref_today_feed_summary">Set your source</string>
+    <string name="pref_today_feed_title">Things To Do</string>    
     <string name="pref_today_feed_selected">pref_today_feed_selected</string>
 	<!-- weather feed prefs -->
     <string name="pref_weather_feed">Weather</string>
     <string name="pref_weather_feed_summary">Set your favorite</string>
-    <string name="pref_weather_feed_title">Weather</string>    
+    <string name="pref_weather_feed_title">Weather Report</string>    
     <string name="pref_weather_feed_selected">pref_weather_feed_selected</string>
 </resources>

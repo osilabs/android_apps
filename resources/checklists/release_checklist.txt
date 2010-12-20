@@ -2,23 +2,25 @@
 >> Release checklist <<
 
 1. update versions in manifest (+1 because updating code and will need to recommit)
-2. Update Websites
+2. app market descriptions
+	- update description
+3. Update Websites
 	- osilabs/m/mobilecontent/{livedropper,tctraffic,...}/about.php
 	- paste about.php pages and apps/index.php in wordprocessor and check spelling3
-3. Screenshots
+4. Screenshots
 	- Config.no_ads = true;
 	- Take screen shots
 	- Config.no_ads = false;
-4. compile "export" live version of apk
+	- Upload to market
+5. compile "export" live version of apk
 	- Swtich Map Key to production version
 	- name: theappname-0.2-prod.apk
-	- verify works on phone
-5. app market site
-	- update description
-	- update the upgrade notes section
+	- verify works on phone - Can use adb or put out to osilabs/m/apps/tctx/xx.apk
+6. app market site
 	- upload apk
+	- update the upgrade notes section
 	- publilsh
-6. Commit and push git. Tag with -m"TCT v0.3 - RELEASE 20101019"
+7. Commit and push git. Tag with -m"TCT v0.3 - RELEASE 20101019"
 	$ git tag 'TCT_v0.4_RELEASE_20101109'
 	$ git push origin master
 	$ git push origin TCT_v0.4_RELEASE_20101109
