@@ -2,6 +2,9 @@
 // TODO v0.1
 //
 
+>> Black Screen Bug <<
+* Again, I had the exact same issue.  Black screen in camera, would not work even after getting cell signal as long as the camera was turned on when I had limited or no signal.  Turning off geotaging and rebooting the phone solved the problem.  I have not had one camera black screen issue since turning off this option.
+
 
 * Get running on g1 and emulator
 
