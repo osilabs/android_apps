@@ -63,6 +63,7 @@ public class LiveDropper extends Activity {
 	
 	private static int FRAMEBUFFER_IS = AVAILABLE;
 	private static int IS_PAUSING = NO;
+	private static boolean SHOWING_PREVIEW = false;	
 
 	// RGB values are set as they become available.
 	private static final int RGB_ELEMENTS = 4;
@@ -357,32 +358,36 @@ public class LiveDropper extends Activity {
 		public void surfaceChanged(SurfaceHolder holder, int format, int w, int h) {
 			//Log.d(TAG, "surfaceChange'd");
 			try{
+				// I found this on http://pastebin.com/06FunF5k and thought it may
+				//  be a benefit. 
+				if (SHOWING_PREVIEW) {
+					SHOWING_PREVIEW = false;
+					camera.stopPreview();
+				}
+
+				
 				Camera.Parameters p = camera.getParameters();
 				Camera.Size s = p.getPreviewSize();
 				//Log.d(TAG, "fmt:" + Integer.toString(p.getPreviewFormat()));
 				p.setPictureFormat(ImageFormat.RGB_565);
+
+				// Set preview size
+				p.setPreviewSize(p.getPreviewSize().width, p.getPreviewSize().height);
+				
+				// Set supported frame rate
+				int FRAME_RATE = 1;
+                List<Integer> fr = p.getSupportedPreviewFrameRates();
+            	FRAME_RATE = fr.get(0);
+                p.setPreviewFrameRate(FRAME_RATE);
+                
 				camera.setParameters(p);
+
 				view_w = s.width;
 				view_h = s.height;
 				
-//				// getsupportedpreviewsizes needs v5
-//				if (Build.VERSION.SDK_INT >= 5) {
-//		
-//					List<Camera.Size> ls = p.getSupportedPreviewSizes();
-//					for (Iterator it = ls.iterator(); it.hasNext();) {
-//						Camera.Size sz = (Camera.Size) it.next();
-//						//Log.d(TAG, "prv sz:" + Integer.toString(sz.width) + ","
-//								+ Integer.toString(sz.height));
-//					}
-//		
-//					ls = p.getSupportedPictureSizes();
-//					for (Iterator it = ls.iterator(); it.hasNext();) {
-//						Camera.Size sz = (Camera.Size) it.next();
-//						//Log.d(TAG, "pic sz:" + Integer.toString(sz.width) + ","
-//								+ Integer.toString(sz.height));
-//					}
-//				}
-//				
+
+				
+				SHOWING_PREVIEW = true;
 				camera.startPreview();
 			} catch (Exception e) {
 				// FIXME - put toast errors if this happens
@@ -400,6 +405,7 @@ public class LiveDropper extends Activity {
 			// Because the CameraDevice object is not a shared resource, it's
 			// very important to release it when the activity is paused.
 			if (camera != null) {
+				SHOWING_PREVIEW = false;
 				camera.stopPreview();
 			}
 
@@ -411,10 +417,10 @@ public class LiveDropper extends Activity {
 			
 			// Surface will be destroyed when we return, so stop the preview.
 			// Because the CameraDevice object is not a shared resource, it's
-			// very important to release it when the activity is paused.
-			
+			// very important to release it when the activity is paused.			
 			if (camera != null) {
 				camera.setPreviewCallback(null);
+				SHOWING_PREVIEW = false;
 				camera.stopPreview();
 				camera.release();
 				camera = null;
