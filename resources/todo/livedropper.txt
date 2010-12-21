@@ -1,9 +1,18 @@
-// -------------------------------------------------------------
-// TODO v0.1
-//
+// TODO
 
->> Black Screen Bug <<
-* Again, I had the exact same issue.  Black screen in camera, would not work even after getting cell signal as long as the camera was turned on when I had limited or no signal.  Turning off geotaging and rebooting the phone solved the problem.  I have not had one camera black screen issue since turning off this option.
+Live Dropper is a live color sampler for your phones camera. It samples the color seen through the lens in realtime. The samples are translated into RGB values such as #FFCB4A or 8,28,99.  Easily capture samples for use later. An augmented reality app. Easy and precise. Use it for graphic and web design, an assistive tool for the colorblind, or a kinda fun toy for children. Same idea as the eyedropper color picker tool in graphic design software only live through your camera.
+
+Motorola Droid Testers Needed !
+<*> Some droid owners are reporting black camera screens on this and other camera apps. I am seeking feedback on this version and if the black screen problem still persists. If you have feedback, please send an email to the developer address provided. Thanks!
+
+
+
+
+
+
+* Feedback needed
+
+* Get screenshot stuff working.
 
 
 * Get running on g1 and emulator
@@ -21,20 +30,18 @@ TESTING
 * Different view port sizes: chk logo, decor positions
 * 
 
-TERMINOLOGY
+>>> TERMINOLOGY <<<
 * A live color picker.  Augmented Reality color picker. Live Dropper.
 * Live Color Sampler. Camera Dropper. 
 * "Get the color!"
 
 Graphic Designers, web designers, forensics, colorblind
 
-//
-// END TODO v0.1
-// -------------------------------------------------------------
 
 
+>>> Black Screen Bug <<<
 
-// *** Fixing the black screen on cheryl's moto milestone
+* Again, I had the exact same issue.  Black screen in camera, would not work even after getting cell signal as long as the camera was turned on when I had limited or no signal.  Turning off geotaging and rebooting the phone solved the problem.  I have not had one camera black screen issue since turning off this option.
 
 * I *think* this is caused by the Droid/Milestone not liking the default 
 previewFrameRate that Android sets. Try setting that to one of the values 
