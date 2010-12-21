@@ -168,10 +168,11 @@ public class LiveDropper extends Activity {
 
 	@Override
 	public void onResume() {
-		//Log.d(TAG, "onResumed'd");
-		IS_PAUSING = NO;
 		super.onResume();
+		Log.d(TAG, "onResumed'd");
+		IS_PAUSING = NO;
 		wl.acquire();
+		preview.onResume();
 	}
 
 	public void onRestoreInstanceState() {
@@ -293,7 +294,6 @@ public class LiveDropper extends Activity {
 			}
 		}
 
-	    //@Override
 		public void onCreate() {
 	    	//Log.d(TAG, "Preview onCreated'd");
 	    	
@@ -427,6 +427,10 @@ public class LiveDropper extends Activity {
 			}
 			
 			//Log.d(TAG, "CAMERA RELEASED HERE");
+		}
+
+		public void onResume() {
+			Log.d(TAG, "onResume'd - preview class");
 		}
 	}
 
