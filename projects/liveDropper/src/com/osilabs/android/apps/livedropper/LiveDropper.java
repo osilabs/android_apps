@@ -3,6 +3,8 @@ package com.osilabs.android.apps.livedropper;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -159,8 +161,8 @@ public class LiveDropper extends Activity {
 
 	@Override
 	public void onPause() {
-		//Log.d(TAG, "onPause'd activity");
 		super.onPause();
+		Log.d(TAG, "onPause'd activity");
         wl.release();  
 		IS_PAUSING = YES;
 		preview.onPause();
@@ -309,6 +311,7 @@ public class LiveDropper extends Activity {
 			// where to draw.
 			camera = Camera.open();
 			try {
+
 				camera.setPreviewDisplay(holder);
 				camera.setPreviewCallback(new PreviewCallback() {
 					//
@@ -604,3 +607,53 @@ public class LiveDropper extends Activity {
 // See http://www.screaming-penguin.com/node/7746
 //
 //
+
+
+//
+// Code for setting camera params
+//
+
+//params.setPreviewSize(width, height);
+//params.setPreviewFrameRate(5);
+//iCamera.setParameters(params);
+
+//for(int i=0; i<fr.size(); i++) {
+//	Log.d(TAG, "Frame size: " + Integer.toString(fr.get(i)));
+//	FRAME_RATE = fr.get(i);
+//}
+
+////getSupportedPreviewFormats() and getSupportedPreviewFrameRates()
+//Camera.Parameters parameters = mCamera.getParameters(); 
+//List<Size> cameraSizes = 
+//CameraReflect.getSupportedPreviewSizes(parameters); 
+//if(cameraSizes != null && cameraSizes.size() > 0) { 
+//	parameters.setPreviewSize(Math.max(cameraSizes.get(0).width, 
+//			cameraSizes.get(0).height), Math.min(cameraSizes.get(0).width, 
+//					cameraSizes.get(0).height)); 
+//	} 
+//	else { 
+//		parameters.setPreviewSize(Math.max(w, h), Math.min(w, h)); 
+//	} 
+//	mCamera.setParameters(parameters); 
+//	mCamera.startPreview(); 
+//} 
+
+
+
+//// getsupportedpreviewsizes needs v5
+//if (Build.VERSION.SDK_INT >= 5) {
+//
+//	List<Camera.Size> ls = p.getSupportedPreviewSizes();
+//	for (Iterator it = ls.iterator(); it.hasNext();) {
+//		Camera.Size sz = (Camera.Size) it.next();
+//		//Log.d(TAG, "prv sz:" + Integer.toString(sz.width) + ","
+//				+ Integer.toString(sz.height));
+//	}
+//
+//	ls = p.getSupportedPictureSizes();
+//	for (Iterator it = ls.iterator(); it.hasNext();) {
+//		Camera.Size sz = (Camera.Size) it.next();
+//		//Log.d(TAG, "pic sz:" + Integer.toString(sz.width) + ","
+//				+ Integer.toString(sz.height));
+//	}
+//}
