@@ -1,10 +1,6 @@
 // TODO
 
-Live Dropper is a live color sampler for your phones camera. It samples the color seen through the lens in realtime. The samples are translated into RGB values such as #FFCB4A or 8,28,99.  Easily capture samples for use later. An augmented reality app. Easy and precise. Use it for graphic and web design, an assistive tool for the colorblind, or a kinda fun toy for children. Same idea as the eyedropper color picker tool in graphic design software only live through your camera.
-
-Motorola Droid Testers Needed !
-<*> Some droid owners are reporting black camera screens on this and other camera apps. I am seeking feedback on this version and if the black screen problem still persists. If you have feedback, please send an email to the developer address provided. Thanks!
-
+* Add 'Error' icon on capture button. say "Lighting isn't great".
 
 
 
