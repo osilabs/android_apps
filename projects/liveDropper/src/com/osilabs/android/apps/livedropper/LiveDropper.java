@@ -137,7 +137,7 @@ public class LiveDropper extends Activity {
                 drop.setBackgroundColor(Color.rgb(RGBs[_RED], RGBs[_GRN], RGBs[_BLU]));
                  
                 //set up button
-                Button button = (Button) dialog.findViewById(R.id.Button01);
+                Button button = (Button) dialog.findViewById(R.id.buCapture);
                 button.setOnClickListener(new OnClickListener() {
                 	@Override
                     public void onClick(View vc) {
