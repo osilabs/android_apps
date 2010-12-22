@@ -170,6 +170,11 @@ public class LiveDropper extends Activity {
 
 	@Override
 	public void onResume() {
+		// Keep in mind that onResume is not the best indicator that your
+		// activity is visible to the user; a system window such as the
+		// keyguard may be in front. Use onWindowFocusChanged(boolean) 
+		// to know for certain that your activity is visible to the 
+		// user (for example, to resume a game).
 		super.onResume();
 		Log.d(TAG, "onResumed'd");
 		IS_PAUSING = NO;
@@ -178,7 +183,7 @@ public class LiveDropper extends Activity {
 	}
 
 	public void onRestoreInstanceState() {
-		//Log.d(TAG, "OnRestoreInstanceState'd");
+		Log.d(TAG, "OnRestoreInstanceState'd");
 	}
 	
 	//
@@ -279,6 +284,8 @@ public class LiveDropper extends Activity {
 
 		SurfaceHolder mHolder;
 		public Camera camera;
+		Size mPreviewSize;
+	    List<Size> mSupportedPreviewSizes;
 
 		Preview(Context context) {
 			super(context);
@@ -290,26 +297,60 @@ public class LiveDropper extends Activity {
 				mHolder.addCallback(this);
 				mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 			} catch (Exception e) {
-				// FIXME - put toast errors if this happens
-				//Log.d(TAG, "YuvImage error:" + e.getMessage());
 				e.printStackTrace();
 			}
 		}
 
 		public void onCreate() {
-	    	//Log.d(TAG, "Preview onCreated'd");
+	    	Log.d(TAG, "Preview onCreated'd");
 	    	
 	    	// Coming out of pause
 			IS_PAUSING = NO;
 	    }
 
+		public void onPause() {
+			Log.d(TAG, "onPause'd - preview class");
+			
+			// Surface will be destroyed when we return, so stop the preview.
+			// Because the CameraDevice object is not a shared resource, it's
+			// very important to release it when the activity is paused.			
+			if (camera != null) {
+				camera.setPreviewCallback(null);
+				SHOWING_PREVIEW = false;
+				camera.stopPreview();
+				camera.release();
+				camera = null;
+			}
+
+			// Fixed bug with powering off then coming back to a blank screen by
+			//  calling surfaceDestroyed/surfaceCreated from onPause/onResume.
+			this.surfaceDestroyed(mHolder);
+		}
+
+		public void onResume() {
+			Log.d(TAG, "onResume'd - preview class");
+			IS_PAUSING = NO;
+			
+	        // Open the default i.e. the first rear facing camera.
+	        camera = Camera.open();
+	        if (camera != null) {
+	            mSupportedPreviewSizes = camera.getParameters().getSupportedPreviewSizes();
+	            requestLayout();
+	            SHOWING_PREVIEW = true;
+	            camera.startPreview();
+	        } 
+
+	        // Need this for killing power then coming back.
+			this.surfaceCreated(mHolder);
+		}
+	    
 		// Called once the holder is ready
 		public void surfaceCreated(SurfaceHolder holder) {
-			//Log.d(TAG, "surfaceCreated'd");
+			Log.d(TAG, "surfaceCreated'd");
 
 			// The Surface has been created, acquire the camera and tell it
 			// where to draw.
-			camera = Camera.open();
+			//camera = Camera.open();
 			try {
 
 				camera.setPreviewDisplay(holder);
@@ -429,7 +470,7 @@ public class LiveDropper extends Activity {
 		// Called when the holder is destroyed
 		@Override
 		public void surfaceDestroyed(SurfaceHolder holder) {
-			//Log.d(TAG, "surfaceDestroyed'd start");
+			Log.d(TAG, "surfaceDestroyed'd");
 
 			// Surface will be destroyed when we return, so stop the preview.
 			// Because the CameraDevice object is not a shared resource, it's
@@ -440,27 +481,6 @@ public class LiveDropper extends Activity {
 			}
 
 			//Log.d(TAG, "surfaceDestroyed'd finish");
-		}
-
-		public void onPause() {
-			//Log.d(TAG, "onPause'd - preview class");
-			
-			// Surface will be destroyed when we return, so stop the preview.
-			// Because the CameraDevice object is not a shared resource, it's
-			// very important to release it when the activity is paused.			
-			if (camera != null) {
-				camera.setPreviewCallback(null);
-				SHOWING_PREVIEW = false;
-				camera.stopPreview();
-				camera.release();
-				camera = null;
-			}
-			
-			//Log.d(TAG, "CAMERA RELEASED HERE");
-		}
-
-		public void onResume() {
-			Log.d(TAG, "onResume'd - preview class");
 		}
 	}
 
