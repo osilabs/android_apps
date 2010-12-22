@@ -5,7 +5,7 @@
 		android:gravity="center"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
-		android:padding="16dip">
+		android:padding="12dip">
 		
 <!--	<ImageView android:id="@+id/ImageView01"-->
 <!--		android:layout_width="wrap_content" android:layout_height="wrap_content"-->
@@ -13,7 +13,7 @@
 
 	<!-- FIXME - use only one textview for these -->
 	<TextView android:id="@+id/dropVals"
-		android:text="."
+		android:layout_gravity="center_vertical|center_horizontal"
 		android:layout_height="wrap_content" 
 		android:layout_width="wrap_content" />
 		
@@ -22,16 +22,19 @@
 		android:layout_width="wrap_content"
 		android:width="220dip"
 		android:height="100dip"
-		android:gravity="center"
-		android:layout_below="@+id/dropVals" />
-	
+		android:layout_gravity="center_vertical|center_horizontal"
+		android:layout_below="@+id/dropVals"
+		android:layout_marginTop="8dip"
+		android:layout_marginRight="4dip"
+		android:layout_marginLeft="4dip"
+		android:layout_marginBottom="8dip"
+	/>
 
 	<Button android:id="@+id/buNext" 
 		android:layout_below="@+id/drop_textview"
 		android:layout_width="fill_parent" 
 		android:layout_height="fill_parent"
 		android:layout_centerHorizontal="true" 
-		android:layout_marginTop="20dip"
 		android:text="Next" />
 
 </LinearLayout>

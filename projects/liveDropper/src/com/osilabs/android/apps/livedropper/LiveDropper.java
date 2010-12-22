@@ -129,19 +129,15 @@ public class LiveDropper extends Activity {
                 //set up dialog
                 final Dialog dialog = new Dialog(v.getContext());
                 dialog.setContentView(R.layout.drop);
+                
+                // Title
                 dialog.setTitle("Your drop");
                 
+                // Drop values
                 TextView dropLabel = (TextView) dialog.findViewById(R.id.dropVals);
                 dropLabel.setText(
-                		"#" 
-        				+ HEXVAL
-        				+ "\nrgb("
-        				+ RGBs[_RED]
-        				+ ","
-        				+ RGBs[_GRN]
-        				+ ","
-        				+ RGBs[_BLU]
-        				+ ")");
+                		"#" + HEXVAL
+        				+ " / rgb("+RGBs[_RED]+ ","+ RGBs[_GRN]+ ","+ RGBs[_BLU]+ ")");
                 				
                 dialog.setCancelable(true);
 
@@ -158,6 +154,7 @@ public class LiveDropper extends Activity {
                 		dialog.cancel();
                     }
                 });
+                
                 //now that the dialog is set up, it's time to show it    
                 dialog.show();
 			}
