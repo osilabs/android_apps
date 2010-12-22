@@ -129,8 +129,11 @@ public class LiveDropper extends Activity {
                 //set up dialog
                 final Dialog dialog = new Dialog(v.getContext());
                 dialog.setContentView(R.layout.drop);
-                dialog.setTitle(
-                		"Your drop\n#" 
+                dialog.setTitle("Your drop");
+                
+                TextView dropLabel = (TextView) dialog.findViewById(R.id.dropVals);
+                dropLabel.setText(
+                		"#" 
         				+ HEXVAL
         				+ "\nrgb("
         				+ RGBs[_RED]
@@ -144,11 +147,11 @@ public class LiveDropper extends Activity {
 
                 //there are a lot of settings, for dialog, check them all out!
                 //set up text
-                TextView drop = (TextView) dialog.findViewById(R.id.drop_textview);
+                TextView drop = (TextView) dialog.findViewById(R.id.drop);
                 drop.setBackgroundColor(Color.rgb(RGBs[_RED], RGBs[_GRN], RGBs[_BLU]));
                  
                 //set up button
-                Button button = (Button) dialog.findViewById(R.id.buCapture);
+                Button button = (Button) dialog.findViewById(R.id.buNext);
                 button.setOnClickListener(new OnClickListener() {
                 	@Override
                     public void onClick(View vc) {

@@ -1,21 +1,16 @@
 // TODO
 
-* Add 'Error' icon on capture button. say "Lighting isn't great".
+* Make a feedback options menu option. Just opens email client.
+
+* Make osilabs.com right in 'About' for all apps.
 
 
 
 
 
-* Feedback needed
-
-* Get screenshot stuff working.
-
+* Game idea: use the crosshairs to have rocklike accuracy and stability. Hang a string of xmas lights and move the cross hairs from one to the next.  10000 points per light. Play to 5 and perfect score is 50000. Points awarded as each player gets as close to FFFFFF as possible. FFFFFE is worth is worth 255,255,254 or just under FFFFFF.
 
 * Get running on g1 and emulator
-
-* toast messages when shit can't happen right.
-
-* Undim the screen when onresume-ing.
 
 * Take nice picture of bluejay blue for one of the screenshots. go to borders, find
    a book and take the picture.
