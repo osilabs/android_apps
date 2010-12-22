@@ -396,60 +396,58 @@ public class LiveDropper extends Activity {
 					camera.stopPreview();
 				}
 
-				
-				Camera.Parameters p = camera.getParameters();
-				
-				Camera.Size s = p.getPreviewSize();
-				//Log.d(TAG, "fmt:" + Integer.toString(p.getPreviewFormat()));
-				p.setPictureFormat(ImageFormat.RGB_565);
-				
-				//	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-				//		WHEN I CAUSED AN ARRAY OUT OF BOUNDS ERR HERE, ERROR BEING THROWN
-				//		CAUSED APP TO HANG ON THE "Calibrating..." MESSAGE JUST LIKE THE
-				//		MOTOROLA CAMERA PROBLEM.
-				//	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-				
-				
-//				List<Integer> li = p.getSupportedPictureFormats();
-//				for( int i = 0; i <li.size(); i++) {
-//					Log.d(TAG, "preview picture formats: " + Integer.toString(li.get(i)));
-//				}
-				int PICTURE_FORMAT = ImageFormat.JPEG;
-                List<Integer> piF = p.getSupportedPictureFormats();
-                PICTURE_FORMAT = piF.get(0); // FIXME - use something like fr.get(fr[ fr.size() ])
-                p.setPictureFormat(PICTURE_FORMAT);
-				
-//				List<Integer> prF = p.getSupportedPreviewFormats();
-//				for( int i = 0; i <li.size(); i++) {
-//					Log.d(TAG, "preview preview formats: " + Integer.toString(prF.get(i)));
-//				}
-				int PREVIEW_FORMAT = ImageFormat.JPEG;
-                List<Integer> prF = p.getSupportedPreviewFormats();
-                PREVIEW_FORMAT = prF.get(0); // FIXME - use something like fr.get(fr[ fr.size() ])
-                p.setPreviewFormat(PREVIEW_FORMAT);
-				
-				
-				// Set preview size
-				p.setPreviewSize(p.getPreviewSize().width, p.getPreviewSize().height);
-				
-				// Set supported frame rate
-				int FRAME_RATE = 1;
-                List<Integer> fr = p.getSupportedPreviewFrameRates();
-            	FRAME_RATE = fr.get(0); // FIXME - use something like fr.get(fr[ fr.size() ])
-                p.setPreviewFrameRate(FRAME_RATE);
-                
-				camera.setParameters(p);
-
-				view_w = s.width;
-				view_h = s.height;
-				
-
-				
-				SHOWING_PREVIEW = true;
-				camera.startPreview();
+				if (IS_PAUSING == NO) {
+					Camera.Parameters p = camera.getParameters();
+					
+					Camera.Size s = p.getPreviewSize();
+					//Log.d(TAG, "fmt:" + Integer.toString(p.getPreviewFormat()));
+					
+					//	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+					//		WHEN I CAUSED AN ARRAY OUT OF BOUNDS ERR HERE, ERROR BEING THROWN
+					//		CAUSED APP TO HANG ON THE "Calibrating..." MESSAGE JUST LIKE THE
+					//		MOTOROLA CAMERA PROBLEM.
+					//	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+					
+	//				List<Integer> li = p.getSupportedPictureFormats();
+	//				for( int i = 0; i <li.size(); i++) {
+	//					Log.d(TAG, "preview picture formats: " + Integer.toString(li.get(i)));
+	//				}
+					int PICTURE_FORMAT = ImageFormat.JPEG;
+	                List<Integer> piF = p.getSupportedPictureFormats();
+	                PICTURE_FORMAT = piF.get(0); // FIXME - use something like fr.get(fr[ fr.size() ])
+	                p.setPictureFormat(PICTURE_FORMAT);
+	                //p.setPictureFormat(ImageFormat.RGB_565);
+					
+	//				List<Integer> prF = p.getSupportedPreviewFormats();
+	//				for( int i = 0; i <li.size(); i++) {
+	//					Log.d(TAG, "preview preview formats: " + Integer.toString(prF.get(i)));
+	//				}
+					int PREVIEW_FORMAT = ImageFormat.JPEG;
+	                List<Integer> prF = p.getSupportedPreviewFormats();
+	                PREVIEW_FORMAT = prF.get(0); // FIXME - use something like fr.get(fr[ fr.size() ])
+	                p.setPreviewFormat(PREVIEW_FORMAT);
+					
+					
+					// Set preview size
+					p.setPreviewSize(p.getPreviewSize().width, p.getPreviewSize().height);
+					
+					// Set supported frame rate
+					int FRAME_RATE = 1;
+	                List<Integer> fr = p.getSupportedPreviewFrameRates();
+	            	FRAME_RATE = fr.get(0); // FIXME - use something like fr.get(fr[ fr.size() ])
+	                p.setPreviewFrameRate(FRAME_RATE);
+	                
+					camera.setParameters(p);
+	
+					view_w = s.width;
+					view_h = s.height;
+					
+	
+					
+					SHOWING_PREVIEW = true;
+					camera.startPreview();
+				}
 			} catch (Exception e) {
-				// FIXME - put toast errors if this happens
-				//Log.d(TAG, "YuvImage error:" + e.getMessage());
 				e.printStackTrace();
 			}			
 		}
