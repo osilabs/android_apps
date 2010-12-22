@@ -123,12 +123,23 @@ public class LiveDropper extends Activity {
 		((FrameLayout) findViewById(R.id.preview)).addView(preview);
             
 		captureButton = (Button) findViewById(R.id.capture_button);
+		captureButton.setError("Lighting isn't great");
 		captureButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
                 //set up dialog
                 final Dialog dialog = new Dialog(v.getContext());
                 dialog.setContentView(R.layout.drop);
-                dialog.setTitle("Your drop is #" + HEXVAL);
+                dialog.setTitle(
+                		"Your drop\n#" 
+        				+ HEXVAL
+        				+ "\nrgb("
+        				+ RGBs[_RED]
+        				+ ","
+        				+ RGBs[_GRN]
+        				+ ","
+        				+ RGBs[_BLU]
+        				+ ")");
+                				
                 dialog.setCancelable(true);
 
                 //there are a lot of settings, for dialog, check them all out!
