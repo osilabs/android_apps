@@ -26,6 +26,7 @@ import android.graphics.YuvImage;
 import android.hardware.Camera;
 import android.hardware.Camera.PreviewCallback;
 import android.hardware.Camera.ShutterCallback;
+import android.hardware.Camera.Size;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -93,8 +94,8 @@ public class LiveDropper extends Activity {
 	private Preview preview;
 	private Button captureButton;
 	private DrawOnTop mDraw;
-    private PowerManager.WakeLock wl;  
-
+    private PowerManager.WakeLock wl;
+    
     @Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -120,7 +121,7 @@ public class LiveDropper extends Activity {
 
 		preview = new Preview(this);
 		((FrameLayout) findViewById(R.id.preview)).addView(preview);
-		
+            
 		captureButton = (Button) findViewById(R.id.capture_button);
 		captureButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -134,15 +135,7 @@ public class LiveDropper extends Activity {
                 //set up text
                 TextView drop = (TextView) dialog.findViewById(R.id.drop_textview);
                 drop.setBackgroundColor(Color.rgb(RGBs[_RED], RGBs[_GRN], RGBs[_BLU]));
-                
-//                //set up text
-//                TextView text = (TextView) dialog.findViewById(R.id.TextView01);
-//                text.setText(R.string.drop_color_chosen_message);
- 
-                //set up image view
-//                ImageView img = (ImageView) dialog.findViewById(R.id.ImageView01);
-//                img.setImageResource(R.drawable.icon);
- 
+                 
                 //set up button
                 Button button = (Button) dialog.findViewById(R.id.Button01);
                 button.setOnClickListener(new OnClickListener() {
@@ -209,12 +202,6 @@ public class LiveDropper extends Activity {
 		@Override
 		protected void onDraw(Canvas canvas) {
 			//Log.w(TAG, "OnDraw'd");
-			//
-			// FIXME - this is redrawing the decorations with every frame,
-			//  should only redraw after a framebuffer has been processed.
-			// Er .. May need to recalculate w each frame in case of
-			//  resizing or orientation changes.
-			//
 			
 			int w = preview.getWidth();
 			int h = preview.getHeight();
@@ -227,46 +214,46 @@ public class LiveDropper extends Activity {
 			int center_y = (int) h / 2;
 
 			try{
-					// Text
-					Paint paint = new Paint();
-					paint.setStyle(Paint.Style.STROKE);
-					paint.setColor(Color.RED);
-					canvas.drawText("osilabs.com", 15, h - 8, paint);
+				// Text
+				Paint paint = new Paint();
+				paint.setStyle(Paint.Style.STROKE);
+				paint.setColor(Color.RED);
+				canvas.drawText("osilabs.com", 15, h - 8, paint);
 
-					// FIXME - make a function to convert all these rgbs to and fro
-					paint.setColor(Color.rgb(
-									255 - RGBs[_RED], 
-									255 - RGBs[_GRN],
-									255 - RGBs[_BLU]));
-					canvas.drawCircle(center_x, center_y, cirele_radius, paint);
-		
-					// crosshairs
-					canvas.drawLine(center_x, center_y, center_x - line_len, center_y,
-							paint); // left
-					canvas.drawLine(center_x, center_y, center_x, center_y + line_len,
-							paint); // top
-					canvas.drawLine(center_x, center_y, center_x + line_len, center_y,
-							paint); // right
-					canvas.drawLine(center_x, center_y, center_x, center_y - line_len,
-							paint); // bottom
-		
-					// corners
-					canvas.drawLine(0 + corner_padding, 0 + corner_padding, 0
-							+ corner_padding + line_len, 0 + corner_padding, paint); // top-left
-					canvas.drawLine(0 + corner_padding, 0 + corner_padding,
-							0 + corner_padding, 0 + corner_padding + line_len, paint); // top-left
-					canvas.drawLine(w - corner_padding, 0 + corner_padding, w
-							- corner_padding - line_len, 0 + corner_padding, paint); // top-right
-					canvas.drawLine(w - corner_padding, 0 + corner_padding, w
-							- corner_padding, 0 + corner_padding + line_len, paint); // top-right
-					canvas.drawLine(w - corner_padding, h - corner_padding, w
-							- corner_padding, h - corner_padding - line_len, paint); // bottom-left
-					canvas.drawLine(w - corner_padding, h - corner_padding, w
-							- corner_padding - line_len, h - corner_padding, paint); // bottom-left
-					canvas.drawLine(0 + corner_padding, h - corner_padding, 0
-							+ corner_padding + line_len, h - corner_padding, paint); // bottom-right
-					canvas.drawLine(0 + corner_padding, h - corner_padding,
-							0 + corner_padding, h - corner_padding - line_len, paint); // bottom-right
+				// FIXME - make a function to convert all these rgbs to and fro
+				paint.setColor(Color.rgb(
+								255 - RGBs[_RED], 
+								255 - RGBs[_GRN],
+								255 - RGBs[_BLU]));
+				canvas.drawCircle(center_x, center_y, cirele_radius, paint);
+	
+				// crosshairs
+				canvas.drawLine(center_x, center_y, center_x - line_len, center_y,
+						paint); // left
+				canvas.drawLine(center_x, center_y, center_x, center_y + line_len,
+						paint); // top
+				canvas.drawLine(center_x, center_y, center_x + line_len, center_y,
+						paint); // right
+				canvas.drawLine(center_x, center_y, center_x, center_y - line_len,
+						paint); // bottom
+	
+				// corners
+				canvas.drawLine(0 + corner_padding, 0 + corner_padding, 0
+						+ corner_padding + line_len, 0 + corner_padding, paint); // top-left
+				canvas.drawLine(0 + corner_padding, 0 + corner_padding,
+						0 + corner_padding, 0 + corner_padding + line_len, paint); // top-left
+				canvas.drawLine(w - corner_padding, 0 + corner_padding, w
+						- corner_padding - line_len, 0 + corner_padding, paint); // top-right
+				canvas.drawLine(w - corner_padding, 0 + corner_padding, w
+						- corner_padding, 0 + corner_padding + line_len, paint); // top-right
+				canvas.drawLine(w - corner_padding, h - corner_padding, w
+						- corner_padding, h - corner_padding - line_len, paint); // bottom-left
+				canvas.drawLine(w - corner_padding, h - corner_padding, w
+						- corner_padding - line_len, h - corner_padding, paint); // bottom-left
+				canvas.drawLine(0 + corner_padding, h - corner_padding, 0
+						+ corner_padding + line_len, h - corner_padding, paint); // bottom-right
+				canvas.drawLine(0 + corner_padding, h - corner_padding,
+						0 + corner_padding, h - corner_padding - line_len, paint); // bottom-right
 			} catch (Exception e) {
 				// FIXME - put toast errors if this happens
 				//Log.d(TAG, "YuvImage error:" + e.getMessage());
