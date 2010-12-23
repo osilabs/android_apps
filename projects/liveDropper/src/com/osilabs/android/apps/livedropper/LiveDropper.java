@@ -3,6 +3,7 @@ package com.osilabs.android.apps.livedropper;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.List;
 
@@ -60,9 +61,8 @@ public class LiveDropper extends Activity {
 	private static final int _BLU = 2;
 	private static final int _ALP = 3; // alpha
 	private static final int MENU_PREFS = 0;
-	private static final int MENU_ABOUT = 1;
-	private static final int MENU_QUIT = 2;
 	private static final String TAG = "<<< ** osilabs.com ** >>> ";
+	private static final String URI_FEEDBACK = "http://osilabs.com/m/mobilecontent/feedback/ld.php";
 	
 	private static int FRAMEBUFFER_IS = AVAILABLE;
 	private static int IS_PAUSING = NO;
@@ -411,7 +411,7 @@ public class LiveDropper extends Activity {
 					Camera.Parameters p = camera.getParameters();
 					
 					Camera.Size s = p.getPreviewSize();
-					//Log.d(TAG, "fmt:" + Integer.toString(p.getPreviewFormat()));
+					Log.d(TAG, "fmt:" + Integer.toString(p.getPreviewFormat()));
 					
 					//	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 					//		WHEN I CAUSED AN ARRAY OUT OF BOUNDS ERR HERE, ERROR BEING THROWN
@@ -598,13 +598,29 @@ public class LiveDropper extends Activity {
 	/* Handles item selections */
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {
-		        
-		    case MENU_PREFS:
-		    	Toast.makeText(getApplicationContext(), "Prefs", Toast.LENGTH_SHORT).show();
-		    	//Intent intent = new Intent()
-		    	//	.setClass(this, com.osilabs.android.apps.Prefs.class);
-		    	//this.startActivityForResult(intent, 0);
-		    	return true;
+        
+	    case MENU_PREFS:
+	    	Toast.makeText(getApplicationContext(), "Prefs", Toast.LENGTH_SHORT).show();
+	    	//Intent intent = new Intent()
+	    	//	.setClass(this, com.osilabs.android.apps.Prefs.class);
+	    	//this.startActivityForResult(intent, 0);
+	    	return true;
+	        
+	    case R.id.menu_feedback:
+	    	String pi = URLEncoder.encode(
+	    			Build.MANUFACTURER + ", " +
+                    Build.MODEL + ", " +
+                    Build.BRAND + ", " +
+                    Build.DEVICE + ", " +
+                    Build.DISPLAY + ", " +
+                    Build.FINGERPRINT + ", " +
+                    Build.PRODUCT + ", " +
+                    Build.VERSION.RELEASE);
+	    	
+	    	Intent i = new Intent(Intent.ACTION_VIEW);
+	    	i.setData(Uri.parse(URI_FEEDBACK + "?phoneinfo=" + pi));
+	    	startActivity(i);
+	    	return true;
 
 			case R.id.menu_help:
 		        //
