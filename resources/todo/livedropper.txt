@@ -4,16 +4,14 @@
 
 * Make osilabs.com right in 'About' for all apps.
 
-
-
-
-
 * Game idea: use the crosshairs to have rocklike accuracy and stability. Hang a string of xmas lights and move the cross hairs from one to the next.  10000 points per light. Play to 5 and perfect score is 50000. Points awarded as each player gets as close to FFFFFF as possible. FFFFFE is worth is worth 255,255,254 or just under FFFFFF.
 
 * Get running on g1 and emulator
 
 * Take nice picture of bluejay blue for one of the screenshots. go to borders, find
    a book and take the picture.
+
+>>> Promotional text: "A live color picker. Capture hues through the lens of augmented reality." This requires a large promotional graphic to use but would be good for business.
 
 
 TESTING
