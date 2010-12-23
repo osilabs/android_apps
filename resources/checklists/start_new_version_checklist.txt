@@ -1,19 +1,29 @@
 
->> New Version checklist <<
+>>> New Version checklist <<<
 
 **
-** TCTRAFFIC
+** All apps
 **
 
-* Create new android project in eclipse and close eclipse.
+* Create new android project in eclipse
+	- Workspace location: /home/dezurik/GIT/android_apps/projects/chicagoTraffic
+	- build target: Google apis (for mapview), apilevel 4
+	- Package Name: com.osilabs.android.apps.chicagotraffic
+	- Application Name: chicagoTraffic
+	- Check "Create Activity" and call it "App"
+
+* Close eclipse
 
 * cp manifest, src/.../*.java, res/ from sourceproject to targetproject.
-
 * Edit java and xml to remove errors
-
 * Grep for the source project city name and replace with target/new.
-
 * git commit -m"ST - SEEDING FROM DT V0.2"
+
+
+
+**
+** Traffic apps
+**
 
 1. Up the versionname and versioncode in the manifest.
 	- the versioncode is used in the trafficmap URL path 
