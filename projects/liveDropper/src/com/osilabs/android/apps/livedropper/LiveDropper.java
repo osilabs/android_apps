@@ -553,7 +553,14 @@ public class LiveDropper extends Activity {
 				RGBVAL = RGBs[_RED] + "," + RGBs[_GRN] + "," + RGBs[_BLU];
 
 				// Set global hexval
-				HEXVAL = Integer.toHexString(iRGB[0]).substring(2).toUpperCase();
+				//HEXVAL = Integer.toHexString(iRGB[0]).substring(2).toUpperCase();
+				String rgbHex = Integer.toHexString(iRGB[0]);
+				if (rgbHex.length() >= 2) {
+					HEXVAL = rgbHex.substring(2).toUpperCase();
+				} else {
+					Log.d(TAG, "doinbackground::onpostexecute: RGBVAL length too short: " + Integer.toHexString(iRGB[0]));
+					HEXVAL = "#------";
+				}
 
 				// Make display string for previewer
 				String rgbDisplay= "rgb(" + RGBVAL + ")";
