@@ -26,6 +26,7 @@
 	- git update-index --assume-unchanged gen/com/osilabs/android/apps/chicagotraffic/R.java
 * git commit -m"ST - SEEDING FROM DT V0.2"
 
+* Update strings.xml, arrays.xml, Config.java
 
 
 **
