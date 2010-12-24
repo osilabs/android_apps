@@ -96,10 +96,6 @@ public class App extends MapActivity {
 	protected static ImageView ivCalendarTab;
 	protected static ImageView ivCamerasTab;
 	
-//	// Tab Views
-//	protected ImageView ivTraffic;
-//	protected ScrollView damien;
-	
 	// Configs
 	protected static ImageView ivMapsMore;
 	protected static TextView  tvMapsPop;
@@ -118,12 +114,8 @@ public class App extends MapActivity {
 	protected static MapView mvTraffic;
     protected static MapController mcMain;
     protected static GeoPoint gpMain;
-    //protected static Geocoder gcMain;
-    
-	// Tints and paints
-	//protected int color_tab;
-	
-	 // For posting runnables
+
+    // For posting runnables
     private Handler mHandler = new Handler();
 
     @Override
@@ -700,6 +692,8 @@ public class App extends MapActivity {
 		
 		// Refresh banner webview
 		wvAd.loadUrl(AD_BANNER_URL);
+		
+		//Log.d(TAG, AD_BANNER_URL);
 	}
 
 	public void activateViewType(int v) {
