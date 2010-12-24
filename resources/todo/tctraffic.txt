@@ -2,6 +2,7 @@
 
 * New install doesn't select a camera for you
 
+* Bug in strings.xml. session_camera_1 is still using '/tctraffic5' not 7
 
 
 
