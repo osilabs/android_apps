@@ -2,32 +2,26 @@
 <resources>
 
 <string-array name="pref_police_radios">
-	<item>Anka Rmsy Hnpn &amp; Wshtn sheriff &amp; fire</item>
-	<item>Hnpn Scot Crvr Dkta &amp; Anka fire &amp; police</item>
-	<item>Minneapolis St. Paul police fire &amp; EMS</item>
-	<item>St. Paul police &amp; fire &amp; Ramsey sheriff</item>
+	<item>Chicago Police</item>
+	<item>Northern Sub. Fire</item>
 </string-array> 
 <string-array name="pref_police_radios_values">
-	<item>22115</item> 
-	<item>16004</item> 
-	<item>24429</item> 
-	<item>968</item> 
+	<item>18589</item> 
+	<item>497</item> 
 </string-array>
 
 <string-array name="pref_weather_radios">
-	<item>Minneapolis St. Paul weather radio</item>
-	<item>Clearwater weather radio</item>
-	<item>Saint Cloud weather radio</item>
+	<item>Lockport</item>
+	<item>Odell</item>
 </string-array> 
 <string-array name="pref_weather_radios_values">
-	<item>24761</item> 
-	<item>19405</item> 
-	<item>24610</item> 
+	<item>18464</item> 
+	<item>18123</item> 
 </string-array> 
 
 <string-array name="pref_today_feed">
-	<item>City Pages</item>
-	<item>Star Tribune</item>
+	<item>Metromix 1</item>
+	<item>Metromix 2</item>
 </string-array> 
 <string-array name="pref_today_feed_values">
 	<item>0</item> 
