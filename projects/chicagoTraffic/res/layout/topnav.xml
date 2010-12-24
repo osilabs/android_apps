@@ -17,6 +17,7 @@
 				android:layout_height="wrap_content"
 				android:layout_marginBottom="-2dip" 
 				android:layout_gravity="bottom"
+				android:visibility="gone"
 				/>
 
 			<ImageView
@@ -26,6 +27,7 @@
 				android:layout_height="wrap_content"
 				android:layout_marginBottom="-2dip" 
 				android:layout_gravity="bottom"
+				android:visibility="gone"
 				/>
 
 			<ImageView
@@ -35,6 +37,7 @@
 				android:layout_height="wrap_content"
 				android:layout_marginBottom="-2dip" 
 				android:layout_gravity="bottom"
+				android:visibility="gone"
 				/>
 
 		<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"

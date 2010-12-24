@@ -178,15 +178,16 @@ public class App extends MapActivity {
 		CalendarTab.init();
 		
 	    // Set up camera tab
-	    ivCamerasTab = (ImageView) findViewById(R.id.launcher_cameras);
-	    ivCamerasTab.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				setViewForCurrentTab(INDEX_CAMERAS);
-			}
-		});
-		CamerasTab.init();
-
+		if (Config.mainroads.length > 0) {
+		    ivCamerasTab = (ImageView) findViewById(R.id.launcher_cameras);
+		    ivCamerasTab.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					setViewForCurrentTab(INDEX_CAMERAS);
+				}
+			});
+			CamerasTab.init();
+		}
 
 	    ivRefresh = (ImageView) findViewById(R.id.navbar_refresh);
 	    // Give it a nice blue color. SRC_ATOP means color the icon, not

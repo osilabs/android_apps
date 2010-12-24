@@ -5,6 +5,7 @@ import java.net.URLEncoder;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,6 +33,7 @@ public class MapsTab {
 	public    static int    	  CURRENT_INDEX = 0;
 	
 	public static void init() {
+		App.ivMapsTab.setVisibility(View.VISIBLE);
 		App.ivMapsTab.setPadding(15, 0, 15, 0);
 		App.ivMapsTab.setAlpha(ALPHA_OFF);
 		App.ivMapsTab.setBackgroundColor(BG_OFF);

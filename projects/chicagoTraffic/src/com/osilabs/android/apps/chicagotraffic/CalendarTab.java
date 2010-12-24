@@ -22,6 +22,7 @@ public class CalendarTab {
 	public    static       int    CURRENT_WEATHER_FEED_INDEX = 0;
 	
 	public static void init() {
+		App.ivCalendarTab.setVisibility(View.VISIBLE);
 		App.ivCalendarTab.setPadding(15, 0, 15, 0);
 		App.ivCalendarTab.setAlpha(ALPHA_OFF);
 		App.ivCalendarTab.setBackgroundColor(BG_OFF);
