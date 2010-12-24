@@ -1,11 +1,13 @@
 package com.osilabs.android.apps.chicagotraffic;
 
 import java.net.URLEncoder;
+import java.util.List;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
+import com.google.android.maps.Overlay;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -242,8 +244,14 @@ public class App extends MapActivity {
     	//
     	mvTraffic = (MapView) findViewById(R.id.mainMapView);
     	mvTraffic.setBuiltInZoomControls(true);
-    	mvTraffic.setTraffic(true);
+    	mvTraffic.setTraffic(true);    	
 		mcMain = mvTraffic.getController();
+		
+        // Add a location marker---
+        MapOverlay mapOverlay = new MapOverlay();
+        List<Overlay> listOfOverlays = mvTraffic.getOverlays();
+        listOfOverlays.clear();
+        listOfOverlays.add(mapOverlay);    
 		
 		// -------------------------
 	    // Bottom Navigation Bar
