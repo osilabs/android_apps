@@ -58,8 +58,13 @@ public class CameraELV extends ExpandableListActivity implements OnChildClickLis
     	int childPosition, long id) { 
     	
     	// Get mainroad
-        String[] mainroads = getResources().getStringArray(R.array.campref_mainroads_values);
-
+    	String[] mainroads = {};
+    	if (Config.mainroads.length > 0) {
+    		// FIXME - make this just use the config.mainroads array.
+    		//mainroads = getResources().getStringArray(R.array.campref_mainroads_values);
+    		mainroads = Config.mainroads;
+    	}
+    	
         // Get crossroad camera id
         int getRes = getResources().getIdentifier("campref_crossroads_" + mainroads[groupPosition] + "_values" , "array", getPackageName());
         String[] crossroads = getResources().getStringArray(getRes);
