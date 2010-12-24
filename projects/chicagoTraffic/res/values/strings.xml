@@ -1,5 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <resources>
-    <string name="hello">Hello World, App!</string>
-    <string name="app_name">chicagoTraffic</string>
+	<!--	~~~~~~~~~~~~~ ~~~~~~~~~~~~~ ~~~~~~~~~~~~~ -->
+	<!--	~~~~~~~~~~~~~ -->
+	<!--	CONFIGURE HERE-->
+	<!--	~~~~~~~~~~~~~ -->
+    <string name="app_name">Twin Cities Traffic</string>
+    <string name="city_name">Twin Cities</string>
+    <string name="pref_police_radios_default">24429</string> <!-- FIXME - These need to go -->
+    <string name="pref_weather_radios_default">24761</string>
+    <string name="pref_today_feed_default">0</string>
+    <string name="pref_weather_feed_default">0</string>
+    <string name="session_camera_1">http://osilabs.com/m/mobilecontent/tctraffic5/trafficmap.php?target=4&amp;camera=832</string>
+    <string name="session_map">0</string>
+    <string name="session_calendar">0</string>
+    <string name="pref_police_radios_dialog_title">Set Favorite Police Scanner</string>
+    <string name="pref_weather_radios_dialog_title">Set Favorite Weather Radio</string>
+    <string name="pref_today_feed_dialog_title">Things To Do</string>
+    <string name="pref_weather_feed_dialog_title">Choose Weather Source</string>
+	<!--	~~~~~~~~~~~~~ -->
+	<!--	~~~~~~~~~~~~~ ~~~~~~~~~~~~~ ~~~~~~~~~~~~~ -->
+
+	<string name="radios_dialog_title">Radios</string>
+	<string name="txt_refreshing">Refreshing...</string>
+	<string name="txt_loading">Loading...</string>
+	<string name="txt_version">You are running version </string>
+	<string name="txt_btn_ok">Ok</string>
+	<string name="txt_btn_more">More...</string>
+	<string name="txt_prefs_saved">Preferences saved</string>
+	<string name="txt_camera_picker_noop">Camera may have moved, please try again</string>
+	<string name="txt_map_popup_title">Traffic</string>
+	<string name="txt_calendar_popup_title">Right Now</string>
+
+    <string name="menu_prefs">Settings</string>
+    <string name="menu_refresh">Refresh</string>
+    <string name="menu_scanner_police">Police Scanner</string>
+    <string name="menu_scanner_weather">Weather Radio</string>
+    <string name="menu_feedback">Feedback</string>
+    <string name="menu_help">Help</string>
+    <string name="menu_about">About</string>
+    <string name="menu_exit">Exit</string>
+
+    <!-- Preferences strings -->
+<!--    FIXME - not convinced this is getting used-->
+    <string name="session_current_view">0</string>
+
+	<!-- Camera Prefs -->
+    <string name="prefs"> Choices</string>
+    <string name="prefs_title">Preferences</string>
+    <string name="prefs_summary">Summary z</string>
+    <string name="pref_activity_name">Camera Choices</string>
+	<!-- police radio prefs -->
+    <string name="pref_police_radios">Police Scanners</string>
+    <string name="pref_police_radios_summary">Set your favorite</string>
+    <string name="pref_police_radios_title">Police Scanners</string>    
+    <string name="pref_police_radios_selected">pref_police_radios_selected</string>
+	<!-- weather radio prefs -->
+    <string name="pref_weather_radios">Weather Radios</string>
+    <string name="pref_weather_radios_summary">Set your favorite</string>
+    <string name="pref_weather_radios_title">Weather Radios</string>    
+    <string name="pref_weather_radios_selected">pref_weather_radios_selected</string>
+	<!-- today feed prefs -->
+    <string name="pref_today_feed">Today</string>
+    <string name="pref_today_feed_summary">Set your source</string>
+    <string name="pref_today_feed_title">Things To Do</string>    
+    <string name="pref_today_feed_selected">pref_today_feed_selected</string>
+	<!-- weather feed prefs -->
+    <string name="pref_weather_feed">Weather</string>
+    <string name="pref_weather_feed_summary">Set your favorite</string>
+    <string name="pref_weather_feed_title">Weather Report</string>    
+    <string name="pref_weather_feed_selected">pref_weather_feed_selected</string>
 </resources>

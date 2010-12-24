@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+	android:key="@string/prefs" 
+	android:title="@string/prefs_title"
+	android:summary="@string/prefs_summary">
+	<PreferenceCategory android:title="Radios">
+		<!-- Police Radios -->
+		<ListPreference android:key="@string/pref_police_radios_selected"
+			android:title="@string/pref_police_radios_title" android:summary="@string/pref_police_radios_summary"
+			android:defaultValue="@string/pref_police_radios_default"
+			android:dialogTitle="@string/pref_police_radios_dialog_title"
+			android:entries="@array/pref_police_radios" android:entryValues="@array/pref_police_radios_values"></ListPreference>
+
+		<!-- Weather Radios -->
+		<ListPreference android:key="@string/pref_weather_radios_selected"
+			android:title="@string/pref_weather_radios_title" android:summary="@string/pref_weather_radios_summary"
+			android:defaultValue="@string/pref_weather_radios_default"
+			android:dialogTitle="@string/pref_weather_radios_dialog_title"
+			android:entries="@array/pref_weather_radios" android:entryValues="@array/pref_weather_radios_values"></ListPreference>
+	</PreferenceCategory>
+	
+	<PreferenceCategory android:title="Information Sources">
+<!--		 Today Feed -->
+		<ListPreference android:key="@string/pref_today_feed_selected"
+			android:title="@string/pref_today_feed_title" android:summary="@string/pref_today_feed_summary"
+			android:defaultValue="@string/pref_today_feed_default"
+			android:dialogTitle="@string/pref_today_feed_dialog_title"
+			android:entries="@array/pref_today_feed" android:entryValues="@array/pref_today_feed_values"></ListPreference>
+<!--		 Weather Feed -->
+		<ListPreference android:key="@string/pref_weather_feed_selected"
+			android:title="@string/pref_weather_feed_title" android:summary="@string/pref_weather_feed_summary"
+			android:defaultValue="@string/pref_weather_feed_default"
+			android:dialogTitle="@string/pref_weather_feed_dialog_title"
+			android:entries="@array/pref_weather_feed" android:entryValues="@array/pref_weather_feed_values"></ListPreference>
+	</PreferenceCategory>
+
+</PreferenceScreen>
