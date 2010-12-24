@@ -76,6 +76,10 @@ public class App extends MapActivity {
 
 	// Will need to up this number if more indexes are needed.
 	protected static int CURRENT_TAB_INDEX = 0;
+	
+	// Flag indicating prefs have changed and need to be reread
+	protected static boolean PREFS_UPDATED = false;
+	
 
 	// Tracks when the MapView is showing
 	protected static boolean MAP_VIEW_IS_VISIBLE = false;
@@ -489,38 +493,55 @@ public class App extends MapActivity {
 	    }
 	}
 
+    
+    
+    
+    
+    
+    
     /**
      * This gets called in onStart and when the prefs intent returns. 
      * Should cover making sure the local globals always have the current
      * prefs.
      */
     protected void setCurrentFavorites() {
-        // Log.d(TAG, "setCurrentRadios");
-
-    	// Set Global with current prefs
-    	// If this namespace path doesn't end in '_preferences' this won't work.
-    	mySharedPreferences = getSharedPreferences(Config.NAMESPACE + "_preferences", 0);
-
-    	Context c = getApplicationContext();
-    	
-		String wr_saved = c.getResources().getString(R.string.pref_weather_radios_selected);
-		Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER] = Integer.parseInt(mySharedPreferences
-	      .getString(wr_saved, Integer.toString(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER])));
-
-		String pr_saved = c.getResources().getString(R.string.pref_police_radios_selected);
-		Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE] = Integer.parseInt(mySharedPreferences
-	      .getString(pr_saved, Integer.toString(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE])));
-
-		// today feed
-		String tf_saved = c.getResources().getString(R.string.pref_today_feed_selected);
-		CalendarTab.CURRENT_TODAY_FEED_INDEX = Integer.parseInt(mySharedPreferences
-			.getString(tf_saved, "0"));
-
-		// weather feed
-		String wf_saved = c.getResources().getString(R.string.pref_weather_feed_selected);
-		CalendarTab.CURRENT_WEATHER_FEED_INDEX = Integer.parseInt(mySharedPreferences
-			.getString(wf_saved, "0"));
-
+    	// Only waste time rereading prefs if they changed.
+    	if (PREFS_UPDATED) {
+    		PREFS_UPDATED = false;
+	        // Log.d(TAG, "setCurrentRadios");
+	
+	    	// Set Global with current prefs
+	    	// If this namespace path doesn't end in '_preferences' this won't work.
+	    	mySharedPreferences = getSharedPreferences(Config.NAMESPACE + "_preferences", 0);
+	
+	    	Context c = getApplicationContext();
+	    	
+			String wr_saved = c.getResources().getString(R.string.pref_weather_radios_selected);
+			Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER] = Integer.parseInt(mySharedPreferences
+		      .getString(wr_saved, Integer.toString(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER])));
+	
+			String pr_saved = c.getResources().getString(R.string.pref_police_radios_selected);
+			Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE] = Integer.parseInt(mySharedPreferences
+		      .getString(pr_saved, Integer.toString(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE])));
+	
+			// today feed
+			String tf_saved = c.getResources().getString(R.string.pref_today_feed_selected);
+			CalendarTab.CURRENT_TODAY_FEED_INDEX = Integer.parseInt(mySharedPreferences
+				.getString(tf_saved, "0"));
+	
+			// weather feed
+			String wf_saved = c.getResources().getString(R.string.pref_weather_feed_selected);
+			CalendarTab.CURRENT_WEATHER_FEED_INDEX = Integer.parseInt(mySharedPreferences
+				.getString(wf_saved, "0"));
+	
+			// Favorite Map View
+			// FIXME - Make sure I call set current favorites after I update this value
+			mySharedPreferences = getSharedPreferences(Config.NAMESPACE, 0);
+		    Config.FAVORITE_GEO_POINTS[0]
+		        = mySharedPreferences.getString("pref_favorite_map_frame_1", Config.GEO_POINTS[0]);
+	
+//		    Toast.makeText(getApplicationContext(), "prefs were gotten: " + Config.FAVORITE_GEO_POINTS[0], Toast.LENGTH_LONG).show();
+    	}
     }
     
 	public void colorTheCurrentTab() {
@@ -629,12 +650,22 @@ public class App extends MapActivity {
 	// Map view map
 	//
 	public void drawTrafficMap() {
+		// Check for updated prefs and reread them
+		setCurrentFavorites();
+		
+	    String[] aFavPoint = Config.FAVORITE_GEO_POINTS[0].split(":");
+
 		// Animate to a view.
         gpMain = new GeoPoint(
-        		Config.GEO_POINTS[0][0], 
-        		Config.GEO_POINTS[0][1]);
+        		Integer.parseInt(aFavPoint[1]), 
+        		Integer.parseInt(aFavPoint[2]));
+        mcMain.setZoom(Integer.parseInt(aFavPoint[0]));
         mcMain.animateTo(gpMain);
-        mcMain.setZoom(11);
+//        gpMain = new GeoPoint(
+//        		Config.GEO_POINTS[0][0], 
+//        		Config.GEO_POINTS[0][1]);
+//        mcMain.animateTo(gpMain);
+//        mcMain.setZoom(11);
 
         // Redraw traffic
         mvTraffic.invalidate();

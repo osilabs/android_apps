@@ -21,9 +21,12 @@ public final class Config {
 	public static final CharSequence[] RADIOS              = {"Weather Radio", "Police Scanner"};
 	
 	// Geo points
-	public static		int [][] GEO_POINTS = {
-		{ 41878114, -87790000 }
+	// zoom:lat:long
+	public static		String [] GEO_POINTS = {
+		"11:41878114:-87790000"
 	};
+	// Will be filled in l8r with sharedprefs. Defaults to the main system map
+	public static		String [] FAVORITE_GEO_POINTS = { GEO_POINTS[0] };
 		
 	//
 	// Non config stuff
