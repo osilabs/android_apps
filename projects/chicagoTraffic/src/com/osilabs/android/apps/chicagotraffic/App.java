@@ -3,6 +3,10 @@ package com.osilabs.android.apps.chicagotraffic;
 import java.net.URLEncoder;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
@@ -653,14 +657,39 @@ public class App extends MapActivity {
 		// Check for updated prefs and reread them
 		setCurrentFavorites();
 		
-	    String[] aFavPoint = Config.FAVORITE_GEO_POINTS[0].split(":");
+//	    String[] aFavPoint = Config.FAVORITE_GEO_POINTS[0].split(":");
+//		// Animate to a view.
+//        gpMain = new GeoPoint(
+//        		Integer.parseInt(aFavPoint[1]), 
+//        		Integer.parseInt(aFavPoint[2]));
+//        mcMain.setZoom(Integer.parseInt(aFavPoint[0]));
+//        mcMain.animateTo(gpMain);
+	    
+		//Log.d(TAG, "Favorite: " + Config.FAVORITE_GEO_POINTS[0]);
+		
+		try {
+			JSONArray ja = new JSONArray(Config.FAVORITE_GEO_POINTS[0]);			
+			//JSONObject jo = ja.getJSONObject(0);
+			
+			
+			//JSONObject jo = new JSONObject(Config.FAVORITE_GEO_POINTS[0]);
+			
 
-		// Animate to a view.
-        gpMain = new GeoPoint(
-        		Integer.parseInt(aFavPoint[1]), 
-        		Integer.parseInt(aFavPoint[2]));
-        mcMain.setZoom(Integer.parseInt(aFavPoint[0]));
-        mcMain.animateTo(gpMain);
+			Log.d(TAG, "First label: " + ja.getJSONObject(0).getString("label").toString());
+			
+			gpMain = new GeoPoint(
+					Integer.parseInt(ja.getJSONObject(0).getString("latitude").toString()),
+					Integer.parseInt(ja.getJSONObject(0).getString("longitude").toString()));
+	        mcMain.setZoom(Integer.parseInt(ja.getJSONObject(0).getString("zoom").toString()));
+	        mcMain.animateTo(gpMain);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	    
+
+
+
+        
 //        gpMain = new GeoPoint(
 //        		Config.GEO_POINTS[0][0], 
 //        		Config.GEO_POINTS[0][1]);
