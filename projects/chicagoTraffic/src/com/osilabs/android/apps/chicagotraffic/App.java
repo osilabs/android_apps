@@ -635,7 +635,11 @@ public class App extends MapActivity {
 				
 				MapsTab.showConfiguration();
 				
-				switch(Config.traffic_viewtypes[ MapsTab.CURRENT_INDEX ]) {
+				Log.d(TAG, "Config.traffic_viewtypes length: " + Integer.toString(Config.traffic_viewtypes.length));
+				Log.d(TAG, "mapstab.current_index: " + Integer.toString(MapsTab.CURRENT_INDEX));
+				//Log.d(TAG, "Traffic_viewtypes[mapstab.current_index]: " + Integer.toString(Config.traffic_viewtypes[ MapsTab.CURRENT_INDEX ]));
+				
+				switch(MapsTab.getAndroidViewType()) {
 					case Config.MAP:
 				    	activateViewType(MAPVIEW);
 			        	

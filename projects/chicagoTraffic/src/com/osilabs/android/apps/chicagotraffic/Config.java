@@ -31,10 +31,14 @@ public final class Config {
 	//
 	// Non config stuff
 	//
-	public static final int WEB   = 0;
-	public static final int MAP   = 1;
-	public static final int IMAGE = 2;
-	public static final int FEED  = 3;
+	
+	// Android viewtypes - Tells sytem what type of android view (webview,
+	//  mapview, imageview,...) is needed.
+	public static final int WEB      = 0;
+	public static final int MAP      = 1;
+	public static final int IMAGE    = 2;
+	public static final int FEED     = 3;
+	public static final int FAVORITE = 4;
 
 	// Formats:
 	//

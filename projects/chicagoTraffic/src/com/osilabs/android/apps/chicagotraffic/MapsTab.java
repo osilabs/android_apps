@@ -32,12 +32,21 @@ public class MapsTab {
 	// If never set, is set to first map.
 	public    static int    	  CURRENT_INDEX = 0;
 	
+	// Init will set this to the number of system views. Will be used
+	//  to determine if a view is above this number and is therefore
+	//  a favorite of a mapview.
+	public    static int    	  NUMBER_OF_SYSTEM_VIEWS = 0;
+	
 	public static void init() {
 		App.ivMapsTab.setVisibility(View.VISIBLE);
 		App.ivMapsTab.setPadding(15, 0, 15, 0);
 		App.ivMapsTab.setAlpha(ALPHA_OFF);
 		App.ivMapsTab.setBackgroundColor(BG_OFF);
-
+		
+		// Set the number of system views this build is using. Any views
+		//  accessed above this number is out of the defined list
+		//  and is a user favorite of a mapview.
+		NUMBER_OF_SYSTEM_VIEWS = Config.traffic_viewtypes.length;
 	}
 //	public static String getActiveMapURL() {
 //		// Keep from exceeding the size of the array
@@ -49,14 +58,14 @@ public class MapsTab {
 		
 		String query_string= "";
 		
-		if (Config.traffic_viewtypes[CURRENT_INDEX] == Config.IMAGE) {
+		if (MapsTab.getAndroidViewType() == Config.IMAGE) {
 			query_string 
 				= "&traffic=" + URLEncoder.encode(Config.traffic_urls[CURRENT_INDEX])
 				+ "&mapscrollx="
 				+ MapsTab.getScrollX()
 				+ "&mapscrolly="
 				+ MapsTab.getScrollY();
-		} else if (Config.traffic_viewtypes[CURRENT_INDEX] == Config.FEED) {
+		} else if (MapsTab.getAndroidViewType() == Config.FEED) {
 			query_string 
 				= "&traffic=" + URLEncoder.encode(Config.traffic_urls[CURRENT_INDEX]);
 		} else {
@@ -83,9 +92,19 @@ public class MapsTab {
 		App.ivMapsMore.setVisibility(ImageView.VISIBLE);
 		App.tvMapsPop.setVisibility(TextView.VISIBLE);
 	}
-	public static String getViewType() {
+	public static String getWebViewType() {
 		String[] as = Config.traffic_urls[CURRENT_INDEX].split("~");
 		return as[TYPE];
+	}
+	public static int getAndroidViewType() {
+		if (MapsTab.CURRENT_INDEX > (NUMBER_OF_SYSTEM_VIEWS-1)) {
+			// Viewing a map favorite
+			return Config.FAVORITE;
+		}
+		else {
+			// Look for the system type defined in Config.traffic_viewtypes
+			return Config.traffic_viewtypes[ MapsTab.CURRENT_INDEX ];
+		}
 	}
 	public static String getScrollX() {
 		// FIXME - cache these so they are calc'd all the time
