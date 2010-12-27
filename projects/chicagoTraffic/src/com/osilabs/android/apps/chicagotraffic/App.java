@@ -54,7 +54,7 @@ public class App extends MapActivity {
 	//
 	// Consts
 	//
-	private static final String TAG = "** osilabs.com **";
+	static final String TAG = "** osilabs.com **";
 
 	private static final int MENU_TRAFFIC               = 0;
 	private static final int MENU_CAMERAS               = 1;
@@ -415,12 +415,28 @@ public class App extends MapActivity {
 		
 //		int optionsIndex = options.length;
 
-    	// Fixme, this size should be figured out first.
+    	// FIXME, this size should be figured out first.
+    	// FIXME, this size should be figured out first.
+    	// FIXME, this size should be figured out first.
+    	// FIXME, this size should be figured out first.
+    	// FIXME, this size should be figured out first.
+    	// FIXME, this size should be figured out first.
+    	// FIXME, this size should be figured out first.
+    	// FIXME, this size should be figured out first.
+    	// FIXME, this size should be figured out first.
+    	// FIXME, this size should be figured out first.
+    	// FIXME, this size should be figured out first.
+    	// FIXME, this size should be figured out first.
+    	// FIXME, this size should be figured out first.
+    	// FIXME, this size should be figured out first.
+    	// FIXME, this size should be figured out first.
+    	// FIXME, this size should be figured out first.
+    	// FIXME, this size should be figured out first.
 		List<String> sl = new ArrayList<String>(6);
 
 		JSONArray ja;
 		try {
-			ja = new JSONArray(Config.FAVORITE_GEO_POINTS[0]);
+			ja = new JSONArray(Config.CURRENT_MAPVIEW_COORDS);
 			Log.d(TAG, "favs: " + ja.toString());
 			Log.d(TAG, "labeled: " + ja.getJSONObject(0).getString("label").toString());
 			
@@ -579,9 +595,11 @@ public class App extends MapActivity {
 			// Favorite Map View
 			// FIXME - Make sure I call set current favorites after I update this value
 			mySharedPreferences = getSharedPreferences(Config.NAMESPACE, 0);
-		    Config.FAVORITE_GEO_POINTS[0]
-		        = mySharedPreferences.getString("pref_favorite_map_frame_1", Config.GEO_POINTS[0]);
-	
+		    Config.MAPVIEW_FAVORITES
+		        = mySharedPreferences.getString("pref_mapview_favorites", "");
+		    Config.CURRENT_MAPVIEW_COORDS
+		        = mySharedPreferences.getString("pref_current_mapview_coords", "");
+		    
 //		    Toast.makeText(getApplicationContext(), "prefs were gotten: " + Config.FAVORITE_GEO_POINTS[0], Toast.LENGTH_LONG).show();
     	}
     }
@@ -634,12 +652,9 @@ public class App extends MapActivity {
 			case MENU_TRAFFIC:
 				
 				MapsTab.showConfiguration();
-				
-				Log.d(TAG, "Config.traffic_viewtypes length: " + Integer.toString(Config.traffic_viewtypes.length));
-				Log.d(TAG, "mapstab.current_index: " + Integer.toString(MapsTab.CURRENT_INDEX));
-				//Log.d(TAG, "Traffic_viewtypes[mapstab.current_index]: " + Integer.toString(Config.traffic_viewtypes[ MapsTab.CURRENT_INDEX ]));
-				
+
 				switch(MapsTab.getAndroidViewType()) {
+					case Config.FAVORITE:
 					case Config.MAP:
 				    	activateViewType(MAPVIEW);
 			        	
@@ -707,13 +722,13 @@ public class App extends MapActivity {
 //        mcMain.setZoom(Integer.parseInt(aFavPoint[0]));
 //        mcMain.animateTo(gpMain);
 	    
-		//Log.d(TAG, "Favorite: " + Config.FAVORITE_GEO_POINTS[0]);
+		Log.d(TAG, "Current: " + Config.CURRENT_MAPVIEW_COORDS);
 		
 		try {
 			//JSONObject jo = ja.getJSONObject(0);
 			//JSONObject jo = new JSONObject(Config.FAVORITE_GEO_POINTS[0]);			
 
-			JSONArray ja = new JSONArray(Config.FAVORITE_GEO_POINTS[0]);			
+			JSONArray ja = new JSONArray(Config.CURRENT_MAPVIEW_COORDS);			
 			Log.d(TAG, "First label: " + ja.getJSONObject(0).getString("label").toString());
 			
 			gpMain = new GeoPoint(

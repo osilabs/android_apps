@@ -1,10 +1,15 @@
 // Release 0.8
 
-
-
-
-
 >> STM <<
+Config.MAPVIEW_FAVORITES - Holds JSON string of favorites in current session.
+
+Config.CURRENT_MAPVIEW_COORDS - Holds that is the currently active view in the mapview.
+
+renaming preference: 
+	pref_favorite_map_frame_1 to 
+		pref_mapview_favorites 
+		and 
+		pref_current_mapview_coords
 
 >> TEST <<
 

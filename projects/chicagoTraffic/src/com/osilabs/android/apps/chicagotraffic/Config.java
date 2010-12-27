@@ -20,14 +20,14 @@ public final class Config {
 	public static       int[]          RADIOS_CURRENT_NODE = {18464,           18589};
 	public static final CharSequence[] RADIOS              = {"Weather Radio", "Police Scanner"};
 	
-	// Geo points
-	// zoom:lat:long
-	public static		String [] GEO_POINTS = {
-		"11:41878114:-87790000"
-	};
+//	// Geo points
+//	// zoom:lat:long
+//	public static		String [] GEO_POINTS = {
+//		"11:41878114:-87790000"
+//	};
 	// Will be filled in l8r with sharedprefs. Defaults to the main system map
-	public static		String [] FAVORITE_GEO_POINTS = { GEO_POINTS[0] };
-		
+	//public static		String [] FAVORITE_GEO_POINTS = { };
+
 	//
 	// Non config stuff
 	//
@@ -65,7 +65,7 @@ public final class Config {
 	public static final String [] traffic_urls = {
 		"map~http://wrc.gettingaroundillinois.com/images/wrccook.jpg~120%~ ~40~66",
 		"map~http://wrc.gettingaroundillinois.com/images/wrcimage.jpg~150%~ ~80~6",
-		"MAP"
+		"[{\"longitude\":\"-87790000\",\"zoom\":\"11\",\"label\":\"Chicago Metro\",\"latitude\":\"41878114\"}]"
 	};
 	// View Types: WEB, IMAGE, FEED, MAP
 	public static final int [] traffic_viewtypes = {
@@ -73,6 +73,10 @@ public final class Config {
 		IMAGE,
 		MAP,
 	};
+	// This defaults to one of the system configured mapviews in traffic_urls
+	public static String CURRENT_MAPVIEW_COORDS = traffic_urls[2];
+	public static String MAPVIEW_FAVORITES = "";
+	
 	//
 	// Traffic Tab
 	// ---------------------------------------------------------

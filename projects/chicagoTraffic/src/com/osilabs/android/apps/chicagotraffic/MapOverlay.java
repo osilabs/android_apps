@@ -15,6 +15,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.text.Editable;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -50,8 +51,7 @@ class MapOverlay extends com.google.android.maps.Overlay
 
         gpFavorite = p;
 		prefname = "-1";
-
-                
+		
         final CharSequence[] items = {"Save as Favorite", "Zoom In", "Zoom Out"};
         AlertDialog.Builder builder = new AlertDialog.Builder(App.me);
         builder.setTitle("Map Views");
@@ -59,22 +59,35 @@ class MapOverlay extends com.google.android.maps.Overlay
             public void onClick(DialogInterface dialog, int item) {
             	switch (item) {
             	case 0:
+            		// Here they have chosen add a new favorite android mapview.
+            		// 1. Collect the label to call this one.
+            		// 2. Get the existing list of favorites and 
+            		//     prepend this one to it
+            		
+            		// 1. Collect the label
             		AlertDialog.Builder alert = new AlertDialog.Builder(App.me);  
-            		alert.setTitle("Title");  
-            		alert.setMessage("Message");  
+            		alert.setTitle("Favorite Maps");  
+            		alert.setMessage("Title");  
             		// Set an EditText view to get user input   
-            		final EditText input = new EditText(App.me);  
+            		final EditText input = new EditText(App.me);
             		alert.setView(input);  
+            		alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {  
+            			public void onClick(DialogInterface dialog, int whichButton) {  
+            				// User hit cancel, flag so we can exit
+            				prefname = "-1";
+            			}  
+            		});  
             		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {  
             			public void onClick(DialogInterface dialog, int whichButton) {  
             		  		prefname = input.getText().toString();
             		  		
             		  		if (prefname != "") {
+            		  			JSONArray ja = null;
+            		  			ArrayList<JSONObject> aj = new ArrayList<JSONObject>();
             		  			
+                		  		// 2a. Prepend the new favorite
                 		  		JSONObject jo = new JSONObject();
-                		  		JSONArray ja = new JSONArray();
-                		  		
-                 		  		try {
+								try {
 									jo.put("label", prefname);
 									jo.put("zoom", Integer.toString(App.mvTraffic.getZoomLevel()));
 	                		  		jo.put("latitude", Integer.toString(gpFavorite.getLatitudeE6()));
@@ -82,42 +95,57 @@ class MapOverlay extends com.google.android.maps.Overlay
 								} catch (JSONException e) {
 									e.printStackTrace();
 								}
-								
-//								HashMap<Integer, JSONObject> hm = new HashMap<Integer, JSONObject>();
-//								ArrayList<Map<String, String>> al = new ArrayList<Map<String, String>>();
-								ArrayList<JSONObject> aj = new ArrayList<JSONObject>();
-								
-								aj.add(jo);
-								aj.add(jo);
 								aj.add(jo);
 								
-						//		ja.put(aj);
-								//al.add();
+        	            		Log.d(App.TAG, "Saved json: " + aj.toString());
+	
+            		  			// 2b. Get existing list of favorites
+								if (Config.MAPVIEW_FAVORITES != "") {
+	                		  		try {
+										ja = new JSONArray(Config.MAPVIEW_FAVORITES);
+									} catch (JSONException e1) {
+										e1.printStackTrace();
+									}
+									
+									// If no favs exist, skip appending them
+									if ( ja != null && ! ja.isNull(0) ) {
+		        	            		Toast.makeText(App.me,
+		        	                            "JSON array: " + ja.toString(),
+		        	                            Toast.LENGTH_SHORT).show();
+		
+										// 2c. Append on the rest of existing favorites. Turn each into
+										//  a json object and append.
+										for(int i=0; i<ja.length(); i++) {
+											try {
+												jo.put("label", ja.getJSONObject(i).getString("label"));
+												jo.put("zoom", ja.getJSONObject(i).getString("zoom"));
+				                		  		jo.put("latitude", ja.getJSONObject(i).getString("latitude"));
+				                		  		jo.put("longitude", ja.getJSONObject(i).getString("longitude"));
+											} catch (JSONException e) {
+												e.printStackTrace();
+											}
+											aj.add(jo);
+										}
+																		
+		//								HashMap<Integer, JSONObject> hm = new HashMap<Integer, JSONObject>();
+		//								ArrayList<Map<String, String>> al = new ArrayList<Map<String, String>>();
+								//		ja.put(aj);
+										//al.add();
+										//hm.put(0, jo);
+										//ja.put(hm);
+										//ja.put(jo);
+									}
+								}								
 								
-								
-								//hm.put(0, jo);
-								//ja.put(hm);
-								
-								//ja.put(jo);
-								
-								
-        	            		Toast.makeText(App.me,
-        	                            "Created JSON: " + jo.toString(), 
-        	                            Toast.LENGTH_SHORT).show();
-
-//	                		  	// Create a bundle of geopoint and zoom level to save as favorite
-//        	            		String mapframe =
-//        	            			Integer.toString(App.mvTraffic.getZoomLevel())
-//        	            			+ ":" 
-//        	            			+ Integer.toString(gpFavorite.getLatitudeE6())
-//        	            			+ ":" 
-//        	            			+ Integer.toString(gpFavorite.getLongitudeE6());
-        	            		
         	            		// Save to shared prefs
         					    SharedPreferences.Editor editor = App.mySharedPreferences.edit();
         					    editor.putString("pref_favorite_map_frame_1", aj.toString());
         					    editor.commit();
         	            		
+        	            		Toast.makeText(App.me,
+        	                            "Created JSON: " + aj.toString(),
+        	                            Toast.LENGTH_SHORT).show();
+
         	            		// Tell the main app that prefs have changed so things can reread them
         	            		App.PREFS_UPDATED = true;
         	            		
@@ -127,13 +155,7 @@ class MapOverlay extends com.google.android.maps.Overlay
         	                            Toast.LENGTH_SHORT).show();
                     		}
             			}  
-            		});  
-            		alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {  
-            			public void onClick(DialogInterface dialog, int whichButton) {  
-            				// User hit cancel, flag so we can exit
-            				prefname = "-1";
-            			}  
-            		});  
+            		});
             		alert.show();
 
             		break;

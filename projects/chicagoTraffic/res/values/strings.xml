@@ -21,6 +21,8 @@
 	<!--	~~~~~~~~~~~~~ -->
 	<!--	~~~~~~~~~~~~~ ~~~~~~~~~~~~~ ~~~~~~~~~~~~~ -->
 
+    <string name="pref_mapview_favorites"></string>
+    <string name="pref_current_mapview_coords"></string>
 	<string name="radios_dialog_title">Radios</string>
 	<string name="txt_refreshing">Refreshing...</string>
 	<string name="txt_loading">Loading...</string>
