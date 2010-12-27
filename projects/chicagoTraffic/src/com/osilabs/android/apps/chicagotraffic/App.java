@@ -1,6 +1,7 @@
 package com.osilabs.android.apps.chicagotraffic;
 
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -405,10 +406,47 @@ public class App extends MapActivity {
     protected void launchMapPicker() {
         // Log.d(TAG, "launchMapPicker");
 
+    	// Add selected favorites to the list of Traffic maps to view.
+		//CharSequence[] options = new CharSequence[Config.traffic.length]; 
+		//optionsConfig.traffic;
+		//for(int i=0; i<Config.traffic.length; i++) { options[i] = Config.traffic[i]; }
+//		System.arraycopy(Config.traffic, 0, options, 0, Config.traffic.length);
+//		System.arraycopy(Config.traffic, 0, options, 0, Config.traffic.length);
+		
+//		int optionsIndex = options.length;
+
+    	// Fixme, this size should be figured out first.
+		List<String> sl = new ArrayList<String>(6);
+
+		JSONArray ja;
+		try {
+			ja = new JSONArray(Config.FAVORITE_GEO_POINTS[0]);
+			Log.d(TAG, "favs: " + ja.toString());
+			Log.d(TAG, "labeled: " + ja.getJSONObject(0).getString("label").toString());
+			
+//			sl.add(ja.getJSONObject(0).getString("label").toString());			
+//			sl.add(ja.getJSONObject(1).getString("zoom").toString());			
+//			sl.add(ja.getJSONObject(2).getString("longitude").toString());			
+//			options[3] = ja.getJSONObject(0).getString("label").toString();
+//			options[4] = ja.getJSONObject(1).getString("label").toString();
+//			options[5] = ja.getJSONObject(2).getString("label").toString();
+			for(int i=0; i<ja.length(); i++) {
+				//options[optionsIndex++] = ja.getJSONObject(i).getString("label").toString();
+				sl.add("Favorite: " + ja.getJSONObject(i).getString("label").toString());			
+			}
+		} catch (JSONException e1) {
+			e1.printStackTrace();
+		}
+		
+		// Tack on the system menu options
+		for(int i=0; i<Config.traffic.length; i++) { sl.add(Config.traffic[i]); } 
+		
+		CharSequence[] options = (String[]) sl.toArray(new String[sl.size()]);
+		
         AlertDialog alert = new AlertDialog.Builder(this)
         .setTitle(R.string.txt_map_popup_title)
         .setIcon(R.drawable.ic_police)
-        .setItems(Config.traffic, new DialogInterface.OnClickListener() {
+        .setItems(options, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
             	MapsTab.CURRENT_INDEX = which;
     			Toast.makeText(getApplicationContext(), 
@@ -668,13 +706,10 @@ public class App extends MapActivity {
 		//Log.d(TAG, "Favorite: " + Config.FAVORITE_GEO_POINTS[0]);
 		
 		try {
-			JSONArray ja = new JSONArray(Config.FAVORITE_GEO_POINTS[0]);			
 			//JSONObject jo = ja.getJSONObject(0);
-			
-			
-			//JSONObject jo = new JSONObject(Config.FAVORITE_GEO_POINTS[0]);
-			
+			//JSONObject jo = new JSONObject(Config.FAVORITE_GEO_POINTS[0]);			
 
+			JSONArray ja = new JSONArray(Config.FAVORITE_GEO_POINTS[0]);			
 			Log.d(TAG, "First label: " + ja.getJSONObject(0).getString("label").toString());
 			
 			gpMain = new GeoPoint(
