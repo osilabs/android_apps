@@ -11,6 +11,11 @@ renaming preference:
 		and 
 		pref_current_mapview_coords
 
+Created inner class in MapsTab for pointers to keep track of the indexes of the favorites and system menu choices.
+- Initializes upon mapstab init().
+- Need to change fav_size every time a fav is added or deleted.
+- Need to use the right index when a menu option is chosen.
+
 >> TEST <<
 
 >> Enhancements <<

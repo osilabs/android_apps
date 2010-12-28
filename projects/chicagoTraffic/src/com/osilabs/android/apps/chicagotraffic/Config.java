@@ -60,7 +60,7 @@ public final class Config {
 	public static final String [] traffic = {
 		"Winter Weather",
 		"Winter Weather State",
-		"Interactive Map"
+		"Chicago Metro"
 	};
 	public static final String [] traffic_urls = {
 		"map~http://wrc.gettingaroundillinois.com/images/wrccook.jpg~120%~ ~40~66",

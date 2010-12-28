@@ -82,6 +82,12 @@ class MapOverlay extends com.google.android.maps.Overlay
             		  		prefname = input.getText().toString();
             		  		
             		  		if (prefname != "") {
+            		  			// FIXME - Move the setting of Favorites into Favorites class.
+            		  			// FIXME - Move the setting of Favorites into Favorites class.
+            		  			// FIXME - Move the setting of Favorites into Favorites class.
+            		  			// FIXME - Move the setting of Favorites into Favorites class.
+            		  			// FIXME - Move the setting of Favorites into Favorites class.
+            		  			// FIXME - Move the setting of Favorites into Favorites class.
             		  			JSONArray ja = null;
             		  			ArrayList<JSONObject> aj = new ArrayList<JSONObject>();
             		  			
@@ -97,7 +103,7 @@ class MapOverlay extends com.google.android.maps.Overlay
 								}
 								aj.add(jo);
 								
-        	            		Log.d(App.TAG, "Saved json: " + aj.toString());
+        	            		Log.d(App.TAG, "New JSON bit: " + aj.toString());
 	
             		  			// 2b. Get existing list of favorites
 								if (Config.MAPVIEW_FAVORITES != "") {
@@ -108,14 +114,15 @@ class MapOverlay extends com.google.android.maps.Overlay
 									}
 									
 									// If no favs exist, skip appending them
-									if ( ja != null && ! ja.isNull(0) ) {
-		        	            		Toast.makeText(App.me,
-		        	                            "JSON array: " + ja.toString(),
-		        	                            Toast.LENGTH_SHORT).show();
+//									if ( ja != null && ! ja.isNull(0) ) {
+//		        	            		Toast.makeText(App.me,
+//		        	                            "JSON array: " + ja.toString(),
+//		        	                            Toast.LENGTH_SHORT).show();
 		
 										// 2c. Append on the rest of existing favorites. Turn each into
 										//  a json object and append.
 										for(int i=0; i<ja.length(); i++) {
+											jo = new JSONObject();
 											try {
 												jo.put("label", ja.getJSONObject(i).getString("label"));
 												jo.put("zoom", ja.getJSONObject(i).getString("zoom"));
@@ -126,6 +133,8 @@ class MapOverlay extends com.google.android.maps.Overlay
 											}
 											aj.add(jo);
 										}
+										
+										Log.d(App.TAG, "Full Favs JSON: " + aj.toString());
 																		
 		//								HashMap<Integer, JSONObject> hm = new HashMap<Integer, JSONObject>();
 		//								ArrayList<Map<String, String>> al = new ArrayList<Map<String, String>>();
@@ -135,14 +144,17 @@ class MapOverlay extends com.google.android.maps.Overlay
 										//ja.put(hm);
 										//ja.put(jo);
 									}
-								}								
+//								}
 								
+        	            		// Set the favorites string.
+        	            		Config.MAPVIEW_FAVORITES = aj.toString();
+
         	            		// Save to shared prefs
         					    SharedPreferences.Editor editor = App.mySharedPreferences.edit();
-        					    editor.putString("pref_favorite_map_frame_1", aj.toString());
+        					    editor.putString("pref_mapview_favorites", Config.MAPVIEW_FAVORITES);
         					    editor.commit();
-        	            		
-        	            		Toast.makeText(App.me,
+
+        					    Toast.makeText(App.me,
         	                            "Created JSON: " + aj.toString(),
         	                            Toast.LENGTH_SHORT).show();
 

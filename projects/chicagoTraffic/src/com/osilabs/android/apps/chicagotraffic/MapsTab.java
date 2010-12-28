@@ -2,6 +2,9 @@ package com.osilabs.android.apps.chicagotraffic;
 
 import java.net.URLEncoder;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.util.Log;
@@ -32,10 +35,10 @@ public class MapsTab {
 	// If never set, is set to first map.
 	public    static int    	  CURRENT_INDEX = 0;
 	
-	// Init will set this to the number of system views. Will be used
-	//  to determine if a view is above this number and is therefore
-	//  a favorite of a mapview.
-	public    static int    	  NUMBER_OF_SYSTEM_VIEWS = 0;
+//	// Init will set this to the number of system views. Will be used
+//	//  to determine if a view is above this number and is therefore
+//	//  a favorite of a mapview.
+//	public    static int    	  NUMBER_OF_SYSTEM_VIEWS = 0;
 	
 	public static void init() {
 		App.ivMapsTab.setVisibility(View.VISIBLE);
@@ -46,7 +49,11 @@ public class MapsTab {
 		// Set the number of system views this build is using. Any views
 		//  accessed above this number is out of the defined list
 		//  and is a user favorite of a mapview.
-		NUMBER_OF_SYSTEM_VIEWS = Config.traffic_viewtypes.length;
+//		NUMBER_OF_SYSTEM_VIEWS = Config.traffic_viewtypes.length;
+		
+		// Init the sizes of the favorites and system map 
+		//  popup menu option arrays.
+		MenuIndexes.init();
 	}
 //	public static String getActiveMapURL() {
 //		// Keep from exceeding the size of the array
@@ -97,13 +104,21 @@ public class MapsTab {
 		return as[TYPE];
 	}
 	public static int getAndroidViewType() {
-		if (MapsTab.CURRENT_INDEX > (NUMBER_OF_SYSTEM_VIEWS-1)) {
+		if (MapsTab.CURRENT_INDEX < (MenuIndexes.FAV_SIZE-1)) {
 			// Viewing a map favorite
 			return Config.FAVORITE;
 		}
 		else {
+			// The favs section must be ignorred for looking up in traffic_viewtypes
+			int adjustedIndex = (MapsTab.CURRENT_INDEX - MenuIndexes.FAV_SIZE);
+			adjustedIndex = adjustedIndex<0 ? 0 : adjustedIndex;
+
+			Log.d("+++++++++++++++++++++++", "current index: " + Integer.toString(MapsTab.CURRENT_INDEX));
+			Log.d("+++++++++++++++++++++++", "favs size: " + Integer.toString(MenuIndexes.FAV_SIZE));
+			Log.d("+++++++++++++++++++++++", "adjusted index: " + Integer.toString(adjustedIndex));
+			
 			// Look for the system type defined in Config.traffic_viewtypes
-			return Config.traffic_viewtypes[ MapsTab.CURRENT_INDEX ];
+			return Config.traffic_viewtypes[ adjustedIndex ];
 		}
 	}
 	public static String getScrollX() {
@@ -115,4 +130,32 @@ public class MapsTab {
 		String[] as = Config.traffic_urls[CURRENT_INDEX].split("~");
 		return as[SCROLLY];
 	}
+	
+	/**
+	 * A data type to hold and track indexes for a
+	 *  menu with different types
+	 */
+	public static class MenuIndexes {
+		public static int FAV_INDEX = 0;
+		public static int FAV_SIZE  = 0;
+		public static int SYS_INDEX = 0;
+		public static int SYS_SIZE  = 0;
+		
+		public static void init() {
+			setFavArraySize();
+			setSysArraySize();
+		}
+		public static void setFavArraySize() {
+			JSONArray ja = null;
+			try {
+				ja = new JSONArray(Config.CURRENT_MAPVIEW_COORDS);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			FAV_SIZE = ja.length();
+		}
+		public static void setSysArraySize() {
+			SYS_SIZE = Config.traffic.length;
+		}
+	};
 }

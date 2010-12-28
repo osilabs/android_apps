@@ -13,6 +13,7 @@ import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
+import com.osilabs.android.apps.chicagotraffic.MapsTab.MenuIndexes;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -436,9 +437,10 @@ public class App extends MapActivity {
 
 		JSONArray ja;
 		try {
-			ja = new JSONArray(Config.CURRENT_MAPVIEW_COORDS);
+			ja = new JSONArray(Config.MAPVIEW_FAVORITES);
 			Log.d(TAG, "favs: " + ja.toString());
-			Log.d(TAG, "labeled: " + ja.getJSONObject(0).getString("label").toString());
+			Log.d(TAG, "favs length: " + ja.length());
+			Log.d(TAG, "labeled at index 0: " + ja.getJSONObject(0).getString("label").toString());
 			
 //			sl.add(ja.getJSONObject(0).getString("label").toString());			
 //			sl.add(ja.getJSONObject(1).getString("zoom").toString());			
@@ -464,15 +466,33 @@ public class App extends MapActivity {
         .setIcon(R.drawable.ic_police)
         .setItems(options, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
+            	// Algorithm to determine system index
+            	// 1. if( which < count(favs) ) { use favs[index] }
+            	// 2. else { use SYSTEM_COORDS[index - count] } 
+
+            	if (which < MenuIndexes.FAV_SIZE) {
+					// Set the current mapview coords
+        			Config.CURRENT_MAPVIEW_COORDS = Favorites.getFavorite(which);
+        			
+            		// Save to shared prefs
+				    SharedPreferences.Editor editor = App.mySharedPreferences.edit();
+				    editor.putString("pref_current_mapview_coords", Config.CURRENT_MAPVIEW_COORDS);
+				    editor.commit();
+				    
+				    PREFS_UPDATED = true;
+            	}
+            	
+            	// Set the MapsTab.CURRENT_INDEX
             	MapsTab.CURRENT_INDEX = which;
     			Toast.makeText(getApplicationContext(), 
     					R.string.txt_loading
     					, Toast.LENGTH_LONG).show();
     			
     			// Save current map
-    	    	SharedPreferences prefs 
+    	    	//SharedPreferences prefs 
+    	    	mySharedPreferences
     				= getSharedPreferences(Config.NAMESPACE, Activity.MODE_PRIVATE);
-			    SharedPreferences.Editor editor = prefs.edit();
+			    SharedPreferences.Editor editor = mySharedPreferences.edit();
 			    editor.putInt("session_map", MapsTab.CURRENT_INDEX);
 			    editor.commit();
     			
@@ -594,8 +614,7 @@ public class App extends MapActivity {
 	
 			// Favorite Map View
 			// FIXME - Make sure I call set current favorites after I update this value
-			mySharedPreferences = getSharedPreferences(Config.NAMESPACE, 0);
-		    Config.MAPVIEW_FAVORITES
+			Config.MAPVIEW_FAVORITES
 		        = mySharedPreferences.getString("pref_mapview_favorites", "");
 		    Config.CURRENT_MAPVIEW_COORDS
 		        = mySharedPreferences.getString("pref_current_mapview_coords", "");
@@ -714,6 +733,10 @@ public class App extends MapActivity {
 		// Check for updated prefs and reread them
 		setCurrentFavorites();
 		
+		// Get the current mapview coordinates
+		Log.d(TAG, "Mapview index: " + MapsTab.CURRENT_INDEX);
+		//Config.CURRENT_MAPVIEW_COORDS;
+		
 //	    String[] aFavPoint = Config.FAVORITE_GEO_POINTS[0].split(":");
 //		// Animate to a view.
 //        gpMain = new GeoPoint(
@@ -728,6 +751,16 @@ public class App extends MapActivity {
 			//JSONObject jo = ja.getJSONObject(0);
 			//JSONObject jo = new JSONObject(Config.FAVORITE_GEO_POINTS[0]);			
 
+			// FIXME - only using index 0
+			// FIXME - only using index 0
+			// FIXME - only using index 0
+			// FIXME - only using index 0
+			// FIXME - only using index 0
+			// FIXME - only using index 0
+			// FIXME - only using index 0
+			// FIXME - only using index 0
+			// FIXME - only using index 0
+			// FIXME - only using index 0
 			JSONArray ja = new JSONArray(Config.CURRENT_MAPVIEW_COORDS);			
 			Log.d(TAG, "First label: " + ja.getJSONObject(0).getString("label").toString());
 			
