@@ -95,12 +95,19 @@ public class LiveDropper extends Activity {
 	private Button captureButton;
 	private DrawOnTop mDraw;
     private PowerManager.WakeLock wl;
-    
-    @Override
+	
+	private SurfaceView mPreview;
+	private SurfaceHolder mHolder;
+	private Camera mCamera;
+
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		//Log.d(TAG, "onCreate'd");
+		mPreview = null;
+		mHolder = null;
+		mCamera = null;
 
 		// Prevent screen dimming
         PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);  
@@ -280,8 +287,6 @@ public class LiveDropper extends Activity {
 	//
 	private class Preview extends SurfaceView implements SurfaceHolder.Callback {
 
-		SurfaceHolder mHolder;
-		public Camera camera;
 		Size mPreviewSize;
 	    List<Size> mSupportedPreviewSizes;
 
@@ -312,12 +317,12 @@ public class LiveDropper extends Activity {
 			// Surface will be destroyed when we return, so stop the preview.
 			// Because the CameraDevice object is not a shared resource, it's
 			// very important to release it when the activity is paused.			
-			if (camera != null) {
-				camera.setPreviewCallback(null);
+			if (mCamera != null) {
+				mCamera.setPreviewCallback(null);
 				SHOWING_PREVIEW = false;
-				camera.stopPreview();
-				camera.release();
-				camera = null;
+				mCamera.stopPreview();
+				mCamera.release();
+				mCamera = null;
 			}
 
 			// Fixed bug with powering off then coming back to a blank screen by
@@ -330,12 +335,12 @@ public class LiveDropper extends Activity {
 			IS_PAUSING = NO;
 			
 	        // Open the default i.e. the first rear facing camera.
-	        camera = Camera.open();
-	        if (camera != null) {
-	            mSupportedPreviewSizes = camera.getParameters().getSupportedPreviewSizes();
+			mCamera = Camera.open();
+	        if (mCamera != null) {
+	            mSupportedPreviewSizes = mCamera.getParameters().getSupportedPreviewSizes();
 	            requestLayout();
 	            SHOWING_PREVIEW = true;
-	            camera.startPreview();
+	            mCamera.startPreview();
 	        } 
 
 	        // Need this for killing power then coming back.
@@ -348,11 +353,11 @@ public class LiveDropper extends Activity {
 
 			// The Surface has been created, acquire the camera and tell it
 			// where to draw.
-			//camera = Camera.open();
+			//mCamera = Camera.open();
 			try {
 
-				camera.setPreviewDisplay(holder);
-				camera.setPreviewCallback(new PreviewCallback() {
+				mCamera.setPreviewDisplay(holder);
+				mCamera.setPreviewCallback(new PreviewCallback() {
 					//
 					// FIXME - Take these callbacks out of inline. Read
 					//          somewhere this was an efficiency problem
@@ -390,8 +395,8 @@ public class LiveDropper extends Activity {
 					}
 				});
 			} catch (IOException e) {
-	            camera.release();
-	            camera = null;
+				mCamera.release();
+				mCamera = null;
 				e.printStackTrace();
 			}
 		}
@@ -404,11 +409,11 @@ public class LiveDropper extends Activity {
 				//  be a benefit. 
 				if (SHOWING_PREVIEW) {
 					SHOWING_PREVIEW = false;
-					camera.stopPreview();
+					mCamera.stopPreview();
 				}
 
 				if (IS_PAUSING == NO) {
-					Camera.Parameters p = camera.getParameters();
+					Camera.Parameters p = mCamera.getParameters();
 					
 					Camera.Size s = p.getPreviewSize();
 					Log.d(TAG, "fmt:" + Integer.toString(p.getPreviewFormat()));
@@ -448,14 +453,14 @@ public class LiveDropper extends Activity {
 	            	FRAME_RATE = fr.get(0); // FIXME - use something like fr.get(fr[ fr.size() ])
 	                p.setPreviewFrameRate(FRAME_RATE);
 	                
-					camera.setParameters(p);
+	                mCamera.setParameters(p);
 	
 					view_w = s.width;
 					view_h = s.height;
 
 					Log.d(TAG, "Starting preview");
 					SHOWING_PREVIEW = true;
-					camera.startPreview();
+					mCamera.startPreview();
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -470,9 +475,9 @@ public class LiveDropper extends Activity {
 			// Surface will be destroyed when we return, so stop the preview.
 			// Because the CameraDevice object is not a shared resource, it's
 			// very important to release it when the activity is paused.
-			if (camera != null) {
+			if (mCamera != null) {
 				SHOWING_PREVIEW = false;
-				camera.stopPreview();
+				mCamera.stopPreview();
 			}
 
 			//Log.d(TAG, "surfaceDestroyed'd finish");
