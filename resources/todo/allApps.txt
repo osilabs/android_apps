@@ -1,5 +1,9 @@
 // All Apps
 
+* Make twitter account
+
+* Make facebook page
+
 * Need better promotonal graphics
 
 * See http://android-developers.blogspot.com/2009/04/backward-compatibility-for-android.html for how to code for backward compatability so it can show up on the market for v1.5 devices.

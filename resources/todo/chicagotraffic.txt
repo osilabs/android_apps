@@ -1,6 +1,11 @@
 // Release 0.8
 
 >> STM <<
+
+* Current problem, when I pull up the traffic menu, get an error.
+
+* The counts of favorites have to be rechecked on every onstart just in case the saved pref json strings are unexpectedly deleted or altered.  Must also check they are validate before trying to use them, again, because they are saved on disk and could be corroupt.
+
 Config.MAPVIEW_FAVORITES - Holds JSON string of favorites in current session.
 
 Config.CURRENT_MAPVIEW_COORDS - Holds that is the currently active view in the mapview.

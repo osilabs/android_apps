@@ -6,7 +6,7 @@
 	- update description
 * Update Websites
 	- osilabs/m/mobilecontent/{livedropper,tctraffic,...}/about.php
-	- paste about.php pages and apps/index.php in wordprocessor and check spelling3
+	- paste about.php pages and apps/index.php in wordprocessor and check spelling
 * Screenshots
 	- Config.no_ads = true;
 	- Take screen shots
