@@ -61,6 +61,10 @@ public class MapsTab {
 		// Init the sizes of the favorites and system map 
 		//  popup menu option arrays.
 		MenuIndexes.init();
+		
+		Log.d(App.TAG, "MapsTab.Init() complete: FAV_SIZE: " + MenuIndexes.FAV_SIZE);
+		Log.d(App.TAG, "MapsTab.Init() complete: Config.MAPVIEW_FAVORITES: " + Config.MAPVIEW_FAVORITES);
+
 	}
 //	public static String getActiveMapURL() {
 //		// Keep from exceeding the size of the array
@@ -120,39 +124,44 @@ public class MapsTab {
 		String[] as = Config.traffic_urls[getAdjustedIndex()].split("~");
 		return as[SCROLLY];
 	}
+	/**
+	 * The adjusted index takes the CURRENT_INDEX and subtracts
+	 *  out the number of favorites so it can be used with
+	 *  Config.traffic_viewtypes[ adjustedIndex ]
+	 */
 	public static int getAdjustedIndex() {
 		
-		Log.d(App.TAG, "MapsTab.CURRENT_INDEX:"+MapsTab.CURRENT_INDEX);
-		Log.d(App.TAG, "MenuIndexes.FAV_SIZE:"+MenuIndexes.FAV_SIZE);
-		
+		//Log.d(App.TAG, "MapsTab.CURRENT_INDEX:"+MapsTab.CURRENT_INDEX);
+		//Log.d(App.TAG, "MenuIndexes.FAV_SIZE:"+MenuIndexes.FAV_SIZE);
 		
 		// The favs section must be ignorred for looking up in traffic_viewtypes
-		int adjustedIndex = (MapsTab.CURRENT_INDEX - MenuIndexes.FAV_SIZE);
+		int noFavs = (MapsTab.CURRENT_INDEX - MenuIndexes.FAV_SIZE);
 		
 		// Floor at 0
-		int index = adjustedIndex<0 ? 0 : adjustedIndex;
+		int index = noFavs<0 ? 0 : noFavs;
 		
 		// Ceil at Config.traffic
 		int trafficSize = Config.traffic.length;
 		
-		return index > trafficSize-1 ? trafficSize : index;
+		int adjustedIndex = index > trafficSize-1 ? trafficSize : index;
+		Log.d(">>>>> ", "adjusted index: " + Integer.toString(adjustedIndex));
+
+		return adjustedIndex;
 	}
 	
 	public static int getAndroidViewType() {
-		if (MapsTab.CURRENT_INDEX < (MenuIndexes.FAV_SIZE-1)) {
-			// Viewing a map favorite
-			return Config.FAVORITE;
+		
+		Log.d(App.TAG, "current index: " + Integer.toString(MapsTab.CURRENT_INDEX));
+		Log.d(App.TAG, "favs size: " + Integer.toString(MenuIndexes.FAV_SIZE));
+		
+		if (MenuIndexes.FAV_SIZE > 0) {
+			// Need to use adjusted index for the favorites
+			if ( MapsTab.CURRENT_INDEX < (MenuIndexes.FAV_SIZE)) {
+				return Config.FAVORITE;
+			}
 		}
-		else {
-			int adjustedIndex = getAdjustedIndex();
-			
-			Log.d("+++++++++++++++++++++++", "current index: " + Integer.toString(MapsTab.CURRENT_INDEX));
-			Log.d("+++++++++++++++++++++++", "favs size: " + Integer.toString(MenuIndexes.FAV_SIZE));
-			Log.d("+++++++++++++++++++++++", "adjusted index: " + Integer.toString(adjustedIndex));
-			
-			// Look for the system type defined in Config.traffic_viewtypes
-			return Config.traffic_viewtypes[ adjustedIndex ];
-		}
+
+		return Config.traffic_viewtypes[ getAdjustedIndex() ];
 	}
 
 	/**
@@ -170,6 +179,9 @@ public class MapsTab {
 		public static void init() {
 			setFavArraySize();
 			setSysArraySize();
+			
+			Log.d(App.TAG, "MenuIndexes.Init() complete: FAV_SIZE: " + FAV_SIZE);
+			Log.d(App.TAG, "MenuIndexes.Init() complete: Config.MAPVIEW_FAVORITES: " + Config.MAPVIEW_FAVORITES);
 		}
 		public static void setFavArraySize() {
 			JSONArray ja = null;

@@ -151,7 +151,7 @@ class MapOverlay extends com.google.android.maps.Overlay
         	            		Config.MAPVIEW_FAVORITES = aj.toString();
 
         	            		// FIXME - Make sure I am saving the favs size preference in case
-        	            		//  it changed.
+        	            		//  it changed. if i have to...
         	            		
         	            		// Save to shared prefs
         					    SharedPreferences.Editor editor = App.mySharedPreferences.edit();

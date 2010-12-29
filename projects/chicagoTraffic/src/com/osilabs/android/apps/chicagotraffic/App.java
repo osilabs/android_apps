@@ -345,24 +345,26 @@ public class App extends MapActivity {
 				alert.show();
 			}
 		});
+
+		Log.d(App.TAG, "onCreate() complete: FAV_SIZE: " + MenuIndexes.FAV_SIZE);
+		Log.d(App.TAG, "onCreate() complete: Config.MAPVIEW_FAVORITES: " + Config.MAPVIEW_FAVORITES);
     }
     @Override
     public void onStart() {
     	// Log.d(TAG, "onStart");
     	super.onStart();
 
-    	MenuIndexes.init();
 		setCurrentFavorites();
+    	MenuIndexes.init();
 
-		// FIXME - Don't set these unless I need to.
-		
-		
-    	// Set some long term "pulse" timers to redraw the traffic lines after enough time
-    	//  that they may have changed.
-        mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 60000);
-        mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 180000);
-
-        if (MAP_VIEW_IS_VISIBLE) { drawTrafficMap(); }
+        if (MAP_VIEW_IS_VISIBLE) { 
+        	// Set some long term "pulse" timers to redraw the traffic lines after enough time
+        	//  that they may have changed.
+            mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 60000);
+            mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 180000);
+        
+            drawTrafficMap();
+        }
         
     	//
     	// Set the current tab and load it
@@ -373,6 +375,9 @@ public class App extends MapActivity {
 		
     	setViewForCurrentTab(CURRENT_TAB_INDEX);
 		reloadViews();
+		
+		Log.d(App.TAG, "onStart() complete: FAV_SIZE: " + MenuIndexes.FAV_SIZE);
+		Log.d(App.TAG, "onStart() complete: Config.MAPVIEW_FAVORITES: " + Config.MAPVIEW_FAVORITES);
     }
     @Override
     public void onPause() {
@@ -471,9 +476,17 @@ public class App extends MapActivity {
             	// 1. if( which < count(favs) ) { use favs[index] }
             	// 2. else { use SYSTEM_COORDS[index - count] } 
 
-            	if (which < MenuIndexes.FAV_SIZE) {
+            	int androidViewType = MapsTab.getAndroidViewType();
+            	
+            	if ( androidViewType == Config.FAVORITE || androidViewType == Config.MAP ) {
 					// Set the current mapview coords
-        			Config.CURRENT_MAPVIEW_COORDS = Favorites.getFavorite(which);
+            		JSONArray ja = null;
+            		try {
+	        			ja = new JSONArray(Config.MAPVIEW_FAVORITES);
+	        			Config.CURRENT_MAPVIEW_COORDS = ja.getJSONObject( which ).toString();
+            		} catch (JSONException e) {
+            			//e.printStackTrace();
+            		}
         			
             		// Save to shared prefs
 				    SharedPreferences.Editor editor = App.mySharedPreferences.edit();
@@ -485,12 +498,12 @@ public class App extends MapActivity {
             	
             	// Set the MapsTab.CURRENT_INDEX
             	MapsTab.CURRENT_INDEX = which;
+            	
     			Toast.makeText(getApplicationContext(), 
     					R.string.txt_loading
     					, Toast.LENGTH_LONG).show();
     			
     			// Save current map
-    	    	//SharedPreferences prefs 
     	    	mySharedPreferences
     				= getSharedPreferences(Config.NAMESPACE, Activity.MODE_PRIVATE);
 			    SharedPreferences.Editor editor = mySharedPreferences.edit();
@@ -644,7 +657,7 @@ public class App extends MapActivity {
 	}
 
 	public void setViewForCurrentTab(int tab_index) {
-		//Log.d(TAG, "setViewForCurrentTab index" + Integer.toString(tab_index));
+		Log.d(TAG, "setViewForCurrentTab()");
 
 		CURRENT_TAB_INDEX = tab_index;
 		setCurrentTab(CURRENT_TAB_INDEX);
@@ -671,7 +684,7 @@ public class App extends MapActivity {
 			case MENU_TRAFFIC:
 				
 				MapsTab.showConfiguration();
-
+				Log.d(TAG, "Android View Type: " + MapsTab.getAndroidViewType());
 				switch(MapsTab.getAndroidViewType()) {
 					case Config.FAVORITE:
 					case Config.MAP:
@@ -747,8 +760,9 @@ public class App extends MapActivity {
 //        mcMain.setZoom(Integer.parseInt(aFavPoint[0]));
 //        mcMain.animateTo(gpMain);
 	    
-		Log.d(TAG, "Current: " + Config.CURRENT_MAPVIEW_COORDS);
+		Log.d(TAG, "drawTrafficMap() Config.CURRENT_MAPVIEW_COORDS: " + Config.CURRENT_MAPVIEW_COORDS);
 		
+		JSONObject jo = null;
 		try {
 			//JSONObject jo = ja.getJSONObject(0);
 			//JSONObject jo = new JSONObject(Config.FAVORITE_GEO_POINTS[0]);			
@@ -763,14 +777,22 @@ public class App extends MapActivity {
 			// FIXME - only using index 0
 			// FIXME - only using index 0
 			// FIXME - only using index 0
-			JSONArray ja = new JSONArray(Config.CURRENT_MAPVIEW_COORDS);			
-			Log.d(TAG, "First label: " + ja.getJSONObject(0).getString("label").toString());
+			jo = new JSONObject(Config.CURRENT_MAPVIEW_COORDS);
+			Log.d(TAG, "drawTrafficMap() Config.CURRENT_MAPVIEW_COORDS Label: " + jo.getString("label").toString());
+
+//			JSONArray ja = new JSONArray(Config.CURRENT_MAPVIEW_COORDS);
+//			Log.d(TAG, "First label: " + ja.getJSONObject(0).getString("label").toString());
 			
 			gpMain = new GeoPoint(
-					Integer.parseInt(ja.getJSONObject(0).getString("latitude").toString()),
-					Integer.parseInt(ja.getJSONObject(0).getString("longitude").toString()));
-	        mcMain.setZoom(Integer.parseInt(ja.getJSONObject(0).getString("zoom").toString()));
+					Integer.parseInt(jo.getString("latitude").toString()),
+					Integer.parseInt(jo.getString("longitude").toString()));
+	        mcMain.setZoom(Integer.parseInt(jo.getString("zoom").toString()));
 	        mcMain.animateTo(gpMain);
+//			gpMain = new GeoPoint(
+//					Integer.parseInt(ja.getJSONObject(0).getString("latitude").toString()),
+//					Integer.parseInt(ja.getJSONObject(0).getString("longitude").toString()));
+//	        mcMain.setZoom(Integer.parseInt(ja.getJSONObject(0).getString("zoom").toString()));
+//	        mcMain.animateTo(gpMain);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
