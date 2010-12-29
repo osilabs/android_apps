@@ -288,7 +288,6 @@ public class LiveDropper extends Activity {
 	private class Preview extends SurfaceView implements SurfaceHolder.Callback {
 
 		Size mPreviewSize;
-	    List<Size> mSupportedPreviewSizes;
 
 		Preview(Context context) {
 			super(context);
@@ -338,7 +337,6 @@ public class LiveDropper extends Activity {
 	        // Open the default i.e. the first rear facing camera.
 			mCamera = Camera.open();
 	        if (mCamera != null) {
-	            mSupportedPreviewSizes = mCamera.getParameters().getSupportedPreviewSizes();
 	            requestLayout();
 	            mCamera.startPreview();
 	        } 
