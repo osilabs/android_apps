@@ -21,6 +21,8 @@ public class Favorites {
 			return "";
 		} else {
 			try {
+				// FIXME - return an object. hopefully it can be used more natively
+				//  than returning a string and turning back into json.
 				return ja.getJSONObject( index ).getString("label").toString();
 			} catch (JSONException e) {
 				e.printStackTrace();

@@ -164,6 +164,9 @@ public class App extends MapActivity {
 				Config.NAMESPACE, Activity.MODE_PRIVATE);
         CURRENT_TAB_INDEX = mySharedPreferences.getInt("session_current_view", Config.DEFAULT_TAB_INDEX);
         
+        // The init() methods must happen after i pull the existing values
+        //  from the session. This is so init() can determine if the values are 
+        //  valid and inrange, otherwise it will set them back to defaults.
         MapsTab.CURRENT_INDEX = mySharedPreferences.getInt("session_map", Config.DEFAULT_MAP_INDEX);
         CalendarTab.CURRENT_INDEX = mySharedPreferences.getInt("session_calendar", Config.DEFAULT_CALENDAR_INDEX);
         CamerasTab.CURRENT_CAMERA_URL = mySharedPreferences.getString("session_camera_1", Config.DEFAULT_CAMERA_URL);
@@ -343,7 +346,6 @@ public class App extends MapActivity {
 			}
 		});
     }
-
     @Override
     public void onStart() {
     	// Log.d(TAG, "onStart");
@@ -372,7 +374,6 @@ public class App extends MapActivity {
     	setViewForCurrentTab(CURRENT_TAB_INDEX);
 		reloadViews();
     }
-    
     @Override
     public void onPause() {
     	super.onPause();
@@ -380,20 +381,11 @@ public class App extends MapActivity {
     	//  from causing the map to redraw after we leave
     	MAP_VIEW_IS_VISIBLE = false;
     }
-    
     @Override
     public void onResume() {
     	super.onResume();
     }
     
-    
-    
-    
-    
-    
-    
-    
-
     //
     // Map View Methods
     //
@@ -441,30 +433,33 @@ public class App extends MapActivity {
     	// FIXME, this size should be figured out first.
 		List<String> sl = new ArrayList<String>(6);
 
-		JSONArray ja;
+		JSONArray ja = null;
 		try {
 			ja = new JSONArray(Config.MAPVIEW_FAVORITES);
+
 			Log.d(TAG, "favs: " + ja.toString());
 			Log.d(TAG, "favs length: " + ja.length());
-			Log.d(TAG, "labeled at index 0: " + ja.getJSONObject(0).getString("label").toString());
 			
-//			sl.add(ja.getJSONObject(0).getString("label").toString());			
-//			sl.add(ja.getJSONObject(1).getString("zoom").toString());			
-//			sl.add(ja.getJSONObject(2).getString("longitude").toString());			
-//			options[3] = ja.getJSONObject(0).getString("label").toString();
-//			options[4] = ja.getJSONObject(1).getString("label").toString();
-//			options[5] = ja.getJSONObject(2).getString("label").toString();
 			for(int i=0; i<ja.length(); i++) {
 				//options[optionsIndex++] = ja.getJSONObject(i).getString("label").toString();
 				sl.add("Favorite: " + ja.getJSONObject(i).getString("label").toString());			
 			}
 		} catch (JSONException e1) {
-			e1.printStackTrace();
+			Log.e(TAG, "Favorites string is empty:" + Config.MAPVIEW_FAVORITES);
+
+			// FIXME - Here I should delete the contents of Config.MAPVIEW_FAVORITES
+			//  and save the prefs to recover from corroupt saved data.   Maybe have 
+			//  a method called resetPrefData()  which cleans house and is called 
+			//  in the cases where malformed json is found. It probably shouldn't delete
+			//  all, some may be good to keep.
+			///e1.printStackTrace();
 		}
+
 		
 		// Tack on the system menu options
 		for(int i=0; i<Config.traffic.length; i++) { sl.add(Config.traffic[i]); } 
 		
+		// Turn list into menu options
 		CharSequence[] options = (String[]) sl.toArray(new String[sl.size()]);
 		
         AlertDialog alert = new AlertDialog.Builder(this)
@@ -579,10 +574,6 @@ public class App extends MapActivity {
 
     
     
-    
-    
-    
-    
     /**
      * This gets called in onStart and when the prefs intent returns. 
      * Should cover making sure the local globals always have the current
@@ -624,7 +615,7 @@ public class App extends MapActivity {
 			Config.MAPVIEW_FAVORITES
 		        = mySharedPreferences.getString("pref_mapview_favorites", "");
 		    Config.CURRENT_MAPVIEW_COORDS
-		        = mySharedPreferences.getString("pref_current_mapview_coords", "");
+		        = mySharedPreferences.getString("pref_current_mapview_coords", Config.CURRENT_MAPVIEW_COORDS);
 		    
 		    Log.d(TAG, "Set Config.MAPVIEW_FAVORITES: " + Config.MAPVIEW_FAVORITES);
 		    Log.d(TAG, "Set Config.CURRENT_MAPVIEW_COORDS: " + Config.CURRENT_MAPVIEW_COORDS);
@@ -742,9 +733,9 @@ public class App extends MapActivity {
 		// Check for updated prefs and reread them
 		setCurrentFavorites();
 		
-		// Get the current mapview coordinates
-		Log.d(TAG, "Mapview current index: " + MapsTab.CURRENT_INDEX);
-		Log.d(TAG, "Mapview adjusted index: " + MapsTab.getAdjustedIndex());
+		// Get the current mapview coordinates 
+		Log.d(TAG, "MapsTab.CURRENT_INDEX: " + MapsTab.CURRENT_INDEX);
+		Log.d(TAG, "MapsTab adjusted index: " + MapsTab.getAdjustedIndex());
 		
 		//Config.CURRENT_MAPVIEW_COORDS;
 		
@@ -881,10 +872,6 @@ public class App extends MapActivity {
 	
 	
 	
-	
-	
-	
-
     
     
     // -----------------------------------------------

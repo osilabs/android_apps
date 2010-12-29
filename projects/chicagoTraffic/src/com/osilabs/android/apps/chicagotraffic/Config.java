@@ -4,7 +4,7 @@ package com.osilabs.android.apps.chicagotraffic;
 
 public final class Config {
 	public static final    String DEFAULT_CAMERA_URL = "";
-	public static final int       DEFAULT_MAP_INDEX = 2; // !!! Can't be above array size-1
+	public static final int       DEFAULT_MAP_INDEX = 2; // !!! Can't be above array size-1. Includes favorites, best to set to one of the system traffic maps indexes.
 	public static final int       DEFAULT_CALENDAR_INDEX = 0;
 	public static final int       DEFAULT_TAB_INDEX = 0;
 	public static final boolean   NO_ADS = true; // True will hide the ads
@@ -27,19 +27,6 @@ public final class Config {
 //	};
 	// Will be filled in l8r with sharedprefs. Defaults to the main system map
 	//public static		String [] FAVORITE_GEO_POINTS = { };
-
-	//
-	// Non config stuff
-	//
-	
-	// Android viewtypes - Tells sytem what type of android view (webview,
-	//  mapview, imageview,...) is needed.
-	public static final int WEB      = 0;
-	public static final int MAP      = 1;
-	public static final int IMAGE    = 2;
-	public static final int FEED     = 3;
-	public static final int FAVORITE = 4;
-
 	// Formats:
 	//
 	// >> rss << 
@@ -67,7 +54,12 @@ public final class Config {
 		"map~http://wrc.gettingaroundillinois.com/images/wrcimage.jpg~150%~ ~80~6",
 		"[{\"longitude\":\"-87790000\",\"zoom\":\"11\",\"label\":\"Chicago Metro\",\"latitude\":\"41878114\"}]"
 	};
-	// View Types: WEB, IMAGE, FEED, MAP
+	// Android viewtypes
+	public static final int WEB      = 0;
+	public static final int MAP      = 1;
+	public static final int IMAGE    = 2;
+	public static final int FEED     = 3;
+	public static final int FAVORITE = 4;
 	public static final int [] traffic_viewtypes = {
 		IMAGE,
 		IMAGE,
@@ -131,4 +123,11 @@ public final class Config {
 	public static final String[][] crossroads = {{}};
 	 
 	public static final String[][] crossroadsValues = {{}};
+	
+	
+	
+	
+	
+
+
 }	

@@ -122,6 +122,7 @@ class MapOverlay extends com.google.android.maps.Overlay
 										// 2c. Append on the rest of existing favorites. Turn each into
 										//  a json object and append.
 										for(int i=0; i<ja.length(); i++) {
+											// FIXME - is there a lighter way to init these?
 											jo = new JSONObject();
 											try {
 												jo.put("label", ja.getJSONObject(i).getString("label"));
@@ -149,6 +150,9 @@ class MapOverlay extends com.google.android.maps.Overlay
         	            		// Set the favorites string.
         	            		Config.MAPVIEW_FAVORITES = aj.toString();
 
+        	            		// FIXME - Make sure I am saving the favs size preference in case
+        	            		//  it changed.
+        	            		
         	            		// Save to shared prefs
         					    SharedPreferences.Editor editor = App.mySharedPreferences.edit();
         					    editor.putString("pref_mapview_favorites", Config.MAPVIEW_FAVORITES);

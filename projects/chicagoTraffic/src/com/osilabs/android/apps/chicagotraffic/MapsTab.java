@@ -51,6 +51,13 @@ public class MapsTab {
 		//  and is a user favorite of a mapview.
 //		NUMBER_OF_SYSTEM_VIEWS = Config.traffic_viewtypes.length;
 		
+		if (MapsTab.CURRENT_INDEX > (MenuIndexes.totalSize()) - 1) {
+			// The saved value that came from the session was larger
+			//  than the total indexes available. Set the current index
+			//  back to defaults.
+			MapsTab.CURRENT_INDEX = Config.DEFAULT_MAP_INDEX;
+		}
+		
 		// Init the sizes of the favorites and system map 
 		//  popup menu option arrays.
 		MenuIndexes.init();
@@ -114,12 +121,20 @@ public class MapsTab {
 		return as[SCROLLY];
 	}
 	public static int getAdjustedIndex() {
+		
+		Log.d(App.TAG, "MapsTab.CURRENT_INDEX:"+MapsTab.CURRENT_INDEX);
+		Log.d(App.TAG, "MenuIndexes.FAV_SIZE:"+MenuIndexes.FAV_SIZE);
+		
+		
 		// The favs section must be ignorred for looking up in traffic_viewtypes
 		int adjustedIndex = (MapsTab.CURRENT_INDEX - MenuIndexes.FAV_SIZE);
+		
 		// Floor at 0
 		int index = adjustedIndex<0 ? 0 : adjustedIndex;
+		
 		// Ceil at Config.traffic
 		int trafficSize = Config.traffic.length;
+		
 		return index > trafficSize-1 ? trafficSize : index;
 	}
 	
@@ -145,6 +160,8 @@ public class MapsTab {
 	 *  menu with different types
 	 */
 	public static class MenuIndexes {
+		// FIXME - This should be detached from the MapsTab code
+		//  and in its own class so favorites can be used on any tab.
 		public static int FAV_INDEX = 0;
 		public static int FAV_SIZE  = 0;
 		public static int SYS_INDEX = 0;
@@ -157,14 +174,17 @@ public class MapsTab {
 		public static void setFavArraySize() {
 			JSONArray ja = null;
 			try {
-				ja = new JSONArray(Config.CURRENT_MAPVIEW_COORDS);
+				ja = new JSONArray(Config.MAPVIEW_FAVORITES);
+				FAV_SIZE = ja.length();
 			} catch (JSONException e) {
-				e.printStackTrace();
+				Log.d(App.TAG, "Current map view coords empty");
 			}
-			FAV_SIZE = ja.length();
 		}
 		public static void setSysArraySize() {
 			SYS_SIZE = Config.traffic.length;
+		}
+		public static int totalSize() {
+			return FAV_SIZE + SYS_SIZE;
 		}
 	};
 }
