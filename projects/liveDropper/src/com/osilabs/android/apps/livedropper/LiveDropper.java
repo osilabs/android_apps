@@ -64,10 +64,11 @@ public class LiveDropper extends Activity {
 	private static final String TAG = "<<< ** osilabs.com ** >>> ";
 	private static final String URI_FEEDBACK = "http://osilabs.com/m/mobilecontent/feedback/ld.php";
 	
-	private static int FRAMEBUFFER_IS = AVAILABLE;
-	private static int IS_PAUSING = NO;
+	private static int     FRAMEBUFFER_IS = AVAILABLE;
+	private static int     IS_PAUSING = NO;
 	private static boolean SHOWING_PREVIEW = false;	
-
+	private static int     DEBUG = 0; // 0=off, 2=Verbose logging
+	
 	// RGB values are set as they become available.
 	private static final int RGB_ELEMENTS = 4;
 	private static int[] RGBs = new int[RGB_ELEMENTS];
@@ -104,7 +105,7 @@ public class LiveDropper extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		//Log.d(TAG, "onCreate'd");
+		if (DEBUG>=2) Log.d(TAG, "onCreate'd");
 		mPreview = null;
 		mHolder = null;
 		mCamera = null;
@@ -173,7 +174,7 @@ public class LiveDropper extends Activity {
 	@Override
 	public void onPause() {
 		super.onPause();
-		Log.d(TAG, "onPause'd activity");
+		if (DEBUG>=2) Log.d(TAG, "onPause'd activity");
         wl.release();  
 		preview.onPause();
 	}
@@ -186,14 +187,14 @@ public class LiveDropper extends Activity {
 		// to know for certain that your activity is visible to the 
 		// user (for example, to resume a game).
 		super.onResume();
-		Log.d(TAG, "onResumed'd");
+		if (DEBUG>=2) Log.d(TAG, "onResumed'd");
 		IS_PAUSING = NO;
 		wl.acquire();
 		preview.onResume();
 	}
 
 	public void onRestoreInstanceState() {
-		Log.d(TAG, "OnRestoreInstanceState'd");
+		if (DEBUG>=2) Log.d(TAG, "OnRestoreInstanceState'd");
 	}
 	
 	//
@@ -203,7 +204,7 @@ public class LiveDropper extends Activity {
 	// Called when shutter is opened
 	ShutterCallback shutterCallback = new ShutterCallback() { 
 		public void onShutter() {
-			//Log.d(TAG, "onShutter'd");
+			if (DEBUG>=2) Log.d(TAG, "onShutter'd");
 		}
 	};
 
@@ -218,7 +219,7 @@ public class LiveDropper extends Activity {
 
 		@Override
 		protected void onDraw(Canvas canvas) {
-			//Log.w(TAG, "OnDraw'd");
+			if (DEBUG==3) Log.w(TAG, "OnDraw'd");
 			
 			int w = preview.getWidth();
 			int h = preview.getHeight();
@@ -304,14 +305,11 @@ public class LiveDropper extends Activity {
 		}
 
 		public void onCreate() {
-	    	Log.d(TAG, "Preview onCreated'd");
-	    	
-	    	// Coming out of pause
-//			IS_PAUSING = NO;
+			if (DEBUG>=2) Log.d(TAG, "Preview onCreated'd");
 	    }
 
 		public void onPause() {
-			Log.d(TAG, "onPause'd - preview class");
+			if (DEBUG>=2) Log.d(TAG, "onPause'd - preview class");
 
 			IS_PAUSING = YES;
 			
@@ -325,13 +323,14 @@ public class LiveDropper extends Activity {
 				mCamera.release();
 				mCamera = null;
 			}
+			
 			// Fixed bug with powering off then coming back to a blank screen by
 			//  calling surfaceDestroyed/surfaceCreated from onPause/onResume.
 			this.surfaceDestroyed(mHolder);
 		}
 
 		public void onResume() {
-			Log.d(TAG, "onResume'd - preview class");
+			if (DEBUG>=2) Log.d(TAG, "onResume'd - preview class");
 
 			IS_PAUSING = NO;
             //SHOWING_PREVIEW = true;
@@ -350,7 +349,7 @@ public class LiveDropper extends Activity {
 	    
 		// Called once the holder is ready
 		public void surfaceCreated(SurfaceHolder holder) {
-			Log.d(TAG, "surfaceCreated'd");
+			if (DEBUG>=2) Log.d(TAG, "surfaceCreated'd");
 
 			// The Surface has been created, acquire the camera and tell it
 			// where to draw.
@@ -365,7 +364,7 @@ public class LiveDropper extends Activity {
 					//
 					// Called for each frame previewed
 					public void onPreviewFrame(byte[] data, Camera camera) {
-						Log.w(TAG, "onPreviewFrame'd");
+						//Log.w(TAG, "onPreviewFrame'd");
 
 						// Allocate space for processing buffer. Allow it
 						//  to grow if necessary. No max cap.
@@ -388,7 +387,7 @@ public class LiveDropper extends Activity {
 						
 						// Discard frames until processing completes
 						if (FRAMEBUFFER_IS == AVAILABLE) {
-							Log.d(TAG, "Framebuffer available for reuse");
+							if (DEBUG>=2) Log.d(TAG, "Framebuffer available for reuse");
 							new HandleFrameTask().execute(data);
 						}
 
@@ -404,7 +403,7 @@ public class LiveDropper extends Activity {
 
 		// Called when holder has changed
 		public void surfaceChanged(SurfaceHolder holder, int format, int w, int h) {
-			Log.d(TAG, "surfaceChange'd");
+			if (DEBUG>=2) Log.d(TAG, "surfaceChange'd");
 			try{
 				// I found this on http://pastebin.com/06FunF5k and thought it may
 				//  be a benefit. 
@@ -417,7 +416,7 @@ public class LiveDropper extends Activity {
 					Camera.Parameters p = mCamera.getParameters();
 					
 					Camera.Size s = p.getPreviewSize();
-					Log.d(TAG, "fmt:" + Integer.toString(p.getPreviewFormat()));
+					//Log.d(TAG, "fmt:" + Integer.toString(p.getPreviewFormat()));
 					
 					//	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 					//		WHEN I CAUSED AN ARRAY OUT OF BOUNDS ERR HERE, ERROR BEING THROWN
@@ -425,27 +424,19 @@ public class LiveDropper extends Activity {
 					//		MOTOROLA CAMERA PROBLEM.
 					//	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 					
-	//				List<Integer> li = p.getSupportedPictureFormats();
-	//				for( int i = 0; i <li.size(); i++) {
-	//					Log.d(TAG, "preview picture formats: " + Integer.toString(li.get(i)));
-	//				}
 					int PICTURE_FORMAT = ImageFormat.JPEG;
 	                List<Integer> piF = p.getSupportedPictureFormats();
 	                PICTURE_FORMAT = piF.get(0); // FIXME - use something like fr.get(fr[ fr.size() ])
 	                p.setPictureFormat(PICTURE_FORMAT);
-	                //p.setPictureFormat(ImageFormat.RGB_565);
 					
-	//				List<Integer> prF = p.getSupportedPreviewFormats();
-	//				for( int i = 0; i <li.size(); i++) {
-	//					Log.d(TAG, "preview preview formats: " + Integer.toString(prF.get(i)));
-	//				}
 					int PREVIEW_FORMAT = ImageFormat.JPEG;
 	                List<Integer> prF = p.getSupportedPreviewFormats();
 	                PREVIEW_FORMAT = prF.get(0); // FIXME - use something like fr.get(fr[ fr.size() ])
 	                p.setPreviewFormat(PREVIEW_FORMAT);
 						    			
-					// Set preview size
-	    			//p.setPreviewSize(p.getPreviewSize().width, p.getPreviewSize().height);
+					// Set preview size for yuv - This must be set before p.setPreviewSize().
+					view_w = s.width;
+					view_h = s.height;
 	    			p.setPreviewSize(w, h);
 					
 					// Set supported frame rate
@@ -455,11 +446,8 @@ public class LiveDropper extends Activity {
 	                p.setPreviewFrameRate(FRAME_RATE);
 	                
 	                mCamera.setParameters(p);
-	
-					view_w = s.width;
-					view_h = s.height;
 
-					Log.d(TAG, "Starting preview");
+	                if (DEBUG>=2) Log.d(TAG, "Starting preview");
 					SHOWING_PREVIEW = true;
 					mCamera.startPreview();
 				}
@@ -471,7 +459,7 @@ public class LiveDropper extends Activity {
 		// Called when the holder is destroyed
 		@Override
 		public void surfaceDestroyed(SurfaceHolder holder) {
-			Log.d(TAG, "surfaceDestroyed'd");
+			if (DEBUG>=2) Log.d(TAG, "surfaceDestroyed'd");
 
 			// Surface will be destroyed when we return, so stop the preview.
 			// Because the CameraDevice object is not a shared resource, it's
@@ -498,30 +486,42 @@ public class LiveDropper extends Activity {
 
 		@Override
 		protected int[] doInBackground(byte[]... yuvs) {
-			Log.d(TAG, "doInBackground time=" + System.currentTimeMillis());
+			if (DEBUG>=2) Log.d(TAG, "doInBackground time=" + System.currentTimeMillis());
 
 			int[] iii = { 0 };
 
 			// YuvImage() needs min sdk version 8
 			if (Build.VERSION.SDK_INT >= 8) {
+				if (DEBUG>=2) Log.d(TAG, ">= 8 algorithm");
+				ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+				Rect r = new Rect(0, 0, view_w - 1, view_h - 1);
+				
+				YuvImage yi = null;
 				try {
-					YuvImage yi = new YuvImage(yuvs[0], ImageFormat.NV21,
-							view_w, view_h, null);
-					Rect r = new Rect(0, 0, view_w - 1, view_h - 1);
-					ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+					yi = new YuvImage(yuvs[0], ImageFormat.NV21, view_w, view_h, null);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				
+				// Catch a case where yuv isn't giving what I expect. This happened
+				//  then when the view_w and view_h were 0.
+				if (yi == null) {
+					Log.e(TAG, "YuvImage is null");
+					return iii;
+				}
+				
+				try {
 					yi.compressToJpeg(r, 80, outStream);
 					ByteArrayInputStream is = new ByteArrayInputStream(
 							outStream.toByteArray());
 					Bitmap bit = BitmapFactory.decodeStream(is);
 					iii[0] = bit.getPixel(view_w / 2, view_h / 2);
 				} catch (Exception e) {
-					// FIXME - put toast errors if this happens
-					//Log.d(TAG, "YuvImage error:" + e.getMessage());
 					e.printStackTrace();
 				}
 
 			} else {
-				//Log.d(TAG, "Pre v 8 algorithm");
+				if (DEBUG>=2) Log.d(TAG, "Pre v 8 algorithm");
 				int center = (int) ((view_w * view_h) / 2) + (view_w / 2);
 				try {
 					ImageProcessing.decodeYUV(decodeBuf, yuvs[0], view_w, view_h);
@@ -538,7 +538,8 @@ public class LiveDropper extends Activity {
 		// can use UI thread here
 		// protected void onPostExecute(final byte[] rgb_result) {
 		protected void onPostExecute(int[] iRGB) {
-			//Log.d(TAG, "doinbackground onPostExecute'd" + System.currentTimeMillis());
+			//Log.d(TAG, "onPostExecute'd" + System.currentTimeMillis());
+			if (DEBUG>=2) Log.d(TAG, "onPostExecute'd");
 
 			// Allow the next frame to be processed
 			FRAMEBUFFER_IS = AVAILABLE;
@@ -549,23 +550,25 @@ public class LiveDropper extends Activity {
 				RGBint = iRGB[0];
 
 				// Set global reg green and blue
-				RGBs[_ALP] = (iRGB[0] >> 24) & 255;
-				RGBs[_RED] = (iRGB[0] >> 16) & 255;
-				RGBs[_GRN] = (iRGB[0] >> 8) & 255;
-				RGBs[_BLU] = iRGB[0] & 255;
+				RGBs[_ALP] = (RGBint >> 24) & 255;
+				RGBs[_RED] = (RGBint >> 16) & 255;
+				RGBs[_GRN] = (RGBint >> 8) & 255;
+				RGBs[_BLU] = RGBint & 255;
 	
 				// Set global rgb value for display
 				RGBVAL = RGBs[_RED] + "," + RGBs[_GRN] + "," + RGBs[_BLU];
 
 				// Set global hexval
-				//HEXVAL = Integer.toHexString(iRGB[0]).substring(2).toUpperCase();
-				String rgbHex = Integer.toHexString(iRGB[0]);
+				//HEXVAL = Integer.toHexString(RGBint).substring(2).toUpperCase();
+				String rgbHex = Integer.toHexString(RGBint);
 				if (rgbHex.length() >= 2) {
 					HEXVAL = rgbHex.substring(2).toUpperCase();
 				} else {
-					Log.d(TAG, "doinbackground::onpostexecute: RGBVAL length too short: " + Integer.toHexString(iRGB[0]));
-					HEXVAL = "#------";
+					//Log.d(TAG, "doinbackground::onpostexecute: RGBVAL length too short: " + Integer.toHexString(RGBint));
+					HEXVAL = "------";
 				}
+				
+				//Log.d(TAG, "rgbHEX:" + rgbHex);
 
 				// Make display string for previewer
 				String rgbDisplay= "rgb(" + RGBVAL + ")";
@@ -573,7 +576,7 @@ public class LiveDropper extends Activity {
 				// Set drop color
 				TextView tv = (TextView) findViewById(R.id.preview_text);
 				tv.setText(rgbDisplay);
-				tv.setBackgroundColor(iRGB[0]);
+				tv.setBackgroundColor(RGBint);
 
 				// Set capture button color
 				captureButton = (Button) findViewById(R.id.capture_button);
