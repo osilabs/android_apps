@@ -2,6 +2,7 @@
 
 >> STM <<
 
+* Check special chars in favs names.
 * Current problem, when I pull up the traffic menu, get an error.
 
 * The counts of favorites have to be rechecked on every onstart just in case the saved pref json strings are unexpectedly deleted or altered.  Must also check they are validate before trying to use them, again, because they are saved on disk and could be corroupt.
