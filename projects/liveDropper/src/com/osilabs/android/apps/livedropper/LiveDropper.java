@@ -359,7 +359,7 @@ public class LiveDropper extends Activity {
 					//
 					// Called for each frame previewed
 					public void onPreviewFrame(byte[] data, Camera camera) {
-						//Log.w(TAG, "onPreviewFrame'd");
+						Log.w(TAG, "onPreviewFrame'd");
 
 						// Allocate space for processing buffer. Allow it
 						//  to grow if necessary. No max cap.
@@ -382,7 +382,7 @@ public class LiveDropper extends Activity {
 						
 						// Discard frames until processing completes
 						if (FRAMEBUFFER_IS == AVAILABLE) {
-							//Log.d(TAG, "Framebuffer available for reuse");
+							Log.d(TAG, "Framebuffer available for reuse");
 							new HandleFrameTask().execute(data);
 						}
 
@@ -398,7 +398,7 @@ public class LiveDropper extends Activity {
 
 		// Called when holder has changed
 		public void surfaceChanged(SurfaceHolder holder, int format, int w, int h) {
-			//Log.d(TAG, "surfaceChange'd");
+			Log.d(TAG, "surfaceChange'd");
 			try{
 				// I found this on http://pastebin.com/06FunF5k and thought it may
 				//  be a benefit. 
@@ -437,10 +437,10 @@ public class LiveDropper extends Activity {
 	                List<Integer> prF = p.getSupportedPreviewFormats();
 	                PREVIEW_FORMAT = prF.get(0); // FIXME - use something like fr.get(fr[ fr.size() ])
 	                p.setPreviewFormat(PREVIEW_FORMAT);
-					
-					
+						    			
 					// Set preview size
-					p.setPreviewSize(p.getPreviewSize().width, p.getPreviewSize().height);
+	    			//p.setPreviewSize(p.getPreviewSize().width, p.getPreviewSize().height);
+	    			p.setPreviewSize(w, h);
 					
 					// Set supported frame rate
 					int FRAME_RATE = 1;
@@ -452,9 +452,8 @@ public class LiveDropper extends Activity {
 	
 					view_w = s.width;
 					view_h = s.height;
-					
-	
-					
+
+					Log.d(TAG, "Starting preview");
 					SHOWING_PREVIEW = true;
 					camera.startPreview();
 				}
@@ -493,7 +492,7 @@ public class LiveDropper extends Activity {
 
 		@Override
 		protected int[] doInBackground(byte[]... yuvs) {
-			//Log.d(TAG, "doInBackground time=" + System.currentTimeMillis());
+			Log.d(TAG, "doInBackground time=" + System.currentTimeMillis());
 
 			int[] iii = { 0 };
 
