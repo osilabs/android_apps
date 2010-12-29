@@ -61,20 +61,21 @@ public class MapsTab {
 //		return Config.maps[CURRENT_INDEX];
 //	}
 	public static String getReloadURLParts() {
+		int adjustedIndex = getAdjustedIndex();
 		if (CURRENT_INDEX > (Config.traffic_urls.length - 1)) CURRENT_INDEX = 0;
 		
 		String query_string= "";
 		
 		if (MapsTab.getAndroidViewType() == Config.IMAGE) {
 			query_string 
-				= "&traffic=" + URLEncoder.encode(Config.traffic_urls[CURRENT_INDEX])
+				= "&traffic=" + URLEncoder.encode(Config.traffic_urls[adjustedIndex])
 				+ "&mapscrollx="
 				+ MapsTab.getScrollX()
 				+ "&mapscrolly="
 				+ MapsTab.getScrollY();
 		} else if (MapsTab.getAndroidViewType() == Config.FEED) {
 			query_string 
-				= "&traffic=" + URLEncoder.encode(Config.traffic_urls[CURRENT_INDEX]);
+				= "&traffic=" + URLEncoder.encode(Config.traffic_urls[adjustedIndex]);
 		} else {
 			query_string = "&traffic=";			
 		}
@@ -100,19 +101,36 @@ public class MapsTab {
 		App.tvMapsPop.setVisibility(TextView.VISIBLE);
 	}
 	public static String getWebViewType() {
-		String[] as = Config.traffic_urls[CURRENT_INDEX].split("~");
+		String[] as = Config.traffic_urls[getAdjustedIndex()].split("~");
 		return as[TYPE];
 	}
+	public static String getScrollX() {
+		// FIXME - cache these so they are calc'd all the time
+		String[] as = Config.traffic_urls[getAdjustedIndex()].split("~");
+		return as[SCROLLX];
+	}
+	public static String getScrollY() {
+		String[] as = Config.traffic_urls[getAdjustedIndex()].split("~");
+		return as[SCROLLY];
+	}
+	public static int getAdjustedIndex() {
+		// The favs section must be ignorred for looking up in traffic_viewtypes
+		int adjustedIndex = (MapsTab.CURRENT_INDEX - MenuIndexes.FAV_SIZE);
+		// Floor at 0
+		int index = adjustedIndex<0 ? 0 : adjustedIndex;
+		// Ceil at Config.traffic
+		int trafficSize = Config.traffic.length;
+		return index > trafficSize-1 ? trafficSize : index;
+	}
+	
 	public static int getAndroidViewType() {
 		if (MapsTab.CURRENT_INDEX < (MenuIndexes.FAV_SIZE-1)) {
 			// Viewing a map favorite
 			return Config.FAVORITE;
 		}
 		else {
-			// The favs section must be ignorred for looking up in traffic_viewtypes
-			int adjustedIndex = (MapsTab.CURRENT_INDEX - MenuIndexes.FAV_SIZE);
-			adjustedIndex = adjustedIndex<0 ? 0 : adjustedIndex;
-
+			int adjustedIndex = getAdjustedIndex();
+			
 			Log.d("+++++++++++++++++++++++", "current index: " + Integer.toString(MapsTab.CURRENT_INDEX));
 			Log.d("+++++++++++++++++++++++", "favs size: " + Integer.toString(MenuIndexes.FAV_SIZE));
 			Log.d("+++++++++++++++++++++++", "adjusted index: " + Integer.toString(adjustedIndex));
@@ -121,16 +139,7 @@ public class MapsTab {
 			return Config.traffic_viewtypes[ adjustedIndex ];
 		}
 	}
-	public static String getScrollX() {
-		// FIXME - cache these so they are calc'd all the time
-		String[] as = Config.traffic_urls[CURRENT_INDEX].split("~");
-		return as[SCROLLX];
-	}
-	public static String getScrollY() {
-		String[] as = Config.traffic_urls[CURRENT_INDEX].split("~");
-		return as[SCROLLY];
-	}
-	
+
 	/**
 	 * A data type to hold and track indexes for a
 	 *  menu with different types

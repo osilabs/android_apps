@@ -83,8 +83,9 @@ public class App extends MapActivity {
 	// Will need to up this number if more indexes are needed.
 	protected static int CURRENT_TAB_INDEX = 0;
 	
-	// Flag indicating prefs have changed and need to be reread
-	protected static boolean PREFS_UPDATED = false;
+	// Flag indicating prefs have changed and need to be reread.
+	//  Default to true so it initializes onStart()
+	protected static boolean PREFS_UPDATED = true;
 	
 
 	// Tracks when the MapView is showing
@@ -347,7 +348,13 @@ public class App extends MapActivity {
     public void onStart() {
     	// Log.d(TAG, "onStart");
     	super.onStart();
-    	
+
+    	MenuIndexes.init();
+		setCurrentFavorites();
+
+		// FIXME - Don't set these unless I need to.
+		
+		
     	// Set some long term "pulse" timers to redraw the traffic lines after enough time
     	//  that they may have changed.
         mvTraffic.postDelayed(new Runnable() { public void run() { refreshTrafficMap(); } }, 60000);
@@ -362,7 +369,6 @@ public class App extends MapActivity {
         // It's going to take a second to load
 		Toast.makeText(this, R.string.txt_loading, Toast.LENGTH_LONG).show();
 		
-		setCurrentFavorites();
     	setViewForCurrentTab(CURRENT_TAB_INDEX);
 		reloadViews();
     }
@@ -583,6 +589,7 @@ public class App extends MapActivity {
      * prefs.
      */
     protected void setCurrentFavorites() {
+    	Log.d(TAG, "setCurrentFavorites()");
     	// Only waste time rereading prefs if they changed.
     	if (PREFS_UPDATED) {
     		PREFS_UPDATED = false;
@@ -619,6 +626,8 @@ public class App extends MapActivity {
 		    Config.CURRENT_MAPVIEW_COORDS
 		        = mySharedPreferences.getString("pref_current_mapview_coords", "");
 		    
+		    Log.d(TAG, "Set Config.MAPVIEW_FAVORITES: " + Config.MAPVIEW_FAVORITES);
+		    Log.d(TAG, "Set Config.CURRENT_MAPVIEW_COORDS: " + Config.CURRENT_MAPVIEW_COORDS);
 //		    Toast.makeText(getApplicationContext(), "prefs were gotten: " + Config.FAVORITE_GEO_POINTS[0], Toast.LENGTH_LONG).show();
     	}
     }
@@ -734,7 +743,9 @@ public class App extends MapActivity {
 		setCurrentFavorites();
 		
 		// Get the current mapview coordinates
-		Log.d(TAG, "Mapview index: " + MapsTab.CURRENT_INDEX);
+		Log.d(TAG, "Mapview current index: " + MapsTab.CURRENT_INDEX);
+		Log.d(TAG, "Mapview adjusted index: " + MapsTab.getAdjustedIndex());
+		
 		//Config.CURRENT_MAPVIEW_COORDS;
 		
 //	    String[] aFavPoint = Config.FAVORITE_GEO_POINTS[0].split(":");
