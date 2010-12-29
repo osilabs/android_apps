@@ -175,7 +175,6 @@ public class LiveDropper extends Activity {
 		super.onPause();
 		Log.d(TAG, "onPause'd activity");
         wl.release();  
-		IS_PAUSING = YES;
 		preview.onPause();
 	}
 
@@ -308,23 +307,24 @@ public class LiveDropper extends Activity {
 	    	Log.d(TAG, "Preview onCreated'd");
 	    	
 	    	// Coming out of pause
-			IS_PAUSING = NO;
+//			IS_PAUSING = NO;
 	    }
 
 		public void onPause() {
 			Log.d(TAG, "onPause'd - preview class");
+
+			IS_PAUSING = YES;
 			
 			// Surface will be destroyed when we return, so stop the preview.
 			// Because the CameraDevice object is not a shared resource, it's
 			// very important to release it when the activity is paused.			
 			if (mCamera != null) {
 				mCamera.setPreviewCallback(null);
-				SHOWING_PREVIEW = false;
 				mCamera.stopPreview();
+				SHOWING_PREVIEW = false;
 				mCamera.release();
 				mCamera = null;
 			}
-
 			// Fixed bug with powering off then coming back to a blank screen by
 			//  calling surfaceDestroyed/surfaceCreated from onPause/onResume.
 			this.surfaceDestroyed(mHolder);
@@ -332,14 +332,15 @@ public class LiveDropper extends Activity {
 
 		public void onResume() {
 			Log.d(TAG, "onResume'd - preview class");
+
 			IS_PAUSING = NO;
+            //SHOWING_PREVIEW = true;
 			
 	        // Open the default i.e. the first rear facing camera.
 			mCamera = Camera.open();
 	        if (mCamera != null) {
 	            mSupportedPreviewSizes = mCamera.getParameters().getSupportedPreviewSizes();
 	            requestLayout();
-	            SHOWING_PREVIEW = true;
 	            mCamera.startPreview();
 	        } 
 
