@@ -1,0 +1,19 @@
+// All Apps
+
+* Need better promotonal graphics
+
+* See http://android-developers.blogspot.com/2009/04/backward-compatibility-for-android.html for how to code for backward compatability so it can show up on the market for v1.5 devices.
+
+* Make osilabs.com right in 'About' for all apps.
+
+* link for where to donate. Multiple ways. 
+	1. buy the donate app. 
+	2. Encourage to buy another osilabs app that costs money.
+
+//
+// Related technology ideas
+//
+
+* Forensics buddy: use eye cloudiness color to estimate minutes dead. Use blood color to estimate age.
+
+* Bloodwork tool: Two samples needed. 1. The substrate color then 2. the blood. The color of the substrate will be subtracted from the blood sample to 

@@ -1,5 +1,7 @@
 // TODO
 
+* See http://android-developers.blogspot.com/2009/04/backward-compatibility-for-android.html for how to code for backward compatability so it can show up on the market for v1.5 devices.
+
 * Make a feedback options menu option. Just opens email client.
 
 * Make osilabs.com right in 'About' for all apps.
