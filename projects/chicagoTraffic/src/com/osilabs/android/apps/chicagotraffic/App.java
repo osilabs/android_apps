@@ -590,7 +590,7 @@ public class App extends MapActivity {
             break;
             
         case INTENT_RESULT_CODE_PREFS:
-        	setCurrentFavorites();
+        	setCurrentPrefs();
         	
 			Toast.makeText(getApplicationContext(), 
 					R.string.txt_prefs_saved
@@ -609,8 +609,8 @@ public class App extends MapActivity {
      * Should cover making sure the local globals always have the current
      * prefs.
      */
-    protected void setCurrentFavorites() {
-    	Log.d(TAG, "setCurrentFavorites()");
+    protected void setCurrentPrefs() {
+    	Log.d(TAG, "setCurrentPrefs()");
     	// Only waste time rereading prefs if they changed.
     	if (PREFS_UPDATED) {
     		PREFS_UPDATED = false;
@@ -767,7 +767,7 @@ public class App extends MapActivity {
 	//
 	public void drawTrafficMap() {
 		// Check for updated prefs and reread them
-		setCurrentFavorites();
+		setCurrentPrefs();
 		
 		// Get the current mapview coordinates 
 		Log.d(TAG, "MapsTab.CURRENT_INDEX: " + MapsTab.CURRENT_INDEX);
