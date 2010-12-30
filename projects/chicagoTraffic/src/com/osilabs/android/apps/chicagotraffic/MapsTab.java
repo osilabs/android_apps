@@ -177,11 +177,12 @@ public class MapsTab {
 		public static int SYS_SIZE  = 0;
 		
 		public static void init() {
-			setFavArraySize();
 			setSysArraySize();
+			setFavArraySize();
+			setFavArrayIndex(MapsTab.CURRENT_INDEX);
 			
-			Log.d(App.TAG, "MenuIndexes.Init() complete: FAV_SIZE: " + FAV_SIZE);
-			Log.d(App.TAG, "MenuIndexes.Init() complete: Config.MAPVIEW_FAVORITES: " + Config.MAPVIEW_FAVORITES);
+			//Log.d(App.TAG, "MenuIndexes.Init() complete: FAV_SIZE : " + FAV_SIZE);
+			//Log.d(App.TAG, "MenuIndexes.Init() complete: Config.MAPVIEW_FAVORITES: " + Config.MAPVIEW_FAVORITES);
 		}
 		public static void setFavArraySize() {
 			JSONArray ja = null;
@@ -191,12 +192,28 @@ public class MapsTab {
 			} catch (JSONException e) {
 				Log.d(App.TAG, "Current map view coords empty");
 			}
+			//Log.d(App.TAG, "MenuIndexes.setFavArraySize(): FAV_INDEX: " + FAV_INDEX);
+		}
+		public static void setFavArrayIndex(int index) {
+			if (FAV_SIZE > 0 && index < FAV_SIZE) {
+				FAV_INDEX = index;
+			} else {
+				// The current index is not in the range of favs so there
+				//  is no current favorite selected.
+				FAV_INDEX = -1;
+			}
 		}
 		public static void setSysArraySize() {
 			SYS_SIZE = Config.traffic.length;
 		}
 		public static int totalSize() {
 			return FAV_SIZE + SYS_SIZE;
+		}
+		public static String debug() {
+			return "MenuIndexes:: SYS_SIZE:" + SYS_SIZE +
+			" SYS_INDEX:" + SYS_INDEX +
+			" FAV_SIZE:" + FAV_SIZE +
+			" FAV_INDEX:" + FAV_INDEX;
 		}
 	};
 }

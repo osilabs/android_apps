@@ -100,6 +100,13 @@
 		    		android:layout_height="fill_parent"
 					android:gravity="right"
 		    		>
+				  <ImageView	android:id="@+id/favorites_star"
+				  				android:src="@drawable/favorite_star_off"
+								android:layout_width="wrap_content" 
+								android:layout_height="30dip"
+								android:layout_marginRight="8dip"
+								android:gravity="right"
+								/>
 				  <ImageView	android:id="@+id/navbar_radios"
 				  				android:src="@drawable/ic_menu_notifications"
 								android:layout_width="wrap_content" 

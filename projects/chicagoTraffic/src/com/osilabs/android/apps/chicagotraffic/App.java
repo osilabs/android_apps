@@ -122,6 +122,7 @@ public class App extends MapActivity {
 	// Misc icons
 	protected ImageView ivRefresh;
 	protected ImageView ivRadios;
+	protected static ImageView ivFavorite;
 
 	// Mapview stuff
 	protected static MapView mvTraffic;
@@ -346,17 +347,28 @@ public class App extends MapActivity {
 			}
 		});
 
-		Log.d(App.TAG, "onCreate() complete: FAV_SIZE: " + MenuIndexes.FAV_SIZE);
-		Log.d(App.TAG, "onCreate() complete: Config.MAPVIEW_FAVORITES: " + Config.MAPVIEW_FAVORITES);
+	    // Favorite Icon Click
+	    ivFavorite = (ImageView) findViewById(R.id.favorites_star);
+	    ivFavorite.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Favorites.handleClick();
+        		MapsTab.MenuIndexes.setFavArrayIndex(MapsTab.CURRENT_INDEX);
+        		Log.d(TAG, MapsTab.MenuIndexes.debug());
+			}
+		});
+
+		Log.d(App.TAG, "onCreate() complete: " + MapsTab.MenuIndexes.debug());
+//		Log.d(App.TAG, "onCreate() complete: Config.MAPVIEW_FAVORITES: " + Config.MAPVIEW_FAVORITES);
     }
     @Override
     public void onStart() {
     	// Log.d(TAG, "onStart");
     	super.onStart();
 
-		setCurrentFavorites();
+    	setCurrentPrefs(); // This must happen before other things.
     	MenuIndexes.init();
-
+    	
         if (MAP_VIEW_IS_VISIBLE) { 
         	// Set some long term "pulse" timers to redraw the traffic lines after enough time
         	//  that they may have changed.
@@ -376,8 +388,9 @@ public class App extends MapActivity {
     	setViewForCurrentTab(CURRENT_TAB_INDEX);
 		reloadViews();
 		
-		Log.d(App.TAG, "onStart() complete: FAV_SIZE: " + MenuIndexes.FAV_SIZE);
-		Log.d(App.TAG, "onStart() complete: Config.MAPVIEW_FAVORITES: " + Config.MAPVIEW_FAVORITES);
+//		Log.d(App.TAG, "onStart() complete: FAV_SIZE: " + MenuIndexes.FAV_SIZE);
+//		Log.d(App.TAG, "onStart() complete: Config.MAPVIEW_FAVORITES: " + Config.MAPVIEW_FAVORITES);
+		Log.d(App.TAG, "onStart() complete: " + MapsTab.MenuIndexes.debug());
     }
     @Override
     public void onPause() {
@@ -447,7 +460,7 @@ public class App extends MapActivity {
 			
 			for(int i=0; i<ja.length(); i++) {
 				//options[optionsIndex++] = ja.getJSONObject(i).getString("label").toString();
-				sl.add("Favorite: " + ja.getJSONObject(i).getString("label").toString());			
+				sl.add("Favorite: " + ja.getJSONObject(i).getString("label").toString());
 			}
 		} catch (JSONException e1) {
 			Log.e(TAG, "Favorites string is empty:" + Config.MAPVIEW_FAVORITES);
@@ -509,6 +522,10 @@ public class App extends MapActivity {
 			    SharedPreferences.Editor editor = mySharedPreferences.edit();
 			    editor.putInt("session_map", MapsTab.CURRENT_INDEX);
 			    editor.commit();
+			    
+			    // Update the current favorites index.
+			    MapsTab.MenuIndexes.setFavArrayIndex(MapsTab.CURRENT_INDEX);
+				Log.d(App.TAG, "onStart() complete: " + MapsTab.MenuIndexes.debug());
     			
 			    setViewForCurrentTab(INDEX_TRAFFIC);
 			    reloadViews();
@@ -659,6 +676,9 @@ public class App extends MapActivity {
 	public void setViewForCurrentTab(int tab_index) {
 		Log.d(TAG, "setViewForCurrentTab()");
 
+		// By default, remove the star, it will be shown later if it needs to be.
+		Favorites.setStarIcon(Favorites.MODE_GONE);
+		
 		CURRENT_TAB_INDEX = tab_index;
 		setCurrentTab(CURRENT_TAB_INDEX);
 
@@ -682,11 +702,14 @@ public class App extends MapActivity {
         
 		switch (CURRENT_TAB_INDEX) {
 			case MENU_TRAFFIC:
-				
 				MapsTab.showConfiguration();
 				Log.d(TAG, "Android View Type: " + MapsTab.getAndroidViewType());
+				
 				switch(MapsTab.getAndroidViewType()) {
 					case Config.FAVORITE:
+						// Show the star in MODE_ON because this is a favorite.
+						Favorites.setStarIcon(Favorites.MODE_ON);
+						// Allow to drop into next case as this is a mapview too
 					case Config.MAP:
 				    	activateViewType(MAPVIEW);
 			        	
