@@ -436,7 +436,7 @@ public class App extends MapActivity {
     	// FIXME, this size should be figured out first.
     	// FIXME, this size should be figured out first.
     	// FIXME, this size should be figured out first.
-		List<String> sl = new ArrayList<String>(6);
+		List<String> sl = new ArrayList<String>(30);
 
 		JSONArray ja = null;
 		try {
