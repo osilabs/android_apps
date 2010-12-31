@@ -449,7 +449,7 @@ public class App extends MapActivity {
     	// FIXME, this size should be figured out first.
     	// FIXME, this size should be figured out first.
     	// FIXME, this size should be figured out first.
-		List<String> sl = new ArrayList<String>(30);
+		List<String> sl = new ArrayList<String>(6);
 
 		JSONArray ja = null;
 		try {
@@ -493,6 +493,8 @@ public class App extends MapActivity {
             	
             	if ( androidViewType == Config.FAVORITE || androidViewType == Config.MAP ) {
 					// Set the current mapview coords
+            		
+            		// FIXME - move to favs
             		JSONArray ja = null;
             		try {
 	        			ja = new JSONArray(Config.MAPVIEW_FAVORITES);

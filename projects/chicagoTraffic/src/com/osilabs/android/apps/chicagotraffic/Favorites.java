@@ -49,6 +49,7 @@ public class Favorites {
 	
 	public static void removeFavorite(int index) {
 		if (Config.MAPVIEW_FAVORITES != "") {
+			String removedLabel = "";
 			JSONArray ja = null;
 	  		JSONObject jo = null;
   			ArrayList<JSONObject> aj = new ArrayList<JSONObject>();
@@ -63,13 +64,16 @@ public class Favorites {
 	    		  		jo.put("latitude", ja.getJSONObject(i).getString("latitude"));
 	    		  		jo.put("longitude", ja.getJSONObject(i).getString("longitude"));
 						aj.add(jo);
+					} else {
+						// This is the one we removed so save it's name for the toast message
+						removedLabel = ja.getJSONObject(i).getString("label");
 					}
 				}
 			} catch (JSONException e1) {
 				//e1.printStackTrace();
 			}
 			
-			// FIXME - Look at current index and make sure it hasn't exceeded the
+			// Look at current index and make sure it hasn't exceeded the
 			//  array sizes
 			if (MapsTab.CURRENT_INDEX >= MapsTab.MenuIndexes.totalSize()) {
 				// The deletion caused the current index to exceed the total size
@@ -85,7 +89,7 @@ public class Favorites {
 		    setStarIcon(MODE_OFF);
 			
 			Toast.makeText(App.me, 
-					"Removed Favorite: fixme, display the label of the removed one"
+					"Removed Favorite " + removedLabel
 					, Toast.LENGTH_LONG).show();
 		}
 	}
@@ -166,7 +170,6 @@ public class Favorites {
 								// 2c. Append on the rest of existing favorites. Turn each into
 								//  a json object and append.
 								for(int i=0; i<ja.length(); i++) {
-									// FIXME - is there a lighter way to init these?
 									jo = new JSONObject();
 									try {
 										jo.put("label", ja.getJSONObject(i).getString("label"));
@@ -185,14 +188,15 @@ public class Favorites {
 							}
 						}
 
-	            		// FIXME - Make sure I am saving the favs size preference in case
-	            		//  it changed. if i have to...
-	            		
 						// Save updates in session and globals
 	        			saveUpdatedFavs(aj.toString());
 
 					    // Set the favorites star to on
 					    setStarIcon(MODE_ON);
+					    
+						Toast.makeText(App.me,
+								"New Favorite Added: " + prefname
+								, Toast.LENGTH_LONG).show();
 	        		}
 				}  
 			});
