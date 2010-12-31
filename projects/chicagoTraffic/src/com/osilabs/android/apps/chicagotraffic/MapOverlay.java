@@ -21,7 +21,14 @@ class MapOverlay extends com.google.android.maps.Overlay
 
     @Override
     public boolean onTap(GeoPoint p, MapView mapView) {
-    	if (DEBUG>0) Log.d(App.TAG, "MapOverlay::onTap()");
+    	if (Config.DEBUG>0) {
+    		Log.d(App.TAG, "MapOverlay::onTap() Coords=lat:" 
+    				+ p.getLatitudeE6()
+    				+ ", lon:"
+    				+ p.getLongitudeE6()
+    				+ ", zoom:"
+    				+ App.mvTraffic.getZoomLevel());
+    	}
 
     	// Look for double tap and zoom
     	Gesture.DoubleTapListner dt = new Gesture.DoubleTapListner();

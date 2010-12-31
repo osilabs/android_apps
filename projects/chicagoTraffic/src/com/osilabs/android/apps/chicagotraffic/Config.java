@@ -53,8 +53,10 @@ public final class Config {
 	public static final String [] traffic_urls = {
 		"map~http://wrc.gettingaroundillinois.com/images/wrccook.jpg~120%~ ~40~66",
 		"map~http://wrc.gettingaroundillinois.com/images/wrcimage.jpg~150%~ ~80~6",
-		"[{\"longitude\":\"-87790000\",\"zoom\":\"11\",\"label\":\"Chicago Metro\",\"latitude\":\"41878114\"}]"
+		"[{\"longitude\":\"-87810976\",\"zoom\":\"11\",\"label\":\"Chicago Metro\",\"latitude\":\"41858849\"}]"
 	};
+	
+	
 	// Android viewtypes
 	public static final int WEB      = 0;
 	public static final int MAP      = 1;

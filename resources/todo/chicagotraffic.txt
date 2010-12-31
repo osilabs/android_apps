@@ -2,13 +2,7 @@
 
 >> STM <<
 
-* MAIN PROBLEM:: None of the session updates are being saved from Favorites but only the first time??
-
-* Look into session restore: make it dump out what is being pulled back in.
-
-* Had fav "Dj". Selected it, to get to map from chicago dot map. added new favorite "Test". Open list of maps and selected "Dj" ("test" was in the list). Opened list again and now "test" is gone.  This only happens after a compile, the first time.  Maybe the session.
-
-* The system chicago metro map is showing minneapolis
+* Still won't animate to chicago Metro Map.
 
 * Try putting the yellow favorites star drawable in the mapOverlay::draw() method. To get it on top of the upper rh corner of the mapview.
 
@@ -17,10 +11,6 @@
 * Fix this fixme : // FIXME, this size should be figured out first.
 
 * Deleted all favorites, clicked the system Chicago Metro mapview map and it says loading but never pulls it up.
-
-* Had 1 fav. Added another. zoomed out. new fav was gone. ... or something like that
-
-* Recompiled, had no favorites. Added a single favorite from the main map and it won't show up in the menu. But I did get a message that it saved.
 
 * Long press stars to change them
 
