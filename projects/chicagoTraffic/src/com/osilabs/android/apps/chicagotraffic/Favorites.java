@@ -164,7 +164,7 @@ public class Favorites {
 				public void onClick(DialogInterface dialog, int whichButton) {  
 			  		prefname = input.getText().toString();
 			  		
-			  		if (prefname != "") {
+			  		if (! prefname.equals("")) {
 			  			JSONArray ja = null;
 			  			ArrayList<JSONObject> aj = new ArrayList<JSONObject>();
 			  			
@@ -206,18 +206,22 @@ public class Favorites {
 							} catch (JSONException e1) {
 								e1.printStackTrace();
 							}
+
+							// Save updates in session and globals
+		        			saveNewFav(aj.toString());
+
+						    // Set the favorites star to on
+						    setStarIcon(MODE_ON);
+						    
+							Toast.makeText(App.me,
+									"New Favorite Added: " + prefname
+									, Toast.LENGTH_LONG).show();
 						}
-
-						// Save updates in session and globals
-	        			saveNewFav(aj.toString());
-
-					    // Set the favorites star to on
-					    setStarIcon(MODE_ON);
-					    
+	        		} else {
 						Toast.makeText(App.me,
-								"New Favorite Added: " + prefname
+								"Please name your favorite"
 								, Toast.LENGTH_LONG).show();
-	        		}
+					}
 				}  
 			});
 			alert.show();

@@ -1,7 +1,6 @@
 // Release 0.8
 
 >> STM <<
-* When you add a favorite then immediately click the yellow star it doesn't remove the one you just added, it removes the one you had last loaded.  Must update the last loaded favorite to the one you just added.
 
 * Allows me to add a blank favorite
 
@@ -9,6 +8,8 @@
 
 * Fix this fixme : // FIXME, this size should be figured out first.
 * Deleted all favorites, clicked the system Chicago Metro mapview map and it says loading but never pulls it up.
+
+* Had 1 fav. Added another. zoomed out. new fav was gone. ... or something like that
 
 * Recompiled, had no favorites. Added a single favorite from the main map and it won't show up in the menu. But I did get a message that it saved.
 
