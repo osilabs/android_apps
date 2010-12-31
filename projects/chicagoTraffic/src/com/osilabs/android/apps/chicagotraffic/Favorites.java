@@ -84,7 +84,7 @@ public class Favorites {
 			}
 
 			// Set the favorites string.
-			saveUpdatedFavs(aj.toString());
+			saveNewFav(aj.toString());
 
 			// Unstar it
 		    setStarIcon(MODE_OFF);
@@ -95,7 +95,7 @@ public class Favorites {
 		}
 	}
 	
-	public static void saveUpdatedFavs(String favString) {
+	public static void saveNewFav(String favString) {
 		// FIXME - Move Config.MAPVIEW_FAVORITES to this class
 		Config.MAPVIEW_FAVORITES = favString;
 		
@@ -103,6 +103,10 @@ public class Favorites {
 	    SharedPreferences.Editor editor = App.mySharedPreferences.edit();
 	    editor.putString("pref_mapview_favorites", Config.MAPVIEW_FAVORITES);
 	    editor.commit();
+	    
+	    // New fav is added to top of list so set the current index 
+	    //  to 0 so the new one is the current one
+	    MapsTab.CURRENT_INDEX = 0;
 	    
 	    // Update MenuIndex FAV_SIZE
 		MapsTab.MenuIndexes.setFavArraySize();
@@ -202,7 +206,7 @@ public class Favorites {
 						}
 
 						// Save updates in session and globals
-	        			saveUpdatedFavs(aj.toString());
+	        			saveNewFav(aj.toString());
 
 					    // Set the favorites star to on
 					    setStarIcon(MODE_ON);

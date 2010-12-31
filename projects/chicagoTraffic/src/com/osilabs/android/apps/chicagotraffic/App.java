@@ -451,13 +451,10 @@ public class App extends MapActivity {
     	// FIXME, this size should be figured out first.
 		List<String> sl = new ArrayList<String>(6);
 
+		// FIXME - move these into the Favorites class
 		JSONArray ja = null;
 		try {
 			ja = new JSONArray(Config.MAPVIEW_FAVORITES);
-
-			Log.d(TAG, "favs: " + ja.toString());
-			Log.d(TAG, "favs length: " + ja.length());
-			
 			for(int i=0; i<ja.length(); i++) {
 				//options[optionsIndex++] = ja.getJSONObject(i).getString("label").toString();
 				sl.add("~ " + ja.getJSONObject(i).getString("label").toString() + " ~");
@@ -485,10 +482,6 @@ public class App extends MapActivity {
         .setIcon(R.drawable.ic_police)
         .setItems(options, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-            	// Algorithm to determine system index
-            	// 1. if( which < count(favs) ) { use favs[index] }
-            	// 2. else { use SYSTEM_COORDS[index - count] } 
-
             	int androidViewType = MapsTab.getAndroidViewType();
             	
             	if ( androidViewType == Config.FAVORITE || androidViewType == Config.MAP ) {
@@ -498,20 +491,21 @@ public class App extends MapActivity {
             		JSONArray ja = null;
             		try {
 	        			ja = new JSONArray(Config.MAPVIEW_FAVORITES);
-	        			Config.CURRENT_MAPVIEW_COORDS = ja.getJSONObject( which ).toString();
+	        			setCurrentMapView(ja.getJSONObject( which ).toString());
             		} catch (JSONException e) {
             			//e.printStackTrace();
             		}
         			
-            		// Save to shared prefs
-				    SharedPreferences.Editor editor = App.mySharedPreferences.edit();
-				    editor.putString("pref_current_mapview_coords", Config.CURRENT_MAPVIEW_COORDS);
-				    editor.commit();
-				    
-				    PREFS_UPDATED = true;
+//            		// Save to shared prefs
+//				    SharedPreferences.Editor editor = App.mySharedPreferences.edit();
+//				    editor.putString("pref_current_mapview_coords", Config.CURRENT_MAPVIEW_COORDS);
+//				    editor.commit();
+//				    
+//				    PREFS_UPDATED = true;
             	}
             	
             	// Set the MapsTab.CURRENT_INDEX
+            	// FIXME - Move into MapsTab
             	MapsTab.CURRENT_INDEX = which;
             	
     			Toast.makeText(getApplicationContext(), 
@@ -527,7 +521,7 @@ public class App extends MapActivity {
 			    
 			    // Update the current favorites index.
 			    MapsTab.MenuIndexes.setFavArrayIndex(MapsTab.CURRENT_INDEX);
-				Log.d(App.TAG, "onStart() complete: " + MapsTab.MenuIndexes.debug());
+				Log.d(App.TAG, "launchMapPicker()::onClick(): " + MapsTab.MenuIndexes.debug());
     			
 			    setViewForCurrentTab(INDEX_TRAFFIC);
 			    reloadViews();
@@ -535,6 +529,16 @@ public class App extends MapActivity {
         }).create();
 		
 		alert.show();
+    }
+    protected void setCurrentMapView(String current) {
+		Config.CURRENT_MAPVIEW_COORDS = current;
+	
+		// Save to shared prefs
+	    SharedPreferences.Editor editor = mySharedPreferences.edit();
+	    editor.putString("pref_current_mapview_coords", Config.CURRENT_MAPVIEW_COORDS);
+	    editor.commit();
+	    
+	    PREFS_UPDATED = true;
     }
     protected void launchCalendarPicker() { 
         // Log.d(TAG, "LaunchCalendarPicker");
