@@ -1,14 +1,16 @@
 // Release 0.8
 
 >> STM <<
-
 * When you add a favorite then immediately click the yellow star it doesn't remove the one you just added, it removes the one you had last loaded.  Must update the last loaded favorite to the one you just added.
-
-* Deleted all favorites, clicked the system Chicago Metro mapview map and it says loading but never pulls it up.
 
 * Allows me to add a blank favorite
 
 * Get rid of onTap listener unless for zooming
+
+* Fix this fixme : // FIXME, this size should be figured out first.
+* Deleted all favorites, clicked the system Chicago Metro mapview map and it says loading but never pulls it up.
+
+* Recompiled, had no favorites. Added a single favorite from the main map and it won't show up in the menu. But I did get a message that it saved.
 
 * Long press stars to change them
 
@@ -18,30 +20,17 @@
 
 * Still need to wiggle the map to get traffic to draw sometimes
 
-* Check special chars in favs names.
-
-* Limit the characters allowed for favorite names.
-
-* Have a message when they have added a new favorite.
-
-* Current problem, when I pull up the traffic menu, get an error.
+* PUt padding in textedit
 
 * The counts of favorites have to be rechecked on every onstart just in case the saved pref json strings are unexpectedly deleted or altered.  Must also check they are validate before trying to use them, again, because they are saved on disk and could be corroupt.
 
-Config.MAPVIEW_FAVORITES - Holds JSON string of favorites in current session.
-
-Config.CURRENT_MAPVIEW_COORDS - Holds that is the currently active view in the mapview.
-
+* Make sure I finished this
 renaming preference: 
 	pref_favorite_map_frame_1 to 
 		pref_mapview_favorites 
 		and 
 		pref_current_mapview_coords
 
-Created inner class in MapsTab for pointers to keep track of the indexes of the favorites and system menu choices.
-- Initializes upon mapstab init().
-- Need to change fav_size every time a fav is added or deleted.
-- Need to use the right index when a menu option is chosen.
 
 >> TEST <<
 
