@@ -103,6 +103,10 @@ public class Favorites {
 	    editor.putString("pref_mapview_favorites", Config.MAPVIEW_FAVORITES);
 	    editor.commit();
 	    
+	    // Update MenuIndex FAV_SIZE
+		MapsTab.MenuIndexes.setFavArraySize();
+		MapsTab.MenuIndexes.setFavArrayIndex(MapsTab.CURRENT_INDEX);
+	    
 		// Tell the main app that prefs have changed so things can reread them
 		App.PREFS_UPDATED = true;
 	}
@@ -129,8 +133,8 @@ public class Favorites {
 			
 			// 1. Collect the label
 			AlertDialog.Builder alert = new AlertDialog.Builder(App.me);  
-			alert.setTitle("Save Favorite");  
-			alert.setMessage("Name");  
+			alert.setTitle("New Favorite");  
+			alert.setMessage("Short Name");  
 			// Set an EditText view to get user input   
 			final EditText input = new EditText(App.me);
 			alert.setView(input);  
