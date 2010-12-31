@@ -183,7 +183,6 @@ public class App extends MapActivity {
 				setViewForCurrentTab(INDEX_TRAFFIC);
 			}
 		});
-		MapsTab.init();
 
 		ivCalendarTab = (ImageView) findViewById(R.id.launcher_calendar);
 		App.ivCalendarTab.setOnClickListener(new View.OnClickListener() {
@@ -192,9 +191,9 @@ public class App extends MapActivity {
 				setViewForCurrentTab(INDEX_CALENDAR);
 			}
 		});
-		CalendarTab.init();
 		
 	    // Set up camera tab
+		// FIXME - Rename Config.mainroads to Config.camera_mainroads
 		if (Config.mainroads.length > 0) {
 		    ivCamerasTab = (ImageView) findViewById(R.id.launcher_cameras);
 		    ivCamerasTab.setOnClickListener(new View.OnClickListener() {
@@ -203,7 +202,6 @@ public class App extends MapActivity {
 					setViewForCurrentTab(INDEX_CAMERAS);
 				}
 			});
-			CamerasTab.init();
 		}
 
 	    ivRefresh = (ImageView) findViewById(R.id.navbar_refresh);
@@ -367,7 +365,13 @@ public class App extends MapActivity {
     	super.onStart();
 
     	setCurrentPrefs(); // This must happen before other things.
-    	MenuIndexes.init();
+		MapsTab.init();
+		CalendarTab.init();
+		if (Config.mainroads.length > 0) {
+			CamerasTab.init();
+		}
+
+    	//MenuIndexes.init();
     	
         if (MAP_VIEW_IS_VISIBLE) { 
         	// Set some long term "pulse" timers to redraw the traffic lines after enough time
