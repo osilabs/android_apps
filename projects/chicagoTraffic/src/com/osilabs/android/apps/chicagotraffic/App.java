@@ -361,7 +361,7 @@ public class App extends MapActivity {
     }
     @Override
     public void onStart() {
-    	// Log.d(TAG, "onStart");
+    	Log.d(TAG, "onStart");
     	super.onStart();
 
     	setCurrentPrefs(); // This must happen before other things.

@@ -85,6 +85,10 @@ public class Favorites {
 
 			// Set the favorites string.
 			saveNewFav(aj.toString());
+			
+			// Remove the current mapview from
+			//  the current mapview global variable and session
+			updateCurrentMapviewCoords();
 
 			// Unstar it
 		    setStarIcon(MODE_OFF);
@@ -93,6 +97,18 @@ public class Favorites {
 					"Removed Favorite " + removedLabel
 					, Toast.LENGTH_LONG).show();
 		}
+	}
+	
+	public static void updateCurrentMapviewCoords() {
+		Config.CURRENT_MAPVIEW_COORDS = "";
+		
+		// Save to shared prefs
+	    SharedPreferences.Editor editor = App.mySharedPreferences.edit();
+	    editor.putString("pref_current_mapview_config", "");
+	    editor.commit();
+	    
+		// Tell the main app that prefs have changed so things can reread them
+		App.PREFS_UPDATED = true;
 	}
 	
 	public static void saveNewFav(String favString) {

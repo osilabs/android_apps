@@ -2,11 +2,23 @@
 
 >> STM <<
 
-* Allows me to add a blank favorite
 
-* Get rid of onTap listener unless for zooming
+* This output shows the Config.CURRENT_MAPVIEW_COORDS having the label "Gui". Problem is I deleted that and it was not cleaned out of the Config.CURRENT_MAPVIEW_COORDS. Clean it out upon delete
+D/** osilabs.com **(27745): onCreate() complete: MenuIndexes:: SYS_SIZE:0 SYS_INDEX:0 FAV_SIZE:0 FAV_INDEX:0
+D/** osilabs.com **(27745): setCurrentPrefs()
+D/** osilabs.com **(27745): Set Config.MAPVIEW_FAVORITES: [{"longitude":"-93169523","zoom":"11","label":"Dj","latitude":"44959488"}]
+D/** osilabs.com **(27745): Set Config.CURRENT_MAPVIEW_COORDS: {"label":"Gui","zoom":"11","longitude":"-93169523","latitude":"44959488"}
+
+* Had fav "Dj". Selected it, to get to map from chicago dot map. added new favorite "Test". Open list of maps and selected "Dj" ("test" was in the list). Opened list again and now "test" is gone.  This only happens after a compile, the first time.  Maybe the session.
+
+* The system chicago metro map is showing minneapolis
+
+* Try putting the yellow favorites star drawable in the mapOverlay::draw() method. To get it on top of the upper rh corner of the mapview.
+
+* onstart says: "Current map view coords empty" even thought last time i did anything i was looking at a mapview.  This happens after a compile, maybe always. make sure I am setting that current variable and it is getting put in the session and pulled out onStart();
 
 * Fix this fixme : // FIXME, this size should be figured out first.
+
 * Deleted all favorites, clicked the system Chicago Metro mapview map and it says loading but never pulls it up.
 
 * Had 1 fav. Added another. zoomed out. new fav was gone. ... or something like that
@@ -15,13 +27,7 @@
 
 * Long press stars to change them
 
-* FC problem when I have more favs than the list can hold
-
-* Double tap to zoom
-
 * Still need to wiggle the map to get traffic to draw sometimes
-
-* PUt padding in textedit
 
 * The counts of favorites have to be rechecked on every onstart just in case the saved pref json strings are unexpectedly deleted or altered.  Must also check they are validate before trying to use them, again, because they are saved on disk and could be corroupt.
 
