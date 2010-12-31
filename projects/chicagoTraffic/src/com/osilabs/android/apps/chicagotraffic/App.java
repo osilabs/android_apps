@@ -620,11 +620,19 @@ public class App extends MapActivity {
      * prefs.
      */
     protected void setCurrentPrefs() {
-    	Log.d(TAG, "setCurrentPrefs()");
+    	Log.d(TAG, "++ setCurrentPrefs() ++");
     	// Only waste time rereading prefs if they changed.
     	if (PREFS_UPDATED) {
-    		PREFS_UPDATED = false;
-	        // Log.d(TAG, "setCurrentRadios");
+		    if (Config.DEBUG > 1) {
+			    Log.d(TAG, "setCurrentPrefs() Orig Config.CURRENT_MAPVIEW_COORDS: " + Config.CURRENT_MAPVIEW_COORDS);
+			    Log.d(TAG, "setCurrentPrefs() Orig Config.MAPVIEW_FAVORITES: " + Config.MAPVIEW_FAVORITES);
+			    Log.d(TAG, "setCurrentPrefs() Orig CalendarTab.CURRENT_WEATHER_FEED_INDEX: " + CalendarTab.CURRENT_WEATHER_FEED_INDEX);
+			    Log.d(TAG, "setCurrentPrefs() Orig CalendarTab.CURRENT_TODAY_FEED_INDEX: " + CalendarTab.CURRENT_TODAY_FEED_INDEX);
+			    Log.d(TAG, "setCurrentPrefs() Orig Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER]: " + Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER]);
+			    Log.d(TAG, "setCurrentPrefs() Orig Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE]: " + Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE]);
+		    }
+		    
+		    PREFS_UPDATED = false;
 	
 	    	// Set Global with current prefs
 	    	// If this namespace path doesn't end in '_preferences' this won't work.
@@ -632,11 +640,13 @@ public class App extends MapActivity {
 	
 	    	Context c = getApplicationContext();
 	    	
+		    // Get weather radio
 			String wr_saved = c.getResources().getString(R.string.pref_weather_radios_selected);
 			Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER] = Integer.parseInt(mySharedPreferences
 		      .getString(wr_saved, Integer.toString(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER])));
-	
-			String pr_saved = c.getResources().getString(R.string.pref_police_radios_selected);
+
+		    // Get police radio
+		    String pr_saved = c.getResources().getString(R.string.pref_police_radios_selected);
 			Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE] = Integer.parseInt(mySharedPreferences
 		      .getString(pr_saved, Integer.toString(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE])));
 	
@@ -649,17 +659,24 @@ public class App extends MapActivity {
 			String wf_saved = c.getResources().getString(R.string.pref_weather_feed_selected);
 			CalendarTab.CURRENT_WEATHER_FEED_INDEX = Integer.parseInt(mySharedPreferences
 				.getString(wf_saved, "0"));
-	
-			// Favorite Map View
+
+		    // Favorite Map View
 			// FIXME - Make sure I call set current favorites after I update this value
+			// FIXME - This shouldn't be in Config. Move it to App
 			Config.MAPVIEW_FAVORITES
 		        = mySharedPreferences.getString("pref_mapview_favorites", "");
+
 		    Config.CURRENT_MAPVIEW_COORDS
 		        = mySharedPreferences.getString("pref_current_mapview_coords", Config.CURRENT_MAPVIEW_COORDS);
-		    
-		    Log.d(TAG, "Set Config.MAPVIEW_FAVORITES: " + Config.MAPVIEW_FAVORITES);
-		    Log.d(TAG, "Set Config.CURRENT_MAPVIEW_COORDS: " + Config.CURRENT_MAPVIEW_COORDS);
-//		    Toast.makeText(getApplicationContext(), "prefs were gotten: " + Config.FAVORITE_GEO_POINTS[0], Toast.LENGTH_LONG).show();
+
+		    if (Config.DEBUG > 1) {
+			    Log.d(TAG, "setCurrentPrefs() Pulled Config.CURRENT_MAPVIEW_COORDS: " + Config.CURRENT_MAPVIEW_COORDS);
+			    Log.d(TAG, "setCurrentPrefs() Pulled Config.MAPVIEW_FAVORITES: " + Config.MAPVIEW_FAVORITES);
+			    Log.d(TAG, "setCurrentPrefs() Pulled CalendarTab.CURRENT_WEATHER_FEED_INDEX: " + CalendarTab.CURRENT_WEATHER_FEED_INDEX);
+			    Log.d(TAG, "setCurrentPrefs() Pulled CalendarTab.CURRENT_TODAY_FEED_INDEX: " + CalendarTab.CURRENT_TODAY_FEED_INDEX);
+			    Log.d(TAG, "setCurrentPrefs() Pulled Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER]: " + Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER]);
+			    Log.d(TAG, "setCurrentPrefs() Pulled Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE]: " + Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE]);
+    		}
     	}
     }
     

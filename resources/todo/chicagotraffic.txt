@@ -2,12 +2,9 @@
 
 >> STM <<
 
+* MAIN PROBLEM:: None of the session updates are being saved from Favorites but only the first time??
 
-* This output shows the Config.CURRENT_MAPVIEW_COORDS having the label "Gui". Problem is I deleted that and it was not cleaned out of the Config.CURRENT_MAPVIEW_COORDS. Clean it out upon delete
-D/** osilabs.com **(27745): onCreate() complete: MenuIndexes:: SYS_SIZE:0 SYS_INDEX:0 FAV_SIZE:0 FAV_INDEX:0
-D/** osilabs.com **(27745): setCurrentPrefs()
-D/** osilabs.com **(27745): Set Config.MAPVIEW_FAVORITES: [{"longitude":"-93169523","zoom":"11","label":"Dj","latitude":"44959488"}]
-D/** osilabs.com **(27745): Set Config.CURRENT_MAPVIEW_COORDS: {"label":"Gui","zoom":"11","longitude":"-93169523","latitude":"44959488"}
+* Look into session restore: make it dump out what is being pulled back in.
 
 * Had fav "Dj". Selected it, to get to map from chicago dot map. added new favorite "Test". Open list of maps and selected "Dj" ("test" was in the list). Opened list again and now "test" is gone.  This only happens after a compile, the first time.  Maybe the session.
 

@@ -71,7 +71,7 @@ public class Favorites {
 					}
 				}
 			} catch (JSONException e1) {
-				//e1.printStackTrace();
+				// e1.printStackTrace();
 			}
 			
 			// Look at current index and make sure it hasn't exceeded the
@@ -103,8 +103,9 @@ public class Favorites {
 		Config.CURRENT_MAPVIEW_COORDS = "";
 		
 		// Save to shared prefs
+    	App.mySharedPreferences = App.me.getSharedPreferences(Config.NAMESPACE + "_preferences", 0);
 	    SharedPreferences.Editor editor = App.mySharedPreferences.edit();
-	    editor.putString("pref_current_mapview_config", "");
+	    editor.putString("pref_current_mapview_coords", "");
 	    editor.commit();
 	    
 		// Tell the main app that prefs have changed so things can reread them
@@ -112,14 +113,17 @@ public class Favorites {
 	}
 	
 	public static void saveNewFav(String favString) {
+		if(Config.DEBUG>1) Log.d(App.TAG, "Favorites::saveNewFav(): " + favString);
+		
 		// FIXME - Move Config.MAPVIEW_FAVORITES to this class
 		Config.MAPVIEW_FAVORITES = favString;
 		
 		// Save to shared prefs
+    	App.mySharedPreferences = App.me.getSharedPreferences(Config.NAMESPACE + "_preferences", 0);
 	    SharedPreferences.Editor editor = App.mySharedPreferences.edit();
-	    editor.putString("pref_mapview_favorites", Config.MAPVIEW_FAVORITES);
+	    editor.putString("pref_mapview_favorites", favString);
 	    editor.commit();
-	    
+	    	    
 	    // New fav is added to top of list so set the current index 
 	    //  to 0 so the new one is the current one
 	    MapsTab.CURRENT_INDEX = 0;

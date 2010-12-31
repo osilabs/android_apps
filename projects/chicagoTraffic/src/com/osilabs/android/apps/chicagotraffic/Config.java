@@ -1,8 +1,9 @@
 package com.osilabs.android.apps.chicagotraffic;
 
-//import com.google.android.maps.GeoPoint;
-
 public final class Config {
+	// Tell classes to dump to logcat
+	public static final int DEBUG = 2; 
+
 	public static final    String DEFAULT_CAMERA_URL = "";
 	public static final int       DEFAULT_MAP_INDEX = 2; // !!! Can't be above array size-1. Includes favorites, best to set to one of the system traffic maps indexes.
 	public static final int       DEFAULT_CALENDAR_INDEX = 0;
