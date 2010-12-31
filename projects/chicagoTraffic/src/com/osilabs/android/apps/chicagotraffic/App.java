@@ -460,7 +460,7 @@ public class App extends MapActivity {
 			
 			for(int i=0; i<ja.length(); i++) {
 				//options[optionsIndex++] = ja.getJSONObject(i).getString("label").toString();
-				sl.add("Favorite: " + ja.getJSONObject(i).getString("label").toString());
+				sl.add("~ " + ja.getJSONObject(i).getString("label").toString() + " ~");
 			}
 		} catch (JSONException e1) {
 			Log.e(TAG, "Favorites string is empty:" + Config.MAPVIEW_FAVORITES);
