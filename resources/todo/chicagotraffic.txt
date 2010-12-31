@@ -2,7 +2,28 @@
 
 >> STM <<
 
+* When you add a favorite then immediately click the yellow star it doesn't remove the one you just added, it removes the one you had last loaded.  Must update the last loaded favorite to the one you just added.
+
+* Deleted all favorites, clicked the system Chicago Metro mapview map and it says loading but never pulls it up.
+
+* Allows me to add a blank favorite
+
+* Get rid of onTap listener unless for zooming
+
+* Long press stars to change them
+
+* FC problem when I have more favs than the list can hold
+
+* Double tap to zoom
+
+* Still need to wiggle the map to get traffic to draw sometimes
+
 * Check special chars in favs names.
+
+* Limit the characters allowed for favorite names.
+
+* Have a message when they have added a new favorite.
+
 * Current problem, when I pull up the traffic menu, get an error.
 
 * The counts of favorites have to be rechecked on every onstart just in case the saved pref json strings are unexpectedly deleted or altered.  Must also check they are validate before trying to use them, again, because they are saved on disk and could be corroupt.

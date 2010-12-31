@@ -1,18 +1,28 @@
 // All Apps
-
+* Email "Tune In" dev to see about using an intent to launch it.
+* Do feedback like gTasks maybe (Where it just opens an intent for email and dumps phone data in)
 * Make twitter account
 
 * Make facebook page
 
 * Need better promotonal graphics
 
-* See http://android-developers.blogspot.com/2009/04/backward-compatibility-for-android.html for how to code for backward compatability so it can show up on the market for v1.5 devices.
-
 * Make osilabs.com right in 'About' for all apps.
 
 * link for where to donate. Multiple ways. 
 	1. buy the donate app. 
 	2. Encourage to buy another osilabs app that costs money.
+
+>>> Traffic Apps <<<
+
+
+
+>>> Live Dropper and Color Eye <<<
+
+* See http://android-developers.blogspot.com/2009/04/backward-compatibility-for-android.html for how to code for backward compatability so it can show up on the market for v1.5 devices.
+
+
+
 
 //
 // Related technology ideas
