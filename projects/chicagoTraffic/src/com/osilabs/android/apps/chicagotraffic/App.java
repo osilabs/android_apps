@@ -55,7 +55,7 @@ public class App extends MapActivity {
 	//
 	// Consts
 	//
-	static final String TAG = "** osilabs.com **";
+	public static final String TAG = "** osilabs.com **";
 
 	private static final int MENU_TRAFFIC               = 0;
 	private static final int MENU_CAMERAS               = 1;
