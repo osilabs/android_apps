@@ -11,6 +11,7 @@ import com.google.android.maps.GeoPoint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -134,9 +135,17 @@ public class Favorites {
 			// 1. Collect the label
 			AlertDialog.Builder alert = new AlertDialog.Builder(App.me);  
 			alert.setTitle("New Favorite");  
-			alert.setMessage("Short Name");  
+			alert.setMessage("Short Name");
+			alert.setIcon(R.drawable.favorite_star_on);
+			
 			// Set an EditText view to get user input   
 			final EditText input = new EditText(App.me);
+			
+			// Limit the number of characters for the label
+			InputFilter[] FilterArray = new InputFilter[1];
+			FilterArray[0] = new InputFilter.LengthFilter(15);
+			input.setFilters(FilterArray);
+			
 			alert.setView(input);  
 			alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {  
 				public void onClick(DialogInterface dialog, int whichButton) {  
