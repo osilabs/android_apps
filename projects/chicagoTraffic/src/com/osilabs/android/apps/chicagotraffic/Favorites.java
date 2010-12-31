@@ -150,7 +150,10 @@ public class Favorites {
 			FilterArray[0] = new InputFilter.LengthFilter(15);
 			input.setFilters(FilterArray);
 			
-			alert.setView(input);  
+			// Padding the text edit to make her look nice
+			input.setPadding(10, 0, 10, 0);
+
+			alert.setView(input);
 			alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {  
 				public void onClick(DialogInterface dialog, int whichButton) {  
 					// User hit cancel, flag so we can exit
