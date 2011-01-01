@@ -17,6 +17,8 @@
 
 >>> Traffic Apps <<<
 
+* Try putting the yellow favorites star drawable in the mapOverlay::draw() method. To get it on top of the upper rh corner of the mapview.
+
 * Long press stars to change them
 
 * Still need to wiggle the map to get traffic to draw sometimes

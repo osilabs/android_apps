@@ -2,13 +2,16 @@
 
 >> STM <<
 
-* Try putting the yellow favorites star drawable in the mapOverlay::draw() method. To get it on top of the upper rh corner of the mapview.
+* *** Must wrap all session data grabbing in try catches
 
-* Fix this fixme : // FIXME, this size should be figured out first.
+* After deleting all favorites. I recompiled and it started out on Vegas which had already been deleted.  Must have been saved in session.
 
-* Deleted all favorites, clicked the system Chicago Metro mapview map and it says loading but never pulls it up.
+* Had two favorites, was on my newly added favorite. hit back and program closed. launched again with icon and it started on the first system map, not the favorite I was once on.
 
 * Find and fix FIXME's
+* Fix this fixme : // FIXME, this size should be figured out first.
+
+* Put the Config.DEBUG check on all the Log.d's
 
 * The counts of favorites have to be rechecked on every onstart just in case the saved pref json strings are unexpectedly deleted or altered.  Must also check they are validate before trying to use them, again, because they are saved on disk and could be corroupt.
 
@@ -19,6 +22,7 @@ renaming preference:
 		and 
 		pref_current_mapview_coords
 
+* Check that the refresh is working
 
 >> TEST <<
 

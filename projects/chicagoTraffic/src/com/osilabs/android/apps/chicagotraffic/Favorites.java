@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.google.android.maps.GeoPoint;
+import com.osilabs.android.lib.gestures.Session;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -103,10 +104,11 @@ public class Favorites {
 		Config.CURRENT_MAPVIEW_COORDS = "";
 		
 		// Save to shared prefs
-    	App.mySharedPreferences = App.me.getSharedPreferences(Config.NAMESPACE + "_preferences", 0);
-	    SharedPreferences.Editor editor = App.mySharedPreferences.edit();
-	    editor.putString("pref_current_mapview_coords", "");
-	    editor.commit();
+		Session.saveString(App.mySharedPreferences, "pref_current_mapview_coords", "");
+//    	App.mySharedPreferences = App.me.getSharedPreferences(Config.NAMESPACE + "_preferences", 0);
+//	    SharedPreferences.Editor editor = App.mySharedPreferences.edit();
+//	    editor.putString("pref_current_mapview_coords", "");
+//	    editor.commit();
 	    
 		// Tell the main app that prefs have changed so things can reread them
 		App.PREFS_UPDATED = true;
@@ -119,10 +121,11 @@ public class Favorites {
 		Config.MAPVIEW_FAVORITES = favString;
 		
 		// Save to shared prefs
-    	App.mySharedPreferences = App.me.getSharedPreferences(Config.NAMESPACE + "_preferences", 0);
-	    SharedPreferences.Editor editor = App.mySharedPreferences.edit();
-	    editor.putString("pref_mapview_favorites", favString);
-	    editor.commit();
+		Session.saveString(App.mySharedPreferences, "pref_mapview_favorites", favString);
+//    	App.mySharedPreferences = App.me.getSharedPreferences(Config.NAMESPACE + "_preferences", 0);
+//	    SharedPreferences.Editor editor = App.mySharedPreferences.edit();
+//	    editor.putString("pref_mapview_favorites", favString);
+//	    editor.commit();
 	    	    
 	    // New fav is added to top of list so set the current index 
 	    //  to 0 so the new one is the current one

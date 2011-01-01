@@ -14,6 +14,7 @@ import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.osilabs.android.apps.chicagotraffic.MapsTab.MenuIndexes;
+import com.osilabs.android.lib.gestures.Session;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -161,16 +162,8 @@ public class App extends MapActivity {
         //
 		// Restore preferences
         //
-		mySharedPreferences = getSharedPreferences(
-				Config.NAMESPACE, Activity.MODE_PRIVATE);
-        CURRENT_TAB_INDEX = mySharedPreferences.getInt("session_current_view", Config.DEFAULT_TAB_INDEX);
-        
-        // The init() methods must happen after i pull the existing values
-        //  from the session. This is so init() can determine if the values are 
-        //  valid and inrange, otherwise it will set them back to defaults.
-        MapsTab.CURRENT_INDEX = mySharedPreferences.getInt("session_map", Config.DEFAULT_MAP_INDEX);
-        CalendarTab.CURRENT_INDEX = mySharedPreferences.getInt("session_calendar", Config.DEFAULT_CALENDAR_INDEX);
-        CamerasTab.CURRENT_CAMERA_URL = mySharedPreferences.getString("session_camera_1", Config.DEFAULT_CAMERA_URL);
+		mySharedPreferences = getSharedPreferences(Config.NAMESPACE, Activity.MODE_PRIVATE);
+		setIndexesForSessionFromPrefs();
         
 	    // -------------------------
 	    // Top Nav bar
@@ -357,7 +350,6 @@ public class App extends MapActivity {
 		});
 
 		Log.d(App.TAG, "onCreate() complete: " + MapsTab.MenuIndexes.debug());
-//		Log.d(App.TAG, "onCreate() complete: Config.MAPVIEW_FAVORITES: " + Config.MAPVIEW_FAVORITES);
     }
     @Override
     public void onStart() {
@@ -454,9 +446,9 @@ public class App extends MapActivity {
     	// FIXME, this size should be figured out first.
     	// FIXME, this size should be figured out first.
     	// FIXME, this size should be figured out first.
-		List<String> sl = new ArrayList<String>(6);
+		List<String> sl = new ArrayList<String>();
 
-		// FIXME - move these into the Favorites class
+		// TODO - move these into the Favorites class
 		JSONArray ja = null;
 		try {
 			ja = new JSONArray(Config.MAPVIEW_FAVORITES);
@@ -521,12 +513,13 @@ public class App extends MapActivity {
     					, Toast.LENGTH_LONG).show();
     			
     			// Save current map
-    	    	//mySharedPreferences
-    			//	= getSharedPreferences(Config.NAMESPACE, Activity.MODE_PRIVATE);
-    	    	mySharedPreferences = getSharedPreferences(Config.NAMESPACE + "_preferences", Activity.MODE_PRIVATE);
-			    SharedPreferences.Editor editor = mySharedPreferences.edit();
-			    editor.putInt("session_map", MapsTab.CURRENT_INDEX);
-			    editor.commit();
+    			Session.saveInt(mySharedPreferences, "session_map", MapsTab.CURRENT_INDEX);
+//    	    	//mySharedPreferences
+//    			//	= getSharedPreferences(Config.NAMESPACE, Activity.MODE_PRIVATE);
+//    	    	mySharedPreferences = getSharedPreferences(Config.NAMESPACE + "_preferences", Activity.MODE_PRIVATE);
+//			    SharedPreferences.Editor editor = mySharedPreferences.edit();
+//			    editor.putInt("session_map", MapsTab.CURRENT_INDEX);
+//			    editor.commit();
 			    
 			    // Update the current favorites index.
 			    MapsTab.MenuIndexes.setFavArrayIndex(MapsTab.CURRENT_INDEX);
@@ -544,9 +537,10 @@ public class App extends MapActivity {
 		Config.CURRENT_MAPVIEW_COORDS = current;
 	
 		// Save to shared prefs
-	    SharedPreferences.Editor editor = mySharedPreferences.edit();
-	    editor.putString("pref_current_mapview_coords", Config.CURRENT_MAPVIEW_COORDS);
-	    editor.commit();
+	    Session.saveString(mySharedPreferences, "pref_current_mapview_coords", Config.CURRENT_MAPVIEW_COORDS);
+//	    SharedPreferences.Editor editor = mySharedPreferences.edit();
+//	    editor.putString("pref_current_mapview_coords", Config.CURRENT_MAPVIEW_COORDS);
+//	    editor.commit();
 	    
 	    PREFS_UPDATED = true;
     }
@@ -564,11 +558,12 @@ public class App extends MapActivity {
     					, Toast.LENGTH_LONG).show();
     			
     			// Save current CALENDAR
-    	    	SharedPreferences prefs 
-    				= getSharedPreferences(Config.NAMESPACE, Activity.MODE_PRIVATE);
-			    SharedPreferences.Editor editor = prefs.edit();
-			    editor.putInt("session_calendar", CalendarTab.CURRENT_INDEX);
-			    editor.commit();
+    	    	Session.saveInt(mySharedPreferences, "session_calendar", CalendarTab.CURRENT_INDEX);
+//    	    	SharedPreferences prefs 
+//    				= getSharedPreferences(Config.NAMESPACE, Activity.MODE_PRIVATE);
+//			    SharedPreferences.Editor editor = prefs.edit();
+//			    editor.putInt("session_calendar", CalendarTab.CURRENT_INDEX);
+//			    editor.commit(); 
     			
             	reloadViews();
             }
@@ -597,11 +592,12 @@ public class App extends MapActivity {
 				reloadViews();
 				
     			// Set the chosen camera in the persistent settings
-    	    	SharedPreferences prefs 
-    				= getSharedPreferences(Config.NAMESPACE, Activity.MODE_PRIVATE);
-    			    SharedPreferences.Editor editor = prefs.edit();
-    			    editor.putString("session_camera_1", CamerasTab.CURRENT_CAMERA_URL);
-    			    editor.commit();
+				Session.saveString(mySharedPreferences, "session_camera_1", CamerasTab.CURRENT_CAMERA_URL);
+//    	    	SharedPreferences prefs 
+//    				= getSharedPreferences(Config.NAMESPACE, Activity.MODE_PRIVATE);
+//    			    SharedPreferences.Editor editor = prefs.edit();
+//    			    editor.putString("session_camera_1", CamerasTab.CURRENT_CAMERA_URL);
+//    			    editor.commit();
             }
             break;
             
@@ -638,42 +634,65 @@ public class App extends MapActivity {
 		    
 		    PREFS_UPDATED = false;
 	
-	    	// Set Global with current prefs
+			//
+			// User Preferences
+			//
+
 	    	// If this namespace path doesn't end in '_preferences' this won't work.
-	    	mySharedPreferences = getSharedPreferences(Config.NAMESPACE + "_preferences", 0);
-	
-	    	Context c = getApplicationContext();
+	    	SharedPreferences userPrefs = getSharedPreferences(Config.NAMESPACE + "_preferences", Activity.MODE_PRIVATE);
 	    	
 		    // Get weather radio
-			String wr_saved = c.getResources().getString(R.string.pref_weather_radios_selected);
-			Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER] = Integer.parseInt(mySharedPreferences
+			String wr_saved = this.getResources().getString(R.string.pref_weather_radios_selected);
+			Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER] = Integer.parseInt(userPrefs
 		      .getString(wr_saved, Integer.toString(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER])));
 
 		    // Get police radio
-		    String pr_saved = c.getResources().getString(R.string.pref_police_radios_selected);
-			Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE] = Integer.parseInt(mySharedPreferences
+		    String pr_saved = this.getResources().getString(R.string.pref_police_radios_selected);
+			Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE] = Integer.parseInt(userPrefs
 		      .getString(pr_saved, Integer.toString(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE])));
 	
 			// today feed
-			String tf_saved = c.getResources().getString(R.string.pref_today_feed_selected);
-			CalendarTab.CURRENT_TODAY_FEED_INDEX = Integer.parseInt(mySharedPreferences
+			String tf_saved = this.getResources().getString(R.string.pref_today_feed_selected);
+			CalendarTab.CURRENT_TODAY_FEED_INDEX = Integer.parseInt(userPrefs
 				.getString(tf_saved, "0"));
 	
 			// weather feed
-			String wf_saved = c.getResources().getString(R.string.pref_weather_feed_selected);
-			CalendarTab.CURRENT_WEATHER_FEED_INDEX = Integer.parseInt(mySharedPreferences
+			String wf_saved = this.getResources().getString(R.string.pref_weather_feed_selected);
+			CalendarTab.CURRENT_WEATHER_FEED_INDEX = Integer.parseInt(userPrefs
 				.getString(wf_saved, "0"));
 
+			
+			//
+			// Session Preferences
+			//
+			mySharedPreferences = getSharedPreferences(Config.NAMESPACE, Activity.MODE_PRIVATE);
+			
 		    // Favorite Map View
 			// FIXME - Make sure I call set current favorites after I update this value
-			// FIXME - This shouldn't be in Config. Move it to App
+			// todo - This shouldn't be in Config. Move it to App
 			Config.MAPVIEW_FAVORITES
 		        = mySharedPreferences.getString("pref_mapview_favorites", "");
 
 		    Config.CURRENT_MAPVIEW_COORDS
 		        = mySharedPreferences.getString("pref_current_mapview_coords", Config.CURRENT_MAPVIEW_COORDS);
 
-		    if (Config.DEBUG > 1) {
+		    // Set some locals
+		    setIndexesForSessionFromPrefs();
+//		    try {
+//		        CURRENT_TAB_INDEX = mySharedPreferences.getInt("session_current_view", Config.DEFAULT_TAB_INDEX);
+//		        MapsTab.CURRENT_INDEX = mySharedPreferences.getInt("session_map", Config.DEFAULT_MAP_INDEX);
+//		        CalendarTab.CURRENT_INDEX = mySharedPreferences.getInt("session_calendar", Config.DEFAULT_CALENDAR_INDEX);
+//		        CamerasTab.CURRENT_CAMERA_URL = mySharedPreferences.getString("session_camera_1", Config.DEFAULT_CAMERA_URL);
+//			} catch (Exception e) {
+//				Log.e(TAG, "Could not set shared prefs into session, setting to defaults");
+//				
+//		        CURRENT_TAB_INDEX = Config.DEFAULT_TAB_INDEX;
+//		        MapsTab.CURRENT_INDEX = Config.DEFAULT_MAP_INDEX;
+//		        CalendarTab.CURRENT_INDEX = Config.DEFAULT_CALENDAR_INDEX;
+//		        CamerasTab.CURRENT_CAMERA_URL = Config.DEFAULT_CAMERA_URL;
+//			}
+			
+	        if (Config.DEBUG > 1) {
 			    Log.d(TAG, "setCurrentPrefs() Pulled Config.CURRENT_MAPVIEW_COORDS: " + Config.CURRENT_MAPVIEW_COORDS);
 			    Log.d(TAG, "setCurrentPrefs() Pulled Config.MAPVIEW_FAVORITES: " + Config.MAPVIEW_FAVORITES);
 			    Log.d(TAG, "setCurrentPrefs() Pulled CalendarTab.CURRENT_WEATHER_FEED_INDEX: " + CalendarTab.CURRENT_WEATHER_FEED_INDEX);
@@ -682,6 +701,23 @@ public class App extends MapActivity {
 			    Log.d(TAG, "setCurrentPrefs() Pulled Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE]: " + Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE]);
     		}
     	}
+    }
+    
+    private void setIndexesForSessionFromPrefs() {
+	    // Set some locals
+	    try {
+	        CURRENT_TAB_INDEX = mySharedPreferences.getInt("session_current_view", Config.DEFAULT_TAB_INDEX);
+	        MapsTab.CURRENT_INDEX = mySharedPreferences.getInt("session_map", Config.DEFAULT_MAP_INDEX);
+	        CalendarTab.CURRENT_INDEX = mySharedPreferences.getInt("session_calendar", Config.DEFAULT_CALENDAR_INDEX);
+	        CamerasTab.CURRENT_CAMERA_URL = mySharedPreferences.getString("session_camera_1", Config.DEFAULT_CAMERA_URL);
+		} catch (Exception e) {
+			Log.e(TAG, "Could not set shared prefs into session, setting to defaults");
+			
+	        CURRENT_TAB_INDEX = Config.DEFAULT_TAB_INDEX;
+	        MapsTab.CURRENT_INDEX = Config.DEFAULT_MAP_INDEX;
+	        CalendarTab.CURRENT_INDEX = Config.DEFAULT_CALENDAR_INDEX;
+	        CamerasTab.CURRENT_CAMERA_URL = Config.DEFAULT_CAMERA_URL;
+		}
     }
     
 	public void colorTheCurrentTab() {
@@ -852,10 +888,11 @@ public class App extends MapActivity {
         // Log.d(TAG, "setCurrentTab");
 
 		// Save Settings
-		mySharedPreferences = getSharedPreferences(Config.NAMESPACE + "_preferences", 0);
-	    SharedPreferences.Editor editor = mySharedPreferences.edit();
-	    editor.putInt("session_current_view", viewIndex);
-	    editor.commit();
+		Session.saveInt(mySharedPreferences, "session_current_view", viewIndex);
+//		mySharedPreferences = getSharedPreferences(Config.NAMESPACE + "_preferences", 0);
+//	    SharedPreferences.Editor editor = mySharedPreferences.edit();
+//	    editor.putInt("session_current_view", viewIndex);
+//	    editor.commit();
 
 	    return true;
 	}
@@ -955,7 +992,7 @@ public class App extends MapActivity {
 		    	return true;
 
 		    case R.id.menu_help:
-		    	activateViewType(WEBVIEW);
+		    	activateViewType(WEBVIEW); 
 		    	Favorites.setStarIcon(Favorites.MODE_GONE);
 		    	HELP_IS_VISIBLE = true;
 				Toast.makeText(this, R.string.txt_loading, Toast.LENGTH_LONG).show();
