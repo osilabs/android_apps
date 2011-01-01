@@ -20,14 +20,8 @@ public final class Config {
 	// These are the Defaults and they will be changed as prefs change. Set current node to -1 to disable.
 	public static       int[]          RADIOS_CURRENT_NODE = {18464,           18589};
 	public static final CharSequence[] RADIOS              = {"Weather Radio", "Police Scanner"};
-	
-//	// Geo points
-//	// zoom:lat:long
-//	public static		String [] GEO_POINTS = {
-//		"11:41878114:-87790000"
-//	};
-	// Will be filled in l8r with sharedprefs. Defaults to the main system map
-	//public static		String [] FAVORITE_GEO_POINTS = { };
+
+	// ----------------------------------------------------------
 	// Formats:
 	//
 	// >> rss << 
@@ -41,7 +35,11 @@ public final class Config {
 	// >> Tags for preference based options
 	// "{WEATHER}"
 	// "{TODAY}"
+	// ----------------------------------------------------------
 
+	
+	
+	
 	// ---------------------------------------------------------
 	// Traffic Tab
 	//
@@ -53,7 +51,7 @@ public final class Config {
 	public static final String [] traffic_urls = {
 		"map~http://wrc.gettingaroundillinois.com/images/wrccook.jpg~120%~ ~40~66",
 		"map~http://wrc.gettingaroundillinois.com/images/wrcimage.jpg~150%~ ~80~6",
-		"[{\"longitude\":\"-87810976\",\"zoom\":\"11\",\"label\":\"Chicago Metro\",\"latitude\":\"41858849\"}]"
+		"{\"longitude\":\"-87810976\",\"zoom\":\"11\",\"label\":\"Chicago Metro\",\"latitude\":\"41858849\"}"
 	};
 	
 	

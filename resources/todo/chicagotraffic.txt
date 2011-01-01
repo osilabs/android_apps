@@ -2,7 +2,7 @@
 
 >> STM <<
 
-* Still won't animate to chicago Metro Map.
+* Switch from a favorite to the first system map, black screen.  When I switch tabs then come back it shows but is showing the mapview. Which is wrong because it should be showing the webview.
 
 * Try putting the yellow favorites star drawable in the mapOverlay::draw() method. To get it on top of the upper rh corner of the mapview.
 

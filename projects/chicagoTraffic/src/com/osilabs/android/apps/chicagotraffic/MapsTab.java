@@ -130,29 +130,23 @@ public class MapsTab {
 	 *  Config.traffic_viewtypes[ adjustedIndex ]
 	 */
 	public static int getAdjustedIndex() {
-		
-		//Log.d(App.TAG, "MapsTab.CURRENT_INDEX:"+MapsTab.CURRENT_INDEX);
-		//Log.d(App.TAG, "MenuIndexes.FAV_SIZE:"+MenuIndexes.FAV_SIZE);
-		
 		// The favs section must be ignorred for looking up in traffic_viewtypes
 		int noFavs = (MapsTab.CURRENT_INDEX - MenuIndexes.FAV_SIZE);
 		
 		// Floor at 0
 		int index = noFavs<0 ? 0 : noFavs;
 		
-		// Ceil at Config.traffic
+		// Ceil at Config.traffic.length
 		int trafficSize = Config.traffic.length;
+		int adjustedIndex = index > (trafficSize-1) ? trafficSize : index;
 		
-		int adjustedIndex = index > trafficSize-1 ? trafficSize : index;
-		Log.d(">>>>> ", "adjusted index: " + Integer.toString(adjustedIndex));
-
+		if(Config.DEBUG>0) Log.d(App.TAG, "MapsTab::getAdjustedIndex() adjustedIndex: " + Integer.toString(adjustedIndex));
 		return adjustedIndex;
 	}
 	
 	public static int getAndroidViewType() {
-		
-		Log.d(App.TAG, "current index: " + Integer.toString(MapsTab.CURRENT_INDEX));
-		Log.d(App.TAG, "favs size: " + Integer.toString(MenuIndexes.FAV_SIZE));
+		if(Config.DEBUG>0) Log.d(App.TAG, "MapsTab::getAndroidViewType() MapsTab.CURRENT_INDEX: " + Integer.toString(MapsTab.CURRENT_INDEX));
+		if(Config.DEBUG>0) Log.d(App.TAG, "MapsTab::getAndroidViewType() MenuIndexes.FAV_SIZE: " + Integer.toString(MenuIndexes.FAV_SIZE));
 		
 		if (MenuIndexes.FAV_SIZE > 0) {
 			// Need to use adjusted index for the favorites

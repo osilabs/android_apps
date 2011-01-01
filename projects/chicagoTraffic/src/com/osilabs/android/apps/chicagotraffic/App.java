@@ -486,12 +486,18 @@ public class App extends MapActivity {
         .setIcon(R.drawable.ic_police)
         .setItems(options, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
+            	// Set the MapsTab.CURRENT_INDEX
+            	// FIXME - Move into MapsTab
+            	MapsTab.CURRENT_INDEX = which;
+
             	int androidViewType = MapsTab.getAndroidViewType();
+            	if(Config.DEBUG>0) Log.d(TAG, "launchMapPicker()::onClick(): androidViewType " + androidViewType);
             	
-            	if ( androidViewType == Config.FAVORITE || androidViewType == Config.MAP ) {
+            	// Favorites come from Config.MAPVIEW_FAVORITES
+            	if ( androidViewType == Config.FAVORITE ) {
 					// Set the current mapview coords
             		
-            		// FIXME - move to favs
+            		// FIXME - move to Favorites
             		JSONArray ja = null;
             		try {
 	        			ja = new JSONArray(Config.MAPVIEW_FAVORITES);
@@ -499,18 +505,15 @@ public class App extends MapActivity {
             		} catch (JSONException e) {
             			//e.printStackTrace();
             		}
-        			
-//            		// Save to shared prefs
-//				    SharedPreferences.Editor editor = App.mySharedPreferences.edit();
-//				    editor.putString("pref_current_mapview_coords", Config.CURRENT_MAPVIEW_COORDS);
-//				    editor.commit();
-//				    
-//				    PREFS_UPDATED = true;
             	}
-            	
-            	// Set the MapsTab.CURRENT_INDEX
-            	// FIXME - Move into MapsTab
-            	MapsTab.CURRENT_INDEX = which;
+
+            	// System maps come from Config.traffic_urls
+            	if ( androidViewType == Config.MAP ) {
+            		// Use the adjusted index to get the map coords from 
+            		//  Config.traffic_urls
+            		setCurrentMapView(Config.traffic_urls[ MapsTab.getAdjustedIndex() ]);
+            		if(Config.DEBUG>0) Log.d(TAG, "launchMapPicker()::onClick(): SetCurrentMapView to " + Config.traffic_urls[ MapsTab.getAdjustedIndex() ]);
+            	}
             	
     			Toast.makeText(getApplicationContext(), 
     					R.string.txt_loading
@@ -534,6 +537,7 @@ public class App extends MapActivity {
 		
 		alert.show();
     }
+    
     protected void setCurrentMapView(String current) {
 		Config.CURRENT_MAPVIEW_COORDS = current;
 	
@@ -612,8 +616,6 @@ public class App extends MapActivity {
 	    }
 	}
 
-    
-    
     /**
      * This gets called in onStart and when the prefs intent returns. 
      * Should cover making sure the local globals always have the current
@@ -701,6 +703,10 @@ public class App extends MapActivity {
 	}
 
 	public void setViewForCurrentTab(int tab_index) {
+		
+		// FIXME - CAn I consolidate setViewForCurrentTab, 
+		//  setCurrentMapView, and setCurrentTab. All these 'Set' 
+		//  functions are confusing
 		Log.d(TAG, "setViewForCurrentTab()");
 
 		// By default, remove the star, it will be shown later if it needs to be.
@@ -730,7 +736,6 @@ public class App extends MapActivity {
 		switch (CURRENT_TAB_INDEX) {
 			case MENU_TRAFFIC:
 				MapsTab.showConfiguration();
-				Log.d(TAG, "Android View Type: " + MapsTab.getAndroidViewType());
 				
 				switch(MapsTab.getAndroidViewType()) {
 					case Config.FAVORITE:
@@ -797,65 +802,21 @@ public class App extends MapActivity {
 		setCurrentPrefs();
 		
 		// Get the current mapview coordinates 
-		Log.d(TAG, "MapsTab.CURRENT_INDEX: " + MapsTab.CURRENT_INDEX);
-		Log.d(TAG, "MapsTab adjusted index: " + MapsTab.getAdjustedIndex());
-		
-		//Config.CURRENT_MAPVIEW_COORDS;
-		
-//	    String[] aFavPoint = Config.FAVORITE_GEO_POINTS[0].split(":");
-//		// Animate to a view.
-//        gpMain = new GeoPoint(
-//        		Integer.parseInt(aFavPoint[1]), 
-//        		Integer.parseInt(aFavPoint[2]));
-//        mcMain.setZoom(Integer.parseInt(aFavPoint[0]));
-//        mcMain.animateTo(gpMain);
-	    
+		Log.d(TAG, "drawTrafficMap() MapsTab.CURRENT_INDEX: " + MapsTab.CURRENT_INDEX);
 		Log.d(TAG, "drawTrafficMap() Config.CURRENT_MAPVIEW_COORDS: " + Config.CURRENT_MAPVIEW_COORDS);
 		
 		JSONObject jo = null;
 		try {
-			//JSONObject jo = ja.getJSONObject(0);
-			//JSONObject jo = new JSONObject(Config.FAVORITE_GEO_POINTS[0]);			
-
-			// FIXME - only using index 0
-			// FIXME - only using index 0
-			// FIXME - only using index 0
-			// FIXME - only using index 0
-			// FIXME - only using index 0
-			// FIXME - only using index 0
-			// FIXME - only using index 0
-			// FIXME - only using index 0
-			// FIXME - only using index 0
-			// FIXME - only using index 0
 			jo = new JSONObject(Config.CURRENT_MAPVIEW_COORDS);
-			Log.d(TAG, "drawTrafficMap() Config.CURRENT_MAPVIEW_COORDS Label: " + jo.getString("label").toString());
 
-//			JSONArray ja = new JSONArray(Config.CURRENT_MAPVIEW_COORDS);
-//			Log.d(TAG, "First label: " + ja.getJSONObject(0).getString("label").toString());
-			
 			gpMain = new GeoPoint(
 					Integer.parseInt(jo.getString("latitude").toString()),
 					Integer.parseInt(jo.getString("longitude").toString()));
 	        mcMain.setZoom(Integer.parseInt(jo.getString("zoom").toString()));
 	        mcMain.animateTo(gpMain);
-//			gpMain = new GeoPoint(
-//					Integer.parseInt(ja.getJSONObject(0).getString("latitude").toString()),
-//					Integer.parseInt(ja.getJSONObject(0).getString("longitude").toString()));
-//	        mcMain.setZoom(Integer.parseInt(ja.getJSONObject(0).getString("zoom").toString()));
-//	        mcMain.animateTo(gpMain);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-	    
-
-
-
-        
-//        gpMain = new GeoPoint(
-//        		Config.GEO_POINTS[0][0], 
-//        		Config.GEO_POINTS[0][1]);
-//        mcMain.animateTo(gpMain);
-//        mcMain.setZoom(11);
 
         // Redraw traffic
         mvTraffic.invalidate();
