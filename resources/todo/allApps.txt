@@ -1,6 +1,8 @@
 // All Apps
 * Email "Tune In" dev to see about using an intent to launch it.
+
 * Do feedback like gTasks maybe (Where it just opens an intent for email and dumps phone data in)
+
 * Make twitter account
 
 * Make facebook page
@@ -15,7 +17,9 @@
 
 >>> Traffic Apps <<<
 
+* Long press stars to change them
 
+* Still need to wiggle the map to get traffic to draw sometimes
 
 >>> Live Dropper and Color Eye <<<
 

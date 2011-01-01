@@ -396,6 +396,7 @@ public class App extends MapActivity {
 //		Log.d(App.TAG, "onStart() complete: Config.MAPVIEW_FAVORITES: " + Config.MAPVIEW_FAVORITES);
 		Log.d(App.TAG, "onStart() complete: " + MapsTab.MenuIndexes.debug());
     }
+    
     @Override
     public void onPause() {
     	super.onPause();
@@ -520,8 +521,9 @@ public class App extends MapActivity {
     					, Toast.LENGTH_LONG).show();
     			
     			// Save current map
-    	    	mySharedPreferences
-    				= getSharedPreferences(Config.NAMESPACE, Activity.MODE_PRIVATE);
+    	    	//mySharedPreferences
+    			//	= getSharedPreferences(Config.NAMESPACE, Activity.MODE_PRIVATE);
+    	    	mySharedPreferences = getSharedPreferences(Config.NAMESPACE + "_preferences", Activity.MODE_PRIVATE);
 			    SharedPreferences.Editor editor = mySharedPreferences.edit();
 			    editor.putInt("session_map", MapsTab.CURRENT_INDEX);
 			    editor.commit();
@@ -531,7 +533,7 @@ public class App extends MapActivity {
 				Log.d(App.TAG, "launchMapPicker()::onClick(): " + MapsTab.MenuIndexes.debug());
     			
 			    setViewForCurrentTab(INDEX_TRAFFIC);
-			    reloadViews();
+			    reloadViews(); 
             }
         }).create();
 		
@@ -850,9 +852,8 @@ public class App extends MapActivity {
         // Log.d(TAG, "setCurrentTab");
 
 		// Save Settings
-    	SharedPreferences prefs 
-			= getSharedPreferences(Config.NAMESPACE, Activity.MODE_PRIVATE);
-	    SharedPreferences.Editor editor = prefs.edit();
+		mySharedPreferences = getSharedPreferences(Config.NAMESPACE + "_preferences", 0);
+	    SharedPreferences.Editor editor = mySharedPreferences.edit();
 	    editor.putInt("session_current_view", viewIndex);
 	    editor.commit();
 

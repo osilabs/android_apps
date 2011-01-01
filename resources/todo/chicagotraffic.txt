@@ -6,15 +6,9 @@
 
 * Try putting the yellow favorites star drawable in the mapOverlay::draw() method. To get it on top of the upper rh corner of the mapview.
 
-* onstart says: "Current map view coords empty" even thought last time i did anything i was looking at a mapview.  This happens after a compile, maybe always. make sure I am setting that current variable and it is getting put in the session and pulled out onStart();
-
 * Fix this fixme : // FIXME, this size should be figured out first.
 
 * Deleted all favorites, clicked the system Chicago Metro mapview map and it says loading but never pulls it up.
-
-* Long press stars to change them
-
-* Still need to wiggle the map to get traffic to draw sometimes
 
 * The counts of favorites have to be rechecked on every onstart just in case the saved pref json strings are unexpectedly deleted or altered.  Must also check they are validate before trying to use them, again, because they are saved on disk and could be corroupt.
 
