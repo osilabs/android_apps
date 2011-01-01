@@ -72,19 +72,24 @@ public class MapsTab {
 //		return Config.maps[CURRENT_INDEX];
 //	}
 	public static String getReloadURLParts() {
-		int adjustedIndex = getAdjustedIndex();
-		if (CURRENT_INDEX > (Config.traffic_urls.length - 1)) CURRENT_INDEX = 0;
+		if(Config.DEBUG>0) Log.d(App.TAG, "MapsTab::getReloadURLParts()");
 		
+		int adjustedIndex = getAdjustedIndex();
+		if (CURRENT_INDEX > ((Config.traffic_urls.length+MapsTab.MenuIndexes.FAV_SIZE) - 1)) CURRENT_INDEX = 0;
+		
+		int androidViewType = MapsTab.getAndroidViewType();
+		if(Config.DEBUG>0) Log.d(App.TAG, "MapsTab::getReloadURLParts() androidViewType: " + androidViewType);
+
 		String query_string= "";
 		
-		if (MapsTab.getAndroidViewType() == Config.IMAGE) {
+		if (androidViewType == Config.IMAGE) {
 			query_string 
 				= "&traffic=" + URLEncoder.encode(Config.traffic_urls[adjustedIndex])
 				+ "&mapscrollx="
 				+ MapsTab.getScrollX()
 				+ "&mapscrolly="
 				+ MapsTab.getScrollY();
-		} else if (MapsTab.getAndroidViewType() == Config.FEED) {
+		} else if (androidViewType == Config.FEED) {
 			query_string 
 				= "&traffic=" + URLEncoder.encode(Config.traffic_urls[adjustedIndex]);
 		} else {

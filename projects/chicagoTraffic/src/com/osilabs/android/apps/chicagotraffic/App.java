@@ -875,17 +875,20 @@ public class App extends MapActivity {
 	 * No toast message
 	 */
 	public void reloadViews() {
+		String reloadString = 
+			WEBVIEW_URL
+			+ "?target=" + CURRENT_TAB_INDEX
+			+ MapsTab.getReloadURLParts()
+			+ CalendarTab.getReloadURLParts()
+			+ CamerasTab.getReloadURLParts();
+			
 		// Refresh main content webview
-		wvMain.loadUrl(WEBVIEW_URL
-						+ "?target=" + CURRENT_TAB_INDEX
-						+ MapsTab.getReloadURLParts()
-						+ CalendarTab.getReloadURLParts()
-						+ CamerasTab.getReloadURLParts());
+		wvMain.loadUrl(reloadString);
+		if(Config.DEBUG>0) Log.d(TAG, "reloadViews() " + reloadString);
 		
 		// Refresh banner webview
 		wvAd.loadUrl(AD_BANNER_URL);
 		
-		//Log.d(TAG, AD_BANNER_URL);
 	}
 
 	public void activateViewType(int v) {
@@ -894,10 +897,12 @@ public class App extends MapActivity {
 		
 		switch(v) {
 			case WEBVIEW:
-				wvMain.setVisibility(View.VISIBLE);			
+				wvMain.setVisibility(View.VISIBLE);
+				if(Config.DEBUG>0) Log.d(TAG,"activateViewType() WEBVIEW");
 				break;
 			case MAPVIEW:
 				mvTraffic.setVisibility(View.VISIBLE);			
+				if(Config.DEBUG>0) Log.d(TAG,"activateViewType() MAPVIEW");
 				break;
 		};
 	}
