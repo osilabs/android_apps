@@ -951,6 +951,7 @@ public class App extends MapActivity {
 
 		    case R.id.menu_help:
 		    	activateViewType(WEBVIEW);
+		    	Favorites.setStarIcon(Favorites.MODE_GONE);
 		    	HELP_IS_VISIBLE = true;
 				Toast.makeText(this, R.string.txt_loading, Toast.LENGTH_LONG).show();
 		    	wvMain.loadUrl(MOBILECONTENT_URL_HELP);

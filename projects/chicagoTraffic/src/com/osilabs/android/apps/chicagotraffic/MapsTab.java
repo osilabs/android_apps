@@ -93,6 +93,7 @@ public class MapsTab {
 
 		return	query_string;
 	}
+	
 	public static void setActive() {
 		App.ivMapsTab.setColorFilter(TAB_ACTIVE_COLOR, PorterDuff.Mode.SRC_ATOP);
 		App.ivMapsTab.setAlpha(ALPHA_ON);

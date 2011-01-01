@@ -2,13 +2,20 @@
 
 >> STM <<
 
+
 * Switch from a favorite to the first system map, black screen.  When I switch tabs then come back it shows but is showing the mapview. Which is wrong because it should be showing the webview.
+
+* The maps, when switching, are causing the CURRENT_INDEX to drop to 0
+D/** osilabs.com **( 4496): MapsTab::getAndroidViewType() MapsTab.CURRENT_INDEX: 0
+D/** osilabs.com **( 4496): MapsTab::getAndroidViewType() MenuIndexes.FAV_SIZE: 9
 
 * Try putting the yellow favorites star drawable in the mapOverlay::draw() method. To get it on top of the upper rh corner of the mapview.
 
 * Fix this fixme : // FIXME, this size should be figured out first.
 
 * Deleted all favorites, clicked the system Chicago Metro mapview map and it says loading but never pulls it up.
+
+* Find and fix FIXME's
 
 * The counts of favorites have to be rechecked on every onstart just in case the saved pref json strings are unexpectedly deleted or altered.  Must also check they are validate before trying to use them, again, because they are saved on disk and could be corroupt.
 
