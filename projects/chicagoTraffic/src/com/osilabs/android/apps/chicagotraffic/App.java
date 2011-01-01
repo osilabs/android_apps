@@ -963,6 +963,7 @@ public class App extends MapActivity {
 		        alertDialog.setButton(this.getResources().getString(R.string.txt_btn_more), new DialogInterface.OnClickListener() {
 		        	public void onClick(DialogInterface dialog, int which) {
 				    	activateViewType(WEBVIEW);
+				    	Favorites.setStarIcon(Favorites.MODE_GONE);
 				    	ABOUT_IS_VISIBLE = true;
 						Toast.makeText(getApplicationContext(), R.string.txt_loading, Toast.LENGTH_LONG).show();
 				    	wvMain.loadUrl(Config.MOBILECONTENT_URL_ABOUT);
@@ -987,6 +988,7 @@ public class App extends MapActivity {
 		    	
 		    	activateViewType(WEBVIEW);
 		    	FEEDBACK_IS_VISIBLE = true;
+		    	Favorites.setStarIcon(Favorites.MODE_GONE);
 				Toast.makeText(this, R.string.txt_loading, Toast.LENGTH_LONG).show();
 		    	wvMain.loadUrl(MOBILECONTENT_URL_FEEDBACK + "?phoneinfo=" + URLEncoder.encode(phoneinfo));
 		    	wvMain.requestFocus(View.FOCUS_DOWN); // Necessary or the input boxes may not take input.
