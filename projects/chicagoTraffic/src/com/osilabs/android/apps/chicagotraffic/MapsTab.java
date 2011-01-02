@@ -51,16 +51,18 @@ public class MapsTab {
 		//  and is a user favorite of a mapview.
 //		NUMBER_OF_SYSTEM_VIEWS = Config.traffic_viewtypes.length;
 		
+		// Init the sizes of the favorites and system map 
+		//  popup menu option arrays.
+		MenuIndexes.init();
+
+		// Must happen after MenuIndexes.init() because that sets the values
+		//  for MenuIndexes.totalSize()
 		if (MapsTab.CURRENT_INDEX > (MenuIndexes.totalSize()) - 1) {
 			// The saved value that came from the session was larger
 			//  than the total indexes available. Set the current index
 			//  back to defaults.
 			MapsTab.CURRENT_INDEX = Config.DEFAULT_MAP_INDEX;
 		}
-		
-		// Init the sizes of the favorites and system map 
-		//  popup menu option arrays.
-		MenuIndexes.init();
 		
 		Log.d(App.TAG, "MapsTab.Init() complete: FAV_SIZE: " + MenuIndexes.FAV_SIZE);
 		Log.d(App.TAG, "MapsTab.Init() complete: Config.MAPVIEW_FAVORITES: " + Config.MAPVIEW_FAVORITES);
@@ -93,7 +95,7 @@ public class MapsTab {
 			query_string 
 				= "&traffic=" + URLEncoder.encode(Config.traffic_urls[adjustedIndex]);
 		} else {
-			query_string = "&traffic=";			
+			query_string = "&traffic=";		
 		}
 
 		return	query_string;
@@ -151,17 +153,23 @@ public class MapsTab {
 	}
 	
 	public static int getAndroidViewType() {
-		if(Config.DEBUG>0) Log.d(App.TAG, "MapsTab::getAndroidViewType() MapsTab.CURRENT_INDEX: " + Integer.toString(MapsTab.CURRENT_INDEX));
-		if(Config.DEBUG>0) Log.d(App.TAG, "MapsTab::getAndroidViewType() MenuIndexes.FAV_SIZE: " + Integer.toString(MenuIndexes.FAV_SIZE));
+		int viewType = -1;
 		
 		if (MenuIndexes.FAV_SIZE > 0) {
 			// Need to use adjusted index for the favorites
 			if ( MapsTab.CURRENT_INDEX < (MenuIndexes.FAV_SIZE)) {
-				return Config.FAVORITE;
+				viewType = Config.FAVORITE;
 			}
 		}
 
-		return Config.traffic_viewtypes[ getAdjustedIndex() ];
+		if (viewType == -1) {
+			// Use adjusted index
+			viewType = Config.traffic_viewtypes[ getAdjustedIndex() ];
+		}
+		
+		if(Config.DEBUG>0) Log.d(App.TAG, "MapsTab::getAndroidViewType() androidViewType: " + viewType);
+		
+		return viewType;
 	}
 
 	/**

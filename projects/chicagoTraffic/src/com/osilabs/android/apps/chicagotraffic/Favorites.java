@@ -89,7 +89,7 @@ public class Favorites {
 			
 			// Remove the current mapview from
 			//  the current mapview global variable and session
-			updateCurrentMapviewCoords();
+			removeCurrentMapviewCoords();
 
 			// Unstar it
 		    setStarIcon(MODE_OFF);
@@ -100,7 +100,7 @@ public class Favorites {
 		}
 	}
 	
-	public static void updateCurrentMapviewCoords() {
+	public static void removeCurrentMapviewCoords() {
 		Config.CURRENT_MAPVIEW_COORDS = "";
 		
 		// Save to shared prefs
@@ -114,8 +114,18 @@ public class Favorites {
 		App.PREFS_UPDATED = true;
 	}
 	
+	public static void saveCurrentMapviewCoords(String coords) {
+		Config.CURRENT_MAPVIEW_COORDS = coords;
+		
+		// Save to shared prefs
+		Session.saveString(App.mySharedPreferences, "pref_current_mapview_coords", coords);
+	    
+		// Tell the main app that prefs have changed so things can reread them
+		App.PREFS_UPDATED = true;
+	}
+	
 	public static void saveNewFav(String favString) {
-		if(Config.DEBUG>1) Log.d(App.TAG, "Favorites::saveNewFav(): " + favString);
+		if(Config.DEBUG>0) Log.d(App.TAG, "Favorites::saveNewFav(): " + favString);
 		
 		// FIXME - Move Config.MAPVIEW_FAVORITES to this class
 		Config.MAPVIEW_FAVORITES = favString;
@@ -187,6 +197,8 @@ public class Favorites {
 				public void onClick(DialogInterface dialog, int whichButton) {  
 			  		prefname = input.getText().toString();
 			  		
+			  		String newCurrentMapviewCoords = "";
+			  		
 			  		if (! prefname.equals("")) {
 			  			JSONArray ja = null;
 			  			ArrayList<JSONObject> aj = new ArrayList<JSONObject>();
@@ -201,12 +213,17 @@ public class Favorites {
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
+						
+						// Set this newly added fav as the new current mapview coords
+	        			saveCurrentMapviewCoords(jo.toString());
+	        			
+	        			// Add favorite to list of favs for menu
 						aj.add(jo);
 						
-	            		Log.d(App.TAG, "New JSON bit: " + aj.toString());
+	            		Log.d(App.TAG, "Favorites::handleClick() New JSON bit: " + aj.toString());
 	
 			  			// 2b. Get existing list of favorites
-						if (Config.MAPVIEW_FAVORITES != "") {
+						if (! Config.MAPVIEW_FAVORITES.equals("")) {
 	        		  		try {
 								ja = new JSONArray(Config.MAPVIEW_FAVORITES);
 								
@@ -225,21 +242,22 @@ public class Favorites {
 									aj.add(jo);
 								}
 								
-								Log.d(App.TAG, "Full Favs JSON: " + aj.toString());
+			            		Log.d(App.TAG, "Favorites::handleClick() Updated JSON: " + aj.toString());
+
 							} catch (JSONException e1) {
 								e1.printStackTrace();
 							}
-
-							// Save updates in session and globals
-		        			saveNewFav(aj.toString());
-
-						    // Set the favorites star to on
-						    setStarIcon(MODE_ON);
-						    
-							Toast.makeText(App.me,
-									"New Favorite Added: " + prefname
-									, Toast.LENGTH_LONG).show();
 						}
+						
+						// Save updates in session and globals
+	        			saveNewFav(aj.toString());
+
+					    // Set the favorites star to on
+					    setStarIcon(MODE_ON);
+					    
+						Toast.makeText(App.me,
+								"New Favorite Added: " + prefname
+								, Toast.LENGTH_LONG).show();
 	        		} else {
 						Toast.makeText(App.me,
 								"Please name your favorite"

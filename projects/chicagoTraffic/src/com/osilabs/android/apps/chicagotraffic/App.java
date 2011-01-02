@@ -135,7 +135,7 @@ public class App extends MapActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        // Log.d(TAG, "onCreate");
+        Log.d(TAG, "onCreate");
 
     	super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
@@ -162,8 +162,9 @@ public class App extends MapActivity {
         //
 		// Restore preferences
         //
+		// FIXME - Can this go away if it is done in setCurrentPrefs()?
 		mySharedPreferences = getSharedPreferences(Config.NAMESPACE, Activity.MODE_PRIVATE);
-		setIndexesForSessionFromPrefs();
+		setCurrentPrefs();
         
 	    // -------------------------
 	    // Top Nav bar
@@ -349,18 +350,19 @@ public class App extends MapActivity {
 			}
 		});
 
-		Log.d(App.TAG, "onCreate() complete: " + MapsTab.MenuIndexes.debug());
+		//Log.d(App.TAG, "onCreate() complete: " + MapsTab.MenuIndexes.debug());
     }
     @Override
     public void onStart() {
-    	Log.d(TAG, "onStart");
     	super.onStart();
+
+    	Log.d(TAG, "onStart");
 
     	setCurrentPrefs(); // This must happen before other things.
 		MapsTab.init();
 		CalendarTab.init();
 		if (Config.mainroads.length > 0) {
-			CamerasTab.init();
+			CamerasTab.init(); 
 		}
 
     	//MenuIndexes.init();
@@ -381,12 +383,14 @@ public class App extends MapActivity {
         // It's going to take a second to load
 		Toast.makeText(this, R.string.txt_loading, Toast.LENGTH_LONG).show();
 		
-    	setViewForCurrentTab(CURRENT_TAB_INDEX);
+		Log.d(App.TAG, "onStart() MapsTab.MenuIndexes: " + MapsTab.MenuIndexes.debug());
+		Log.d(App.TAG, "onStart() CURRENT_TAB_INDEX: " + CURRENT_TAB_INDEX);
+		Log.d(App.TAG, "onStart() MapsTab.CURRENT_INDEX: " + MapsTab.CURRENT_INDEX);
+		Log.d(App.TAG, "onStart() CalendarTab.CURRENT_INDEX: " + CalendarTab.CURRENT_INDEX);
+
+		setViewForCurrentTab(CURRENT_TAB_INDEX);
 		reloadViews();
 		
-//		Log.d(App.TAG, "onStart() complete: FAV_SIZE: " + MenuIndexes.FAV_SIZE);
-//		Log.d(App.TAG, "onStart() complete: Config.MAPVIEW_FAVORITES: " + Config.MAPVIEW_FAVORITES);
-		Log.d(App.TAG, "onStart() complete: " + MapsTab.MenuIndexes.debug());
     }
     
     @Override
@@ -419,33 +423,7 @@ public class App extends MapActivity {
     }
     protected void launchMapPicker() {
         // Log.d(TAG, "launchMapPicker");
-
-    	// Add selected favorites to the list of Traffic maps to view.
-		//CharSequence[] options = new CharSequence[Config.traffic.length]; 
-		//optionsConfig.traffic;
-		//for(int i=0; i<Config.traffic.length; i++) { options[i] = Config.traffic[i]; }
-//		System.arraycopy(Config.traffic, 0, options, 0, Config.traffic.length);
-//		System.arraycopy(Config.traffic, 0, options, 0, Config.traffic.length);
 		
-//		int optionsIndex = options.length;
-
-    	// FIXME, this size should be figured out first.
-    	// FIXME, this size should be figured out first.
-    	// FIXME, this size should be figured out first.
-    	// FIXME, this size should be figured out first.
-    	// FIXME, this size should be figured out first.
-    	// FIXME, this size should be figured out first.
-    	// FIXME, this size should be figured out first.
-    	// FIXME, this size should be figured out first.
-    	// FIXME, this size should be figured out first.
-    	// FIXME, this size should be figured out first.
-    	// FIXME, this size should be figured out first.
-    	// FIXME, this size should be figured out first.
-    	// FIXME, this size should be figured out first.
-    	// FIXME, this size should be figured out first.
-    	// FIXME, this size should be figured out first.
-    	// FIXME, this size should be figured out first.
-    	// FIXME, this size should be figured out first.
 		List<String> sl = new ArrayList<String>();
 
 		// TODO - move these into the Favorites class
@@ -457,7 +435,7 @@ public class App extends MapActivity {
 				sl.add("~ " + ja.getJSONObject(i).getString("label").toString() + " ~");
 			}
 		} catch (JSONException e1) {
-			Log.e(TAG, "Favorites string is empty:" + Config.MAPVIEW_FAVORITES);
+			Log.e(TAG, "App::launchMapPicker() Favorites string is empty:" + Config.MAPVIEW_FAVORITES);
 
 			// FIXME - Here I should delete the contents of Config.MAPVIEW_FAVORITES
 			//  and save the prefs to recover from corroupt saved data.   Maybe have 
@@ -624,6 +602,10 @@ public class App extends MapActivity {
     	// Only waste time rereading prefs if they changed.
     	if (PREFS_UPDATED) {
 		    if (Config.DEBUG > 1) {
+			    Log.d(TAG, "setCurrentPrefs() Orig CURRENT_TAB_INDEX: " + CURRENT_TAB_INDEX);
+			    Log.d(TAG, "setCurrentPrefs() Orig MapsTab.CURRENT_INDEX: " + MapsTab.CURRENT_INDEX);
+			    Log.d(TAG, "setCurrentPrefs() Orig CalendarTab.CURRENT_INDEX: " + CalendarTab.CURRENT_INDEX);
+			    Log.d(TAG, "setCurrentPrefs() Orig CamerasTab.CURRENT_CAMERA_URL: " + CamerasTab.CURRENT_CAMERA_URL);
 			    Log.d(TAG, "setCurrentPrefs() Orig Config.CURRENT_MAPVIEW_COORDS: " + Config.CURRENT_MAPVIEW_COORDS);
 			    Log.d(TAG, "setCurrentPrefs() Orig Config.MAPVIEW_FAVORITES: " + Config.MAPVIEW_FAVORITES);
 			    Log.d(TAG, "setCurrentPrefs() Orig CalendarTab.CURRENT_WEATHER_FEED_INDEX: " + CalendarTab.CURRENT_WEATHER_FEED_INDEX);
@@ -632,94 +614,104 @@ public class App extends MapActivity {
 			    Log.d(TAG, "setCurrentPrefs() Orig Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE]: " + Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE]);
 		    }
 		    
+		    // Unset the flag indicating prefs need to be re-read
 		    PREFS_UPDATED = false;
 	
 			//
 			// User Preferences
-			//
-
-	    	// If this namespace path doesn't end in '_preferences' this won't work.
-	    	SharedPreferences userPrefs = getSharedPreferences(Config.NAMESPACE + "_preferences", Activity.MODE_PRIVATE);
-	    	
-		    // Get weather radio
-			String wr_saved = this.getResources().getString(R.string.pref_weather_radios_selected);
-			Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER] = Integer.parseInt(userPrefs
-		      .getString(wr_saved, Integer.toString(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER])));
-
-		    // Get police radio
-		    String pr_saved = this.getResources().getString(R.string.pref_police_radios_selected);
-			Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE] = Integer.parseInt(userPrefs
-		      .getString(pr_saved, Integer.toString(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE])));
-	
-			// today feed
-			String tf_saved = this.getResources().getString(R.string.pref_today_feed_selected);
-			CalendarTab.CURRENT_TODAY_FEED_INDEX = Integer.parseInt(userPrefs
-				.getString(tf_saved, "0"));
-	
-			// weather feed
-			String wf_saved = this.getResources().getString(R.string.pref_weather_feed_selected);
-			CalendarTab.CURRENT_WEATHER_FEED_INDEX = Integer.parseInt(userPrefs
-				.getString(wf_saved, "0"));
-
+			//			
+		    setUserPrefs();
 			
+			//
+			// Session Preferences
+			//			
+		    setSharedPrefs();
+			
+	        if (Config.DEBUG > 1) {
+			    Log.d(TAG, "setCurrentPrefs() Pull CURRENT_TAB_INDEX: " + CURRENT_TAB_INDEX);
+			    Log.d(TAG, "setCurrentPrefs() Pull MapsTab.CURRENT_INDEX: " + MapsTab.CURRENT_INDEX);
+			    Log.d(TAG, "setCurrentPrefs() Pull CalendarTab.CURRENT_INDEX: " + CalendarTab.CURRENT_INDEX);
+			    Log.d(TAG, "setCurrentPrefs() Pull CamerasTab.CURRENT_CAMERA_URL: " + CamerasTab.CURRENT_CAMERA_URL);
+			    Log.d(TAG, "setCurrentPrefs() Pull Config.CURRENT_MAPVIEW_COORDS: " + Config.CURRENT_MAPVIEW_COORDS);
+			    Log.d(TAG, "setCurrentPrefs() Pull Config.MAPVIEW_FAVORITES: " + Config.MAPVIEW_FAVORITES);
+			    Log.d(TAG, "setCurrentPrefs() Pull CalendarTab.CURRENT_WEATHER_FEED_INDEX: " + CalendarTab.CURRENT_WEATHER_FEED_INDEX);
+			    Log.d(TAG, "setCurrentPrefs() Pull CalendarTab.CURRENT_TODAY_FEED_INDEX: " + CalendarTab.CURRENT_TODAY_FEED_INDEX);
+			    Log.d(TAG, "setCurrentPrefs() Pull Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER]: " + Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER]);
+			    Log.d(TAG, "setCurrentPrefs() Pull Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE]: " + Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE]);
+    		}
+    	}
+    }
+    
+    private void setSharedPrefs() {
+	    // Set some locals
+	    try {
 			//
 			// Session Preferences
 			//
 			mySharedPreferences = getSharedPreferences(Config.NAMESPACE, Activity.MODE_PRIVATE);
 			
-		    // Favorite Map View
-			// FIXME - Make sure I call set current favorites after I update this value
-			// todo - This shouldn't be in Config. Move it to App
-			Config.MAPVIEW_FAVORITES
-		        = mySharedPreferences.getString("pref_mapview_favorites", "");
-
-		    Config.CURRENT_MAPVIEW_COORDS
-		        = mySharedPreferences.getString("pref_current_mapview_coords", Config.CURRENT_MAPVIEW_COORDS);
-
-		    // Set some locals
-		    setIndexesForSessionFromPrefs();
-//		    try {
-//		        CURRENT_TAB_INDEX = mySharedPreferences.getInt("session_current_view", Config.DEFAULT_TAB_INDEX);
-//		        MapsTab.CURRENT_INDEX = mySharedPreferences.getInt("session_map", Config.DEFAULT_MAP_INDEX);
-//		        CalendarTab.CURRENT_INDEX = mySharedPreferences.getInt("session_calendar", Config.DEFAULT_CALENDAR_INDEX);
-//		        CamerasTab.CURRENT_CAMERA_URL = mySharedPreferences.getString("session_camera_1", Config.DEFAULT_CAMERA_URL);
-//			} catch (Exception e) {
-//				Log.e(TAG, "Could not set shared prefs into session, setting to defaults");
-//				
-//		        CURRENT_TAB_INDEX = Config.DEFAULT_TAB_INDEX;
-//		        MapsTab.CURRENT_INDEX = Config.DEFAULT_MAP_INDEX;
-//		        CalendarTab.CURRENT_INDEX = Config.DEFAULT_CALENDAR_INDEX;
-//		        CamerasTab.CURRENT_CAMERA_URL = Config.DEFAULT_CAMERA_URL;
-//			}
-			
-	        if (Config.DEBUG > 1) {
-			    Log.d(TAG, "setCurrentPrefs() Pulled Config.CURRENT_MAPVIEW_COORDS: " + Config.CURRENT_MAPVIEW_COORDS);
-			    Log.d(TAG, "setCurrentPrefs() Pulled Config.MAPVIEW_FAVORITES: " + Config.MAPVIEW_FAVORITES);
-			    Log.d(TAG, "setCurrentPrefs() Pulled CalendarTab.CURRENT_WEATHER_FEED_INDEX: " + CalendarTab.CURRENT_WEATHER_FEED_INDEX);
-			    Log.d(TAG, "setCurrentPrefs() Pulled CalendarTab.CURRENT_TODAY_FEED_INDEX: " + CalendarTab.CURRENT_TODAY_FEED_INDEX);
-			    Log.d(TAG, "setCurrentPrefs() Pulled Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER]: " + Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER]);
-			    Log.d(TAG, "setCurrentPrefs() Pulled Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE]: " + Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE]);
-    		}
-    	}
-    }
-    
-    private void setIndexesForSessionFromPrefs() {
-	    // Set some locals
-	    try {
 	        CURRENT_TAB_INDEX = mySharedPreferences.getInt("session_current_view", Config.DEFAULT_TAB_INDEX);
 	        MapsTab.CURRENT_INDEX = mySharedPreferences.getInt("session_map", Config.DEFAULT_MAP_INDEX);
 	        CalendarTab.CURRENT_INDEX = mySharedPreferences.getInt("session_calendar", Config.DEFAULT_CALENDAR_INDEX);
 	        CamerasTab.CURRENT_CAMERA_URL = mySharedPreferences.getString("session_camera_1", Config.DEFAULT_CAMERA_URL);
+		    Config.CURRENT_MAPVIEW_COORDS = mySharedPreferences.getString("pref_current_mapview_coords", Config.CURRENT_MAPVIEW_COORDS);
+		    // Favorite Map View
+			// FIXME - Make sure I call set current favorites after I update this value
+			// todo - This shouldn't be in Config. Move it to App
+			Config.MAPVIEW_FAVORITES = mySharedPreferences.getString("pref_mapview_favorites", "");
 		} catch (Exception e) {
+			e.printStackTrace();
+
+			// If we get errors setting prefs, set them to defaults
 			Log.e(TAG, "Could not set shared prefs into session, setting to defaults");
 			
 	        CURRENT_TAB_INDEX = Config.DEFAULT_TAB_INDEX;
 	        MapsTab.CURRENT_INDEX = Config.DEFAULT_MAP_INDEX;
 	        CalendarTab.CURRENT_INDEX = Config.DEFAULT_CALENDAR_INDEX;
 	        CamerasTab.CURRENT_CAMERA_URL = Config.DEFAULT_CAMERA_URL;
+		    Config.CURRENT_MAPVIEW_COORDS = Config.DEFAULT_MAPVIEW_COORDS;
+			Config.MAPVIEW_FAVORITES = "";
 		}
     }
     
+    private void setUserPrefs() {
+	    try {
+	    	// If this namespace path doesn't end in '_preferences' this won't work.
+	    	SharedPreferences userPrefs = getSharedPreferences(Config.NAMESPACE + "_preferences", Activity.MODE_PRIVATE);
+	    	
+	        // Get weather radio
+	    	String wr_saved = this.getResources().getString(R.string.pref_weather_radios_selected);
+	    	Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER] = Integer.parseInt(userPrefs
+	          .getString(wr_saved, Integer.toString(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER])));
+
+	        // Get police radio
+	        String pr_saved = this.getResources().getString(R.string.pref_police_radios_selected);
+	    	Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE] = Integer.parseInt(userPrefs
+	          .getString(pr_saved, Integer.toString(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE])));
+
+	    	// today feed
+	    	String tf_saved = this.getResources().getString(R.string.pref_today_feed_selected);
+	    	CalendarTab.CURRENT_TODAY_FEED_INDEX = Integer.parseInt(userPrefs
+	    		.getString(tf_saved, "0"));
+
+	    	// weather feed
+	    	String wf_saved = this.getResources().getString(R.string.pref_weather_feed_selected);
+	    	CalendarTab.CURRENT_WEATHER_FEED_INDEX = Integer.parseInt(userPrefs
+	    		.getString(wf_saved, "0"));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+			// If we get errors setting prefs, set them to defaults
+			Log.e(TAG, "Could not set user prefs, using defaults");
+			
+			Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER] = Config.RADIOS_DEFAULT_NODE[Config.INDEX_OF_WEATHER];
+			Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE] = Config.RADIOS_DEFAULT_NODE[Config.INDEX_OF_POLICE];
+			CalendarTab.CURRENT_TODAY_FEED_INDEX = 0;
+			CalendarTab.CURRENT_WEATHER_FEED_INDEX = 0;
+		}
+    }
+        
 	public void colorTheCurrentTab() {
         // Log.d(TAG, "colorTheCurrentTab");
 
@@ -745,7 +737,7 @@ public class App extends MapActivity {
 		// FIXME - CAn I consolidate setViewForCurrentTab, 
 		//  setCurrentMapView, and setCurrentTab. All these 'Set' 
 		//  functions are confusing
-		Log.d(TAG, "setViewForCurrentTab()");
+		Log.d(TAG, "setViewForCurrentTab() tab_index: " + tab_index);
 
 		// By default, remove the star, it will be shown later if it needs to be.
 		Favorites.setStarIcon(Favorites.MODE_GONE);
@@ -885,7 +877,7 @@ public class App extends MapActivity {
 	
 	
 	public boolean setCurrentTab(int viewIndex) {
-        // Log.d(TAG, "setCurrentTab");
+        Log.d(TAG, "setCurrentTab() viewIndex: " + viewIndex);
 
 		// Save Settings
 		Session.saveInt(mySharedPreferences, "session_current_view", viewIndex);
