@@ -4,19 +4,12 @@
 
 * Home business tracker - google doc shared w kathy. 1. dba sheet, 2. llc. 3. Business Plan. 4. Business Loan.
 
-
-* Bug - 2 favorites.  Switch to the second one (index 1). Force a stop of chicago traffic. Open it again and it is not on the last favorite.  Prefs are not being saved bc when I come back I have my favs but current index is not.
-
-* Rebooted phone and was on mapview favorite.  When I came back, my favs were still there so they did save but the current index was that of a webview because the spinner was going.
-
-* *** Must wrap all session data grabbing in try catches
-
-* After deleting all favorites. I recompiled and it started out on Vegas which had already been deleted.  Must have been saved in session.
-
 * Had two favorites, was on my newly added favorite. hit back and program closed. launched again with icon and it started on the first system map, not the favorite I was once on.
 
 * Find and fix FIXME's
 * Fix this fixme : // FIXME, this size should be figured out first.
+
+* Put in the share feature
 
 * Put the Config.DEBUG check on all the Log.d's
 

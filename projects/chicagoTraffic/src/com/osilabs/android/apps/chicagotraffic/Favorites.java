@@ -128,9 +128,9 @@ public class Favorites {
 		if(Config.DEBUG>0) Log.d(App.TAG, "Favorites::saveNewFav(): " + favString);
 		
 		// FIXME - Move Config.MAPVIEW_FAVORITES to this class
-		Config.MAPVIEW_FAVORITES = favString;
 		
 		// Save to shared prefs
+		Config.MAPVIEW_FAVORITES = favString;
 		Session.saveString(App.mySharedPreferences, "pref_mapview_favorites", favString);
 //    	App.mySharedPreferences = App.me.getSharedPreferences(Config.NAMESPACE + "_preferences", 0);
 //	    SharedPreferences.Editor editor = App.mySharedPreferences.edit();
@@ -139,7 +139,8 @@ public class Favorites {
 	    	    
 	    // New fav is added to top of list so set the current index 
 	    //  to 0 so the new one is the current one
-	    MapsTab.CURRENT_INDEX = 0;
+		MapsTab.CURRENT_INDEX = 0;
+		Session.saveInt(App.mySharedPreferences, "session_map", MapsTab.CURRENT_INDEX);
 	    
 	    // Update MenuIndex FAV_SIZE
 		MapsTab.MenuIndexes.setFavArraySize();
@@ -258,6 +259,8 @@ public class Favorites {
 						Toast.makeText(App.me,
 								"New Favorite Added: " + prefname
 								, Toast.LENGTH_LONG).show();
+						
+						Log.d(App.TAG, "Favorites::handleClick() After new added: " + MapsTab.MenuIndexes.debug());
 	        		} else {
 						Toast.makeText(App.me,
 								"Please name your favorite"

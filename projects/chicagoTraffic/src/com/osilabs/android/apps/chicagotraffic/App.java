@@ -346,7 +346,7 @@ public class App extends MapActivity {
 			public void onClick(View v) {
 				Favorites.handleClick();
         		MapsTab.MenuIndexes.setFavArrayIndex(MapsTab.CURRENT_INDEX);
-        		Log.d(TAG, MapsTab.MenuIndexes.debug());
+        		Log.d(TAG, "App::" + MapsTab.MenuIndexes.debug());
 			}
 		});
 
@@ -880,11 +880,8 @@ public class App extends MapActivity {
         Log.d(TAG, "setCurrentTab() viewIndex: " + viewIndex);
 
 		// Save Settings
+        // FIXME - Is this really happening? Not committing... Maybe I don't need this.
 		Session.saveInt(mySharedPreferences, "session_current_view", viewIndex);
-//		mySharedPreferences = getSharedPreferences(Config.NAMESPACE + "_preferences", 0);
-//	    SharedPreferences.Editor editor = mySharedPreferences.edit();
-//	    editor.putInt("session_current_view", viewIndex);
-//	    editor.commit();
 
 	    return true;
 	}
@@ -893,7 +890,7 @@ public class App extends MapActivity {
 	 * Like reload views but displays a toast about it.
 	 */
 	public void refreshViews() {
-        // Log.d(TAG, "refreshViews");
+        Log.d(TAG, "refreshViews");
 		Toast.makeText(getApplicationContext(), R.string.txt_loading, Toast.LENGTH_SHORT).show();
 
 		reloadViews();

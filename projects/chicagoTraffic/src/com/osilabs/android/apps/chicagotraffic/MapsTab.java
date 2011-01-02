@@ -62,6 +62,7 @@ public class MapsTab {
 			//  than the total indexes available. Set the current index
 			//  back to defaults.
 			MapsTab.CURRENT_INDEX = Config.DEFAULT_MAP_INDEX;
+			Log.d(App.TAG, "MapsTab.Init() Current index fell back on default: " + Config.DEFAULT_MAP_INDEX);
 		}
 		
 		Log.d(App.TAG, "MapsTab.Init() complete: FAV_SIZE: " + MenuIndexes.FAV_SIZE);
@@ -218,7 +219,7 @@ public class MapsTab {
 			return FAV_SIZE + SYS_SIZE;
 		}
 		public static String debug() {
-			return "MenuIndexes:: SYS_SIZE:" + SYS_SIZE +
+			return "MenuIndexes::debug() SYS_SIZE:" + SYS_SIZE +
 			" SYS_INDEX:" + SYS_INDEX +
 			" FAV_SIZE:" + FAV_SIZE +
 			" FAV_INDEX:" + FAV_INDEX;
