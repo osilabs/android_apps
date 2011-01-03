@@ -13,7 +13,6 @@ import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
-import com.osilabs.android.apps.chicagotraffic.MapsTab.MenuIndexes;
 import com.osilabs.android.lib.gestures.Session;
 
 import android.app.Activity;
@@ -179,6 +178,7 @@ public class App extends MapActivity {
 		});
 
 		ivCalendarTab = (ImageView) findViewById(R.id.launcher_calendar);
+		// FIXME - remove App. from these
 		App.ivCalendarTab.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -661,8 +661,6 @@ public class App extends MapActivity {
 	        CalendarTab.CURRENT_INDEX = mySharedPreferences.getInt("session_calendar", Config.DEFAULT_CALENDAR_INDEX);
 	        CamerasTab.CURRENT_CAMERA_URL = mySharedPreferences.getString("session_camera_1", Config.DEFAULT_CAMERA_URL);
 		    Config.CURRENT_MAPVIEW_COORDS = mySharedPreferences.getString("pref_current_mapview_coords", Config.CURRENT_MAPVIEW_COORDS);
-		    // Favorite Map View
-			// FIXME - Make sure I call set current favorites after I update this value
 			// todo - This shouldn't be in Config. Move it to App
 			Config.MAPVIEW_FAVORITES = mySharedPreferences.getString("pref_mapview_favorites", "");
 		} catch (Exception e) {

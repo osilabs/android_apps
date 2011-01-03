@@ -28,6 +28,7 @@
 
 * Update strings.xml, arrays.xml, Config.java
 
+* Update as many FIXME's, TODO's, and todo's as possible early in the game so they can be tested as the app is worked on
 
 **
 ** Traffic apps
