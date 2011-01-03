@@ -106,6 +106,7 @@ public final class Config {
 		"rss~http://feeds.weatherbug.com/rss.aspx?zipcode=60601&feed=curr,fcst,fcsttxt,cpht&zcode=z4641~ ~ ",
 		"rss~http://rss.accuweather.com/rss/liveweather_rss.asp?metric=0&locCode=60602~ ~ ",
 		"rss~http://rss.weather.com/weather/rss/local/USIL0225?cm_ven=LWO&cm_cat=rss&par=LWO_rss~ ~ ",
+		"rss~http://feeds.weatherbug.com/rss.aspx?zipcode=&feed=currtxt,fcsttxt&zcode=z4641~ ~ "
 	};
 	public static final String[] today_values = {
 		"rss~http://chicago.metromix.com/rss/feed/daily_picks~ ~link",
