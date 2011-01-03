@@ -978,6 +978,7 @@ public class App extends MapActivity {
 
 		    case R.id.menu_share:
 				final Intent shareintent = new Intent(Intent.ACTION_SEND);
+				shareintent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				shareintent.setType("text/html");
 				shareintent.putExtra(Intent.EXTRA_SUBJECT, this.getResources().getString(R.string.txt_sharing_subject));
 				shareintent.putExtra(Intent.EXTRA_TEXT, 
