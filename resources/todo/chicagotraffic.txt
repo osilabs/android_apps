@@ -3,11 +3,10 @@
 >> STM <<
 
 * Refresh doesn't seem to have an effect on rss feeds under calendar.
+* Check that the refresh is working
 
 * Find and fix FIXME's
 * Fix this fixme : // FIXME, this size should be figured out first.
-
-* Put in the share feature
 
 * Put the Config.DEBUG check on all the Log.d's
 
@@ -20,7 +19,6 @@ renaming preference:
 		and 
 		pref_current_mapview_coords
 
-* Check that the refresh is working
 
 
 
