@@ -102,9 +102,9 @@ public final class Config {
 		"rss~http://rss.weather.com/weather/rss/local/USIL0225?cm_ven=LWO&cm_cat=rss&par=LWO_rss~ ~ ",
 	};
 	public static final String[] today_values = {
-		"rss~http://www.chicagoreader.com/chicago/Rss.xml~ ~link",
 		"rss~http://chicago.metromix.com/rss/feed/daily_picks~ ~link",
 		"rss~http://chicago.metromix.com/rss/popup/bars-and-clubs_daily_picks~ ~link",
+		"rss~http://www.chicagoreader.com/chicago/Rss.xml~ ~link",
 	};
 	//
 	// Calendar tab

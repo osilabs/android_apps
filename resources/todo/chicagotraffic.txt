@@ -2,6 +2,16 @@
 
 >> STM <<
 
+* Don't change indexes in arrays of rs s. Add another weather feed but do a no icons version
+
+* Default weather radii sounds like ass
+
+* Add to help how to make and remove a favorite
+
+* Need to improve the feedback so the user can get a response from me.
+
+* The share intent opens the email client in a mode that causes our to replace the main app so re opening it doesn't open ct
+
 * Refresh doesn't seem to have an effect on rss feeds under calendar.
 * Check that the refresh is working
 
