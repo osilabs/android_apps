@@ -1,6 +1,7 @@
 
 >> Release checklist <<
 
+* Set Config.DEBUG=0; And other class DEBUG's
 * Update versions in manifest (+1 because updating code and will need to recommit)
 * App market descriptions
 	- update description

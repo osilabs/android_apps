@@ -157,7 +157,7 @@ public class Favorites {
 			//  are removing a favorite.
 			
 			if (MapsTab.MenuIndexes.FAV_INDEX != -1) {
-				Log.d(App.TAG, "REMOVE INDEX: " + MapsTab.MenuIndexes.FAV_INDEX);
+				if(Config.DEBUG>0)Log.d(App.TAG, "REMOVE INDEX: " + MapsTab.MenuIndexes.FAV_INDEX);
 				
 				removeFavorite(MapsTab.MenuIndexes.FAV_INDEX);
 			}
@@ -221,7 +221,7 @@ public class Favorites {
 	        			// Add favorite to list of favs for menu
 						aj.add(jo);
 						
-	            		Log.d(App.TAG, "Favorites::handleClick() New JSON bit: " + aj.toString());
+	            		if(Config.DEBUG>0)Log.d(App.TAG, "Favorites::handleClick() New JSON bit: " + aj.toString());
 	
 			  			// 2b. Get existing list of favorites
 						if (! Config.MAPVIEW_FAVORITES.equals("")) {
@@ -243,7 +243,7 @@ public class Favorites {
 									aj.add(jo);
 								}
 								
-			            		Log.d(App.TAG, "Favorites::handleClick() Updated JSON: " + aj.toString());
+			            		if(Config.DEBUG>0)Log.d(App.TAG, "Favorites::handleClick() Updated JSON: " + aj.toString());
 
 							} catch (JSONException e1) {
 								e1.printStackTrace();
@@ -260,7 +260,7 @@ public class Favorites {
 								"New Favorite Added: " + prefname
 								, Toast.LENGTH_LONG).show();
 						
-						Log.d(App.TAG, "Favorites::handleClick() After new added: " + MapsTab.MenuIndexes.debug());
+						if(Config.DEBUG>0)Log.d(App.TAG, "Favorites::handleClick() After new added: " + MapsTab.MenuIndexes.debug());
 	        		} else {
 						Toast.makeText(App.me,
 								"Please name your favorite"

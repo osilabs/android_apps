@@ -2,27 +2,14 @@
 
 >> STM <<
 
+* Put the Config.DEBUG check on all the Log.d's
+
 * Refresh doesn't seem to have an effect on rss feeds under calendar.
 * Check that the refresh is working
 
-* Feedback responses
-
-* Find and fix FIXME's
-* Fix this fixme : // FIXME, this size should be figured out first.
-
-* Put the Config.DEBUG check on all the Log.d's
-
-* The counts of favorites have to be rechecked on every onstart just in case the saved pref json strings are unexpectedly deleted or altered.  Must also check they are validate before trying to use them, again, because they are saved on disk and could be corroupt.
-
-* Make sure I finished this
-renaming preference: 
-	pref_favorite_map_frame_1 to 
-		pref_mapview_favorites 
-		and 
-		pref_current_mapview_coords
-
 * Add that info thingie to tell users there is a new version
 
+* Find and fix FIXME's
 
 
 

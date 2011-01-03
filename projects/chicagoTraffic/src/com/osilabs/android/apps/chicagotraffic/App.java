@@ -135,7 +135,7 @@ public class App extends MapActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, "onCreate");
+        if(Config.DEBUG>0)Log.d(TAG, "onCreate");
 
     	super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
@@ -346,17 +346,17 @@ public class App extends MapActivity {
 			public void onClick(View v) {
 				Favorites.handleClick();
         		MapsTab.MenuIndexes.setFavArrayIndex(MapsTab.CURRENT_INDEX);
-        		Log.d(TAG, "App::" + MapsTab.MenuIndexes.debug());
+        		if(Config.DEBUG>0)Log.d(TAG, "App::" + MapsTab.MenuIndexes.debug());
 			}
 		});
 
-		//Log.d(App.TAG, "onCreate() complete: " + MapsTab.MenuIndexes.debug());
+		//if(Config.DEBUG>0)Log.d(App.TAG, "onCreate() complete: " + MapsTab.MenuIndexes.debug());
     }
     @Override
     public void onStart() {
     	super.onStart();
 
-    	Log.d(TAG, "onStart");
+    	if(Config.DEBUG>0)Log.d(TAG, "onStart");
 
     	setCurrentPrefs(); // This must happen before other things.
 		MapsTab.init();
@@ -383,11 +383,13 @@ public class App extends MapActivity {
         // It's going to take a second to load
 		Toast.makeText(this, R.string.txt_loading, Toast.LENGTH_LONG).show();
 		
-		Log.d(App.TAG, "onStart() MapsTab.MenuIndexes: " + MapsTab.MenuIndexes.debug());
-		Log.d(App.TAG, "onStart() CURRENT_TAB_INDEX: " + CURRENT_TAB_INDEX);
-		Log.d(App.TAG, "onStart() MapsTab.CURRENT_INDEX: " + MapsTab.CURRENT_INDEX);
-		Log.d(App.TAG, "onStart() CalendarTab.CURRENT_INDEX: " + CalendarTab.CURRENT_INDEX);
-
+		if(Config.DEBUG>0){
+			Log.d(App.TAG, "onStart() MapsTab.MenuIndexes: " + MapsTab.MenuIndexes.debug());
+			Log.d(App.TAG, "onStart() CURRENT_TAB_INDEX: " + CURRENT_TAB_INDEX);
+			Log.d(App.TAG, "onStart() MapsTab.CURRENT_INDEX: " + MapsTab.CURRENT_INDEX);
+			Log.d(App.TAG, "onStart() CalendarTab.CURRENT_INDEX: " + CalendarTab.CURRENT_INDEX);
+		}
+		
 		setViewForCurrentTab(CURRENT_TAB_INDEX);
 		reloadViews();
 		
@@ -415,14 +417,14 @@ public class App extends MapActivity {
 	}
 
     protected void launchCameraPicker() { 
-        // Log.d(TAG, "launchCameraPicker");
+        // if(Config.DEBUG>0)Log.d(TAG, "launchCameraPicker");
 
 		Context c = getApplicationContext();
 		Intent intent = new Intent().setClassName(c, Config.NAMESPACE + ".CameraELV");
 		startActivityForResult(intent, INTENT_RESULT_CODE_CAMERA_PICKER); 
     }
     protected void launchMapPicker() {
-        // Log.d(TAG, "launchMapPicker");
+        // if(Config.DEBUG>0)Log.d(TAG, "launchMapPicker");
 		
 		List<String> sl = new ArrayList<String>();
 
@@ -505,7 +507,7 @@ public class App extends MapActivity {
 			    
 			    // Update the current favorites index.
 			    MapsTab.MenuIndexes.setFavArrayIndex(MapsTab.CURRENT_INDEX);
-				Log.d(App.TAG, "launchMapPicker()::onClick(): " + MapsTab.MenuIndexes.debug());
+			    if(Config.DEBUG>0)Log.d(App.TAG, "launchMapPicker()::onClick(): " + MapsTab.MenuIndexes.debug());
     			
 			    setViewForCurrentTab(INDEX_TRAFFIC);
 			    reloadViews(); 
@@ -527,7 +529,7 @@ public class App extends MapActivity {
 	    PREFS_UPDATED = true;
     }
     protected void launchCalendarPicker() { 
-        // Log.d(TAG, "LaunchCalendarPicker");
+        // if(Config.DEBUG>0)Log.d(TAG, "LaunchCalendarPicker");
 
 		AlertDialog alert = new AlertDialog.Builder(this)
         .setTitle(R.string.txt_calendar_popup_title)
@@ -555,7 +557,7 @@ public class App extends MapActivity {
     }
     @Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        // Log.d(TAG, "onActivityResult: " + Integer.toString(requestCode));
+        // if(Config.DEBUG>0)Log.d(TAG, "onActivityResult: " + Integer.toString(requestCode));
 
 		// See which child activity is calling us back.
 	    switch (requestCode) {
@@ -602,7 +604,7 @@ public class App extends MapActivity {
      * prefs.
      */
     protected void setCurrentPrefs() {
-    	Log.d(TAG, "++ setCurrentPrefs() ++");
+    	if(Config.DEBUG>0)Log.d(TAG, "++ setCurrentPrefs() ++");
     	// Only waste time rereading prefs if they changed.
     	if (PREFS_UPDATED) {
 		    if (Config.DEBUG > 1) {
@@ -717,7 +719,7 @@ public class App extends MapActivity {
     }
         
 	public void colorTheCurrentTab() {
-        // Log.d(TAG, "colorTheCurrentTab");
+        // if(Config.DEBUG>0)Log.d(TAG, "colorTheCurrentTab");
 
 		MapsTab.setInactive();
 		CalendarTab.setInactive();
@@ -741,7 +743,7 @@ public class App extends MapActivity {
 		// FIXME - CAn I consolidate setViewForCurrentTab, 
 		//  setCurrentMapView, and setCurrentTab. All these 'Set' 
 		//  functions are confusing
-		Log.d(TAG, "setViewForCurrentTab() tab_index: " + tab_index);
+		if(Config.DEBUG>0)Log.d(TAG, "setViewForCurrentTab() tab_index: " + tab_index);
 
 		// By default, remove the star, it will be shown later if it needs to be.
 		Favorites.setStarIcon(Favorites.MODE_GONE);
@@ -836,8 +838,8 @@ public class App extends MapActivity {
 		setCurrentPrefs();
 		
 		// Get the current mapview coordinates 
-		Log.d(TAG, "drawTrafficMap() MapsTab.CURRENT_INDEX: " + MapsTab.CURRENT_INDEX);
-		Log.d(TAG, "drawTrafficMap() Config.CURRENT_MAPVIEW_COORDS: " + Config.CURRENT_MAPVIEW_COORDS);
+		if(Config.DEBUG>0)Log.d(TAG, "drawTrafficMap() MapsTab.CURRENT_INDEX: " + MapsTab.CURRENT_INDEX);
+		if(Config.DEBUG>0)Log.d(TAG, "drawTrafficMap() Config.CURRENT_MAPVIEW_COORDS: " + Config.CURRENT_MAPVIEW_COORDS);
 		
 		JSONObject jo = null;
 		try {
@@ -881,7 +883,7 @@ public class App extends MapActivity {
 	
 	
 	public boolean setCurrentTab(int viewIndex) {
-        Log.d(TAG, "setCurrentTab() viewIndex: " + viewIndex);
+        if(Config.DEBUG>0)Log.d(TAG, "setCurrentTab() viewIndex: " + viewIndex);
 
 		// Save Settings
         // FIXME - Is this really happening? Not committing... Maybe I don't need this.
@@ -894,7 +896,7 @@ public class App extends MapActivity {
 	 * Like reload views but displays a toast about it.
 	 */
 	public void refreshViews() {
-        Log.d(TAG, "refreshViews");
+        if(Config.DEBUG>0)Log.d(TAG, "refreshViews");
 		Toast.makeText(getApplicationContext(), R.string.txt_loading, Toast.LENGTH_SHORT).show();
 
 		reloadViews();
@@ -950,7 +952,7 @@ public class App extends MapActivity {
     /* Creates the menu items */
 	public boolean onCreateOptionsMenu(Menu menu) {
 		
-        // Log.d(TAG, "onCreateOptionsMenu");
+        // if(Config.DEBUG>0)Log.d(TAG, "onCreateOptionsMenu");
 
 	    MenuInflater inflater = getMenuInflater();
 	    inflater.inflate(R.menu.options, menu);
@@ -1073,7 +1075,7 @@ public class App extends MapActivity {
 
 		@Override
 		public boolean shouldOverrideUrlLoading(WebView view, String url) {
-	        // Log.d(TAG, "mywebviewclient::shouldoverrideurlloading");
+	        // if(Config.DEBUG>0)Log.d(TAG, "mywebviewclient::shouldoverrideurlloading");
 			
 			// 0=in webview, 1=in system browser
 			int launchmode = 1;
@@ -1100,14 +1102,14 @@ public class App extends MapActivity {
 	final class MyWebChromeClient extends WebViewClient {
         // @Override
         public boolean onJsCalendar(WebView view, String url, String message, JsResult result) {
-            // Log.d(TAG, "MyWebChromeClient::onjsalert");
+            // if(Config.DEBUG>0)Log.d(TAG, "MyWebChromeClient::onjsalert");
 
             result.confirm();
             return true;
         }
         // Javascript in webview can call colsole.log('the message') to log messages.
 		public void onConsoleMessage(String message, int lineNumber, String sourceID) {
-			// Log.d(TAG, message + " -- From line " + lineNumber + " of " + sourceID);
+			// if(Config.DEBUG>0)Log.d(TAG, message + " -- From line " + lineNumber + " of " + sourceID);
 		}
 	}
     

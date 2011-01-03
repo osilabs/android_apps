@@ -43,13 +43,13 @@ public class CameraELV extends ExpandableListActivity implements OnChildClickLis
     @Override
     public void onPause() {
     	super.onPause();
-    	//Log.d("** CameraELV **", "onPause");
+    	//if(Config.DEBUG>0)Log.d("** CameraELV **", "onPause");
     }
 
     @Override
     public void onResume() {
     	super.onResume();
-    	//Log.d("** CameraELV **", "onResume");
+    	//if(Config.DEBUG>0)Log.d("** CameraELV **", "onResume");
     }
     
     

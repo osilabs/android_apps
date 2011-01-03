@@ -32,7 +32,7 @@ public class ScannerRadio {
 	}
 	
 	public static void launchScanner(int which_scanner) {
-		// Log.d(TAG, "Scanner node: " + Integer.toString(which_scanner));
+		// if(Config.DEBUG>0)Log.d(TAG, "Scanner node: " + Integer.toString(which_scanner));
 		
 		boolean scannerAvailable = isIntentAvailable(App.me,
 				SCANNER_RADIO_NAMESPACE + ".intent.action." + SCANNER_RADIO_ACTION);

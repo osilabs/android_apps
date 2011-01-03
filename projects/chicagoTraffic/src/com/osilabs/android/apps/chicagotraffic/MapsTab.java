@@ -62,11 +62,11 @@ public class MapsTab {
 			//  than the total indexes available. Set the current index
 			//  back to defaults.
 			MapsTab.CURRENT_INDEX = Config.DEFAULT_MAP_INDEX;
-			Log.d(App.TAG, "MapsTab.Init() Current index fell back on default: " + Config.DEFAULT_MAP_INDEX);
+			if(Config.DEBUG>0)Log.d(App.TAG, "MapsTab.Init() Current index fell back on default: " + Config.DEFAULT_MAP_INDEX);
 		}
 		
-		Log.d(App.TAG, "MapsTab.Init() complete: FAV_SIZE: " + MenuIndexes.FAV_SIZE);
-		Log.d(App.TAG, "MapsTab.Init() complete: Config.MAPVIEW_FAVORITES: " + Config.MAPVIEW_FAVORITES);
+		if(Config.DEBUG>0)Log.d(App.TAG, "MapsTab.Init() complete: FAV_SIZE: " + MenuIndexes.FAV_SIZE);
+		if(Config.DEBUG>0)Log.d(App.TAG, "MapsTab.Init() complete: Config.MAPVIEW_FAVORITES: " + Config.MAPVIEW_FAVORITES);
 
 	}
 //	public static String getActiveMapURL() {
@@ -190,8 +190,8 @@ public class MapsTab {
 			setFavArraySize();
 			setFavArrayIndex(MapsTab.CURRENT_INDEX);
 			
-			//Log.d(App.TAG, "MenuIndexes.Init() complete: FAV_SIZE : " + FAV_SIZE);
-			//Log.d(App.TAG, "MenuIndexes.Init() complete: Config.MAPVIEW_FAVORITES: " + Config.MAPVIEW_FAVORITES);
+			//if(Config.DEBUG>0)Log.d(App.TAG, "MenuIndexes.Init() complete: FAV_SIZE : " + FAV_SIZE);
+			//if(Config.DEBUG>0)Log.d(App.TAG, "MenuIndexes.Init() complete: Config.MAPVIEW_FAVORITES: " + Config.MAPVIEW_FAVORITES);
 		}
 		public static void setFavArraySize() {
 			JSONArray ja = null;
@@ -199,9 +199,9 @@ public class MapsTab {
 				ja = new JSONArray(Config.MAPVIEW_FAVORITES);
 				FAV_SIZE = ja.length();
 			} catch (JSONException e) {
-				Log.d(App.TAG, "Current map view coords empty");
+				if(Config.DEBUG>0)Log.e(App.TAG, "Current map view coords empty");
 			}
-			//Log.d(App.TAG, "MenuIndexes.setFavArraySize(): FAV_INDEX: " + FAV_INDEX);
+			//if(Config.DEBUG>0)Log.d(App.TAG, "MenuIndexes.setFavArraySize(): FAV_INDEX: " + FAV_INDEX);
 		}
 		public static void setFavArrayIndex(int index) {
 			if (FAV_SIZE > 0 && index < FAV_SIZE) {

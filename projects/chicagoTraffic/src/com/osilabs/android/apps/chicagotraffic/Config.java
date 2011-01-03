@@ -2,7 +2,7 @@ package com.osilabs.android.apps.chicagotraffic;
 
 public final class Config {
 	// Tell classes to dump to logcat
-	public static final int DEBUG = 2; 
+	public static final int DEBUG = 0; 
 
 	public static final    String DEFAULT_CAMERA_URL = "";
 	public static final int       DEFAULT_MAP_INDEX = 2; // !!! Can't be above array size-1. Includes favorites, best to set to one of the system traffic maps indexes.
