@@ -1123,7 +1123,8 @@ public class App extends MapActivity {
 			Toast.makeText(getApplicationContext(), "Thank you for your feedback", Toast.LENGTH_LONG).show();
 			
 		    final Runnable r = new Runnable() { 
-		        public void run () { 
+		        public void run () {
+		        	setViewForCurrentTab(CURRENT_TAB_INDEX);
 		            reloadViews(); // Here you can modify UI 
 		        }
 		    }; 

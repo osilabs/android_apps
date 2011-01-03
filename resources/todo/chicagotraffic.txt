@@ -2,11 +2,13 @@
 
 >> STM <<
 
-* Don't change indexes in arrays of rs s. Add another weather feed but do a no icons version
+* After I sent feedback, it gave me the toast saying thanks but left me on a black screen.
 
-* Default weather radii sounds like ass
+* Add that info thingie to tell users there is a new version
 
 * Add to help how to make and remove a favorite
+
+* Default weather radii sounds like ass
 
 * Need to improve the feedback so the user can get a response from me.
 
