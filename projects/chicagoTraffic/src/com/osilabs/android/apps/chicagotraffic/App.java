@@ -206,7 +206,7 @@ public class App extends MapActivity {
 			@Override
 			public void onClick(View v) {
 				refreshViews();
-				refreshTrafficMap(); // FIXME - make sure the menu option does the same.
+				refreshTrafficMap();
 			}
 		});
 	    
@@ -972,6 +972,7 @@ public class App extends MapActivity {
 				
 			case R.id.menu_refresh:
 				refreshViews();
+				refreshTrafficMap();
 				return true;
 				
 		    case R.id.menu_prefs:
