@@ -162,7 +162,7 @@ public class App extends MapActivity {
         //
 		// Restore preferences
         //
-		// FIXME - Can this go away if it is done in setCurrentPrefs()?
+		// todo - Can this go away if it is done in setCurrentPrefs()?
 		mySharedPreferences = getSharedPreferences(Config.NAMESPACE, Activity.MODE_PRIVATE);
 		setCurrentPrefs();
         
