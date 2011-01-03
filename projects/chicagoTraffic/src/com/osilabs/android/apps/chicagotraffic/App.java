@@ -435,17 +435,21 @@ public class App extends MapActivity {
 				sl.add("~ " + ja.getJSONObject(i).getString("label").toString() + " ~");
 			}
 		} catch (JSONException e1) {
-			Log.e(TAG, "App::launchMapPicker() Favorites string is empty:" + Config.MAPVIEW_FAVORITES);
-
-			// FIXME - Here I should delete the contents of Config.MAPVIEW_FAVORITES
-			//  and save the prefs to recover from corroupt saved data.   Maybe have 
-			//  a method called resetPrefData()  which cleans house and is called 
-			//  in the cases where malformed json is found. It probably shouldn't delete
-			//  all, some may be good to keep.
-			///e1.printStackTrace();
+			// If we have an exception thrown while trying to render the favorites and the
+			//  string is not empty, it would seem the string has been corrupt. May have
+			//  been modified outside this application. In any case, clear out the string
+			//  so "reset" things and move forward with a clean favorites list.
+			if (Config.MAPVIEW_FAVORITES.length() > 0) {
+				Log.e(TAG, "App::launchMapPicker() Favorites string may be corupt, resetting:" + Config.MAPVIEW_FAVORITES);
+				e1.printStackTrace();
+				Config.MAPVIEW_FAVORITES = "";
+				Session.saveString(mySharedPreferences, "pref_mapview_favorites", Config.MAPVIEW_FAVORITES);
+				MapsTab.MenuIndexes.init();
+				PREFS_UPDATED = true;
+				//reloadViews();
+			}
 		}
 
-		
 		// Tack on the system menu options
 		for(int i=0; i<Config.traffic.length; i++) { sl.add(Config.traffic[i]); } 
 		

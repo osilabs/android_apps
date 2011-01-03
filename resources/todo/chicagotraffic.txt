@@ -2,12 +2,10 @@
 
 >> STM <<
 
-* Add to help how to make and remove a favorite
-
-* The share intent opens the email client in a mode that causes our to replace the main app so re opening it doesn't open ct
-
 * Refresh doesn't seem to have an effect on rss feeds under calendar.
 * Check that the refresh is working
+
+* Feedback responses
 
 * Find and fix FIXME's
 * Fix this fixme : // FIXME, this size should be figured out first.
