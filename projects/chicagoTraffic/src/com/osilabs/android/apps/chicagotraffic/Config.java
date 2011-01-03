@@ -89,11 +89,12 @@ public final class Config {
 	};
 	public static final String[] calendar_src = {
 		"{WEATHER}",
-		"rss~http://chicago.metromix.com/rss/popup/restaurants_new_restaurants~ ~link",
+		"rss~http://www.chicagoreader.com/chicago/Rss.xml?section=846971~ ~link",
 		"rss~http://chicago.metromix.com/rss/popup/music_daily_picks~ ~link",
 		"{TODAY}",
 	};
-	
+	// "rss~http://chicago.metromix.com/rss/popup/restaurants_new_restaurants~ ~link",
+
 	// Pref based Multiple value arrays
 	public static final String[] weather_values = {
 		"rss~http://feeds.weatherbug.com/rss.aspx?zipcode=60601&feed=curr,fcst,fcsttxt,cpht&zcode=z4641~ ~ ",
@@ -101,6 +102,7 @@ public final class Config {
 		"rss~http://rss.weather.com/weather/rss/local/USIL0225?cm_ven=LWO&cm_cat=rss&par=LWO_rss~ ~ ",
 	};
 	public static final String[] today_values = {
+		"rss~http://www.chicagoreader.com/chicago/Rss.xml~ ~link",
 		"rss~http://chicago.metromix.com/rss/feed/daily_picks~ ~link",
 		"rss~http://chicago.metromix.com/rss/popup/bars-and-clubs_daily_picks~ ~link",
 	};

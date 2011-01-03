@@ -20,12 +20,14 @@
 </string-array> 
 
 <string-array name="pref_today_feed">
+	<item>Chicago Reader</item>
 	<item>Metromix 1</item>
 	<item>Metromix 2</item>
 </string-array> 
 <string-array name="pref_today_feed_values">
 	<item>0</item> 
 	<item>1</item> 
+	<item>2</item> 
 </string-array> 
 
 <string-array name="pref_weather_feed">
