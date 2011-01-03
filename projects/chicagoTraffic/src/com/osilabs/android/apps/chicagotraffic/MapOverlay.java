@@ -7,7 +7,7 @@ import android.view.MotionEvent;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
-import com.osilabs.android.lib.gestures.Gesture;
+import com.osilabs.android.lib.Gesture;
 
 class MapOverlay extends com.google.android.maps.Overlay
 {

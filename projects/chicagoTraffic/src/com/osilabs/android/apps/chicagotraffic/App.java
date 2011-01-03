@@ -13,7 +13,8 @@ import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
-import com.osilabs.android.lib.gestures.Session;
+import com.osilabs.android.lib.Session;
+import com.osilabs.android.lib.Version;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -71,6 +72,7 @@ public class App extends MapActivity {
 	// URI's
 	protected static final String MOBILECONTENT_URL_HELP     = "http://osilabs.com/m/mobilecontent/help/shared.php";
 	protected static final String MOBILECONTENT_URL_FEEDBACK = "http://osilabs.com/m/mobilecontent/feedback/shared.php";
+	protected static final String MOBILECONTENT_URL_VERSION  = "http://osilabs.com/m/mobilecontent/version/shared_checkForUpdate.php";
 
 	//
 	// Globals
@@ -87,6 +89,8 @@ public class App extends MapActivity {
 	//  Default to true so it initializes onStart()
 	protected static boolean PREFS_UPDATED = true;
 	
+	// This defaults to true so it can be set once, and only once, from oncreate()
+	protected static boolean CHECK_FOR_NEW_VERSION = true;
 
 	// Tracks when the MapView is showing
 	protected static boolean MAP_VIEW_IS_VISIBLE = false;
@@ -94,7 +98,6 @@ public class App extends MapActivity {
 	protected static boolean HELP_IS_VISIBLE     = false;
 	protected static boolean ABOUT_IS_VISIBLE    = false;
 	
-	protected static PackageInfo pInfo = null;
 	protected static Spinner spViewChoices;
 	protected static WebView wvAd;
 	protected static WebView wvMain;
@@ -131,6 +134,9 @@ public class App extends MapActivity {
 
     // For posting runnables
     private Handler mHandler = new Handler();
+    
+    // My libs
+    protected Version v;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -146,17 +152,14 @@ public class App extends MapActivity {
         // Set globals
         //
         
-        // Read in manifest
-		try {
-			pInfo = getPackageManager().getPackageInfo(Config.NAMESPACE, PackageManager.GET_META_DATA);
-			//version = pInfo.versionName;
-		} catch (NameNotFoundException e) {
-			e.printStackTrace();
-		}
+        //
+        // Get a version handler
+        //
+        v = new Version(this, Config.NAMESPACE, Config.APP_CODE);
 
 		// Set URLs with versioncode
-		WEBVIEW_URL = Config.MOBILECONTENT_URL_PREFIX + pInfo.versionCode + "/trafficmap.php";
-		AD_BANNER_URL = Config.MOBILECONTENT_URL_PREFIX + pInfo.versionCode + "/adbanner.php";
+		WEBVIEW_URL = Config.MOBILECONTENT_URL_PREFIX + v.versionCode() + "/trafficmap.php";
+		AD_BANNER_URL = Config.MOBILECONTENT_URL_PREFIX + v.versionCode() + "/adbanner.php";
 		
         //
 		// Restore preferences
@@ -357,7 +360,7 @@ public class App extends MapActivity {
     	super.onStart();
 
     	if(Config.DEBUG>0)Log.d(TAG, "onStart");
-
+    	
     	setCurrentPrefs(); // This must happen before other things.
 		MapsTab.init();
 		CalendarTab.init();
@@ -391,9 +394,9 @@ public class App extends MapActivity {
 		}
 		
 		setViewForCurrentTab(CURRENT_TAB_INDEX);
+
 		reloadViews();
-		
-    }
+	}
     
     @Override
     public void onPause() {
@@ -905,9 +908,20 @@ public class App extends MapActivity {
 	 * No toast message
 	 */
 	public void reloadViews() {
+		
+		// Check for if a new version check is needed
+		String versionCheckParams = "";
+		if (Config.DEBUG_FORCE_NEW_VERSION_CHECK || CHECK_FOR_NEW_VERSION) {
+			versionCheckParams = v.getVersionCheckURLParams();
+		}
+
+		// Only check once per onCreate();
+		CHECK_FOR_NEW_VERSION = false;
+		
 		String reloadString = 
 			WEBVIEW_URL
 			+ "?target=" + CURRENT_TAB_INDEX
+			+ versionCheckParams
 			+ MapsTab.getReloadURLParts()
 			+ CalendarTab.getReloadURLParts()
 			+ CamerasTab.getReloadURLParts();
@@ -918,7 +932,6 @@ public class App extends MapActivity {
 		
 		// Refresh banner webview
 		wvAd.loadUrl(AD_BANNER_URL);
-		
 	}
 
 	public void activateViewType(int v) {
@@ -1009,7 +1022,7 @@ public class App extends MapActivity {
 		    case R.id.menu_about:
 		        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 		        alertDialog.setTitle(R.string.app_name);
-		        alertDialog.setMessage(getApplicationContext().getResources().getString(R.string.txt_version) + " " + pInfo.versionName);
+		        alertDialog.setMessage(getApplicationContext().getResources().getString(R.string.txt_version) + " " + v.versionName());
 		        alertDialog.setButton(this.getResources().getString(R.string.txt_btn_more), new DialogInterface.OnClickListener() {
 		        	public void onClick(DialogInterface dialog, int which) {
 				    	activateViewType(WEBVIEW);
@@ -1026,7 +1039,7 @@ public class App extends MapActivity {
 		    case R.id.menu_feedback:
 		    	String phoneinfo = 
 		    		getApplicationContext().getResources().getString(R.string.app_name ) + 
-		    		" v" + pInfo.versionName + ", " +
+		    		" v" + v.versionName() + ", " +
 		    		Build.MANUFACTURER + ", " +
 	    			Build.MODEL + ", " +
 	    			Build.BRAND + ", " +
@@ -1136,6 +1149,29 @@ public class App extends MapActivity {
 		    }; 
 		    parent.mHandler.post(r);  // adding this to queue 
     	}	
+    	
+    	public void newVersionAlert(String msg) {
+	        AlertDialog alertDialog = new AlertDialog.Builder(App.me).create();
+	        alertDialog.setTitle(R.string.app_name);
+	        // FIXME - Move these to strings xml
+	        alertDialog.setMessage("A new version is available. It will bring new features or stability. What would you like to do?");
+	        alertDialog.setButton("Remind me later", new DialogInterface.OnClickListener() {
+	        	public void onClick(DialogInterface dialog, int which) {
+	        		// Do nothing, alert closes.
+	            } 
+	        });
+	        alertDialog.setButton2("Upgrade", new DialogInterface.OnClickListener() {
+	        	public void onClick(DialogInterface dialog, int which) {
+	        		Intent intent = new Intent(Intent.ACTION_VIEW);
+	        		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+	        		intent.setData(Uri.parse(me.getResources().getString(R.string.market_link_http)));
+	        		startActivity(intent);
+	            } 
+	        });
+	        alertDialog.setIcon(R.drawable.ic_launcher);
+	        alertDialog.show();
+    	}	
+
     }
     //
     // Web browser

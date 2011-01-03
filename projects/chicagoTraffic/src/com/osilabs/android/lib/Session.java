@@ -1,4 +1,4 @@
-package com.osilabs.android.lib.gestures;
+package com.osilabs.android.lib;
 
 import android.content.SharedPreferences;
 

@@ -7,17 +7,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.google.android.maps.GeoPoint;
-import com.osilabs.android.lib.gestures.Session;
+import com.osilabs.android.lib.Session;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.text.InputFilter;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+// FIXME - Rename to Favorite and move to lib
 public class Favorites {
     protected static        GeoPoint gpFavorite;
 	protected static String   prefname;

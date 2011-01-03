@@ -1,6 +1,4 @@
-package com.osilabs.android.lib.gestures;
-
-import com.osilabs.android.apps.chicagotraffic.App;
+package com.osilabs.android.lib;
 
 import android.util.Log;
 
@@ -48,7 +46,8 @@ public class Gesture {
 				// How long since last
 				int timeSinceLast = (int) (now - doubleTapTimer);
 				
-		    	if (DEBUG>0) Log.d(App.TAG, "Since last: " + timeSinceLast);
+				// FIXME - user a common TAG.  But don't user App. anything, this is a library.
+		    	if (DEBUG>0) Log.d("** osilabs ** Gesture ", "Since last: " + timeSinceLast);
 				
 				// Look for start of new series of taps
 //				if (timeSinceLast == 0 || timeSinceLast > threshold) {
