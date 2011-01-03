@@ -7,6 +7,8 @@
 	<!--	~~~~~~~~~~~~~ -->
     <string name="app_name">Chicago Traffic</string>
     <string name="city_name">Chicago</string>
+    <string name="market_link">market://search?q=pname:com.osilabs.android.apps.chicagotraffic</string>
+    <string name="market_link_http">http://market.android.com/search?q=pname:com.osilabs.android.apps.chicagotraffic</string>
     <string name="pref_police_radios_default">18589</string> <!-- FIXME - These need to go -->
     <string name="pref_weather_radios_default">18464</string>
     <string name="pref_today_feed_default">0</string>
@@ -20,6 +22,14 @@
     <string name="pref_weather_feed_dialog_title">Choose Weather Source</string>
 	<!--	~~~~~~~~~~~~~ -->
 	<!--	~~~~~~~~~~~~~ ~~~~~~~~~~~~~ ~~~~~~~~~~~~~ -->
+	
+    <string name="txt_sharing_subject">Im sharing a phone app with you</string>
+    <string name="txt_sharing_body_a">Hi, Im sharing the</string>
+    <string name="txt_sharing_body_b">app for Android with you.</string>
+    <string name="txt_sharing_body_c">Using your device, click this link to try it out from the Android Market:</string>
+    <string name="txt_sharing_body_d">If your device asks you how to complete this action, be sure to choose the Market choice.</string>
+    <string name="txt_sharing_body_e">If the link does not work for you or you do not use Android Market, please search your market for:</string>
+
 
     <string name="pref_mapview_favorites"></string>
     <string name="pref_current_mapview_coords"></string>
@@ -36,6 +46,7 @@
 
     <string name="menu_prefs">Settings</string>
     <string name="menu_refresh">Refresh</string>
+    <string name="menu_share">Share</string>
     <string name="menu_scanner_police">Police Scanner</string>
     <string name="menu_scanner_weather">Weather Radio</string>
     <string name="menu_feedback">Feedback</string>

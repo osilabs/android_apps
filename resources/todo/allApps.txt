@@ -23,6 +23,99 @@
 
 * Still need to wiggle the map to get traffic to draw sometimes
 
+>> TEST <<
+
+>> Enhancements <<
+* put gradient on navbars
+* Add phone numbers (511) somewhere. tab. phone icon. 
+* Normal, big, huge text sizes.
+* Longpress map menu: 'Navigate to Here', 'Search Near Here', 'Jump to different city views (airport, north, southewest,...)
+* Use styles.xml on webviews of feedback and about and help. - May not be possible. Swear I did it in imednetmobile tho...
+
+>> BUGS <<
+* See If I can get maps to just center so I don't have to do a scrollx/y
+
+>> MISC <<
+* See proandrod2 book p274 for geocoding with threads
+* See proandrod2 book p275/6 for progress dialog
+
+
+
+
+
+//-- Paid version --//
+
+* What the paid version has: 
+
+** Set a different favorite rss feed in place of city pages A list.
+
+** More weather data (make a second feed in the weather bug rss generator)
+
+** Add cameras to favorites. Maybe only 1 in free version and paid version can have many.
+
+* Clear out all data and it starts on the camera tab and no camera shows up.
+
+* Get rid of defaults in strings.xml. put in config.
+
+
+// Release 0.7
+
+* Add double-tap to zoom, pinch zoom. (spent 20 mins on this, was seeming like I need to override touch event and very manually handle these. maybe look into it again later since i already have zoom)
+
+* Add hepatic feedback
+
+// FIXME - check if intent exists
+Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+emailIntent .setType("plain/text");
+emailIntent .setFlags(emailIntent.FLAG_ACTIVITY_NEW_TASK);
+emailIntent .putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"tct_app_feedback@osilabs.com"});
+emailIntent .putExtra(android.content.Intent.EXTRA_SUBJECT, "** TCT Feedback **");
+emailIntent .putExtra(android.content.Intent.EXTRA_TEXT, "Phone:xxx\nTCT Version:yyy\nAndroid Version:zzz\n\nMy Twin Cities Traffic Feedback:\n");
+getApplicationContext().startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+
+* Custom 404 page for when the adbanner can't get it's content. This just happened and the ugly default could not find page page is just that. 
+
+* Context menus when you click the maps (scanner, phone numbers, refresh)
+
+* When in landscape mode, the window.scrollTo doesn't put the view in a good place.
+
+// Ideas
+
+* Your route is figured out from the cameras you chose. They are used to try to tell you if you should avoid that route today. Maybe tap the route icon and up comes a message tailored to you avoiding or taking your route.
+
+* Tap a camera shot, context menu pops up offers 1. next cameras north or west
+
+* Use lat and long on incident feed xml to give realtime update of distance you are from the incident.
+
+* Text to speach will read out loud the Incident Feed.  Does all on the page in succession.
+
+* Incident list screen has cameras in xml feed. Use those to pull up a view of the accident
+
+* On incident map, have a setting that says what one tap of an incident icon does. 1. to incident description or 2. Nearest camera. Long press offers either.
+
+* Build a route: All boils down to telling you if you should avoid the route this morning or not.
+
+
+>> BUGS <<
+
+// Micro grant site ideas
+
+* each child
+	> Just listed by first name
+	> birthdate
+	> Years to expected college date
+	> colorgraph bar showing progress
+	> short bio
+	> link to long bio
+	> Link to request an application/letter to justify why grant is wanted and needed.
+
+* Use google checkout to collect payments
+* Track amounts from each grantor
+* Hidden grantor name and display name.  Display name may be 'Anonymous'.
+* Grantor can seed money, let interest accumulate, then request original amount back. If interest is not made and value becomes less than original value, only original value can be returned. Value is paid back to the credit card used in google checkout to assure money is going back to orininator.
+* Use EAV for settings/metadata about each child and grantor.
+
+
 >>> Live Dropper and Color Eye <<<
 
 * See http://android-developers.blogspot.com/2009/04/backward-compatibility-for-android.html for how to code for backward compatability so it can show up on the market for v1.5 devices.

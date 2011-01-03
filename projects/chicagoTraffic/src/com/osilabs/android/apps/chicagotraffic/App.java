@@ -957,16 +957,12 @@ public class App extends MapActivity {
 	/* Handles item selections */
 	public boolean onOptionsItemSelected(MenuItem item) {
 		
-        // Log.d(TAG, "onOptionsItemSelected:" + Integer.toString(item.getItemId()));
-		
 		switch (item.getItemId()) {
 			case R.id.menu_scanner_police:
-				//setCurrentRadios();
 				ScannerRadio.launchScanner(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE]);
 		    	return true;
 	
 			case R.id.menu_scanner_weather:
-				//setCurrentRadios();
 				ScannerRadio.launchScanner(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER]);
 		    	return true;
 				
@@ -978,6 +974,22 @@ public class App extends MapActivity {
 		    	Intent intent = new Intent();
 				intent.setClassName(this, Config.NAMESPACE + ".Prefs");
 		    	this.startActivityForResult(intent, INTENT_RESULT_CODE_PREFS);
+		    	return true;
+
+		    case R.id.menu_share:
+				final Intent shareintent = new Intent(Intent.ACTION_SEND);
+				shareintent.setType("text/html");
+				shareintent.putExtra(Intent.EXTRA_SUBJECT, this.getResources().getString(R.string.txt_sharing_subject));
+				shareintent.putExtra(Intent.EXTRA_TEXT, 
+							this.getResources().getString(R.string.txt_sharing_body_a) + " "
+							+ this.getResources().getString(R.string.app_name) + " "
+							+ this.getResources().getString(R.string.txt_sharing_body_b) + "\n\n"
+							+ this.getResources().getString(R.string.txt_sharing_body_c) + "\n\n"
+							+ this.getResources().getString(R.string.market_link_http) + "\n\n"
+							+ this.getResources().getString(R.string.txt_sharing_body_d) + "\n\n"
+							+ this.getResources().getString(R.string.txt_sharing_body_e) + "\n\n"
+							+ this.getResources().getString(R.string.app_name));
+				startActivity(Intent.createChooser(shareintent, "Share"));
 		    	return true;
 
 		    case R.id.menu_help:
