@@ -589,6 +589,7 @@ public class App extends MapActivity {
             break;
             
         case INTENT_RESULT_CODE_PREFS:
+        	PREFS_UPDATED = true;
         	setCurrentPrefs();
         	
 			Toast.makeText(getApplicationContext(), 

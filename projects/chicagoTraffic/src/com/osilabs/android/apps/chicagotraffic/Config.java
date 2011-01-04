@@ -2,7 +2,7 @@ package com.osilabs.android.apps.chicagotraffic;
 
 public final class Config {
 	// Tell classes to dump to logcat
-	public static final int     DEBUG =0;
+	public static final int     DEBUG = 0;
 	
 	// This can also be accomplished by recompiling. Also by stopping the app
 	public static final boolean DEBUG_FORCE_NEW_VERSION_CHECK = false; 
@@ -23,6 +23,7 @@ public final class Config {
 	// Use './adb logcat |grep node' to see the scanner ids
 	public static final int            INDEX_OF_WEATHER = 0;
 	public static final int            INDEX_OF_POLICE = 1;
+	
 	// These are the Defaults and they will be changed as prefs change. Set current node to -1 to disable.
 	public static final int[]          RADIOS_DEFAULT_NODE = {18464,           18589};
 	public static       int[]          RADIOS_CURRENT_NODE = {18464,           18589};
@@ -103,10 +104,10 @@ public final class Config {
 
 	// Pref based Multiple value arrays
 	public static final String[] weather_values = {
-		"rss~http://feeds.weatherbug.com/rss.aspx?zipcode=60601&feed=curr,fcst,fcsttxt,cpht&zcode=z4641~ ~ ",
+		"rss~http://feeds.weatherbug.com/rss.aspx?zipcode=60601&feed=curr,fcst&zcode=z4641~ ~ ",
 		"rss~http://rss.accuweather.com/rss/liveweather_rss.asp?metric=0&locCode=60602~ ~ ",
 		"rss~http://rss.weather.com/weather/rss/local/USIL0225?cm_ven=LWO&cm_cat=rss&par=LWO_rss~ ~ ",
-		"rss~http://feeds.weatherbug.com/rss.aspx?zipcode=&feed=currtxt,fcsttxt&zcode=z4641~ ~ "
+		"rss~http://feeds.weatherbug.com/rss.aspx?zipcode=60601&feed=currtxt,fcsttxt&zcode=z4641~ ~ "
 	};
 	public static final String[] today_values = {
 		"rss~http://chicago.metromix.com/rss/feed/daily_picks~ ~link",

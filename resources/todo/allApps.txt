@@ -1,5 +1,6 @@
 // All Apps
-* Email "Tune In" dev to see about using an intent to launch it.
+
+* Add feedback forum to show recent responses
 
 * Do feedback like gTasks maybe (Where it just opens an intent for email and dumps phone data in)
 
@@ -17,13 +18,13 @@
 
 >>> Traffic Apps <<<
 
+* ct_about.php has nice padding for the about screen. others should do same. still looks shitty.
+
 * I reeeaaalllllyyyy need loading messages. when the connection is not there, you just see a black screen after the toast loading message has faded.  Happened when I switched to an rss. Just sat forever but eventually came up. Not all that rare.
 
 * Try putting the yellow favorites star drawable in the mapOverlay::draw() method. To get it on top of the upper rh corner of the mapview.
 
 * Long press stars to change them
-
-* Still need to wiggle the map to get traffic to draw sometimes
 
 >> TEST <<
 

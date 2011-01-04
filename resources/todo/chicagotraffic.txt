@@ -2,17 +2,3 @@
 
 >> STM <<
 
-* Create text only weather rss feed for dallas
-
-* Unplug and test
-
-Today: Re-release Dallas Fort Worth traffic - Add in metromix and icony weatherbug feeds
-Today: Re-release Seattle Tacoma traffic
-Today: Re-release Twin Cities traffic
-L8R: Pull metromix feeds and more weatherbug feeds into existing cities
-
-
->>> Maybe <<<
-* Add feedback forum to show recent responses
-
-
