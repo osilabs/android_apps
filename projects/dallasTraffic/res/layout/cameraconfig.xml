@@ -7,11 +7,6 @@
 		android:layout_height="wrap_content"
 		android:padding="16dip">
 		
-<!--	<ImageView android:id="@+id/ImageView01"-->
-<!--		android:layout_width="wrap_content" android:layout_height="wrap_content"-->
-<!--		android:layout_centerHorizontal="true" />-->
-
-
 	<TextView android:id="@+id/drop_textview"
 		android:text="zoinks" 
 		android:layout_height="wrap_content" 

@@ -5,27 +5,57 @@
 	<!--	~~~~~~~~~~~~~ -->
 	<!--	CONFIGURE HERE-->
 	<!--	~~~~~~~~~~~~~ -->
-    <string name="pref_police_radios_default">21093</string>
-    <string name="pref_weather_radios_default">23034</string>
-    <string name="session_camera_1">29</string>    
+    <string name="app_name">Chicago Traffic</string>
+    <string name="city_name">Chicago</string>
+    <string name="market_link">market://search?q=pname:com.osilabs.android.apps.dallastraffic</string>
+    <string name="market_link_http">http://market.android.com/search?q=pname:com.osilabs.android.apps.dallastraffic</string>
+    <string name="pref_police_radios_default">18589</string> <!-- FIXME - These need to go -->
+    <string name="pref_weather_radios_default">18464</string>
+    <string name="pref_today_feed_default">0</string>
+    <string name="pref_weather_feed_default">0</string>
+    <string name="session_camera_1"></string>
+    <string name="session_map">0</string>
+    <string name="session_calendar">0</string>
+    <string name="pref_police_radios_dialog_title">Set Favorite Police Scanner</string>
+    <string name="pref_weather_radios_dialog_title">Set Favorite Weather Radio</string>
+    <string name="pref_today_feed_dialog_title">Things To Do</string>
+    <string name="pref_weather_feed_dialog_title">Choose Weather Source</string>
 	<!--	~~~~~~~~~~~~~ -->
 	<!--	~~~~~~~~~~~~~ ~~~~~~~~~~~~~ ~~~~~~~~~~~~~ -->
+	
+    <string name="txt_sharing_subject">Im sharing a phone app with you</string>
+    <string name="txt_sharing_body_a">Hi, Im sharing the</string>
+    <string name="txt_sharing_body_b">app for Android with you.</string>
+    <string name="txt_sharing_body_c">Using your device, click this link to try it out from the Android Market:</string>
+    <string name="txt_sharing_body_d">If your device asks you how to complete this action, be sure to choose the Market choice.</string>
+    <string name="txt_sharing_body_e">If the link does not work for you or you do not use Android Market, please search your market for:</string>
 
-<!--	FIXME remove this-->
-    <string name="expandable_list_sample_action">Sample action</string>
 
-    <string name="app_name">Dallas Traffic</string>
-    <string name="quick_view_label">Quick View</string>
+    <string name="pref_mapview_favorites"></string>
+    <string name="pref_current_mapview_coords"></string>
+	<string name="radios_dialog_title">Radios</string>
+	<string name="txt_refreshing">Refreshing...</string>
+	<string name="txt_loading">Loading...</string>
+	<string name="txt_version">You are running version </string>
+	<string name="txt_btn_ok">Ok</string>
+	<string name="txt_btn_more">More...</string>
+	<string name="txt_prefs_saved">Preferences saved</string>
+	<string name="txt_camera_picker_noop">Camera may have moved, please try again</string>
+	<string name="txt_map_popup_title">Traffic</string>
+	<string name="txt_calendar_popup_title">Right Now</string>
 
     <string name="menu_prefs">Settings</string>
     <string name="menu_refresh">Refresh</string>
+    <string name="menu_share">Share</string>
     <string name="menu_scanner_police">Police Scanner</string>
     <string name="menu_scanner_weather">Weather Radio</string>
+    <string name="menu_feedback">Feedback</string>
     <string name="menu_help">Help</string>
     <string name="menu_about">About</string>
     <string name="menu_exit">Exit</string>
 
     <!-- Preferences strings -->
+<!--    FIXME - not convinced this is getting used-->
     <string name="session_current_view">0</string>
 
 	<!-- Camera Prefs -->
@@ -37,22 +67,20 @@
     <string name="pref_police_radios">Police Scanners</string>
     <string name="pref_police_radios_summary">Set your favorite</string>
     <string name="pref_police_radios_title">Police Scanners</string>    
-    <string name="pref_police_radios_dialog_title">Select Favorite Police Scanner</string>
     <string name="pref_police_radios_selected">pref_police_radios_selected</string>
 	<!-- weather radio prefs -->
     <string name="pref_weather_radios">Weather Radios</string>
     <string name="pref_weather_radios_summary">Set your favorite</string>
     <string name="pref_weather_radios_title">Weather Radios</string>    
-    <string name="pref_weather_radios_dialog_title">Select Favorite Weather Radio</string>
     <string name="pref_weather_radios_selected">pref_weather_radios_selected</string>
-    
-    <style name="osistyle" parent="@android:style/TextAppearance.Medium">
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">#444444</item>
-        <item name="android:textStyle">italic</item>
-        <item name="android:typeface">sans</item>
-        <item name="android:gravity">center_vertical|center_horizontal</item>
-    </style>
-    
+	<!-- today feed prefs -->
+    <string name="pref_today_feed">Today</string>
+    <string name="pref_today_feed_summary">Set your source</string>
+    <string name="pref_today_feed_title">Things To Do</string>    
+    <string name="pref_today_feed_selected">pref_today_feed_selected</string>
+	<!-- weather feed prefs -->
+    <string name="pref_weather_feed">Weather</string>
+    <string name="pref_weather_feed_summary">Set your favorite</string>
+    <string name="pref_weather_feed_title">Weather Report</string>    
+    <string name="pref_weather_feed_selected">pref_weather_feed_selected</string>
 </resources>

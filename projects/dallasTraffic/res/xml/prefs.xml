@@ -18,4 +18,20 @@
 			android:dialogTitle="@string/pref_weather_radios_dialog_title"
 			android:entries="@array/pref_weather_radios" android:entryValues="@array/pref_weather_radios_values"></ListPreference>
 	</PreferenceCategory>
+	
+	<PreferenceCategory android:title="Information Sources">
+<!--		 Today Feed -->
+		<ListPreference android:key="@string/pref_today_feed_selected"
+			android:title="@string/pref_today_feed_title" android:summary="@string/pref_today_feed_summary"
+			android:defaultValue="@string/pref_today_feed_default"
+			android:dialogTitle="@string/pref_today_feed_dialog_title"
+			android:entries="@array/pref_today_feed" android:entryValues="@array/pref_today_feed_values"></ListPreference>
+<!--		 Weather Feed -->
+		<ListPreference android:key="@string/pref_weather_feed_selected"
+			android:title="@string/pref_weather_feed_title" android:summary="@string/pref_weather_feed_summary"
+			android:defaultValue="@string/pref_weather_feed_default"
+			android:dialogTitle="@string/pref_weather_feed_dialog_title"
+			android:entries="@array/pref_weather_feed" android:entryValues="@array/pref_weather_feed_values"></ListPreference>
+	</PreferenceCategory>
+
 </PreferenceScreen>

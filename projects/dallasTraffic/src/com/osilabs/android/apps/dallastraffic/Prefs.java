@@ -11,5 +11,7 @@ public class Prefs extends PreferenceActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.prefs);
+		
+		// TODO - inflate options popups and add icons.
 	}
 }
