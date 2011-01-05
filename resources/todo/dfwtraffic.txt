@@ -1,4 +1,11 @@
-// v0.2
+// Dallas Fort Worth Traffic
+
+* Color maps tiny
+* clear data and check defaults
+* Fix security hole passing uri's
+* Put in default camera in string.xml
+
+
 
 // v0.3
 * Add a boolean toggle that indicates if it is the paid version or free version.

@@ -78,6 +78,7 @@ public class MapsTab {
 		if(Config.DEBUG>0) Log.d(App.TAG, "MapsTab::getReloadURLParts()");
 		
 		int adjustedIndex = getAdjustedIndex();
+
 		if (CURRENT_INDEX > ((Config.traffic_urls.length+MapsTab.MenuIndexes.FAV_SIZE) - 1)) CURRENT_INDEX = 0;
 		
 		int androidViewType = MapsTab.getAndroidViewType();

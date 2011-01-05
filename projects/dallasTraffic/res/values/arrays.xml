@@ -3,6 +3,7 @@
 
 <string-array name="pref_police_radios">
 	<item>Carrollton Police and Fire</item>
+	<item>Fort Worth Police Dispatch</item>
 	<item>Dallas County Fire, Sheriff and Constables</item>
 	<item>Dallas Fire Rescue</item>
 	<item>Dallas Police SE, SW, North Central, South Central, with Traffic</item>
@@ -15,6 +16,7 @@
 </string-array> 
 <string-array name="pref_police_radios_values">
 	<item>12529</item> 
+	<item>12587</item> 
 	<item>21115</item> 
 	<item>12535</item> 
 	<item>21093</item> 
@@ -23,36 +25,32 @@
 	<item>23025</item> 
 	<item>21116</item> 
 	<item>24138</item> 
-	<item>12531</item> 
+	<item>12531</item>
 </string-array>
 
 <string-array name="pref_weather_radios">
 	<item>Dallas Weather Radio</item> 
-	<item>Crowley / Fort Worth Weather Radio</item> 
-	<item>Corsicana Weather Radio</item> 
+	<item>Crowley / Fort Worth Weather Radio</item>
 </string-array> 
 <string-array name="pref_weather_radios_values">
-	<item>2233</item> 
-	<item>24109</item> 
-	<item>23034</item> 
+	<item>25254</item> 
+	<item>25336</item> 
 </string-array> 
 
 <string-array name="pref_today_feed">
-	<item>Chicago Reader</item>
-	<item>Metromix 1</item>
-	<item>Metromix 2</item>
+	<item>The Observer</item>
+	<item>Citysearch</item>
 </string-array> 
 <string-array name="pref_today_feed_values">
 	<item>0</item> 
-	<item>1</item> 
-	<item>2</item> 
+	<item>1</item>
 </string-array> 
 
 <string-array name="pref_weather_feed">
+	<item>Weather Bug Text</item>
 	<item>Weather Bug</item>
 	<item>Accuweather</item>
 	<item>Weather.com</item>
-	<item>Weather Bug Text</item>
 </string-array> 
 <string-array name="pref_weather_feed_values">
 	<item>0</item> 

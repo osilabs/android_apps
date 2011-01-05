@@ -52,14 +52,16 @@ public final class Config {
 	// Traffic Tab
 	//
 	public static final String [] traffic = {
-		"Winter Weather",
-		"Winter Weather State",
-		"Chicago Metro"
+		"Traffic",
+		"Traffic at Night",
+		"Dallas Metro",
+		"Fort Worth Metro"
 	};
 	public static final String [] traffic_urls = {
-		"map~http://wrc.gettingaroundillinois.com/images/wrccook.jpg~120%~ ~40~66",
-		"map~http://wrc.gettingaroundillinois.com/images/wrcimage.jpg~150%~ ~80~6",
-		"{\"longitude\":\"-87810976\",\"zoom\":\"10\",\"label\":\"Chicago Metro\",\"latitude\":\"41858849\"}"
+		"map~http://dfwtraffic.dot.state.tx.us/Mobile/DalTrans/MapBurnerOutput/WhiteMap.gif~ ~ ~ ~ ",
+		"map~http://dfwtraffic.dot.state.tx.us/Mobile/DalTrans/MapBurnerOutput/BlackMap.gif~ ~ ~ ~ ",
+		"{\"longitude\":\"-96821123\",\"zoom\":\"11\",\"label\":\"Dallas Metro\",\"latitude\":\"32773415\"}",
+		"{\"longitude\":\"-97250963\",\"zoom\":\"11\",\"label\":\"Chicago Metro\",\"latitude\":\"32737613\"}"
 	};
 	
 	
@@ -73,6 +75,7 @@ public final class Config {
 		IMAGE,
 		IMAGE,
 		MAP,
+		MAP,
 	};
 	// This defaults to one of the system configured mapviews in traffic_urls
 	public static final String DEFAULT_MAPVIEW_COORDS = traffic_urls[2];
@@ -84,7 +87,8 @@ public final class Config {
 	// ---------------------------------------------------------
 
 	
-	
+
+
 	// ---------------------------------------------------------
 	// Calendar tab
 	//
@@ -96,23 +100,24 @@ public final class Config {
 	};
 	public static final String[] calendar_src = {
 		"{WEATHER}",
-		"rss~http://www.chicagoreader.com/chicago/Rss.xml?section=846971~ ~link",
-		"rss~http://chicago.metromix.com/rss/popup/music_daily_picks~ ~link",
+		"rss~http://www.dallasobserver.com/syndication/section/dining/~ ~link",
+		"rss~http://www.dallasobserver.com/syndication/events?type=music~ ~link",
 		"{TODAY}",
 	};
-	// "rss~http://chicago.metromix.com/rss/popup/restaurants_new_restaurants~ ~link",
+	
 
 	// Pref based Multiple value arrays
 	public static final String[] weather_values = {
-		"rss~http://feeds.weatherbug.com/rss.aspx?zipcode=60601&feed=curr,fcst&zcode=z4641~ ~ ",
-		"rss~http://rss.accuweather.com/rss/liveweather_rss.asp?metric=0&locCode=60602~ ~ ",
-		"rss~http://rss.weather.com/weather/rss/local/USIL0225?cm_ven=LWO&cm_cat=rss&par=LWO_rss~ ~ ",
-		"rss~http://feeds.weatherbug.com/rss.aspx?zipcode=60601&feed=currtxt,fcsttxt&zcode=z4641~ ~ "
+		"rss~http://feeds.weatherbug.com/rss.aspx?zipcode=75204&feed=currtxt,fcsttxt&zcode=z4641~ ~ ",
+		"rss~http://feeds.weatherbug.com/rss.aspx?zipcode=75204&feed=curr,fcst&zcode=z4641~ ~ ",
+		"rss~http://rss.accuweather.com/rss/liveweather_rss.asp?metric=0&locCode=75204~ ~ ",
+		"rss~http://rss.weather.com/weather/rss/local/75204?cm_ven=LWO&cm_cat=rss&par=LWO_rss~ ~ ",
 	};
+	// rss feeds with & and ? characters in them don't seem to work out. This will resolve itself
+	//  once I move all the urls to the mobilecontent php side of things.
 	public static final String[] today_values = {
-		"rss~http://chicago.metromix.com/rss/feed/daily_picks~ ~link",
-		"rss~http://chicago.metromix.com/rss/popup/bars-and-clubs_daily_picks~ ~link",
-		"rss~http://www.chicagoreader.com/chicago/Rss.xml~ ~link",
+		"rss~http://www.dallasobserver.com/syndication/events/~ ~link",
+		"rss~http://dallas.citysearch.com/rss/rss_browse_roundups~ ~link",
 	};
 	//
 	// Calendar tab

@@ -10,16 +10,12 @@
     <string name="market_link">market://search?q=pname:com.osilabs.android.apps.dallastraffic</string>
     <string name="market_link_http">http://market.android.com/search?q=pname:com.osilabs.android.apps.dallastraffic</string>
     <string name="pref_police_radios_default">21093</string> <!-- FIXME - These need to go -->
-    <string name="pref_weather_radios_default">23034</string>
+    <string name="pref_weather_radios_default">25254</string>
     <string name="pref_today_feed_default">0</string>
     <string name="pref_weather_feed_default">0</string>
     <string name="session_camera_1"></string>
     <string name="session_map">0</string>
     <string name="session_calendar">0</string>
-    <string name="pref_police_radios_dialog_title">Set Favorite Police Scanner</string>
-    <string name="pref_weather_radios_dialog_title">Set Favorite Weather Radio</string>
-    <string name="pref_today_feed_dialog_title">Things To Do</string>
-    <string name="pref_weather_feed_dialog_title">Choose Weather Source</string>
 	<!--	~~~~~~~~~~~~~ -->
 	<!--	~~~~~~~~~~~~~ ~~~~~~~~~~~~~ ~~~~~~~~~~~~~ -->
 	
@@ -43,6 +39,11 @@
 	<string name="txt_camera_picker_noop">Camera may have moved, please try again</string>
 	<string name="txt_map_popup_title">Traffic</string>
 	<string name="txt_calendar_popup_title">Right Now</string>
+
+    <string name="pref_police_radios_dialog_title">Set Favorite Police Scanner</string>
+    <string name="pref_weather_radios_dialog_title">Set Favorite Weather Radio</string>
+    <string name="pref_today_feed_dialog_title">Things To Do</string>
+    <string name="pref_weather_feed_dialog_title">Choose Weather Source</string>
 
     <string name="menu_prefs">Settings</string>
     <string name="menu_refresh">Refresh</string>
