@@ -25,8 +25,8 @@ public final class Config {
 	public static final int            INDEX_OF_POLICE = 1;
 	
 	// These are the Defaults and they will be changed as prefs change. Set current node to -1 to disable.
-	public static final int[]          RADIOS_DEFAULT_NODE = {18464,           18589};
-	public static       int[]          RADIOS_CURRENT_NODE = {18464,           18589};
+	public static final int[]          RADIOS_DEFAULT_NODE = {23034,           21093};
+	public static       int[]          RADIOS_CURRENT_NODE = {23034,           21093};
 	public static final CharSequence[] RADIOS              = {"Weather Radio", "Police Scanner"};
 
 	// ----------------------------------------------------------

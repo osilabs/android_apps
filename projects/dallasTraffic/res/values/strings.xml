@@ -5,12 +5,12 @@
 	<!--	~~~~~~~~~~~~~ -->
 	<!--	CONFIGURE HERE-->
 	<!--	~~~~~~~~~~~~~ -->
-    <string name="app_name">Chicago Traffic</string>
-    <string name="city_name">Chicago</string>
+    <string name="app_name">Dallas Fort Worth Traffic</string>
+    <string name="city_name">Dallas, Fort Worth</string>
     <string name="market_link">market://search?q=pname:com.osilabs.android.apps.dallastraffic</string>
     <string name="market_link_http">http://market.android.com/search?q=pname:com.osilabs.android.apps.dallastraffic</string>
-    <string name="pref_police_radios_default">18589</string> <!-- FIXME - These need to go -->
-    <string name="pref_weather_radios_default">18464</string>
+    <string name="pref_police_radios_default">21093</string> <!-- FIXME - These need to go -->
+    <string name="pref_weather_radios_default">23034</string>
     <string name="pref_today_feed_default">0</string>
     <string name="pref_weather_feed_default">0</string>
     <string name="session_camera_1"></string>
