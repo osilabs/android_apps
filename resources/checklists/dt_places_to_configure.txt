@@ -1,7 +1,1 @@
-* Configure default radios in strings.xml
-
-* Configure radio arrays in CameraELV
-
-* Configure top of Main class
-
-* Configure Top of HTML page trafficmap.php
+moved to gdocs
