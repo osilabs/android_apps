@@ -34,12 +34,21 @@ public class CalendarTab {
 		
 		// Trap special configurable items
 		if (Config.calendar_src[CURRENT_INDEX].equals("{TODAY}")) {
+			// Save us from array bound overrun
+			int index = (CURRENT_TODAY_FEED_INDEX > (Config.today_values.length-1)) ? 0 : CURRENT_TODAY_FEED_INDEX;
+
 			// Set configured TODAY feed
-			uri = Config.today_values[ CURRENT_TODAY_FEED_INDEX ];
+			uri = Config.today_values[ index ];
 		} else if (Config.calendar_src[CURRENT_INDEX].equals("{WEATHER}")) {
+			// Save us from array bound overrun
+			int index = (CURRENT_WEATHER_FEED_INDEX > (Config.weather_values.length-1)) ? 0 : CURRENT_WEATHER_FEED_INDEX;
+
 			// Set configured WEATHER feed
-			uri = Config.weather_values[ CURRENT_WEATHER_FEED_INDEX ];
+			uri = Config.weather_values[ index ];
 		} else {
+			// Save us from array bound overrun
+			int index = (CURRENT_INDEX > (Config.calendar_src.length-1)) ? 0 : CURRENT_INDEX;
+
 			// Set the feed from alerts_src
 			uri = Config.calendar_src[CURRENT_INDEX];
 		}
