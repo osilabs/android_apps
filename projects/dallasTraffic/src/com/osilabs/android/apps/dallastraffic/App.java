@@ -573,13 +573,13 @@ public class App extends MapActivity {
             }
             else {
             	Bundle extras = data.getExtras();
-                CamerasTab.CURRENT_CAMERA_URL = extras.getString("selected_camera");
+                CamerasTab.CURRENT_CAMERA_INDEX = extras.getString("selected_camera");
     			
     			// Reload the webview so it just shows the chosen camera
 				reloadViews();
 				
     			// Set the chosen camera in the persistent settings
-				Session.saveString(mySharedPreferences, "session_camera_1", CamerasTab.CURRENT_CAMERA_URL);
+				Session.saveString(mySharedPreferences, "session_camera_1", CamerasTab.CURRENT_CAMERA_INDEX);
 //    	    	SharedPreferences prefs 
 //    				= getSharedPreferences(Config.NAMESPACE, Activity.MODE_PRIVATE);
 //    			    SharedPreferences.Editor editor = prefs.edit();
@@ -615,7 +615,7 @@ public class App extends MapActivity {
 			    Log.d(TAG, "setCurrentPrefs() Orig CURRENT_TAB_INDEX: " + CURRENT_TAB_INDEX);
 			    Log.d(TAG, "setCurrentPrefs() Orig MapsTab.CURRENT_INDEX: " + MapsTab.CURRENT_INDEX);
 			    Log.d(TAG, "setCurrentPrefs() Orig CalendarTab.CURRENT_INDEX: " + CalendarTab.CURRENT_INDEX);
-			    Log.d(TAG, "setCurrentPrefs() Orig CamerasTab.CURRENT_CAMERA_URL: " + CamerasTab.CURRENT_CAMERA_URL);
+			    Log.d(TAG, "setCurrentPrefs() Orig CamerasTab.CURRENT_CAMERA_URL: " + CamerasTab.CURRENT_CAMERA_INDEX);
 			    Log.d(TAG, "setCurrentPrefs() Orig Config.CURRENT_MAPVIEW_COORDS: " + Config.CURRENT_MAPVIEW_COORDS);
 			    Log.d(TAG, "setCurrentPrefs() Orig Config.MAPVIEW_FAVORITES: " + Config.MAPVIEW_FAVORITES);
 			    Log.d(TAG, "setCurrentPrefs() Orig CalendarTab.CURRENT_WEATHER_FEED_INDEX: " + CalendarTab.CURRENT_WEATHER_FEED_INDEX);
@@ -641,7 +641,7 @@ public class App extends MapActivity {
 			    Log.d(TAG, "setCurrentPrefs() Pull CURRENT_TAB_INDEX: " + CURRENT_TAB_INDEX);
 			    Log.d(TAG, "setCurrentPrefs() Pull MapsTab.CURRENT_INDEX: " + MapsTab.CURRENT_INDEX);
 			    Log.d(TAG, "setCurrentPrefs() Pull CalendarTab.CURRENT_INDEX: " + CalendarTab.CURRENT_INDEX);
-			    Log.d(TAG, "setCurrentPrefs() Pull CamerasTab.CURRENT_CAMERA_URL: " + CamerasTab.CURRENT_CAMERA_URL);
+			    Log.d(TAG, "setCurrentPrefs() Pull CamerasTab.CURRENT_CAMERA_URL: " + CamerasTab.CURRENT_CAMERA_INDEX);
 			    Log.d(TAG, "setCurrentPrefs() Pull Config.CURRENT_MAPVIEW_COORDS: " + Config.CURRENT_MAPVIEW_COORDS);
 			    Log.d(TAG, "setCurrentPrefs() Pull Config.MAPVIEW_FAVORITES: " + Config.MAPVIEW_FAVORITES);
 			    Log.d(TAG, "setCurrentPrefs() Pull CalendarTab.CURRENT_WEATHER_FEED_INDEX: " + CalendarTab.CURRENT_WEATHER_FEED_INDEX);
@@ -663,7 +663,7 @@ public class App extends MapActivity {
 	        CURRENT_TAB_INDEX = mySharedPreferences.getInt("session_current_view", Config.DEFAULT_TAB_INDEX);
 	        MapsTab.CURRENT_INDEX = mySharedPreferences.getInt("session_map", Config.DEFAULT_MAP_INDEX);
 	        CalendarTab.CURRENT_INDEX = mySharedPreferences.getInt("session_calendar", Config.DEFAULT_CALENDAR_INDEX);
-	        CamerasTab.CURRENT_CAMERA_URL = mySharedPreferences.getString("session_camera_1", Config.DEFAULT_CAMERA_URL);
+	        CamerasTab.CURRENT_CAMERA_INDEX = mySharedPreferences.getString("session_camera_1", Config.DEFAULT_CAMERA_INDEX);
 		    Config.CURRENT_MAPVIEW_COORDS = mySharedPreferences.getString("pref_current_mapview_coords", Config.CURRENT_MAPVIEW_COORDS);
 			// todo - This shouldn't be in Config. Move it to App
 			Config.MAPVIEW_FAVORITES = mySharedPreferences.getString("pref_mapview_favorites", "");
@@ -676,7 +676,7 @@ public class App extends MapActivity {
 	        CURRENT_TAB_INDEX = Config.DEFAULT_TAB_INDEX;
 	        MapsTab.CURRENT_INDEX = Config.DEFAULT_MAP_INDEX;
 	        CalendarTab.CURRENT_INDEX = Config.DEFAULT_CALENDAR_INDEX;
-	        CamerasTab.CURRENT_CAMERA_URL = Config.DEFAULT_CAMERA_URL;
+	        CamerasTab.CURRENT_CAMERA_INDEX = Config.DEFAULT_CAMERA_INDEX;
 		    Config.CURRENT_MAPVIEW_COORDS = Config.DEFAULT_MAPVIEW_COORDS;
 			Config.MAPVIEW_FAVORITES = "";
 		}
