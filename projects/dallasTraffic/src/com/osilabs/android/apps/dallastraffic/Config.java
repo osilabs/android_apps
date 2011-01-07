@@ -51,19 +51,6 @@ public final class Config {
 	// ---------------------------------------------------------
 	// Traffic Tab
 	//
-	public static final String [] traffic = {
-		"Traffic",
-		"Traffic at Night",
-		"Dallas Metro",
-		"Fort Worth Metro"
-	};
-	public static final String [] traffic_urls = {
-		"map~http://dfwtraffic.dot.state.tx.us/Mobile/DalTrans/MapBurnerOutput/WhiteMap.gif~ ~ ~ ~ ",
-		"map~http://dfwtraffic.dot.state.tx.us/Mobile/DalTrans/MapBurnerOutput/BlackMap.gif~ ~ ~ ~ ",
-		"{\"longitude\":\"-96821123\",\"zoom\":\"11\",\"label\":\"Dallas Metro\",\"latitude\":\"32773415\"}",
-		"{\"longitude\":\"-97250963\",\"zoom\":\"11\",\"label\":\"Chicago Metro\",\"latitude\":\"32737613\"}"
-	};
-	
 	
 	// Android viewtypes
 	public static final int WEB      = 0;
@@ -71,6 +58,19 @@ public final class Config {
 	public static final int IMAGE    = 2;
 	public static final int FEED     = 3;
 	public static final int FAVORITE = 4;
+
+	public static final String [] traffic = {
+		"Traffic",
+		"Traffic at Night",
+		"Dallas Metro",
+		"Fort Worth Metro"
+	};
+	public static final String [] traffic_urls = {
+		"image",
+		"image",
+		"{\"longitude\":\"-96821123\",\"zoom\":\"11\",\"label\":\"Dallas Metro\",\"latitude\":\"32773415\"}",
+		"{\"longitude\":\"-97250963\",\"zoom\":\"11\",\"label\":\"Chicago Metro\",\"latitude\":\"32737613\"}"
+	};
 	public static final int [] traffic_viewtypes = {
 		IMAGE,
 		IMAGE,
@@ -92,32 +92,19 @@ public final class Config {
 	// ---------------------------------------------------------
 	// Calendar tab
 	//
+	public static final int RSS      = 0;
+	public static final int ATOM     = 1;
+	public static final String [] calendar_viewtypes = {
+		"rss",
+		"rss",
+		"rss",
+		"rss",
+	};
 	public static final String[] calendar = {
 		"Weather Report",
 		"Food",
 		"Music",
 		"Things To Do",
-	};
-	public static final String[] calendar_src = {
-		"{WEATHER}",
-		"rss~http://www.dallasobserver.com/syndication/section/dining/~ ~link",
-		"rss~http://www.dallasobserver.com/syndication/events?type=music~ ~link",
-		"{TODAY}",
-	};
-	
-
-	// Pref based Multiple value arrays
-	public static final String[] weather_values = {
-		"rss~http://feeds.weatherbug.com/rss.aspx?zipcode=75204&feed=currtxt,fcsttxt&zcode=z4641~ ~ ",
-		"rss~http://feeds.weatherbug.com/rss.aspx?zipcode=75204&feed=curr,fcst&zcode=z4641~ ~ ",
-		"rss~http://rss.accuweather.com/rss/liveweather_rss.asp?metric=0&locCode=75204~ ~ ",
-		"rss~http://rss.weather.com/weather/rss/local/75204?cm_ven=LWO&cm_cat=rss&par=LWO_rss~ ~ ",
-	};
-	// rss feeds with & and ? characters in them don't seem to work out. This will resolve itself
-	//  once I move all the urls to the mobilecontent php side of things.
-	public static final String[] today_values = {
-		"rss~http://www.dallasobserver.com/syndication/events/~ ~link",
-		"rss~http://dallas.citysearch.com/rss/rss_browse_roundups~ ~link",
 	};
 	//
 	// Calendar tab

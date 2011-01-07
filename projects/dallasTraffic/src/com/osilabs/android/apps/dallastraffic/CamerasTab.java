@@ -1,7 +1,5 @@
 package com.osilabs.android.apps.dallastraffic;
 
-import java.net.URLEncoder;
-
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.view.View;

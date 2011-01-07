@@ -1,5 +1,7 @@
 // Dallas Fort Worth Traffic
 
+* Put a link to the source from all rss feeds
+* On Kathy's phone make sure all the icons in the top row fit
 * Color maps tiny
 * clear data and check defaults
 * Fix security hole passing uri's

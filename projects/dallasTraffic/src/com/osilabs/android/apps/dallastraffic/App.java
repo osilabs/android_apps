@@ -871,6 +871,7 @@ public class App extends MapActivity {
 	 */
 	public void refreshTrafficMap() {
 		if (MAP_VIEW_IS_VISIBLE) {
+			Log.d(TAG, "mvTraffic.invalidate");
 	        mvTraffic.invalidate();
 		}
 	}
