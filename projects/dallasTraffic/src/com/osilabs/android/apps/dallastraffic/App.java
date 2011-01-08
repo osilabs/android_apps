@@ -137,7 +137,7 @@ public class App extends MapActivity {
     
     // My libs
     protected Version v;
-
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         if(Config.DEBUG>0)Log.d(TAG, "onCreate");
@@ -999,8 +999,8 @@ public class App extends MapActivity {
 		    case R.id.menu_share:
 				final Intent shareintent = new Intent(Intent.ACTION_SEND);
 				shareintent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				shareintent.setType("text/html");
-				shareintent.putExtra(Intent.EXTRA_SUBJECT, this.getResources().getString(R.string.txt_sharing_subject));
+				shareintent.setType("text/plain");
+				shareintent.putExtra(Intent.EXTRA_SUBJECT, this.getResources().getString(R.string.txt_sharing_subject_a) + " " + this.getResources().getString(R.string.app_name) + " " + this.getResources().getString(R.string.txt_sharing_subject_b));
 				shareintent.putExtra(Intent.EXTRA_TEXT, 
 							this.getResources().getString(R.string.txt_sharing_body_a) + " "
 							+ this.getResources().getString(R.string.app_name) + " "
@@ -1009,8 +1009,20 @@ public class App extends MapActivity {
 							+ this.getResources().getString(R.string.market_link_http) + "\n\n"
 							+ this.getResources().getString(R.string.txt_sharing_body_d) + "\n\n"
 							+ this.getResources().getString(R.string.txt_sharing_body_e) + "\n\n"
-							+ this.getResources().getString(R.string.app_name));
+							+ this.getResources().getString(R.string.app_name) + "\n\n"
+							+ this.getResources().getString(R.string.txt_sharing_body_f));
 				startActivity(Intent.createChooser(shareintent, "Share"));
+		    	
+//		    	
+//				final Intent shareintent = new Intent(Intent.ACTION_SEND);
+//				shareintent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//				shareintent.setType("text/plain");
+//				shareintent.putExtra(Intent.EXTRA_SUBJECT, this.getResources().getString(R.string.txt_sharing_subject));
+//				shareintent.putExtra(Intent.EXTRA_TEXT, 
+//							this.getResources().getString(R.string.txt_sharing_body_a));
+//				startActivity(Intent.createChooser(shareintent, "Share"));
+		    	
+		    	
 		    	return true;
 
 		    case R.id.menu_help:

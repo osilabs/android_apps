@@ -19,12 +19,14 @@
 	<!--	~~~~~~~~~~~~~ -->
 	<!--	~~~~~~~~~~~~~ ~~~~~~~~~~~~~ ~~~~~~~~~~~~~ -->
 	
-    <string name="txt_sharing_subject">Im sharing a phone app with you</string>
-    <string name="txt_sharing_body_a">Hi, Im sharing the</string>
-    <string name="txt_sharing_body_b">app for Android with you.</string>
-    <string name="txt_sharing_body_c">Using your device, click this link to try it out from the Android Market:</string>
+    <string name="txt_sharing_subject_a">Im sharing</string>
+    <string name="txt_sharing_subject_b">for Android with you</string>
+    <string name="txt_sharing_body_a">I like the</string>
+    <string name="txt_sharing_body_b">app for Android. Search for it on the market.</string>
+    <string name="txt_sharing_body_c">Using your device, copy and paste or click this link and try it out from the Android Market:</string>
     <string name="txt_sharing_body_d">If your device asks you how to complete this action, be sure to choose the Market choice.</string>
     <string name="txt_sharing_body_e">If the link does not work for you or you do not use Android Market, please search your market for:</string>
+    <string name="txt_sharing_body_f">QR Code: http://chart.apis.google.com/chart?cht=qr&amp;chs=150x150&amp;chl=http://www.appbrain.com/app/com.osilabs.android.apps.dallastraffic?install=web</string>
 
 
     <string name="pref_mapview_favorites"></string>
