@@ -60,20 +60,26 @@ public final class Config {
 	public static final int FAVORITE = 4;
 
 	public static final String [] traffic = {
-		"Traffic",
-		"Traffic at Night",
-		"Dallas Metro",
-		"Fort Worth Metro"
+		"Dallas Traffic",
+		"Dallas Traffic (dark)",
+		"Dallas",
+		"Fort Worth",
+		"Metroplex",
+		"Metroplex (far)",
 	};
 	public static final String [] traffic_urls = {
 		"image",
 		"image",
 		"{\"longitude\":\"-96821123\",\"zoom\":\"11\",\"label\":\"Dallas Metro\",\"latitude\":\"32773415\"}",
-		"{\"longitude\":\"-97250963\",\"zoom\":\"11\",\"label\":\"Chicago Metro\",\"latitude\":\"32737613\"}"
+		"{\"longitude\":\"-97250963\",\"zoom\":\"11\",\"label\":\"Chicago Metro\",\"latitude\":\"32737613\"}",
+		"{\"longitude\":\"-96899745\",\"zoom\":\"10\",\"label\":\"Chicago Metro\",\"latitude\":\"32774049\"}",
+		"{\"longitude\":\"-96745937\",\"zoom\":\"9\",\"label\":\"Chicago Metro\",\"latitude\":\"32602996\"}",
 	};
 	public static final int [] traffic_viewtypes = {
 		IMAGE,
 		IMAGE,
+		MAP,
+		MAP,
 		MAP,
 		MAP,
 	};
