@@ -1,12 +1,21 @@
 // Dallas Fort Worth Traffic
 
-* Put a link to the source from all rss feeds
-* On Kathy's phone make sure all the icons in the top row fit
-* Color maps tiny
-* clear data and check defaults
-* Fix security hole passing uri's
-* Put in default camera in string.xml
+* TODO : optimize mapview for screen sizes. Market as optimized for tablets.
 
+* check simons qc codes
+* clear data and check defaults
+* Put in default camera in string.xml
+* Remove add banner from about screen
+* On Kathy's phone make sure all the icons in the top row fit
+* Make test script when i test
+
+fail: radios don't play
+fail: haven't tested uninstallng scanner radio
+fail: test automatic upgrade message
+fail: About website it toast
+fail: 
+fail: 
+fail: 
 
 
 // v0.3
