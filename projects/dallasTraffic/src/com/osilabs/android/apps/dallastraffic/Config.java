@@ -2,19 +2,21 @@ package com.osilabs.android.apps.dallastraffic;
 
 public final class Config {
 	// Tell classes to dump to logcat
-	public static final int     DEBUG = 2;
+	public static final int     DEBUG = 0;
 	
 	// This can also be accomplished by recompiling. Also by stopping the app
 	public static final boolean DEBUG_FORCE_NEW_VERSION_CHECK = false; 
+
+	// True will hide the ads
+	public static final boolean NO_ADS = false; 
 
 	// Used by web content versin checker to know which app is checking in
 	public static final    String APP_CODE = "dt"; // i.e. tct, st, ld ...
 	
 	public static final    String DEFAULT_CAMERA_INDEX = "0";
-	public static final int       DEFAULT_MAP_INDEX = 0; // !!! Can't be above array size-1. Includes favorites, best to set to one of the system traffic maps indexes.
+	public static final int       DEFAULT_MAP_INDEX = 4; // !!! Can't be above array size-1. Includes favorites, best to set to one of the system traffic maps indexes.
 	public static final int       DEFAULT_CALENDAR_INDEX = 0;
 	public static final int       DEFAULT_TAB_INDEX = 0;
-	public static final boolean   NO_ADS = false; // True will hide the ads
 	protected static       String MOBILECONTENT_URL_PREFIX   = "http://osilabs.com/m/mobilecontent/dallastraffic";
 	protected static       String MOBILECONTENT_URL_ABOUT    = "http://osilabs.com/m/mobilecontent/about/shared_about.php";
 	protected static final String NAMESPACE = "com.osilabs.android.apps.dallastraffic";
@@ -70,10 +72,10 @@ public final class Config {
 	public static final String [] traffic_urls = {
 		"image",
 		"image",
-		"{\"longitude\":\"-96821123\",\"zoom\":\"11\",\"label\":\"Dallas Metro\",\"latitude\":\"32773415\"}",
-		"{\"longitude\":\"-97250963\",\"zoom\":\"11\",\"label\":\"Chicago Metro\",\"latitude\":\"32737613\"}",
-		"{\"longitude\":\"-96899745\",\"zoom\":\"10\",\"label\":\"Chicago Metro\",\"latitude\":\"32774049\"}",
-		"{\"longitude\":\"-96745937\",\"zoom\":\"9\",\"label\":\"Chicago Metro\",\"latitude\":\"32602996\"}",
+		"{\"longitude\":\"-96821123\",\"zoom\":\"11\",\"label\":\"Metro\",\"latitude\":\"32773415\"}",
+		"{\"longitude\":\"-97250963\",\"zoom\":\"11\",\"label\":\"Metro\",\"latitude\":\"32757238\"}",
+		"{\"longitude\":\"-96899745\",\"zoom\":\"10\",\"label\":\"Metro\",\"latitude\":\"32774049\"}",
+		"{\"longitude\":\"-96745937\",\"zoom\":\"9\",\"label\":\"Metro\",\"latitude\":\"32602996\"}",
 	};
 	public static final int [] traffic_viewtypes = {
 		IMAGE,
