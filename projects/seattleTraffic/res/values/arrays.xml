@@ -12,40 +12,62 @@
 <!--22590 Tacoma police-->
 
 <string-array name="pref_police_radios">
-	<item>Bellevue-Seattle and King Counties Fire and Medic</item>
-	<item>Bureau LaSalle Marshall Putnam and Stark County Fire and EMS</item>
-	<item>City of Kent Police and King County Fire</item>
-	<item>LaSalle county sheriff fire and EMS</item>
-	<item>Leland and Earlville police fire and EMS</item>
-	<item>Seattle police fire and EMS</item>
-	<item>Southeast King county police and fire</item>
-	<item>S N and E Snohomish county sheriff Marysville police and East/North county fire</item>
-	<item>Tacoma police</item>
+        <item>Bellevue-Seattle and King Counties Fire and Medic</item>
+        <item>Bureau LaSalle Marshall Putnam and Stark County Fire and EMS</item>
+        <item>City of Kent Police and King County Fire</item>
+        <item>LaSalle county sheriff fire and EMS</item>
+        <item>Leland and Earlville police fire and EMS</item>
+        <item>Seattle police fire and EMS</item>
+        <item>Southeast King county police and fire</item>
+        <item>S N and E Snohomish county sheriff Marysville police and East/North county fire</item>
+        <item>Tacoma police</item>
 </string-array> 
 <string-array name="pref_police_radios_values">
-	<item>22577</item> 
-	<item>482</item> 
-	<item>22578</item> 
-	<item>484</item> 
-	<item>23102</item> 
-	<item>22580</item> 
-	<item>23934</item> 
-	<item>22597</item> 
-	<item>22590</item> 
+        <item>22577</item> 
+        <item>482</item> 
+        <item>22578</item> 
+        <item>484</item> 
+        <item>23102</item> 
+        <item>22580</item> 
+        <item>23934</item> 
+        <item>22597</item> 
+        <item>22590</item> 
 </string-array> 
-
-
 
 
 <string-array name="pref_weather_radios">
-	<item>Spokane Weather Radio</item>
-	<item>Portland Weather Radio</item>
-	<item>Eugene Weather Radio</item>
+        <item>Spokane Weather Radio</item>
+        <item>Portland Weather Radio</item>
+        <item>Eugene Weather Radio</item>
 </string-array> 
 <string-array name="pref_weather_radios_values">
-	<item>11568</item>
-	<item>22984</item>
-	<item>20034</item>
+        <item>11568</item>
+        <item>22984</item>
+        <item>20034</item>
+</string-array> 
+
+
+
+<string-array name="pref_today_feed">
+	<item>fixme, today 1</item>
+	<item>fixme, today 2</item>
+</string-array> 
+<string-array name="pref_today_feed_values">
+	<item>0</item> 
+	<item>1</item>
+</string-array> 
+
+<string-array name="pref_weather_feed">
+	<item>Weather Bug Text</item>
+	<item>Weather Bug</item>
+	<item>Accuweather</item>
+	<item>Weather.com</item>
+</string-array> 
+<string-array name="pref_weather_feed_values">
+	<item>0</item> 
+	<item>1</item> 
+	<item>2</item> 
+	<item>3</item> 
 </string-array> 
 
 
@@ -57,228 +79,95 @@
 <!--    PASTE GENERATED XML BELOW THIS POINT    -->
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-<string-array name="campref_mainroads"><item>I-5</item> 
-<item>I-205</item> 
-<item>I-405</item> 
-<item>I-90</item> 
-<item>I-82</item> 
-<item>US 2</item> 
-<item>US 12</item> 
-<item>US 97</item> 
-<item>US 97A</item> 
-<item>US 101</item> 
-<item>US 195</item> 
-<item>US 395</item> 
-<item>US 395 NSC</item> 
-<item>SR 3</item> 
-<item>SR 4</item> 
-<item>SR 8</item> 
-<item>SR 9</item> 
-<item>SR 14</item> 
-<item>SR 16</item> 
-<item>SR 17</item> 
-<item>SR 18</item> 
-<item>SR 20</item> 
-<item>SR 24</item> 
-<item>SR 28</item> 
-<item>SR 31</item> 
-<item>SR 96</item> 
-<item>SR 99</item> 
-<item>SR 104</item> 
-<item>SR 109</item> 
-<item>SR 167</item> 
-<item>SR 169</item> 
-<item>SR 221</item> 
-<item>SR 240</item> 
-<item>SR 285</item> 
-<item>SR 290</item> 
-<item>SR 291</item> 
-<item>SR 410</item> 
-<item>SR 433</item> 
-<item>SR 500</item> 
-<item>SR 502</item> 
-<item>SR 504</item> 
-<item>SR 516</item> 
-<item>SR 518</item> 
-<item>SR 520</item> 
-<item>SR 522</item> 
-<item>SR 525</item> 
-<item>SR 526</item> 
-<item>SR 532</item> 
-<item>SR 539</item> 
-<item>SR 543</item> 
-<item>SR 900</item> 
-<item>SR 902</item> 
-<item>Ferries</item> 
-<item>City and County Cams</item> 
-<item>Airports</item> 
+
+
+
+<string-array name="campref_mainroads"><item>US75</item> 
+<item>SH183</item> 
+<item>IH35E</item> 
+<item>IH635</item> 
+<item>US67</item> 
+<item>IH20</item> 
+<item>Spur 408</item> 
+<item>High Five S.E. 1</item> 
+<item>High Five S.E. 2</item> 
+<item>IH30</item> 
+<item>Loop 12</item> 
+<item>Spur 366</item> 
+<item>IH345</item> 
+<item>High Five N.E. 1</item> 
+<item>High Five N.E. 2</item> 
+<item>High Five S.W. 1</item> 
+<item>High Five S.W. 2</item> 
+<item>IH30/IH35E Mixmaster</item> 
+<item>SH114</item> 
+<item>IH35</item> 
+<item>IH35W</item> 
 </string-array> 
  
-<string-array name="campref_mainroads_values"><item>I_5</item> 
-<item>I_205</item> 
-<item>I_405</item> 
-<item>I_90</item> 
-<item>I_82</item> 
-<item>US_2</item> 
-<item>US_12</item> 
-<item>US_97</item> 
-<item>US_97A</item> 
-<item>US_101</item> 
-<item>US_195</item> 
-<item>US_395</item> 
-<item>US_395_NSC</item> 
-<item>SR_3</item> 
-<item>SR_4</item> 
-<item>SR_8</item> 
-<item>SR_9</item> 
-<item>SR_14</item> 
-<item>SR_16</item> 
-<item>SR_17</item> 
-<item>SR_18</item> 
-<item>SR_20</item> 
-<item>SR_24</item> 
-<item>SR_28</item> 
-<item>SR_31</item> 
-<item>SR_96</item> 
-<item>SR_99</item> 
-<item>SR_104</item> 
-<item>SR_109</item> 
-<item>SR_167</item> 
-<item>SR_169</item> 
-<item>SR_221</item> 
-<item>SR_240</item> 
-<item>SR_285</item> 
-<item>SR_290</item> 
-<item>SR_291</item> 
-<item>SR_410</item> 
-<item>SR_433</item> 
-<item>SR_500</item> 
-<item>SR_502</item> 
-<item>SR_504</item> 
-<item>SR_516</item> 
-<item>SR_518</item> 
-<item>SR_520</item> 
-<item>SR_522</item> 
-<item>SR_525</item> 
-<item>SR_526</item> 
-<item>SR_532</item> 
-<item>SR_539</item> 
-<item>SR_543</item> 
-<item>SR_900</item> 
-<item>SR_902</item> 
-<item>Ferries</item> 
-<item>City_and_County_Cams</item> 
-<item>Airports</item> 
+<string-array name="campref_mainroads_values"><item>US75</item> 
+<item>SH183</item> 
+<item>IH35E</item> 
+<item>IH635</item> 
+<item>US67</item> 
+<item>IH20</item> 
+<item>Spur_408</item> 
+<item>High_Five_S_E__1</item> 
+<item>High_Five_S_E__2</item> 
+<item>IH30</item> 
+<item>Loop_12</item> 
+<item>Spur_366</item> 
+<item>IH345</item> 
+<item>High_Five_N_E__1</item> 
+<item>High_Five_N_E__2</item> 
+<item>High_Five_S_W__1</item> 
+<item>High_Five_S_W__2</item> 
+<item>IH30_IH35E_Mixmaster</item> 
+<item>SH114</item> 
+<item>IH35</item> 
+<item>IH35W</item> 
 </string-array> 
  
-<string-array name="campref_crossroads_I_5"><item>I-5 and SR-14</item><item>I-5 Interstate Bridge S</item><item>I-5 Interstate  Bridge N</item><item>I-5 and Mill Plain</item><item>I-5 at Marine Drive</item><item>I-5 and 29th</item><item>I-5 at 35th St</item><item>Main St, Hazel Dell</item><item>I-5 at 63rd</item><item>I-5 and 78th</item><item>I-5 and 99th</item><item>I-5 and 134th</item><item>I-5 at 129th</item><item>SR502 at I-5 SB on ramp</item><item>I-5 at SR502 NB on ramp</item><item>I-5 NB at 199th</item><item>I-5 at Paradise Point</item><item>I-5: Rush Rd</item><item>I-5: MP 73.25</item><item>I-5: Labree Rd</item><item>I-5: 13th Ave</item><item>I-5 at Custer Way (Olympia)</item><item>I-5 Capitol Blvd (Olympia)</item><item>I-5 Pacific Ave (Olympia)</item><item>I-5 at Eastside St (Olympia)</item><item>I-5 at Sleater-Kinney (Olympia)</item><item>I-5 at Martin Way (Olympia)</item><item>Nisqually  on I 5 at MP 114</item><item>I-5: Thorne Lane</item><item>I-5: Gravelly Lk Dr</item><item>I-5: Bridgeport Way</item><item>I-5/SR 512 Interchange</item><item>S 72nd/74th St</item><item>S 38th St</item><item>I-5/SR 16 Interchange</item><item>Pacific Ave</item><item>I-5 and L St</item><item>Puyallup River Bridge</item><item>Port of Tacoma Rd</item><item>I-5: Porter Way</item><item>Emerald St</item><item>I-5 / SR 18 Interchange</item><item>Enchanted Pkwy</item><item>S 320th St</item><item>S 260th St</item><item>I-5/SR 516 Interchange</item><item>S 200th St</item><item>S 188th St</item><item>S 178th St</item><item>Southcenter</item><item>I-5/SR 599 Interchange</item><item>Duwamish River</item><item>Boeing Access Rd</item><item>Rose St (Mid-Boeing Field)</item><item>Albro Pl</item><item>S Spokane St</item><item>S Holgate St</item><item>I-5/I-90 Interchange (4th Ave S-EB)</item><item>Yesler Way</item><item>Pine St</item><item>Mercer St</item><item>Roanoke St</item><item>NE 45th St</item><item>Lake City Way</item><item>NE 85th St</item><item>NE Northgate Way</item><item>NE 175th St, SB</item><item>NE 195th St</item><item>236th St SW</item><item>220th St SW</item><item>44th Ave W</item><item>Alderwood (I-5/405 Interchange)</item><item>164th St SW</item><item>148th St SW</item><item>134th St SW</item><item>128th St SW</item><item>112th St SW, NB</item><item>106th St SW</item><item>SR 526</item><item>I-5/I-405 Interchange (Southcenter)</item><item>36th St SE</item><item>US 2</item><item>1-5 / 228th St NE</item><item>I-5 / SR 532</item><item>I-5 / Anderson Rd (North)</item><item>I-5 / Anderson Rd (South)</item><item>I-5 / North of Kincaid St (North)</item><item>I-5 / North of Kincaid St (South)</item><item>I-5 / College Way Ramps (East)</item><item>I-5 / College Way (North)</item><item>I-5 / SR 20</item><item>Lake Samish Park and Ride </item><item>South of Old Fairhaven Parkway (north)</item><item>Old Fairhaven Parkway</item><item>Lakeway Dr</item><item>Iowa St</item><item>Sunset Dr</item><item>Meridian St</item><item>Bakerview Rd</item><item>Smith Rd (North)</item><item>Smith Rd (South)</item><item>Loomis Trail Rd</item><item>W 88th St</item><item>Peace Portal Dr</item><item>SR 543</item><item>Mitchell Ave</item><item>D St Offramp</item><item>D St</item><item>Peace Arch</item></string-array> 
-<string-array name="campref_crossroads_I_205"><item>I-205 at 18th St</item><item>I-205 at 78th St</item><item>I-205 at Padden</item><item>I-205 at Government Island</item><item>I-205 and SR-14</item><item>I-205 and Mill Plain</item><item>I-205 and Mill Plain Construction</item><item>I-205 at SR 500 </item></string-array> 
-<string-array name="campref_crossroads_I_405"><item>Andover Park W</item><item>I-405 at Everett</item><item>Longacres Dr</item><item>West Valley Hwy (SR 181)</item><item>I-405/SR 167 Interchange</item><item>Oaksdale Ave</item><item>SR 169</item><item>Sunset Blvd</item><item>NE 44th St</item><item>I-90/I-405 Interchange(Factoria)</item><item>SE 8th St</item><item>SE 20th St, NB</item><item>SE 9th Pl</item><item>SR 520, NB</item><item>NE 85th St</item><item>NE 124th St</item><item>NE 160th St</item><item>SR 522, SB</item><item>204th St SE, NB</item><item>213th St SE</item><item>I-405/SR 524 Interchange (Filbert Rd)</item></string-array> 
-<string-array name="campref_crossroads_I_90"><item>4th Ave S, EB</item><item>Airport Way, WB</item><item>12th Ave S, WB</item><item>12th Ave S, EB</item><item>18th Ave S</item><item>Corwin Pl S</item><item>I 90 Bridge Midspan</item><item>76th Ave SE</item><item>77th Ave SE</item><item>Island Crest Way</item><item>Luther Burbank</item><item>Shorewood</item><item>Bellevue Way SE</item><item>142nd Pl SE</item><item>163rd Ave SE</item><item>150th Ave SE</item><item>192nd Ave SE</item><item>W Lk Samm Pkwy</item><item>SR 900</item><item>Front St EB Ramp</item><item>Sunset Way</item><item>246th Ave SE, WB</item><item>246th Ave SE, EB</item><item>Franklin Falls on I-90 at MP51.3</item><item>Snoqualmie Summit on I-90 at MP52</item><item>Hyak on I-90 at MP55.2</item><item>Price Creek on I-90 at MP61</item><item>Easton Hill on I-90 at MP67.4</item><item>Easton on I-90 at MP70.6</item><item>Bullfrog-facing west on I-90 at MP 79.54</item><item>Bullfrog-facing east on I-90 at MP 79.54</item><item>Cle Elum on I-90 at MP 84.6</item><item>Rocky Canyon on I-90 at MP 96.2</item><item>Ellensburg I-90 at MP 110</item><item>Ryegrass Summit on I-90 at MP 125</item><item>Vantage West </item><item>Vantage East</item><item>Silica Road on I-90 at MP 144</item><item>Dodson Road on I-90 at MP 164.5</item><item>Warden Interchange on I-90 at MP 189</item><item>I-90/US 395 Interchange at Ritzville</item><item>I-90/US 395 Interchange at Ritzville (2)</item><item>I-90/US 395 Interchange at Ritzville (3)</item><item>I-90/US 395 Interchange at Ritzville (4)</item><item>I-90/US 395 Interchange at Ritzville (5)</item><item>I-90/US 395 Interchange at Ritzville (6)</item><item>I-90/US 395 Interchange at Ritzville (7)</item><item>I-90/US 395 Interchange at Ritzville (8)</item><item>Tyler Interchange on I-90 at MP 257 (2)</item><item>Tyler Interchange on I-90 at MP 257 (3)</item><item>Tyler Interchange on I-90 at MP 257 (4)</item><item>Tyler Interchange on I-90 at MP 257 (5)</item><item>Tyler Interchange on I-90 at MP 257 (6)</item><item>Tyler Interchange on I-90 at MP 257 (7)</item><item>Tyler Interchange on I-90 at MP 257 (8)</item><item>Tyler Interchange on I-90 at MP 257</item><item>I-90/SR-902</item><item>Thomas Mallen Rd.</item><item>Geiger Rd.</item><item>US-2/I-90</item><item>I-90/US 2 Interchange</item><item>I-90 and US 195</item><item>I-90 / Jefferson</item><item>3rd / Maple</item><item>3rd / Washington</item><item>I-90 / Division #2</item><item>I-90 / Division #1</item><item>I-90 / Arthur St</item><item>I-90 / Hamilton St</item><item>Havana St</item><item>Freya St</item><item>Sprague Ave</item><item>Broadway Ave</item><item>Park Rd</item><item>Fancher Rd</item><item>Argonne Rd</item><item>I-90 / University</item><item>I-90 / Pines Rd</item><item>Evergreen and I-90</item><item>Sullivan and I-90</item><item>2nd / Browne</item><item>Liberty Lake on I-90 at MP 296 (2)</item><item>Liberty Lake on I-90 at MP 296 (3)</item><item>Liberty Lake on I-90 at MP 296 (4)</item><item>Liberty Lake on I-90 at MP 296 (5)</item><item>Liberty Lake on I-90 at MP 296 (6)</item><item>Liberty Lake on I-90 at MP 296 (7)</item><item>Liberty Lake on I-90 at MP 296 (8)</item><item>Liberty Lake on I-90 at MP 296</item><item>2nd / Monroe</item><item>Denny Creek on I-90 at MP46.8</item><item>East Cle Elum I-90 mp 86 looking East</item><item>East Cle Elum I-90 mp 86 looking West</item><item>Elk Heights on I-90 at MP 92</item><item>Elk Heights I-90 mp 93 looking west</item><item>Elk Heights I-90 mp 93 looking east</item></string-array> 
-<string-array name="campref_crossroads_I_82"><item>Manastash Ridge Summit on I-82 at MP 7</item><item>Selah Creek Rest Area</item><item>I-82 - Valley Mall Blvd Interchange </item><item>Union Gap on I-82</item><item>Zillah at I-82</item><item>Outlook at I-82</item><item>Prosser at I-82</item><item>I-82 at I-182</item><item>Horse Heaven on I-82 at MP 121.2</item><item>Plymouth Port of Entry</item></string-array> 
-<string-array name="campref_crossroads_US_2"><item>Homeacres Rd</item><item>US2 at SR9 (north)</item><item>US2 at SR9 (south)</item><item>US 2/SR 522</item><item>Kelsey St</item><item>Lewis St (SR 203)</item><item>Main St</item><item>US 2 at Old Owen Rd</item><item>US 2 at 5th St</item><item>US 2 at Sultan Basin Rd</item><item>Old Faithful at MP 62</item><item>Stevens Pass East Summit at MP 65</item><item>Stevens Pass West Summit at MP 65</item><item>Winton on US 2 at MP 86.6</item><item>Leavenworth at Riverbend Dr.</item><item>US97/US2 Junction (Big Y).</item><item>Wenatchee on US 2 at MP 119</item><item>Waterville</item><item>Fairchild looking East</item><item>Fairchild looking west</item><item>US2/Farwell Rd</item></string-array> 
-<string-array name="campref_crossroads_US_12"><item>White Pass Summit on US12 at MP 150.9</item><item>US12 - SR410</item><item>Delaney on US 12 at MP 381.3</item><item>Alpowa Summit on US-12 at MP 413</item></string-array> 
-<string-array name="campref_crossroads_US_97"><item>Maryhill</item><item>Satus Pass</item><item>YakimaCountyLine  US 97 at MP 34</item><item>Blewett Pass</item><item>US2/US97 Junction(Big Y)</item><item>Odabashian Bridge - East</item><item>Riverside on US-97 at MP 299</item><item>US 97 Border Approach-Oroville - North</item><item>US 97 Border Approach-Oroville - South</item><item>US 97 Border-Oroville - North</item><item>US 97 Border-Oroville - South</item></string-array> 
-<string-array name="campref_crossroads_US_97A"><item>Odabashian Bridge - North</item><item>Knapps Tunnel on US 97A at MP 226</item><item>Chelan on US 97 at MP 240.2 </item></string-array> 
-<string-array name="campref_crossroads_US_101"><item>Astoria-Megler Bridge on US 101 </item><item>Cosmopolis Hill on US-101 at MP 78</item><item>Simpson Ave Bridge South</item><item>Simpson Ave Bridge North</item><item>State Camp Hill on US-101 at MP 100.5</item><item>Queets on  SR 101 at MP 151.7</item><item>Queets on  SR 101 at MP 151.7 21</item><item>Heckelsville Shed on US 101 at MP 214</item><item>Indian Valley on US 101 at MP 237.2</item><item>Seibert on US 101 at MP 256</item><item>Mt Walker, SR-101at 301.5 </item><item>Mt Walker, SR-101at 301.5 2</item><item>Mt Walker, SR-101at 301.5 3</item><item>Oyster Bay Rd. on SR 101 at MP 359</item><item>US 101 at Crosby Blvd</item></string-array> 
-<string-array name="campref_crossroads_US_195"><item>US-195 at Uniontown</item><item>US-195 at Uniontown 2</item><item>US-195 at Uniontown 3</item><item>US-195 at Uniontown 4</item><item>US-195 at Uniontown 5</item><item>US-195 at Uniontown 6</item><item>US-195 at Uniontown 7</item><item>US-195 at Uniontown 8</item><item>US 195 - Colfax</item><item>US-195 at Spangle</item><item>US-195 at Spangle 2</item><item>US-195 at Spangle 3</item><item>US-195 at Spangle 4</item><item>US-195 at Spangle 5</item><item>US-195 at Spangle 6</item><item>US-195 at Spangle 7</item><item>US-195 at Spangle 8</item></string-array> 
-<string-array name="campref_crossroads_US_395"><item>Blue Bridge on US 395 at MP 19</item><item>Little Spokane River on SR-395 at MP 168</item><item>Little Spokane River on SR-395 at MP 168 (2)</item><item>Little Spokane River on SR-395 at MP 168 (3)</item><item>Little Spokane River on SR-395 at MP 168 (4)</item><item>Little Spokane River on SR-395 at MP 168 (5)</item><item>Little Spokane River on SR-395 at MP 168 (6)</item><item>Little Spokane River on SR-395 at MP 168 (7)</item><item>Little Spokane River on SR-395 at MP 168 (8)</item><item>Loon Lake Summit on US-395 at MP 188 (1)</item><item>Loon Lake Summit on US-395 at MP 188 (2)</item><item>Loon Lake Summit on US-395 at MP 188 (3)</item><item>Loon Lake Summit on US-395 at MP 188 (4)</item><item>Loon Lake Summit on US-395 at MP 188 (5)</item><item>Loon Lake Summit on US-395 at MP 188 (6)</item><item>Loon Lake Summit on US-395 at MP 188</item><item>Loon Lake Summit on US-395 at MP 188 (8)</item><item>US 395 - Colville - Birch</item><item>US 395 - Colville - Canning</item><item>Laurier on US-395 at MP 275 Position 2</item><item>Laurier on US-395 at MP 275 Position 5</item><item>Laurier on US-395 at MP 275 Position 6</item><item>Laurier on US-395 at MP 275 Position 3</item><item>Laurier on US-395 at MP 275 Position 4</item><item>Laurier on US-395 at MP 275 Position 8</item><item>Laurier on US-395 at MP 275 Position 7</item><item>Laurier on US-395 at MP 275</item></string-array> 
-<string-array name="campref_crossroads_US_395_NSC"><item>NSC 395 and Lincoln</item><item>NSC 395 and Fairview</item><item>NSC 395 and Gerlach</item><item>NSC 395 and Market</item><item>NSC 395  and Parksmith</item><item>NSC 395 and Farwell</item></string-array> 
-<string-array name="campref_crossroads_SR_3"><item>SR 3 at Christopherson</item><item>South of Hood Canal Bridge</item></string-array> 
-<string-array name="campref_crossroads_SR_4"><item>KM Mountain on SR-4 at MP 22</item></string-array> 
-<string-array name="campref_crossroads_SR_8"><item>Rock Candy Mountain on SR-8 at MP 16.1</item></string-array> 
-<string-array name="campref_crossroads_SR_9"><item>SR 522</item><item>SR 524</item><item>Front St</item><item>Abbotsford (Sumas) SR-9</item></string-array> 
-<string-array name="campref_crossroads_SR_14"><item>SR14 at  Lieser Rd</item><item>SR-14 East of I-205</item><item>SR-14 West of I-205</item><item>CapeHorn</item><item>Hood River Bridge on SR 14</item></string-array> 
-<string-array name="campref_crossroads_SR_16"><item>I-5/SR 16 Interchange</item><item>SR 16: Center St</item><item>SR 16/ SR I63 Interchange(Pearl St</item><item>Tacoma Narrows East</item><item>SR 16 - Sixth Ave</item><item>SR 16: Jackson</item><item>SR 16: 36th Street</item><item>SR 16: Olympic Drive</item><item>Tacoma Narrows West</item><item>SR 16: Wollochet</item><item>SR 16: Toll Plaza</item><item>SR 16: Stone Dr</item><item>SR 16 - Burnham Drive</item><item>SR 16 / SR 302</item><item>SR 16: South 19th St</item></string-array> 
-<string-array name="campref_crossroads_SR_17"><item>Mansfield on SR-17 at MP 112</item></string-array> 
-<string-array name="campref_crossroads_SR_18"><item>SR 18 at I-5</item><item>Tiger Mountain</item></string-array> 
-<string-array name="campref_crossroads_SR_20"><item>SR 20 at Garrett Rd</item><item>SR 20 at Burlington Blvd</item><item>Newhalem</item><item>LoupLoup Pass</item><item>Sherman Pass on SR-20 at MP 320</item></string-array> 
-<string-array name="campref_crossroads_SR_24"><item>SR 24 at SR 241</item><item>SR 24 at SR 241 Pos 2</item><item>SR 24 at SR 241 Pos 3</item><item>SR 24 at SR 241 Pos 4</item><item>SR 24 at SR 241 Pos 6</item><item>SR 24 at SR 241 Pos 5</item><item>I-82 at SR 24</item></string-array> 
-<string-array name="campref_crossroads_SR_28"><item>Sellar Bridge - East</item><item>GrantRoad_Intersection</item><item>Quincy Rest Area</item></string-array> 
-<string-array name="campref_crossroads_SR_31"><item>Metaline Falls on SR 31 at MP 16.69</item></string-array> 
-<string-array name="campref_crossroads_SR_96"><item>25th Ave SE</item><item>35th Ave SE</item></string-array> 
-<string-array name="campref_crossroads_SR_99"><item>W Marginal Way</item><item>S Michigan St</item></string-array> 
-<string-array name="campref_crossroads_SR_104"><item>West of Hood Canal Bridge</item><item>Hood Canal</item><item>SR 104 near 100th Ave W</item></string-array> 
-<string-array name="campref_crossroads_SR_109"><item>Pt. Grenville on SR 109 at MP 36.5</item><item>Pt. Grenville on SR 109 at MP 36.51</item></string-array> 
-<string-array name="campref_crossroads_SR_167"><item>SR 167/SR 410 Interchange</item><item>15th St NW</item><item>S 277th St</item><item>84th Ave S</item><item>S 222nd St</item><item>S 180th St</item></string-array> 
-<string-array name="campref_crossroads_SR_169"><item>140th Way SE</item></string-array> 
-<string-array name="campref_crossroads_SR_221"><item>Sellards Road-NB facing on SR 221 at MP13.5</item></string-array> 
-<string-array name="campref_crossroads_SR_240"><item>SR 240 at Beloit Rd</item><item>SR 240 at Twin Bridges</item><item>SR 240/ Richland Wye at MP 38</item></string-array> 
-<string-array name="campref_crossroads_SR_285"><item>Sellar Bridge - West</item><item>Wenatchee River Bridge on SR 285</item></string-array> 
-<string-array name="campref_crossroads_SR_290"><item>SR 290 / Hamilton</item></string-array> 
-<string-array name="campref_crossroads_SR_291"><item>Charles Road on SR-291 at MP 9  Pos 7</item><item>Charles Road on SR-291 at MP 9  Pos 6</item><item>Charles Road on SR-291 at MP 9  Pos 5</item><item>Charles Road on SR-291 at MP 9  Pos 1</item><item>Charles Road on SR-291 at MP 9  Pos 3</item><item>Charles Road on SR-291 at MP 9  Pos 2</item><item>Charles Road on SR-291 at MP 9  Pos 4</item><item>Charles Road on SR-291 at MP 9  Pos 8</item><item>SR291 and Swenson Rd</item></string-array> 
-<string-array name="campref_crossroads_SR_410"><item>Whistlin Jacks on SR 410</item></string-array> 
-<string-array name="campref_crossroads_SR_433"><item>Lewis and Clark Bridge on SR-433</item></string-array> 
-<string-array name="campref_crossroads_SR_500"><item>SR 500 at Thurston Way</item><item>SR 500 at 112th and Gher Rd.</item></string-array> 
-<string-array name="campref_crossroads_SR_502"><item>SR502 at I-5 NB off ramp</item><item>SR502 at 10th Ave.</item></string-array> 
-<string-array name="campref_crossroads_SR_504"><item>Forest Learning Rest Area andcopy;WSDOT</item></string-array> 
-<string-array name="campref_crossroads_SR_516"><item>SR 516</item></string-array> 
-<string-array name="campref_crossroads_SR_518"><item>S 154th St</item><item>Airport Dr</item><item>46th Ave S</item><item>51st Ave S</item><item>EB Under I-5</item></string-array> 
-<string-array name="campref_crossroads_SR_520"><item>Delmar Dr</item><item>Montlake Ramp</item><item>West Highrise, E</item><item>East Highrise</item><item>92nd Ave NE</item><item>Bellevue Way NE</item><item>148th Ave NE</item><item>NE 51st St</item><item>W Lk Samm Pkwy</item><item>Redmond Way</item></string-array> 
-<string-array name="campref_crossroads_SR_522"><item>SR 522 / SR 104 Interchange</item><item>S Campus Way</item><item>I-405/SR 522 Interchange</item></string-array> 
-<string-array name="campref_crossroads_SR_525"><item>SR99/SR525 Interchange</item></string-array> 
-<string-array name="campref_crossroads_SR_526"><item>Evergreen Way</item></string-array> 
-<string-array name="campref_crossroads_SR_532"><item>SR 532 / Sunrise Blvd</item><item>SR 532 / 102nd Ave NW</item><item>SR 532 / 92nd Ave NW</item><item>SR 532 / 88th Ave NW</item><item>SR 532 / Pioneer Hwy</item><item>SR 532 / 72nd Ave NW</item></string-array> 
-<string-array name="campref_crossroads_SR_539"><item>Pole Rd</item><item>Wiser Lake (North)</item><item>River Rd</item><item>Badger Rd</item><item>Border</item></string-array> 
-<string-array name="campref_crossroads_SR_543"><item>Boblett St</item><item>H St</item><item>Duty Free</item><item>D St</item><item>Truck Spur</item></string-array> 
-<string-array name="campref_crossroads_SR_900"><item>I-90/SR 900 Interchange </item><item>Maple St</item></string-array> 
-<string-array name="campref_crossroads_SR_902"><item>T.J. Meenach Bridge</item></string-array> 
-<string-array name="campref_crossroads_Ferries"><item>WSF Edmonds W Dayton St</item><item>WSF Mukilteo Clover Ln</item><item>Orcas Ferry</item><item>WSF Anacortes Ferry Terminal</item><item>WSF Anacortes Ferry Holding</item><item>WSF Anacortes Ferry Terminal Rd</item><item>WSF Clinton Terminal</item><item>WSF Port Townsend Terminal</item><item>WSF Kingston Terminal</item><item>WSF Coupeville Terminal</item><item>WSF Coupeville Street</item><item>WSF Kingston Ferry Sign East</item><item>WSF Port Townsend Street</item><item>WSF Mukilteo N 525 at 76th</item><item>Friday Harbor Ferry </item><item>WSF Edmonds VMS Sign</item><item>WSF Edmonds Holding</item><item>WSF Bainbridge Ferry Holding</item><item>WSF Mukilteo S 525 at 76th</item><item>WSF Kingston Ferry Sign West</item><item>WSF Kingston Barber</item><item>WSF Mukilteo South Holding</item><item>WSF Edmonds Vessel</item><item>WSF Bremerton Holding North</item><item>WSF Edmonds Underpass</item><item>WSF Mukilteo North Holding</item><item>WSF Edmonds Pine</item><item>WSF Bremerton Holding South</item><item>WSF Bainbridge Ferry Holding</item><item>WSF Fauntleroy Ferry Holding</item><item>WSF Southworth Ferry Holding</item><item>WSF Tahlequah Ferry Holding</item><item>WSF Tahlequah at SW Tahlequah Rd</item><item>WSF Vashon Hwy and Bunker (North)</item><item>WSF Vashon Hwy and Bunker (South)</item><item>WSF Vashon Hwy and 112th (North)</item><item>WSF Vashon Hwy and 112th (South)</item></string-array> 
-<string-array name="campref_crossroads_City_and_County_Cams"><item>18th and Ray Spokane</item><item>Downtown Vancouver</item><item>Mt. Rainier</item><item>Port Townsend Airport</item><item>Colfax</item><item>College at Martin Way (Lacey)</item><item>Plum at Union (Olympia)</item><item>Sleater-Kinney at Martin Way (Olympia)</item><item>Leavenworth</item><item>LaPush</item><item>Long Beach</item><item>Mount St. Helens</item><item>Pullman</item><item>Winthrop</item><item>Morton </item><item>Stevenson Waterfront</item><item>Walla Walla-Whitman College</item></string-array> 
-<string-array name="campref_crossroads_Airports"><item>Arlington Airport East</item><item>Arlington Airport West</item><item>Arlington Airport North</item><item>Arlington Airport South</item><item>Harvey Airfield(Snohomish) </item><item>Olympia Airport</item><item>Skykomish Airport East</item><item>Skykomish Airport SouthEast</item><item>Skykomish Airport South</item><item>Skykomish Airport West</item></string-array> 
-<string-array name="campref_crossroads_I_5_values"><item>http://images.wsdot.wa.gov/vancouver/i-5_sr14.jpg</item><item>http://www.tripcheck.com/RoadCams/cams/i5brnbs_pid553.jpg</item><item>http://www.tripcheck.com/RoadCams/cams/i5brnbn_pid552.jpg</item><item>http://images.wsdot.wa.gov/vancouver/i-5_millplain.jpg</item><item>http://www.tripcheck.com/RoadCams/cams/i5marine_pid567.jpg</item><item>http://images.wsdot.wa.gov/vancouver/i-5_29th.jpg</item><item>http://images.wsdot.wa.gov/vancouver/i-5_35.jpg</item><item>http://images.wsdot.wa.gov/vancouver/i-5_main.jpg</item><item>http://images.wsdot.wa.gov/vancouver/i-5_63rd.jpg</item><item>http://images.wsdot.wa.gov/vancouver/i-5_78th.jpg</item><item>http://images.wsdot.wa.gov/vancouver/i-5_99st.jpg</item><item>http://images.wsdot.wa.gov/vancouver/i-5_134th.jpg</item><item>http://images.wsdot.wa.gov/vancouver/i-5_129th.jpg</item><item>http://images.wsdot.wa.gov/vancouver/I-5_SB_ON_SR502.jpg</item><item>http://images.wsdot.wa.gov/vancouver/I-5_NB_ON_SR502.jpg</item><item>http://images.wsdot.wa.gov/vancouver/I-5_NB_Off_SR502.jpg</item><item>http://images.wsdot.wa.gov/I5RuralSWR/Paradise/Paradise.jpg</item><item>http://images.wsdot.wa.gov/Vancouver/i-5_rush_rd.jpg</item><item>http://images.wsdot.wa.gov/Vancouver/i-5_m.p.73.25.jpg</item><item>http://images.wsdot.wa.gov/Vancouver/i-5_labree_rd.jpg</item><item>http://images.wsdot.wa.gov/Vancouver/i-5_13th.jpg</item><item>http://images.wsdot.wa.gov/orflow/005vc10404.jpg</item><item>http://images.wsdot.wa.gov/orflow/005vc10480.jpg</item><item>http://images.wsdot.wa.gov/orflow/005vc10720.jpg</item><item>http://images.wsdot.wa.gov/orflow/005vc10567.jpg</item><item>http://images.wsdot.wa.gov/orflow/005vc10835.jpg</item><item>http://images.wsdot.wa.gov/orflow/005vc10907.jpg</item><item>http://images.wsdot.wa.gov/orflow/005vc11410.jpg</item><item>http://images.wsdot.wa.gov/orflow/005vc12359.jpg</item><item>http://images.wsdot.wa.gov/orflow/005vc12460.jpg</item><item>http://images.wsdot.wa.gov/orflow/005vc12590.jpg</item><item>http://images.wsdot.wa.gov/ORFlow/005vc12750.jpg</item><item>http://images.wsdot.wa.gov/ORFlow/005vc12960.jpg</item><item>http://images.wsdot.wa.gov/ORFlow/005vc13180.jpg</item><item>http://images.wsdot.wa.gov/ORFlow/005vc13240.jpg</item><item>http://images.wsdot.wa.gov/ORFlow/005vc13360.jpg</item><item>http://images.wsdot.wa.gov/ORFlow/005vc13460.jpg</item><item>http://images.wsdot.wa.gov/ORFlow/005vc13540.jpg</item><item>http://images.wsdot.wa.gov/ORFlow/005vc13660.jpg</item><item>http://images.wsdot.wa.gov/orflow/005vc13870.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc13921.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc14205.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc14126.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc14379.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc14772.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc14918.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc15128.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc15230.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc15315.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc15453.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc15591.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc15664.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc15805.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc15970.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc16123.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc16297.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc16396.jpg</item><item>http://images.wsdot.wa.gov/nw/090vc00245.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc16508.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc16607.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc16702.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc16802.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc16939.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc17078.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc17153.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc17277.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc17603.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc17720.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc17828.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc17928.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc18065.jpg</item><item>http://images.wsdot.wa.gov/nw/405vc03022.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc18391.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc18507.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc18577.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc18648.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc18797.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc18848.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc18935.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc18997.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc19303.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc19389.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc20949.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc21272.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc22517.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc22518.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc22670n.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc22670s.jpg</item><item>http://images.wsdot.wa.gov/nw/538vc00004.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc22773.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc23012.jpg</item><item>http://images.wsdot.wa.gov/rweather/lakesamish_medium.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc25036.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc25074.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc25308.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc25368.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc25494.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc25630.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc25768.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc26134.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc26133.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc27149.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc27281.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc27416.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc27512.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc27556.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc27613.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc27623.jpg</item><item>http://images.wsdot.wa.gov/nw/005vc27650.jpg</item></string-array> 
-<string-array name="campref_crossroads_I_205_values"><item>http://images.wsdot.wa.gov/vancouver/i-205_18th.jpg</item><item>http://images.wsdot.wa.gov/vancouver/i-205_78th.jpg</item><item>http://images.wsdot.wa.gov/vancouver/i-205_padden.jpg</item><item>http://www.tripcheck.com/roadcams/cams/i205govt_pid537.jpg</item><item>http://images.wsdot.wa.gov/vancouver/i-205_sr14.jpg</item><item>http://images.wsdot.wa.gov/vancouver/i-205_millplain.jpg</item><item>http://images.wsdot.wa.gov/vancouver/i-205_millpln_112.jpg</item><item>http://images.wsdot.wa.gov/vancouver/i-205_sr500.jpg</item></string-array> 
-<string-array name="campref_crossroads_I_405_values"><item>http://images.wsdot.wa.gov/nw/405vc00052.jpg</item><item>http://www.tripcheck.com/RoadCams/cams/i405everett_pid545.jpg</item><item>http://images.wsdot.wa.gov/nw/405vc00140.jpg</item><item>http://images.wsdot.wa.gov/nw/405vc00088.jpg</item><item>http://images.wsdot.wa.gov/nw/405vc00229.jpg</item><item>http://images.wsdot.wa.gov/nw/405vc00163.jpg</item><item>http://images.wsdot.wa.gov/nw/405vc00417.jpg</item><item>http://images.wsdot.wa.gov/nw/405vc00475.jpg</item><item>http://images.wsdot.wa.gov/nw/405vc00747.jpg</item><item>http://images.wsdot.wa.gov/nw/405vc01106.jpg</item><item>http://images.wsdot.wa.gov/nw/405vc01286.jpg</item><item>http://images.wsdot.wa.gov/nw/405vc01199.jpg</item><item>http://images.wsdot.wa.gov/nw/405vc01261.jpg</item><item>http://images.wsdot.wa.gov/nw/405vc01482.jpg</item><item>http://images.wsdot.wa.gov/nw/405vc01814.jpg</item><item>http://images.wsdot.wa.gov/nw/405vc02030.jpg</item><item>http://images.wsdot.wa.gov/nw/405vc02261.jpg</item><item>http://images.wsdot.wa.gov/nw/405vc02371.jpg</item><item>http://images.wsdot.wa.gov/nw/405vc02838.jpg</item><item>http://images.wsdot.wa.gov/nw/405vc02760.jpg</item><item>http://images.wsdot.wa.gov/nw/405vc02951.jpg</item></string-array> 
-<string-array name="campref_crossroads_I_90_values"><item>http://images.wsdot.wa.gov/nw/090vc00207.jpg</item><item>http://images.wsdot.wa.gov/nw/090vc00237.jpg</item><item>http://images.wsdot.wa.gov/nw/090vc00272.jpg</item><item>http://images.wsdot.wa.gov/nw/090vc00271.jpg</item><item>http://images.wsdot.wa.gov/nw/090vc00318.jpg</item><item>http://images.wsdot.wa.gov/nw/090vc00292.jpg</item><item>http://images.wsdot.wa.gov/nw/090vc00508.jpg</item><item>http://images.wsdot.wa.gov/nw/090vc00670.jpg</item><item>http://images.wsdot.wa.gov/nw/090vc00687.jpg</item><item>http://images.wsdot.wa.gov/nw/090vc00713.jpg</item><item>http://images.wsdot.wa.gov/nw/090vc00737.jpg</item><item>http://images.wsdot.wa.gov/nw/090vc00793.jpg</item><item>http://images.wsdot.wa.gov/nw/090vc00912.jpg</item><item>http://images.wsdot.wa.gov/nw/090vc01103.jpg</item><item>http://images.wsdot.wa.gov/nw/090vc01243.jpg</item><item>http://images.wsdot.wa.gov/nw/090vc01154.jpg</item><item>http://images.wsdot.wa.gov/nw/090vc01446.jpg</item><item>http://images.wsdot.wa.gov/nw/090vc01350.jpg</item><item>http://images.wsdot.wa.gov/nw/090vc01581.jpg</item><item>http://images.wsdot.wa.gov/nw/090vc01717.jpg</item><item>http://images.wsdot.wa.gov/nw/090vc01808.jpg</item><item>http://images.wsdot.wa.gov/nw/090vc01864.jpg</item><item>http://images.wsdot.wa.gov/nw/090vc01880.jpg</item><item>http://images.wsdot.wa.gov/Snoqualmie/Frankfal/frankfal.jpg</item><item>http://images.wsdot.wa.gov/Snoqualmie/Camera/westsumt.jpg</item><item>http://images.wsdot.wa.gov/snoqualmie/hyakwest/hyakwest.jpg</item><item>http://images.wsdot.wa.gov/Snoqualmie/pricecr/PriceCr.jpg</item><item>http://images.wsdot.wa.gov/Snoqualmie/eastonhill/easthill.jpg</item><item>http://images.wsdot.wa.gov/snoqualmie/easton/easton.jpg</item><item>http://images.wsdot.wa.gov/rweather/Medium_bullfrog.jpg</item><item>http://images.wsdot.wa.gov/rweather/Medium_bullfrog2.jpg</item><item>http://images.wsdot.wa.gov/Snoqualmie/CleElum/cleelum.jpg</item><item>http://images.wsdot.wa.gov/rweather/rocky_medium.jpg</item><item>http://images.wsdot.wa.gov/I90/Ellensburg/eburg.jpg</item><item>http://images.wsdot.wa.gov/rweather/ryegress_medium.jpg</item><item>http://images.wsdot.wa.gov/i90/vantage/i90vantage_west.jpg</item><item>http://images.wsdot.wa.gov/i90/vantage/i90vantage_east.jpg</item><item>http://images.wsdot.wa.gov/rweather/silicaroad_medium.jpg</item><item>http://images.wsdot.wa.gov/I90/DodsonRd/DodsonRd.jpg</item><item>http://images.wsdot.wa.gov/rweather/warden_medium.jpg</item><item>http://images.wsdot.wa.gov/rweather/Ritzville.jpg</item><item>http://images.wsdot.wa.gov/rweather/Ritzville1.jpg</item><item>http://images.wsdot.wa.gov/rweather/Ritzville2.jpg</item><item>http://images.wsdot.wa.gov/rweather/Ritzville3.jpg</item><item>http://images.wsdot.wa.gov/rweather/Ritzville4.jpg</item><item>http://images.wsdot.wa.gov/rweather/Ritzville5.jpg</item><item>http://images.wsdot.wa.gov/rweather/Ritzville6.jpg</item><item>http://images.wsdot.wa.gov/rweather/Ritzville7.jpg</item><item>http://images.wsdot.wa.gov/rweather/TylerRoad1.jpg</item><item>http://images.wsdot.wa.gov/rweather/TylerRoad2.jpg</item><item>http://images.wsdot.wa.gov/rweather/TylerRoad3.jpg</item><item>http://images.wsdot.wa.gov/rweather/TylerRoad4.jpg</item><item>http://images.wsdot.wa.gov/rweather/TylerRoad5.jpg</item><item>http://images.wsdot.wa.gov/rweather/TylerRoad6.jpg</item><item>http://images.wsdot.wa.gov/rweather/TylerRoad7.jpg</item><item>http://images.wsdot.wa.gov/rweather/TylerRoad.jpg</item><item>http://images.wsdot.wa.gov/spokane/i90/cctv023.jpg</item><item>http://images.wsdot.wa.gov/spokane/i90/cctv022.jpg</item><item>http://images.wsdot.wa.gov/spokane/i90/cctv021.jpg</item><item>http://images.wsdot.wa.gov/spokane/i90/cctv020.jpg</item><item>http://images.wsdot.wa.gov/spokane/i90/CCTV001.jpg</item><item>http://images.wsdot.wa.gov/Spokane/i90/cctv018.jpg</item><item>http://images.wsdot.wa.gov/spokane/i90/cctv017.jpg</item><item>http://images.wsdot.wa.gov/spokane/i90/cctv030.jpg</item><item>http://images.wsdot.wa.gov/spokane/i90/cctv029.jpg</item><item>http://images.wsdot.wa.gov/spokane/i90/cctv024.jpg</item><item>http://images.wsdot.wa.gov/spokane/i90/cctv002.jpg</item><item>http://images.wsdot.wa.gov/spokane/i90/CCTV003.jpg</item><item>http://images.wsdot.wa.gov/spokane/i90/CCTV004.jpg</item><item>http://images.wsdot.wa.gov/spokane/i90/CCTV005.jpg</item><item>http://images.wsdot.wa.gov/spokane/i90/CCTV006.jpg</item><item>http://images.wsdot.wa.gov/spokane/i90/CCTV008.jpg</item><item>http://images.wsdot.wa.gov/spokane/i90/CCTV009.jpg</item><item>http://images.wsdot.wa.gov/spokane/i90/CCTV010.jpg</item><item>http://images.wsdot.wa.gov/spokane/i90/CCTV007.jpg</item><item>http://images.wsdot.wa.gov/spokane/i90/CCTV011.jpg</item><item>http://images.wsdot.wa.gov/Spokane/i90/cctv013.jpg</item><item>http://images.wsdot.wa.gov/Spokane/i90/cctv014.jpg</item><item>http://images.wsdot.wa.gov/Spokane/i90/cctv015.jpg</item><item>http://images.wsdot.wa.gov/Spokane/i90/cctv016.jpg</item><item>http://images.wsdot.wa.gov/spokane/i90/cctv027.jpg</item><item>http://images.wsdot.wa.gov/rweather/LibertyLake1.jpg</item><item>http://images.wsdot.wa.gov/rweather/LibertyLake2.jpg</item><item>http://images.wsdot.wa.gov/rweather/LibertyLake3.jpg</item><item>http://images.wsdot.wa.gov/rweather/LibertyLake4.jpg</item><item>http://images.wsdot.wa.gov/rweather/LibertyLake5.jpg</item><item>http://images.wsdot.wa.gov/rweather/LibertyLake6.jpg</item><item>http://images.wsdot.wa.gov/rweather/LibertyLake7.jpg</item><item>http://images.wsdot.wa.gov/rweather/LibertyLake.jpg</item><item>http://images.wsdot.wa.gov/spokane/i90/cctv028.jpg</item><item>http://images.wsdot.wa.gov/Snoqualmie/ebandera/ebandera.jpg</item><item>http://images.wsdot.wa.gov/Snoqualmie/PWS_1/PWS6_front.jpg</item><item>http://images.wsdot.wa.gov/Snoqualmie/PWS_1/PWS6_back.jpg</item><item>http://images.wsdot.wa.gov/rweather/elk_medium.jpg</item><item>http://images.wsdot.wa.gov/Snoqualmie/PWS_1/PWS5_back.jpg</item><item>http://images.wsdot.wa.gov/Snoqualmie/PWS_1/PWS5_front.jpg</item></string-array> 
-<string-array name="campref_crossroads_I_82_values"><item>http://images.wsdot.wa.gov/rweather/UMRidge_medium.jpg</item><item>http://images.wsdot.wa.gov/i-82/selahcreek.jpg</item><item>http://images.wsdot.wa.gov/I-82/082vc03651.jpg</item><item>http://images.wsdot.wa.gov/rweather/Medium_uniongap.jpg</item><item>http://images.wsdot.wa.gov/rweather/Medium_Zillah.jpg</item><item>http://images.wsdot.wa.gov/rweather/Medium_Outlook.jpg</item><item>http://images.wsdot.wa.gov/rweather/Medium_Prosser.jpg</item><item>http://images.wsdot.wa.gov/rweather/medium_I182@I82.jpg</item><item>http://images.wsdot.wa.gov/rweather/Medium_HourseHeaven@I-82.jpg</item><item>http://images.wsdot.wa.gov/tricities/plymouthpoe.jpg</item></string-array> 
-<string-array name="campref_crossroads_US_2_values"><item>http://images.wsdot.wa.gov/nw/002vc00068.jpg</item><item>http://images.wsdot.wa.gov/nw/002vc00504_North.jpg</item><item>http://images.wsdot.wa.gov/nw/002vc00504_South.jpg</item><item>http://images.wsdot.wa.gov/nw/002vc01429.jpg</item><item>http://images.wsdot.wa.gov/nw/002vc01460.jpg</item><item>http://images.wsdot.wa.gov/nw/002vc01494.jpg</item><item>http://images.wsdot.wa.gov/nw/002vc01525.jpg</item><item>http://images.wsdot.wa.gov/nw/002vc02158.jpg</item><item>http://images.wsdot.wa.gov/nw/002vc02235.jpg</item><item>http://images.wsdot.wa.gov/nw/002vc02322.jpg</item><item>http://images.wsdot.wa.gov/us2/oldfaithful/oldfaithful.jpg</item><item>http://images.wsdot.wa.gov/us2/stevens/sumteast.jpg</item><item>http://images.wsdot.wa.gov/us2/stvldg/sumtwest.jpg</item><item>http://images.wsdot.wa.gov/rweather/winton.jpg</item><item>http://images.wsdot.wa.gov/us2/leavenworth/Riverbend/US2Riverbend.jpg</item><item>http://images.wsdot.wa.gov/US97/BigY/BigYJunction.jpg</item><item>http://images.wsdot.wa.gov/US2/Wenatchee/US2Wenatchee.jpg</item><item>http://www.elitewoodworking.biz/webcam/Watervilletv.jpg</item><item>http://images.wsdot.wa.gov/Spokane/SR2/SR2E.jpg</item><item>http://images.wsdot.wa.gov/Spokane/SR2/SR2W.jpg</item><item>http://images.wsdot.wa.gov/Spokane/i90/ccTV012.jpg</item></string-array> 
-<string-array name="campref_crossroads_US_12_values"><item>http://images.wsdot.wa.gov/rweather/White_medium.jpg</item><item>http://images.wsdot.wa.gov/US12/US12-410JCT/us12410jct.jpg</item><item>http://images.wsdot.wa.gov/rweather/Medium_Delaney@us12.jpg</item><item>http://images.wsdot.wa.gov/rweather/alpowa_medium.jpg</item></string-array> 
-<string-array name="campref_crossroads_US_97_values"><item>http://images.wsdot.wa.gov/maryhill/maryhill.jpg</item><item>http://images.wsdot.wa.gov/satus/satus1.jpg</item><item>http://images.wsdot.wa.gov/rweather/Medium_Us97@YakimaCountyLine.jpg</item><item>http://images.wsdot.wa.gov/us97/blewett/sumtnorth.jpg</item><item>http://images.wsdot.wa.gov/US2/US97JCT/BigYJunction.JPG</item><item>http://images.wsdot.wa.gov/US97/Odabashian/US97_Odabashian_East.jpg</item><item>http://images.wsdot.wa.gov/rweather/Riverside_medium.jpg</item><item>http://www.images.wsdot.wa.gov/US97/Border/US97BorderHub/US97HubN.jpg</item><item>http://www.images.wsdot.wa.gov/US97/Border/US97BorderHub/US97HubS.jpg</item><item>http://www.images.wsdot.wa.gov/US97/Border/US97Border/US97BorderN.jpg</item><item>http://www.images.wsdot.wa.gov/US97/Border/US97Border/US97BorderS.jpg</item></string-array> 
-<string-array name="campref_crossroads_US_97A_values"><item>http://images.wsdot.wa.gov/US97/Odabashian/US97A_Wenatchee_North.jpg</item><item>http://images.wsdot.wa.gov/rweather/KTunnel_medium.jpg</item><item>http://images.wsdot.wa.gov/rweather/Medium_Chelan.jpg</item></string-array> 
-<string-array name="campref_crossroads_US_101_values"><item>http://images.wsdot.wa.gov/us101/astoriabr/astoriabridge.jpg</item><item>http://images.wsdot.wa.gov/rweather/Cosmopolish_medium.jpg</item><item>http://images.wsdot.wa.gov/orflow/portable/101south.jpg</item><item>http://images.wsdot.wa.gov/orflow/portable/101north.jpg</item><item>http://images.wsdot.wa.gov/rweather/statecamp_medium.jpg</item><item>http://images.wsdot.wa.gov/rweather/Medium_Queets.jpg</item><item>http://images.wsdot.wa.gov/rweather/Medium_Queets2.jpg</item><item>http://images.wsdot.wa.gov/rweather/HeckShed_medium.jpg</item><item>http://images.wsdot.wa.gov/rweather/Medium_IndianValley@US101.jpg</item><item>http://images.wsdot.wa.gov/rweather/Seibert_medium.jpg</item><item>http://images.wsdot.wa.gov/rweather/Medium_MtWalker.jpg</item><item>http://images.wsdot.wa.gov/rweather/Medium_MtWalker1.jpg</item><item>http://images.wsdot.wa.gov/rweather/Medium_MtWalker2.jpg</item><item>http://images.wsdot.wa.gov/rweather/Medium_OysterBayRD.jpg</item><item>http://images.wsdot.wa.gov/orflow/101vc36664.jpg</item></string-array> 
-<string-array name="campref_crossroads_US_195_values"><item>http://images.wsdot.wa.gov/rweather/Medium_Uniontown.jpg</item><item>http://images.wsdot.wa.gov/rweather/Medium_Uniontown1.jpg</item><item>http://images.wsdot.wa.gov/rweather/Medium_Uniontown2.jpg</item><item>http://images.wsdot.wa.gov/rweather/Medium_Uniontown3.jpg</item><item>http://images.wsdot.wa.gov/rweather/Medium_Uniontown4.jpg</item><item>http://images.wsdot.wa.gov/rweather/Medium_Uniontown5.jpg</item><item>http://images.wsdot.wa.gov/rweather/Medium_Uniontown6.jpg</item><item>http://images.wsdot.wa.gov/rweather/Medium_Uniontown7.jpg</item><item>http://images.wsdot.wa.gov/spokane/sr195/colfax.jpg</item><item>http://images.wsdot.wa.gov/rweather/Medium_Spangle.jpg</item><item>http://images.wsdot.wa.gov/rweather/Medium_Spangle1.jpg</item><item>http://images.wsdot.wa.gov/rweather/Medium_Spangle2.jpg</item><item>http://images.wsdot.wa.gov/rweather/Medium_Spangle3.jpg</item><item>http://images.wsdot.wa.gov/rweather/Medium_Spangle4.jpg</item><item>http://images.wsdot.wa.gov/rweather/Medium_Spangle5.jpg</item><item>http://images.wsdot.wa.gov/rweather/Medium_Spangle6.jpg</item><item>http://images.wsdot.wa.gov/rweather/Medium_Spangle7.jpg</item></string-array> 
-<string-array name="campref_crossroads_US_395_values"><item>http://images.wsdot.wa.gov/tricities/bluebridge.jpg</item><item>http://images.wsdot.wa.gov/rweather/Hastings.jpg</item><item>http://images.wsdot.wa.gov/rweather/Hastings1.jpg</item><item>http://images.wsdot.wa.gov/rweather/Hastings2.jpg</item><item>http://images.wsdot.wa.gov/rweather/Hastings3.jpg</item><item>http://images.wsdot.wa.gov/rweather/Hastings4.jpg</item><item>http://images.wsdot.wa.gov/rweather/Hastings5.jpg</item><item>http://images.wsdot.wa.gov/rweather/Hastings6.jpg</item><item>http://images.wsdot.wa.gov/rweather/Hastings7.jpg</item><item>http://images.wsdot.wa.gov/rweather/ClaytonRd.jpg</item><item>http://images.wsdot.wa.gov/rweather/ClaytonRd1.jpg</item><item>http://images.wsdot.wa.gov/rweather/ClaytonRd2.jpg</item><item>http://images.wsdot.wa.gov/rweather/ClaytonRd3.jpg</item><item>http://images.wsdot.wa.gov/rweather/ClaytonRd4.jpg</item><item>http://images.wsdot.wa.gov/rweather/ClaytonRd5.jpg</item><item>http://images.wsdot.wa.gov/rweather/ClaytonRd6.jpg</item><item>http://images.wsdot.wa.gov/rweather/ClaytonRd7.jpg</item><item>http://images.wsdot.wa.gov/spokane/US395/colville_Birch.jpg</item><item>http://images.wsdot.wa.gov/spokane/US395/colville_Canning.jpg</item><item>http://images.wsdot.wa.gov/rweather/laurier_medium1.jpg</item><item>http://images.wsdot.wa.gov/rweather/laurier_medium4.jpg</item><item>http://images.wsdot.wa.gov/rweather/laurier_medium5.jpg</item><item>http://images.wsdot.wa.gov/rweather/laurier_medium2.jpg</item><item>http://images.wsdot.wa.gov/rweather/laurier_medium3.jpg</item><item>http://images.wsdot.wa.gov/rweather/laurier_medium7.jpg</item><item>http://images.wsdot.wa.gov/rweather/laurier_medium6.jpg</item><item>http://images.wsdot.wa.gov/rweather/laurier_medium.jpg</item></string-array> 
-<string-array name="campref_crossroads_US_395_NSC_values"><item>http://images.wsdot.wa.gov/spokane/us395/Lincoln.jpg</item><item>http://images.wsdot.wa.gov/spokane/us395/Fairview.jpg</item><item>http://images.wsdot.wa.gov/spokane/us395/Girlach.jpg</item><item>http://images.wsdot.wa.gov/spokane/us395/Market.jpg</item><item>http://images.wsdot.wa.gov/spokane/us395/ParkSmith.jpg</item><item>http://images.wsdot.wa.gov/spokane/us395/Farwell.jpg</item></string-array> 
-<string-array name="campref_crossroads_SR_3_values"><item>http://images.wsdot.wa.gov/orflow/003vc03426.jpg</item><item>http://images.wsdot.wa.gov/orflow/sr3cam.jpg</item></string-array> 
-<string-array name="campref_crossroads_SR_4_values"><item>http://images.wsdot.wa.gov/rweather/medium_KMMountain.jpg</item></string-array> 
-<string-array name="campref_crossroads_SR_8_values"><item>http://images.wsdot.wa.gov/rweather/rockcandymtn_medium.jpg</item></string-array> 
-<string-array name="campref_crossroads_SR_9_values"><item>http://images.wsdot.wa.gov/nw/522vc01409.jpg</item><item>http://images.wsdot.wa.gov/nw/009vc00159.jpg</item><item>http://images.wsdot.wa.gov/nw/009vc09750.jpg</item><item>http://images.wsdot.wa.gov/nw/009vc09796.jpg</item></string-array> 
-<string-array name="campref_crossroads_SR_14_values"><item>http://images.wsdot.wa.gov/vancouver/sr14_lieser.jpg</item><item>http://images.wsdot.wa.gov/vancouver/sr14_i-205e.jpg</item><item>http://images.wsdot.wa.gov/vancouver/sr14_i-205w.jpg</item><item>http://images.wsdot.wa.gov/sr14/capehorn/capehorn.jpg</item><item>http://images.wsdot.wa.gov/sr14/hoodriverbr/hoodriverbridge.jpg</item></string-array> 
-<string-array name="campref_crossroads_SR_16_values"><item>http://images.wsdot.wa.gov/ORFlow/005vc13240.jpg</item><item>http://images.wsdot.wa.gov/ORFlow/016vc00190.jpg</item><item>http://images.wsdot.wa.gov/ORFlow/016vc00370.jpg</item><item>http://images.wsdot.wa.gov/ORFlow/016vc00479.jpg</item><item>http://images.wsdot.wa.gov/orflow/016vc00360.jpg</item><item>http://images.wsdot.wa.gov/orflow/016vc00470.jpg</item><item>http://images.wsdot.wa.gov/orflow/016vc00970.jpg</item><item>http://images.wsdot.wa.gov/orflow/016vc01070.jpg</item><item>http://images.wsdot.wa.gov/ORFlow/016vc00850.jpg</item><item>http://images.wsdot.wa.gov/orflow/016vc01230.jpg</item><item>http://images.wsdot.wa.gov/orflow/016vc00930.jpg</item><item>http://images.wsdot.wa.gov/orflow/016vc00860.jpg</item><item>http://images.wsdot.wa.gov/orflow/016vc01470.jpg</item><item>http://images.wsdot.wa.gov/orflow/016vc01540.jpg</item><item>http://images.wsdot.wa.gov/orflow/016vc00250.jpg</item></string-array> 
-<string-array name="campref_crossroads_SR_17_values"><item>http://images.wsdot.wa.gov/sr17/mansfield/mansfield.jpg</item></string-array> 
-<string-array name="campref_crossroads_SR_18_values"><item>http://images.wsdot.wa.gov/nw/005vc14205.jpg</item><item>http://images.wsdot.wa.gov/nw/018vc02357.jpg</item></string-array> 
-<string-array name="campref_crossroads_SR_20_values"><item>http://images.wsdot.wa.gov/nw/020vc05930.jpg</item><item>http://images.wsdot.wa.gov/nw/020vc05984.jpg</item><item>http://www2.nature.nps.gov/air/webcams/parks/nocacam/noca.jpg</item><item>http://images.wsdot.wa.gov/sr20/louploup/sr20louploup_east.jpg</item><item>http://images.wsdot.wa.gov/rweather/shermanpass_medium.jpg</item></string-array> 
-<string-array name="campref_crossroads_SR_24_values"><item>http://images.wsdot.wa.gov/rweather/SR24@SR241_1.jpg</item><item>http://images.wsdot.wa.gov/rweather/SR24@SR241_2.jpg</item><item>http://images.wsdot.wa.gov/rweather/SR24@SR241_3.jpg</item><item>http://images.wsdot.wa.gov/rweather/SR24@SR241_4.jpg</item><item>http://images.wsdot.wa.gov/rweather/SR24@SR241_6.jpg</item><item>http://images.wsdot.wa.gov/rweather/SR24@SR241_5.jpg</item><item>http://images.wsdot.wa.gov/I-82/sr24-I82.jpg</item></string-array> 
-<string-array name="campref_crossroads_SR_28_values"><item>http://images.wsdot.wa.gov/sr28/sellarbridge/sr28sellarbridge_east.jpg</item><item>http://images.wsdot.wa.gov/SR28/sellarbridge/SR28GrantRoad_Intersection.jpg</item><item>http://images.wsdot.wa.gov/sr28/quincy/SR28Quincy_East.jpg</item></string-array> 
-<string-array name="campref_crossroads_SR_31_values"><item>http://images.wsdot.wa.gov/rweather/medium_metalinefalls.JPG</item></string-array> 
-<string-array name="campref_crossroads_SR_96_values"><item>http://images.wsdot.wa.gov/nw/096vc00177.jpg</item><item>http://images.wsdot.wa.gov/nw/096vc00239.jpg</item></string-array> 
-<string-array name="campref_crossroads_SR_99_values"><item>http://images.wsdot.wa.gov/nw/099vc02671.jpg</item><item>http://images.wsdot.wa.gov/nw/099vc02701.jpg</item></string-array> 
-<string-array name="campref_crossroads_SR_104_values"><item>http://images.wsdot.wa.gov/orflow/104VMS.jpg</item><item>http://images.wsdot.wa.gov/hoodcanal/current.jpg</item><item>http://images.wsdot.wa.gov/nw/104vc02630.jpg</item></string-array> 
-<string-array name="campref_crossroads_SR_109_values"><item>http://images.wsdot.wa.gov/rweather/Medium_PTGrenville.jpg</item><item>http://images.wsdot.wa.gov/rweather/Medium_PTGrenville1.jpg</item></string-array> 
-<string-array name="campref_crossroads_SR_167_values"><item>http://images.wsdot.wa.gov/ORFlow/167vc00700.jpg</item><item>http://images.wsdot.wa.gov/nw/167vc01580.jpg</item><item>http://images.wsdot.wa.gov/nw/167vc01796.jpg</item><item>http://images.wsdot.wa.gov/nw/167vc02136.jpg</item><item>http://images.wsdot.wa.gov/nw/167vc02189.jpg</item><item>http://images.wsdot.wa.gov/nw/167vc02443.jpg</item></string-array> 
-<string-array name="campref_crossroads_SR_169_values"><item>http://images.wsdot.wa.gov/nw/169vc02299.jpg</item></string-array> 
-<string-array name="campref_crossroads_SR_221_values"><item>http://images.wsdot.wa.gov/rweather/medium_SellardsRoad.jpg</item></string-array> 
-<string-array name="campref_crossroads_SR_240_values"><item>http://images.wsdot.wa.gov/SR240/beloit.jpg</item><item>http://images.wsdot.wa.gov/SR240/twinBridge.jpg</item><item>http://images.wsdot.wa.gov/tricities/RichlandWye.jpg</item></string-array> 
-<string-array name="campref_crossroads_SR_285_values"><item>http://images.wsdot.wa.gov/sr28/sellarbridge/sr285sellarbridge_west.jpg</item><item>http://images.wsdot.wa.gov/sr285/WenRiverBridge/SR285wenriverbridge_south.jpg</item></string-array> 
-<string-array name="campref_crossroads_SR_290_values"><item>http://images.wsdot.wa.gov/spokane/i90/cctv026.jpg</item></string-array> 
-<string-array name="campref_crossroads_SR_291_values"><item>http://images.wsdot.wa.gov/rweather/NineMile-7.jpg</item><item>http://images.wsdot.wa.gov/rweather/NineMile-6.jpg</item><item>http://images.wsdot.wa.gov/rweather/NineMile-5.jpg</item><item>http://images.wsdot.wa.gov/rweather/NineMile-1.jpg</item><item>http://images.wsdot.wa.gov/rweather/NineMile-3.jpg</item><item>http://images.wsdot.wa.gov/rweather/NineMile-2.jpg</item><item>http://images.wsdot.wa.gov/rweather/NineMile-4.jpg</item><item>http://images.wsdot.wa.gov/rweather/NineMile-8.jpg</item><item>http://images.wsdot.wa.gov/spokane/sr291/swenson.jpg</item></string-array> 
-<string-array name="campref_crossroads_SR_410_values"><item>http://camera.whistlinjacks.com/image.jpg</item></string-array> 
-<string-array name="campref_crossroads_SR_433_values"><item>http://images.wsdot.wa.gov/lewisclark/LCBridge.jpg</item></string-array> 
-<string-array name="campref_crossroads_SR_500_values"><item>http://images.wsdot.wa.gov/vancouver/sr500_thurston.jpg</item><item>http://images.wsdot.wa.gov/vancouver/sr500_112.jpg</item></string-array> 
-<string-array name="campref_crossroads_SR_502_values"><item>http://images.wsdot.wa.gov/vancouver/SR502_I-5_NB_OFF.jpg</item><item>http://images.wsdot.wa.gov/vancouver/SR502_10th_AVE.jpg</item></string-array> 
-<string-array name="campref_crossroads_SR_504_values"><item>http://images.wsdot.wa.gov/sr504/forrestlearningctr/sr504lc.jpg</item></string-array> 
-<string-array name="campref_crossroads_SR_516_values"><item>http://images.wsdot.wa.gov/nw/005vc14918.jpg</item></string-array> 
-<string-array name="campref_crossroads_SR_518_values"><item>http://images.wsdot.wa.gov/nw/518vc00162.jpg</item><item>http://images.wsdot.wa.gov/nw/518vc00228.jpg</item><item>http://images.wsdot.wa.gov/nw/518vc00322.jpg</item><item>http://images.wsdot.wa.gov/nw/518vc00349.jpg</item><item>http://images.wsdot.wa.gov/nw/518vc00388.jpg</item></string-array> 
-<string-array name="campref_crossroads_SR_520_values"><item>http://images.wsdot.wa.gov/nw/520vc00027.jpg</item><item>http://images.wsdot.wa.gov/nw/520vc00095.jpg</item><item>http://images.wsdot.wa.gov/nw/520vc00241.jpg</item><item>http://images.wsdot.wa.gov/nw/520vc00398.jpg</item><item>http://images.wsdot.wa.gov/nw/520vc00519.jpg</item><item>http://images.wsdot.wa.gov/nw/520vc00597.jpg</item><item>http://images.wsdot.wa.gov/nw/520vc00918.jpg</item><item>http://images.wsdot.wa.gov/nw/520vc01074.jpg</item><item>http://images.wsdot.wa.gov/nw/520vc01169.jpg</item><item>http://images.wsdot.wa.gov/nw/520vc01283.jpg</item></string-array> 
-<string-array name="campref_crossroads_SR_522_values"><item>http://images.wsdot.wa.gov/nw/522vc00585.jpg</item><item>http://images.wsdot.wa.gov/nw/522vc01056.jpg</item><item>http://images.wsdot.wa.gov/nw/405vc02371.jpg</item></string-array> 
-<string-array name="campref_crossroads_SR_525_values"><item>http://images.wsdot.wa.gov/nw/525vc00285.jpg</item></string-array> 
-<string-array name="campref_crossroads_SR_526_values"><item>http://images.wsdot.wa.gov/nw/526vc00358.jpg</item></string-array> 
-<string-array name="campref_crossroads_SR_532_values"><item>http://images.wsdot.wa.gov/nw/532vc00000.jpg</item><item>http://images.wsdot.wa.gov/nw/532vc00402.jpg</item><item>http://images.wsdot.wa.gov/nw/532vc00465.jpg</item><item>http://images.wsdot.wa.gov/nw/532vc00490.jpg</item><item>http://images.wsdot.wa.gov/nw/532vc00527.jpg</item><item>http://images.wsdot.wa.gov/nw/532vc00589.jpg</item></string-array> 
-<string-array name="campref_crossroads_SR_539_values"><item>http://images.wsdot.wa.gov/nw/539vc00743.jpg</item><item>http://images.wsdot.wa.gov/nw/539vc00820.jpg</item><item>http://images.wsdot.wa.gov/nw/539vc00958.jpg</item><item>http://images.wsdot.wa.gov/nw/539vc01254.jpg</item><item>http://images.wsdot.wa.gov/nw/539vc01508.jpg</item></string-array> 
-<string-array name="campref_crossroads_SR_543_values"><item>http://images.wsdot.wa.gov/nw/543vc00026.jpg</item><item>http://images.wsdot.wa.gov/nw/543vc00056.jpg</item><item>http://images.wsdot.wa.gov/nw/543vc00098.jpg</item><item>http://images.wsdot.wa.gov/nw/543vc00081.jpg</item><item>http://images.wsdot.wa.gov/nw/543vc00099.jpg</item></string-array> 
-<string-array name="campref_crossroads_SR_900_values"><item>http://images.wsdot.wa.gov/nw/090vc01581.jpg</item><item>http://images.wsdot.wa.gov/nw/900vc02122.jpg</item></string-array> 
-<string-array name="campref_crossroads_SR_902_values"><item>http://images.wsdot.wa.gov/rweather/Medium_TJMeenachBridge.jpg</item></string-array> 
-<string-array name="campref_crossroads_Ferries_values"><item>http://images.wsdot.wa.gov/wsf/edmonds/104dayton.jpg</item><item>http://images.wsdot.wa.gov/wsf/Mukilteo/525atCloverLn/525atCloverLn.jpg</item><item>http://www.islandcam.com/camimages/ofcam.jpg</item><item>http://images.wsdot.wa.gov/wsf/anacortes/terminal/anaterm.jpg</item><item>http://images.wsdot.wa.gov/wsf/anacortes/holding/anahold.jpg</item><item>http://images.wsdot.wa.gov/wsf/anacortes/road/anaroad.jpg</item><item>http://images.wsdot.wa.gov/wsf/clinton/terminal/clinton.jpg</item><item>http://images.wsdot.wa.gov/wsf/PortTownsend/terminal/ptterm.jpg</item><item>http://images.wsdot.wa.gov/wsf/kingston/terminal/kingston.jpg</item><item>http://images.wsdot.wa.gov/wsf/Keystone/Street/keyStreet.jpg</item><item>http://images.wsdot.wa.gov/wsf/Keystone/terminal/keyterm.jpg</item><item>http://images.wsdot.wa.gov/wsf/kingston/fse/fse.jpg</item><item>http://images.wsdot.wa.gov/wsf/PortTownsend/Street/ptStreet.jpg</item><item>http://images.wsdot.wa.gov/wsf/Mukilteo/N_525at76th/N_525at76th.jpg</item><item>http://www.islandcam.com/camimages/ffcam.jpg</item><item>http://images.wsdot.wa.gov/wsf/edmonds/104vms.jpg</item><item>http://images.wsdot.wa.gov/wsf/edmonds/holding.jpg</item><item>http://images.wsdot.wa.gov/wsf/Bainbridge//Bainbridge.jpg</item><item>http://images.wsdot.wa.gov/wsf/Mukilteo/S_525at76th/S_525at76th.jpg</item><item>http://images.wsdot.wa.gov/wsf/kingston/fsw/fsw.jpg</item><item>http://images.wsdot.wa.gov/wsf/kingston/barber/barber.jpg</item><item>http://images.wsdot.wa.gov/wsf/Mukilteo/Terminal/mukterm.jpg</item><item>http://images.wsdot.wa.gov/wsf/edmonds/vessel.jpg</item><item>http://images.wsdot.wa.gov/wsf/bremerton/holding/holding.jpg</item><item>http://images.wsdot.wa.gov/wsf/edmonds/104underpass.jpg</item><item>http://images.wsdot.wa.gov/wsf/Mukilteo/North/North.jpg</item><item>http://images.wsdot.wa.gov/wsf/edmonds/104pine.jpg</item><item>http://images.wsdot.wa.gov/wsf/colman/BremHold/BremHold.jpg</item><item>http://images.wsdot.wa.gov/wsf/colman/BainHold/BainHold.jpg</item><item>http://images.wsdot.wa.gov/wsf/fauntleroy/terminal/fauntleroy.jpg</item><item>http://images.wsdot.wa.gov/wsf/southworth/terminal/southworth.jpg</item><item>http://images.wsdot.wa.gov/wsf/Tahlequah/holding/holding.jpg</item><item>http://images.wsdot.wa.gov/wsf/Tahlequah/VMSSign/VMSSign.jpg</item><item>http://images.wsdot.wa.gov/wsf/vashon//VSHvc00001.jpg</item><item>http://images.wsdot.wa.gov/wsf/vashon//VSHvc00002.jpg</item><item>http://images.wsdot.wa.gov/wsf/vashon//VSHvc00004.jpg</item><item>http://images.wsdot.wa.gov/wsf/vashon//VSHvc00003.jpg</item></string-array> 
-<string-array name="campref_crossroads_City_and_County_Cams_values"><item>http://images.wsdot.wa.gov/rweather/Medium_Ray18th.jpg</item><item>http://bimedia.ftp.clickability.com/fishwebftp/KATU/AVAN.JPG</item><item>http://www.nps.gov/webcams-mora/east.jpg</item><item>http://images.wsdot.wa.gov/airports/porttownsend.jpg</item><item>http://www.whitmancounty.org:3001/axis-cgi/jpg/image.cgi?resolution=320x240</item><item>http://images.wsdot.wa.gov/orflow/Lacvc00c01.jpg</item><item>http://images.wsdot.wa.gov/orflow/Olyvc00c01.jpg</item><item>http://images.wsdot.wa.gov/orflow/Olyvc00c02.jpg</item><item>http://www.leavenworth.org/camera/cam.jpg</item><item>http://www.forkswa.com/webcam/netcam.jpg</item><item>http://www.longbeachsuper8.com/mainstreetcam.jpg</item><item>http://www.fs.fed.us/gpnf/volcanocams/msh/hdimages/volcanocamhd.jpg</item><item>http://www.pullman-wa.com/images/welcome.jpg</item><item>http://www.methow.com/sunmtncam/viewpic.jpg</item><item>http://home.lewiscounty.com/~mortonwebcam/fullsize.jpg</item><item>http://www.saw.net/scenic/image.jpg</item><item>http://olin-cam.whitman.edu/oneshotimage.jpg</item></string-array> 
-<string-array name="campref_crossroads_Airports_values"><item>http://images.wsdot.wa.gov/airports/arleast.jpg</item><item>http://images.wsdot.wa.gov/airports/arlwest.jpg</item><item>http://images.wsdot.wa.gov/airports/arlnorth.jpg</item><item>http://images.wsdot.wa.gov/airports/arlsouth.jpg</item><item>http://www.harveyfield.com/wxcam.jpg</item><item>http://images.wsdot.wa.gov/airports/Olympia.jpg</item><item>http://images.wsdot.wa.gov/airports/Skyeast.jpg</item><item>http://images.wsdot.wa.gov/airports/Skyse.jpg</item><item>http://images.wsdot.wa.gov/airports/Skysouth.jpg</item><item>http://images.wsdot.wa.gov/airports/Skywest.jpg</item></string-array>
+<string-array name="campref_crossroads_US75"><item>Coit Flyover</item><item>Forest</item><item>Royal</item><item>Meadow North</item><item>Meadow South</item><item>Royal North</item><item>SMU Blvd.</item><item>University</item><item>Walnut Hill</item><item>Northpark</item><item>Caruth Haven</item><item>Lovers Lane</item><item>Mockingbird</item><item>McCommas</item><item>Monticello</item><item>Knox North</item><item>Knox South</item><item>Haskell</item><item>Lemmon</item><item>Hall</item><item>Fitzhugh</item><item>Park Lane</item><item>IH635 North</item><item>Midpark</item><item>Spring Valley</item><item>Belt Line</item><item>Arapaho</item><item>Campbell</item><item>Galatyn Pkwy.</item><item>Dallas/Collin County Line</item><item>SH190 S.W. #1</item><item>SH190 S.W. #2</item><item>SH190 N.E. #1</item><item>SH190 N.E. #2</item><item>15th St.</item><item>Park Blvd.</item><item>Parker South</item><item>Parker North</item><item>Spring Creek Pkwy.</item><item>Legacy</item><item>Ridgemont</item><item>Bethany</item><item>McDermott</item><item>Allen Dr.</item><item>Exchange Pkwy.</item></string-array> 
+<string-array name="campref_crossroads_SH183"><item>Esters</item><item>Valley View</item><item>Belt Line</item><item>Story</item><item>MacArthur</item><item>Carl Rd.</item><item>SH114</item><item>Grauwyler</item><item>Profit</item><item>Loop 12</item><item>Wingren</item></string-array> 
+<string-array name="campref_crossroads_IH35E"><item>Royal</item><item>Walnut Hill</item><item>Loop 12</item><item>SH183</item><item>Riverfront Blvd.</item><item>Colorado</item><item>East 8th St.</item><item>Louisiana</item><item>Beckley</item><item>Clarendon</item><item>Saner</item><item>US67</item><item>Marsalis</item><item>Danieldale</item><item>Wintergreen</item><item>Commerce</item><item>Spur 366</item><item>Hi Line</item><item>Tollway</item><item>Market Center</item><item>Wycliff</item><item>Medical District Dr.</item><item>Inwood</item><item>Commonwealth</item><item>Mockingbird</item><item>Empire Central</item><item>Regal Row</item><item>Northwest Hwy</item><item>Raceway / Harry Hines</item><item>Spur 482</item><item>Pleasant Run</item><item>Belt Line South</item><item>Reunion</item><item>IH635 South</item><item>Chambers Creek</item><item>SH34</item><item>IH635 North</item><item>Valley View</item><item>Valwood Pkwy.</item><item>Crosby</item><item>Belt Line North</item><item>Luna</item><item>Sandy Lake</item><item>SH190 South</item><item>Parkerville</item><item>US77 North</item><item>FM387</item><item>US287</item><item>Brookside</item><item>US77 South</item><item>Grainery Rd.</item><item>Kiest</item><item>Ann Arbor</item><item>Loop 12</item><item>Laureland</item><item>Camp Wisdom</item><item>Wheatland</item><item>Dallas/Ellis County Line</item><item>SH342</item><item>FM664 (Ovilla Rd.)</item><item>Red Oak Rd.</item><item>SH190 North</item><item>SH121 Bypass</item><item>Business 121</item><item>FM1171 (Main St.)</item><item>Garden Ridge</item><item>Denton Rd.</item><item>Corinth Pkwy.</item><item>Mayhill</item><item>Dallas Dr. (US77)</item><item>US377</item><item>IH35W Split</item><item>Johnston Rd.</item><item>Ellis County Rest Area</item><item>FM329</item><item>Bill Lewis Rd.</item></string-array> 
+<string-array name="campref_crossroads_IH635"><item>Rosser</item><item>Ratcliff Pedestrian Bridge</item><item>Josey</item><item>Preston</item><item>Montfort</item><item>Welch</item><item>Harry Hines</item><item>IH30 South</item><item>Towne Centre</item><item>Park Central</item><item>Coit East</item><item>Coit</item><item>TI Blvd West</item><item>TI Blvd East</item><item>Greenville</item><item>Abrams</item><item>Forest</item><item>Skillman</item><item>Miller</item><item>Plano Rd.</item><item>Kingsley</item><item>Jupiter</item><item>Garland Rd.</item><item>Northwest Hwy.</item><item>Centerville</item><item>La Prada</item><item>Oates</item><item>Galloway</item><item>IH30 N.W. 1</item><item>IH30 N.W. 2</item><item>IH35E West</item><item>Town East</item></string-array> 
+<string-array name="campref_crossroads_US67"><item>Red Bird</item><item>Kiest</item><item>Polk</item><item>Loop 12</item><item>Swansee</item><item>Hampton</item><item>Camp Wisdom</item><item>IH20 North</item></string-array> 
+<string-array name="campref_crossroads_IH20"><item>Kirnwood</item><item>Wheatland</item><item>Hampton</item><item>South Polk</item><item>Willoughby</item><item>Spur 408 East</item><item>Dallas/Tarrant County Line</item><item>Robinson Rd.</item><item>Carrier Pkwy.</item><item>Fish Creek</item><item>Belt Line</item><item>Mountain Creek EB</item><item>Mountain Creek Pkwy.</item><item>Cedar Ridge</item><item>Duncanville Rd.</item><item>Oriole</item><item>Camp Wisdom</item><item>Westmoreland</item><item>Spur 408 EB</item><item>Spur 408 WB</item><item>Spur 408</item><item>IH35E S.W. #1</item><item>IH35E S.W. #2</item><item>IH35E S.W. #3</item></string-array> 
+<string-array name="campref_crossroads_Spur_408"><item>Loop 12</item><item>Illinois</item><item>Kiest North</item><item>Kiest</item><item>Kiest South</item><item>Grady Niblo</item><item>Artesian Creek NB</item><item>Artesian Creek SB</item><item>IH20 North</item></string-array> 
+<string-array name="campref_crossroads_High_Five_S_E__1"><item>High Five S.E. 1</item></string-array> 
+<string-array name="campref_crossroads_High_Five_S_E__2"><item>High Five S.E. 2</item></string-array> 
+<string-array name="campref_crossroads_IH30"><item>Hotel St.</item><item>Lamar</item><item>Cadiz</item><item>Akard</item><item>St. Paul</item><item>Good Latimer EB</item><item>Haskell</item><item>Carroll</item><item>East Grand</item><item>St. Francis</item><item>Jim Miller</item><item>Samuell</item><item>Dolphin</item><item>Hunnicut</item><item>IH45</item><item>Good Latimer WB</item><item>2nd Ave.</item><item>US80</item><item>Big Town</item><item>Motley</item><item>Gus Thomasson</item><item>Galloway</item><item>Houston St.</item><item>NW 19th St.</item><item>NW 7th St.</item><item>Belt Line</item><item>MacArthur West</item><item>MacArthur East</item><item>Gifford Hill RR Spur</item><item>Loop 12</item><item>Westmoreland</item><item>Hampton</item><item>Sylvan</item><item>Cesar Chavez Blvd.</item><item>Duncan Perry</item></string-array> 
+<string-array name="campref_crossroads_Loop_12"><item>Trinity River (Elm Fork)</item><item>SH183 East</item><item>SH183 South</item><item>Grauwyler</item><item>Union Bower</item><item>Irving Blvd.</item><item>Shady Grove</item><item>Trinity River (West Fork)</item><item>Singleton</item><item>IH30 North</item><item>Anderson</item><item>Jefferson</item><item>Keeneland Pkwy.</item></string-array> 
+<string-array name="campref_crossroads_Spur_366"><item>US75</item><item>IH35E North</item><item>IH35E South</item><item>IH35E East</item><item>US75 North</item><item>US75 South</item><item>US75 West</item></string-array> 
+<string-array name="campref_crossroads_IH345"><item>Ross</item><item>Pacific</item><item>Taylor</item></string-array> 
+<string-array name="campref_crossroads_High_Five_N_E__1"><item>High Five N.E. 1</item></string-array> 
+<string-array name="campref_crossroads_High_Five_N_E__2"><item>High Five N.E. 2</item></string-array> 
+<string-array name="campref_crossroads_High_Five_S_W__1"><item>High Five S.W. 1</item></string-array> 
+<string-array name="campref_crossroads_High_Five_S_W__2"><item>High Five S.W. 2</item></string-array> 
+<string-array name="campref_crossroads_IH30_IH35E_Mixmaster"><item>IH30/IH35E Mixmaster</item></string-array> 
+<string-array name="campref_crossroads_SH114"><item>Dallas/Tarrant County Line</item><item>Freeport Pkwy.</item><item>Esters</item><item>Belt Line West</item><item>Belt Line East</item><item>Longhorn Dr.</item><item>SH161</item><item>MacArthur</item><item>Hidden Ridge</item><item>OConnor</item><item>Rochelle West</item><item>Rochelle East</item></string-array> 
+<string-array name="campref_crossroads_IH35"><item>Bear Creek</item></string-array> 
+<string-array name="campref_crossroads_IH35W"><item>FM2449</item><item>Crawford Rd.</item><item>FM407</item><item>FM1171</item><item>Earnhardt Way</item><item>SH114</item><item>Eagle Pkwy.</item></string-array> 
+<string-array name="campref_crossroads_US75_values"><item>0</item><item>1</item><item>2</item><item>3</item><item>4</item><item>5</item><item>6</item><item>7</item><item>8</item><item>9</item><item>10</item><item>11</item><item>12</item><item>13</item><item>14</item><item>15</item><item>16</item><item>17</item><item>18</item><item>19</item><item>20</item><item>21</item><item>22</item><item>23</item><item>24</item><item>25</item><item>26</item><item>27</item><item>28</item><item>29</item><item>30</item><item>31</item><item>32</item><item>33</item><item>34</item><item>35</item><item>36</item><item>37</item><item>38</item><item>39</item><item>40</item><item>41</item><item>42</item><item>43</item><item>44</item></string-array> 
+<string-array name="campref_crossroads_SH183_values"><item>45</item><item>46</item><item>47</item><item>48</item><item>49</item><item>50</item><item>51</item><item>52</item><item>53</item><item>54</item><item>55</item></string-array> 
+<string-array name="campref_crossroads_IH35E_values"><item>56</item><item>57</item><item>58</item><item>59</item><item>60</item><item>61</item><item>62</item><item>63</item><item>64</item><item>65</item><item>66</item><item>67</item><item>68</item><item>69</item><item>70</item><item>71</item><item>72</item><item>73</item><item>74</item><item>75</item><item>76</item><item>77</item><item>78</item><item>79</item><item>80</item><item>81</item><item>82</item><item>83</item><item>84</item><item>85</item><item>86</item><item>87</item><item>88</item><item>89</item><item>90</item><item>91</item><item>92</item><item>93</item><item>94</item><item>95</item><item>96</item><item>97</item><item>98</item><item>99</item><item>100</item><item>101</item><item>102</item><item>103</item><item>104</item><item>105</item><item>106</item><item>107</item><item>108</item><item>109</item><item>110</item><item>111</item><item>112</item><item>113</item><item>114</item><item>115</item><item>116</item><item>117</item><item>118</item><item>119</item><item>120</item><item>121</item><item>122</item><item>123</item><item>124</item><item>125</item><item>126</item><item>127</item><item>128</item><item>129</item><item>130</item><item>131</item></string-array> 
+<string-array name="campref_crossroads_IH635_values"><item>132</item><item>133</item><item>134</item><item>135</item><item>136</item><item>137</item><item>138</item><item>139</item><item>140</item><item>141</item><item>142</item><item>143</item><item>144</item><item>145</item><item>146</item><item>147</item><item>148</item><item>149</item><item>150</item><item>151</item><item>152</item><item>153</item><item>154</item><item>155</item><item>156</item><item>157</item><item>158</item><item>159</item><item>160</item><item>161</item><item>162</item><item>163</item></string-array> 
+<string-array name="campref_crossroads_US67_values"><item>164</item><item>165</item><item>166</item><item>167</item><item>168</item><item>169</item><item>170</item><item>171</item></string-array> 
+<string-array name="campref_crossroads_IH20_values"><item>172</item><item>173</item><item>174</item><item>175</item><item>176</item><item>177</item><item>178</item><item>179</item><item>180</item><item>181</item><item>182</item><item>183</item><item>184</item><item>185</item><item>186</item><item>187</item><item>188</item><item>189</item><item>190</item><item>191</item><item>192</item><item>193</item><item>194</item><item>195</item></string-array> 
+<string-array name="campref_crossroads_Spur_408_values"><item>196</item><item>197</item><item>198</item><item>199</item><item>200</item><item>201</item><item>202</item><item>203</item><item>204</item></string-array> 
+<string-array name="campref_crossroads_High_Five_S_E__1_values"><item>205</item></string-array> 
+<string-array name="campref_crossroads_High_Five_S_E__2_values"><item>206</item></string-array> 
+<string-array name="campref_crossroads_IH30_values"><item>207</item><item>208</item><item>209</item><item>210</item><item>211</item><item>212</item><item>213</item><item>214</item><item>215</item><item>216</item><item>217</item><item>218</item><item>219</item><item>220</item><item>221</item><item>222</item><item>223</item><item>224</item><item>225</item><item>226</item><item>227</item><item>228</item><item>229</item><item>230</item><item>231</item><item>232</item><item>233</item><item>234</item><item>235</item><item>236</item><item>237</item><item>238</item><item>239</item><item>240</item><item>241</item></string-array> 
+<string-array name="campref_crossroads_Loop_12_values"><item>242</item><item>243</item><item>244</item><item>245</item><item>246</item><item>247</item><item>248</item><item>249</item><item>250</item><item>251</item><item>252</item><item>253</item><item>254</item></string-array> 
+<string-array name="campref_crossroads_Spur_366_values"><item>255</item><item>256</item><item>257</item><item>258</item><item>259</item><item>260</item><item>261</item></string-array> 
+<string-array name="campref_crossroads_IH345_values"><item>262</item><item>263</item><item>264</item></string-array> 
+<string-array name="campref_crossroads_High_Five_N_E__1_values"><item>265</item></string-array> 
+<string-array name="campref_crossroads_High_Five_N_E__2_values"><item>266</item></string-array> 
+<string-array name="campref_crossroads_High_Five_S_W__1_values"><item>267</item></string-array> 
+<string-array name="campref_crossroads_High_Five_S_W__2_values"><item>268</item></string-array> 
+<string-array name="campref_crossroads_IH30_IH35E_Mixmaster_values"><item>269</item></string-array> 
+<string-array name="campref_crossroads_SH114_values"><item>270</item><item>271</item><item>272</item><item>273</item><item>274</item><item>275</item><item>276</item><item>277</item><item>278</item><item>279</item><item>280</item><item>281</item></string-array> 
+<string-array name="campref_crossroads_IH35_values"><item>282</item></string-array> 
+<string-array name="campref_crossroads_IH35W_values"><item>283</item><item>284</item><item>285</item><item>286</item><item>287</item><item>288</item><item>289</item></string-array>
 </resources>
