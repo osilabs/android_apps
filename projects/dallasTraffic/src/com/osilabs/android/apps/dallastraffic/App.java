@@ -924,6 +924,7 @@ public class App extends MapActivity {
 			WEBVIEW_URL
 			+ "?target=" + CURRENT_TAB_INDEX
 			+ versionCheckParams
+			+ "&city_id=" + Config.APP_CODE
 			+ MapsTab.getReloadURLParts()
 			+ CalendarTab.getReloadURLParts()
 			+ CamerasTab.getReloadURLParts();

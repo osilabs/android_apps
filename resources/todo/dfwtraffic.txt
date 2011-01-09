@@ -1,11 +1,5 @@
 // Dallas Fort Worth Traffic
 
-* TODO : optimize mapview for screen sizes. Market as optimized for tablets.
-
-* Put in default camera in string.xml
-
-* clear data and check defaults
-* On Kathy's phone make sure all the icons in the top row fit
 
 
 
