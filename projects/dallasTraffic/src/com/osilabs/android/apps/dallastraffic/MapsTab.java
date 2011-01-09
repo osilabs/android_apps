@@ -148,6 +148,13 @@ public class MapsTab {
 
 		if (viewType == -1) {
 			// Use adjusted index
+			
+			int ai = getAdjustedIndex();
+			if (ai > (Config.traffic_viewtypes.length-1)) {
+				// Shouldn't happen but find and address this if this is ever 
+				//  bigger than the size of the array.
+				Log.e(App.TAG, "arraylen:adjustedindex=" + Config.traffic_viewtypes.length+":"+ai);
+			}
 			viewType = Config.traffic_viewtypes[ getAdjustedIndex() ];
 		}
 		
