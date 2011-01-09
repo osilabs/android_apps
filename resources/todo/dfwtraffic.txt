@@ -2,15 +2,11 @@
 
 * TODO : optimize mapview for screen sizes. Market as optimized for tablets.
 
-* check simons qc codes
 * clear data and check defaults
 * Put in default camera in string.xml
 * Remove add banner from about screen
 * On Kathy's phone make sure all the icons in the top row fit
-* Make test script when i test
 
-fail: radios don't play
-fail: haven't tested uninstallng scanner radio
 fail: test automatic upgrade message
 fail: About website it toast
 fail: 

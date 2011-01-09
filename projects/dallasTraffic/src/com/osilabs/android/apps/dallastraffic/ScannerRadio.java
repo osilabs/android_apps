@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
+import android.util.Log;
 
 public class ScannerRadio {
 	// -----------------------------------------------
@@ -32,13 +33,11 @@ public class ScannerRadio {
 	}
 	
 	public static void launchScanner(int which_scanner) {
-		// if(Config.DEBUG>0)Log.d(TAG, "Scanner node: " + Integer.toString(which_scanner));
+		if(Config.DEBUG>0)Log.d("** osilabs.com **", "Scanner node: " + Integer.toString(which_scanner));
 		
 		boolean scannerAvailable = isIntentAvailable(App.me,
 				SCANNER_RADIO_NAMESPACE + ".intent.action." + SCANNER_RADIO_ACTION);
 
-		// FIXME - put these strings in file and move this to own scanner radio class
-		
 		if (scannerAvailable) {
 			Intent intent = new Intent(SCANNER_RADIO_NAMESPACE + ".intent.action." + SCANNER_RADIO_ACTION);
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
