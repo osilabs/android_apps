@@ -2,16 +2,11 @@
 
 * TODO : optimize mapview for screen sizes. Market as optimized for tablets.
 
-* clear data and check defaults
 * Put in default camera in string.xml
-* Remove add banner from about screen
+
+* clear data and check defaults
 * On Kathy's phone make sure all the icons in the top row fit
 
-fail: test automatic upgrade message
-fail: About website it toast
-fail: 
-fail: 
-fail: 
 
 
 // v0.3

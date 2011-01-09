@@ -16,7 +16,7 @@ public final class Config {
 	public static final int       DEFAULT_TAB_INDEX = 0;
 	public static final boolean   NO_ADS = false; // True will hide the ads
 	protected static       String MOBILECONTENT_URL_PREFIX   = "http://osilabs.com/m/mobilecontent/dallastraffic";
-	protected static       String MOBILECONTENT_URL_ABOUT    = "http://osilabs.com/m/mobilecontent/about/dt_about.php";
+	protected static       String MOBILECONTENT_URL_ABOUT    = "http://osilabs.com/m/mobilecontent/about/shared_about.php";
 	protected static final String NAMESPACE = "com.osilabs.android.apps.dallastraffic";
 
 	// Which radios to offer
