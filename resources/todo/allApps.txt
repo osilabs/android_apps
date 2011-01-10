@@ -1,5 +1,23 @@
 // All Apps
 
+>>> STM >>>
+
+* Seattle
+** rss feeds not set up
+
+<<< STM <<<
+
+
+
+
+
+
+
+
+
+
+
+
 * Add feedback forum to show recent responses
 
 * Do feedback like gTasks maybe (Where it just opens an intent for email and dumps phone data in)
