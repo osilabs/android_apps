@@ -2,9 +2,17 @@
 
 >>> STM >>>
 
-* Seattle
-** rss feeds not set up
+* TCT
+** Update scanner preferences
+** Set mapview coords
 
+
+* Seattle
+** BUG in the share email message.  Still has dallas traffic in the QC code URI
+
+
+* Dallas
+** Add the rss for ft worth weekly: http://www.fwweekly.com/index.php?format=feed&type=rss
 <<< STM <<<
 
 

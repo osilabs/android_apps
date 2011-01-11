@@ -1,94 +1,123 @@
 package com.osilabs.android.apps;
 
-//import com.google.android.maps.GeoPoint;
-
 public final class Config {
-	public static final    String DEFAULT_CAMERA_URL = "http://osilabs.com/m/mobilecontent/tctraffic5/trafficmap.php?target=4&camera=832";
-	public static final int       DEFAULT_MAP_INDEX = 0; // !!! Can't be above array size-1
+	// Tell classes to dump to logcat
+	public static final int     DEBUG = 0;
+	
+	// This can also be accomplished by recompiling. Also by stopping the app
+	public static final boolean DEBUG_FORCE_NEW_VERSION_CHECK = false; 
+
+	// True will hide the ads
+	public static final boolean NO_ADS = false; 
+
+	// Used by web content versin checker to know which app is checking in
+	public static final    String APP_CODE = "tct"; // i.e. tct, st, ld ...
+	
+	public static final    String DEFAULT_CAMERA_INDEX = "0";
+	public static final int       DEFAULT_MAP_INDEX = 0; // !!! Can't be above array size-1. Includes favorites, best to set to one of the system traffic maps indexes.
 	public static final int       DEFAULT_CALENDAR_INDEX = 0;
 	public static final int       DEFAULT_TAB_INDEX = 0;
-	public static final boolean   NO_ADS = false; // True will hide the ads
 	protected static       String MOBILECONTENT_URL_PREFIX   = "http://osilabs.com/m/mobilecontent/tctraffic";
-	protected static       String MOBILECONTENT_URL_ABOUT    = "http://osilabs.com/m/mobilecontent/about/tct_about.php";
+	protected static       String MOBILECONTENT_URL_ABOUT    = "http://osilabs.com/m/mobilecontent/about/shared_about.php";
 	protected static final String NAMESPACE = "com.osilabs.android.apps";
 
 	// Which radios to offer
 	// Use './adb logcat |grep node' to see the scanner ids
 	public static final int            INDEX_OF_WEATHER = 0;
 	public static final int            INDEX_OF_POLICE = 1;
+	
 	// These are the Defaults and they will be changed as prefs change. Set current node to -1 to disable.
+	public static final int[]          RADIOS_DEFAULT_NODE = {24761,           24429};
 	public static       int[]          RADIOS_CURRENT_NODE = {24761,           24429};
 	public static final CharSequence[] RADIOS              = {"Weather Radio", "Police Scanner"};
-	
-	// Geo points
-	//lat=44.787144
-	//lon=-92.834472
-	public static		int [][] GEO_POINTS = {
-		{ 44980000, -93200000 } // Minneapolis
-	};
 
-	//		new GeoPoint((int) (44.787144 * 1E6), (int) (-92.834472 * 1E6)),
-	
+	// ----------------------------------------------------------
+	// Formats:
 	//
-	// Non config studd
+	// >> rss << 
+	// '(rss,atom)~uri~(titleonly)~(link)'
+	// "rss~http://www.startribune.com/entertainment/dining/index.rss2~ ~link"
 	//
-	public static final int WEB   = 0;
-	public static final int MAP   = 1;
-	public static final int IMAGE = 2;
-	public static final int FEED  = 3;
+	// >> Images/Maps << 
+	// 'map~uri~width~height~scrollx~scrolly'
+	// "map~http://www.dot.state.mn.us/tmc/trafficinfo/map/d_map.png~128%~ ~20~66"
+	//
+	// >> Tags for preference based options
+	// "{WEATHER}"
+	// "{TODAY}"
+	// ----------------------------------------------------------
 
-		
+	
+	
+	
+	// ---------------------------------------------------------
 	// Traffic Tab
-	public static final String [] traffic = {
-		"Color Traffic Map",
-		"Hi-Contrast Traffic Map",
-		"Alternate Map",
-		"Traffic Alerts",
-		"Interactive Map"
-	};
-	public static final String [] traffic_urls = {
-		"map~http://www.dot.state.mn.us/tmc/trafficinfo/map/d_map.png~128%~ ~20~66",
-		"map~http://www.dot.state.mn.us/tmc/trafficinfo/map/d_map_alt.png~138%~ ~22~0",
-		"map~http://www.511mn.org/primary/images/all/TC_Metro.gif~138%~ ~92~60",
-		"rss~http://www.dot.state.mn.us/tmc/trafficinfo/incidents.rss~ ~ ",
-		"MAP"
-	};
-	// View Types: WEB, IMAGE, MAP
-	public static final int [] traffic_viewtypes = {
-		IMAGE,
-		IMAGE,
-		IMAGE,
-		FEED,
-		MAP
-	};
+	//
 	
+	// Android viewtypes
+	public static final int WEB      = 0;
+	public static final int MAP      = 1;
+	public static final int IMAGE    = 2;
+	public static final int FEED     = 3;
+	public static final int FAVORITE = 4;
+
+    // Maps
+    public static final String[] traffic = {
+		"Minneapolis",
+		"Saint Paul",
+		"Metro",
+        "Color Traffic Map",
+        "Hi-Contrast Traffic Map",
+        "Alternate Map",
+    };
+    public static final String[] traffic_urls = {
+        "{\"longitude\":\"-122171027\",\"zoom\":\"11\",\"label\":\"Seattle\",\"latitude\":\"47632586\"}",
+        "{\"longitude\":\"-122386624\",\"zoom\":\"11\",\"label\":\"Tacoma\",\"latitude\":\"47313261\"}",
+        "{\"longitude\":\"-122197096\",\"zoom\":\"10\",\"label\":\"Tacoma\",\"latitude\":\"47516769\"}",
+    	"image",
+    	"image",
+    	"image",
+    };
+    public static final int [] traffic_viewtypes = {
+    	MAP,
+    	MAP,
+    	MAP,
+    	IMAGE,
+    	IMAGE,
+    	IMAGE,
+    };
+	// This defaults to one of the system configured mapviews in traffic_urls
+    // CAUTION!!! - If you move the maps around, this could refer to the wrong index
+	public static final String DEFAULT_MAPVIEW_COORDS = traffic_urls[0];
+	public static String CURRENT_MAPVIEW_COORDS = DEFAULT_MAPVIEW_COORDS;
+	public static String MAPVIEW_FAVORITES = "";
 	//
-	// calendar/today
+	// Traffic Tab
+	// ---------------------------------------------------------
+
+	
+
+
+	// ---------------------------------------------------------
+	// Calendar tab
 	//
+	public static final String [] calendar_viewtypes = {
+		"rss",
+		"rss",
+		"rss",
+		"rss",
+		"rss",
+	};
 	public static final String[] calendar = {
 		"Weather Report",
+		"Things To Do",		
 		"Food",
 		"Music",
-		"Things To Do", // FIXME - For different themes this can use a different wording
+        "Traffic Incidents",
 	};
-	// Second param can be 'uri|(titleonly)|(link)'
-	public static final String[] calendar_src = {
-		"{WEATHER}",
-		"rss~http://twincities.metromix.com/rss/popup/restaurants_daily_picks~ ~ ",
-		"rss~http://twincities.metromix.com/rss/popup/music_headlines~ ~ ",
-		"{TODAY}",
-	};
-	// '(rss,atom)|uri|(titleonly)|(link)'
-	public static final String[] today_values = {
-		"rss~http://www.citypages.com/syndication/events/~ ~link",
-		"rss~http://www.startribune.com/entertainment/dining/index.rss2~ ~link"
-	};
-	// '(rss,atom)|uri|(titleonly)|(link)'
-	public static final String[] weather_values = {
-		"rss~http://feeds.weatherbug.com/rss.aspx?zipcode=55401&feed=currtxt,fcsttxt&zcode=z4641~ ~ ",
-		"rss~http://rss.accuweather.com/rss/liveweather_rss.asp?metric=0&locCode=55401~ ~ ",
-		"rss~http://rss.weather.com/weather/rss/local/USMN0503?cm_ven=LWO&cm_cat=rss&par=LWO_rss~ ~ "
-	};
+	//
+	// Calendar tab
+	// ---------------------------------------------------------
 	
 	
 	
@@ -128,25 +157,26 @@ public final class Config {
 	, {"77th Ave", "63rd Ave", "Bass Lake Rd", "49th Ave", "Rockford Rd", "36th Ave", "Medicine Lake Rd", "Plymouth Ave", "T.H.55", "Cedar Lake Rd", "Minnetonka Blvd", "T.H.7", "7th St", "Bren Rd", "Valley View Rd", "I-494", "Anderson Lakes S Bridge", "Anderson Lakes Pkwy", "Pioneer Trail", "Old Shakopee Rd"}
 	};
 	 
-	public static final String[][] crossroadsValues = {{"http://video.dot.state.mn.us/video/image?id=605", "http://video.dot.state.mn.us/video/image?id=604", "http://video.dot.state.mn.us/video/image?id=603", "http://video.dot.state.mn.us/video/image?id=602"}
-	, {"http://video.dot.state.mn.us/video/image?id=42", "http://video.dot.state.mn.us/video/image?id=41", "http://video.dot.state.mn.us/video/image?id=40", "http://video.dot.state.mn.us/video/image?id=39", "http://video.dot.state.mn.us/video/image?id=38", "http://video.dot.state.mn.us/video/image?id=37", "http://video.dot.state.mn.us/video/image?id=36", "http://video.dot.state.mn.us/video/image?id=35", "http://video.dot.state.mn.us/video/image?id=34", "http://video.dot.state.mn.us/video/image?id=33", "http://video.dot.state.mn.us/video/image?id=32", "http://video.dot.state.mn.us/video/image?id=31", "http://video.dot.state.mn.us/video/image?id=30", "http://video.dot.state.mn.us/video/image?id=29", "http://video.dot.state.mn.us/video/image?id=28", "http://video.dot.state.mn.us/video/image?id=27", "http://video.dot.state.mn.us/video/image?id=26", "http://video.dot.state.mn.us/video/image?id=25", "http://video.dot.state.mn.us/video/image?id=24", "http://video.dot.state.mn.us/video/image?id=23", "http://video.dot.state.mn.us/video/image?id=22", "http://video.dot.state.mn.us/video/image?id=21", "http://video.dot.state.mn.us/video/image?id=20", "http://video.dot.state.mn.us/video/image?id=19", "http://video.dot.state.mn.us/video/image?id=18", "http://video.dot.state.mn.us/video/image?id=17", "http://video.dot.state.mn.us/video/image?id=16", "http://video.dot.state.mn.us/video/image?id=15", "http://video.dot.state.mn.us/video/image?id=14", "http://video.dot.state.mn.us/video/image?id=13", "http://video.dot.state.mn.us/video/image?id=12", "http://video.dot.state.mn.us/video/image?id=11", "http://video.dot.state.mn.us/video/image?id=10"}
-	, {"http://video.dot.state.mn.us/video/image?id=644", "http://video.dot.state.mn.us/video/image?id=643", "http://video.dot.state.mn.us/video/image?id=642", "http://video.dot.state.mn.us/video/image?id=641", "http://video.dot.state.mn.us/video/image?id=640", "http://video.dot.state.mn.us/video/image?id=639", "http://video.dot.state.mn.us/video/image?id=638", "http://video.dot.state.mn.us/video/image?id=637", "http://video.dot.state.mn.us/video/image?id=636", "http://video.dot.state.mn.us/video/image?id=635", "http://video.dot.state.mn.us/video/image?id=634", "http://video.dot.state.mn.us/video/image?id=633", "http://video.dot.state.mn.us/video/image?id=632", "http://video.dot.state.mn.us/video/image?id=631", "http://video.dot.state.mn.us/video/image?id=630", "http://video.dot.state.mn.us/video/image?id=629", "http://video.dot.state.mn.us/video/image?id=628", "http://video.dot.state.mn.us/video/image?id=627", "http://video.dot.state.mn.us/video/image?id=626", "http://video.dot.state.mn.us/video/image?id=625", "http://video.dot.state.mn.us/video/image?id=624", "http://video.dot.state.mn.us/video/image?id=623", "http://video.dot.state.mn.us/video/image?id=622", "http://video.dot.state.mn.us/video/image?id=621", "http://video.dot.state.mn.us/video/image?id=620", "http://video.dot.state.mn.us/video/image?id=619", "http://video.dot.state.mn.us/video/image?id=618", "http://video.dot.state.mn.us/video/image?id=617", "http://video.dot.state.mn.us/video/image?id=616", "http://video.dot.state.mn.us/video/image?id=615", "http://video.dot.state.mn.us/video/image?id=614", "http://video.dot.state.mn.us/video/image?id=613", "http://video.dot.state.mn.us/video/image?id=612", "http://video.dot.state.mn.us/video/image?id=611", "http://video.dot.state.mn.us/video/image?id=610", "http://video.dot.state.mn.us/video/image?id=609", "http://video.dot.state.mn.us/video/image?id=608", "http://video.dot.state.mn.us/video/image?id=607", "http://video.dot.state.mn.us/video/image?id=606"}
-	, {"http://video.dot.state.mn.us/video/image?id=918", "http://video.dot.state.mn.us/video/image?id=917", "http://video.dot.state.mn.us/video/image?id=916", "http://video.dot.state.mn.us/video/image?id=915", "http://video.dot.state.mn.us/video/image?id=914", "http://video.dot.state.mn.us/video/image?id=913", "http://video.dot.state.mn.us/video/image?id=912", "http://video.dot.state.mn.us/video/image?id=911", "http://video.dot.state.mn.us/video/image?id=910", "http://video.dot.state.mn.us/video/image?id=909", "http://video.dot.state.mn.us/video/image?id=908", "http://video.dot.state.mn.us/video/image?id=907", "http://video.dot.state.mn.us/video/image?id=906", "http://video.dot.state.mn.us/video/image?id=905", "http://video.dot.state.mn.us/video/image?id=904", "http://video.dot.state.mn.us/video/image?id=903"}
-	, {"http://video.dot.state.mn.us/video/image?id=443", "http://video.dot.state.mn.us/video/image?id=442", "http://video.dot.state.mn.us/video/image?id=441", "http://video.dot.state.mn.us/video/image?id=440", "http://video.dot.state.mn.us/video/image?id=439", "http://video.dot.state.mn.us/video/image?id=438", "http://video.dot.state.mn.us/video/image?id=437", "http://video.dot.state.mn.us/video/image?id=436", "http://video.dot.state.mn.us/video/image?id=435", "http://video.dot.state.mn.us/video/image?id=434", "http://video.dot.state.mn.us/video/image?id=433", "http://video.dot.state.mn.us/video/image?id=432", "http://video.dot.state.mn.us/video/image?id=431", "http://video.dot.state.mn.us/video/image?id=430", "http://video.dot.state.mn.us/video/image?id=429", "http://video.dot.state.mn.us/video/image?id=428", "http://video.dot.state.mn.us/video/image?id=427", "http://video.dot.state.mn.us/video/image?id=426", "http://video.dot.state.mn.us/video/image?id=425", "http://video.dot.state.mn.us/video/image?id=424", "http://video.dot.state.mn.us/video/image?id=423", "http://video.dot.state.mn.us/video/image?id=422", "http://video.dot.state.mn.us/video/image?id=421", "http://video.dot.state.mn.us/video/image?id=420", "http://video.dot.state.mn.us/video/image?id=419", "http://video.dot.state.mn.us/video/image?id=418", "http://video.dot.state.mn.us/video/image?id=417", "http://video.dot.state.mn.us/video/image?id=416", "http://video.dot.state.mn.us/video/image?id=415", "http://video.dot.state.mn.us/video/image?id=414", "http://video.dot.state.mn.us/video/image?id=413", "http://video.dot.state.mn.us/video/image?id=412", "http://video.dot.state.mn.us/video/image?id=411", "http://video.dot.state.mn.us/video/image?id=410", "http://video.dot.state.mn.us/video/image?id=409", "http://video.dot.state.mn.us/video/image?id=408", "http://video.dot.state.mn.us/video/image?id=407", "http://video.dot.state.mn.us/video/image?id=405", "http://video.dot.state.mn.us/video/image?id=404", "http://video.dot.state.mn.us/video/image?id=402", "http://video.dot.state.mn.us/video/image?id=401", "http://video.dot.state.mn.us/video/image?id=400", "http://video.dot.state.mn.us/video/image?id=399"}
-	, {"http://video.dot.state.mn.us/video/image?id=725", "http://video.dot.state.mn.us/video/image?id=724", "http://video.dot.state.mn.us/video/image?id=723", "http://video.dot.state.mn.us/video/image?id=722", "http://video.dot.state.mn.us/video/image?id=721", "http://video.dot.state.mn.us/video/image?id=720", "http://video.dot.state.mn.us/video/image?id=719", "http://video.dot.state.mn.us/video/image?id=718", "http://video.dot.state.mn.us/video/image?id=717", "http://video.dot.state.mn.us/video/image?id=716", "http://video.dot.state.mn.us/video/image?id=715", "http://video.dot.state.mn.us/video/image?id=714", "http://video.dot.state.mn.us/video/image?id=713", "http://video.dot.state.mn.us/video/image?id=712", "http://video.dot.state.mn.us/video/image?id=711", "http://video.dot.state.mn.us/video/image?id=710", "http://video.dot.state.mn.us/video/image?id=709", "http://video.dot.state.mn.us/video/image?id=708", "http://video.dot.state.mn.us/video/image?id=707", "http://video.dot.state.mn.us/video/image?id=706", "http://video.dot.state.mn.us/video/image?id=705", "http://video.dot.state.mn.us/video/image?id=704", "http://video.dot.state.mn.us/video/image?id=703", "http://video.dot.state.mn.us/video/image?id=702", "http://video.dot.state.mn.us/video/image?id=701"}
-	, {"http://video.dot.state.mn.us/video/image?id=869", "http://video.dot.state.mn.us/video/image?id=868", "http://video.dot.state.mn.us/video/image?id=867", "http://video.dot.state.mn.us/video/image?id=866", "http://video.dot.state.mn.us/video/image?id=865", "http://video.dot.state.mn.us/video/image?id=864", "http://video.dot.state.mn.us/video/image?id=863", "http://video.dot.state.mn.us/video/image?id=862", "http://video.dot.state.mn.us/video/image?id=861", "http://video.dot.state.mn.us/video/image?id=860", "http://video.dot.state.mn.us/video/image?id=859", "http://video.dot.state.mn.us/video/image?id=858", "http://video.dot.state.mn.us/video/image?id=857", "http://video.dot.state.mn.us/video/image?id=856", "http://video.dot.state.mn.us/video/image?id=855", "http://video.dot.state.mn.us/video/image?id=854", "http://video.dot.state.mn.us/video/image?id=853", "http://video.dot.state.mn.us/video/image?id=852", "http://video.dot.state.mn.us/video/image?id=851", "http://video.dot.state.mn.us/video/image?id=850", "http://video.dot.state.mn.us/video/image?id=849", "http://video.dot.state.mn.us/video/image?id=848", "http://video.dot.state.mn.us/video/image?id=847", "http://video.dot.state.mn.us/video/image?id=846", "http://video.dot.state.mn.us/video/image?id=845", "http://video.dot.state.mn.us/video/image?id=844", "http://video.dot.state.mn.us/video/image?id=843", "http://video.dot.state.mn.us/video/image?id=842", "http://video.dot.state.mn.us/video/image?id=841", "http://video.dot.state.mn.us/video/image?id=840", "http://video.dot.state.mn.us/video/image?id=839", "http://video.dot.state.mn.us/video/image?id=838", "http://video.dot.state.mn.us/video/image?id=837", "http://video.dot.state.mn.us/video/image?id=836", "http://video.dot.state.mn.us/video/image?id=835", "http://video.dot.state.mn.us/video/image?id=834", "http://video.dot.state.mn.us/video/image?id=833", "http://video.dot.state.mn.us/video/image?id=832", "http://video.dot.state.mn.us/video/image?id=825", "http://video.dot.state.mn.us/video/image?id=824", "http://video.dot.state.mn.us/video/image?id=823", "http://video.dot.state.mn.us/video/image?id=822", "http://video.dot.state.mn.us/video/image?id=821", "http://video.dot.state.mn.us/video/image?id=820", "http://video.dot.state.mn.us/video/image?id=819", "http://video.dot.state.mn.us/video/image?id=818", "http://video.dot.state.mn.us/video/image?id=817", "http://video.dot.state.mn.us/video/image?id=816", "http://video.dot.state.mn.us/video/image?id=815", "http://video.dot.state.mn.us/video/image?id=814", "http://video.dot.state.mn.us/video/image?id=813", "http://video.dot.state.mn.us/video/image?id=812", "http://video.dot.state.mn.us/video/image?id=811", "http://video.dot.state.mn.us/video/image?id=810", "http://video.dot.state.mn.us/video/image?id=809", "http://video.dot.state.mn.us/video/image?id=808", "http://video.dot.state.mn.us/video/image?id=807", "http://video.dot.state.mn.us/video/image?id=806", "http://video.dot.state.mn.us/video/image?id=805", "http://video.dot.state.mn.us/video/image?id=804", "http://video.dot.state.mn.us/video/image?id=803", "http://video.dot.state.mn.us/video/image?id=802", "http://video.dot.state.mn.us/video/image?id=801", "http://video.dot.state.mn.us/video/image?id=797", "http://video.dot.state.mn.us/video/image?id=796", "http://video.dot.state.mn.us/video/image?id=793", "http://video.dot.state.mn.us/video/image?id=792", "http://video.dot.state.mn.us/video/image?id=788", "http://video.dot.state.mn.us/video/image?id=787"}
-	, {"http://video.dot.state.mn.us/video/image?id=1651", "http://video.dot.state.mn.us/video/image?id=1645", "http://video.dot.state.mn.us/video/image?id=1642", "http://video.dot.state.mn.us/video/image?id=673", "http://video.dot.state.mn.us/video/image?id=672", "http://video.dot.state.mn.us/video/image?id=671", "http://video.dot.state.mn.us/video/image?id=670", "http://video.dot.state.mn.us/video/image?id=668", "http://video.dot.state.mn.us/video/image?id=667", "http://video.dot.state.mn.us/video/image?id=666", "http://video.dot.state.mn.us/video/image?id=665", "http://video.dot.state.mn.us/video/image?id=664", "http://video.dot.state.mn.us/video/image?id=663", "http://video.dot.state.mn.us/video/image?id=662", "http://video.dot.state.mn.us/video/image?id=661", "http://video.dot.state.mn.us/video/image?id=660"}
-	, {"http://video.dot.state.mn.us/video/image?id=225", "http://video.dot.state.mn.us/video/image?id=224", "http://video.dot.state.mn.us/video/image?id=223", "http://video.dot.state.mn.us/video/image?id=222", "http://video.dot.state.mn.us/video/image?id=221", "http://video.dot.state.mn.us/video/image?id=220", "http://video.dot.state.mn.us/video/image?id=219", "http://video.dot.state.mn.us/video/image?id=218", "http://video.dot.state.mn.us/video/image?id=217", "http://video.dot.state.mn.us/video/image?id=216", "http://video.dot.state.mn.us/video/image?id=215", "http://video.dot.state.mn.us/video/image?id=214", "http://video.dot.state.mn.us/video/image?id=213", "http://video.dot.state.mn.us/video/image?id=212", "http://video.dot.state.mn.us/video/image?id=210", "http://video.dot.state.mn.us/video/image?id=209"}
-	, {"http://video.dot.state.mn.us/video/image?id=108"}
-	, {"http://video.dot.state.mn.us/video/image?id=396", "http://video.dot.state.mn.us/video/image?id=395", "http://video.dot.state.mn.us/video/image?id=394", "http://video.dot.state.mn.us/video/image?id=393", "http://video.dot.state.mn.us/video/image?id=392", "http://video.dot.state.mn.us/video/image?id=391", "http://video.dot.state.mn.us/video/image?id=390", "http://video.dot.state.mn.us/video/image?id=389"}
-	, {"http://video.dot.state.mn.us/video/image?id=1717", "http://video.dot.state.mn.us/video/image?id=8", "http://video.dot.state.mn.us/video/image?id=7", "http://video.dot.state.mn.us/video/image?id=6", "http://video.dot.state.mn.us/video/image?id=5", "http://video.dot.state.mn.us/video/image?id=4", "http://video.dot.state.mn.us/video/image?id=3", "http://video.dot.state.mn.us/video/image?id=2", "http://video.dot.state.mn.us/video/image?id=1"}
-	, {"http://video.dot.state.mn.us/video/image?id=100"}
-	, {"http://video.dot.state.mn.us/video/image?id=561", "http://video.dot.state.mn.us/video/image?id=560", "http://video.dot.state.mn.us/video/image?id=559", "http://video.dot.state.mn.us/video/image?id=558", "http://video.dot.state.mn.us/video/image?id=557", "http://video.dot.state.mn.us/video/image?id=556", "http://video.dot.state.mn.us/video/image?id=555", "http://video.dot.state.mn.us/video/image?id=554", "http://video.dot.state.mn.us/video/image?id=553", "http://video.dot.state.mn.us/video/image?id=552", "http://video.dot.state.mn.us/video/image?id=551", "http://video.dot.state.mn.us/video/image?id=550"}
-	, {"http://video.dot.state.mn.us/video/image?id=109"}
-	, {"http://video.dot.state.mn.us/video/image?id=1715", "http://video.dot.state.mn.us/video/image?id=1714", "http://video.dot.state.mn.us/video/image?id=1713", "http://video.dot.state.mn.us/video/image?id=403"}
-	, {"http://video.dot.state.mn.us/video/image?id=669"}
-	, {"http://video.dot.state.mn.us/video/image?id=123", "http://video.dot.state.mn.us/video/image?id=122", "http://video.dot.state.mn.us/video/image?id=121", "http://video.dot.state.mn.us/video/image?id=120", "http://video.dot.state.mn.us/video/image?id=119", "http://video.dot.state.mn.us/video/image?id=118", "http://video.dot.state.mn.us/video/image?id=117", "http://video.dot.state.mn.us/video/image?id=116", "http://video.dot.state.mn.us/video/image?id=115", "http://video.dot.state.mn.us/video/image?id=114", "http://video.dot.state.mn.us/video/image?id=113", "http://video.dot.state.mn.us/video/image?id=112", "http://video.dot.state.mn.us/video/image?id=111", "http://video.dot.state.mn.us/video/image?id=110"}
-	, {"http://video.dot.state.mn.us/video/image?id=512", "http://video.dot.state.mn.us/video/image?id=511", "http://video.dot.state.mn.us/video/image?id=510", "http://video.dot.state.mn.us/video/image?id=509", "http://video.dot.state.mn.us/video/image?id=508", "http://video.dot.state.mn.us/video/image?id=507", "http://video.dot.state.mn.us/video/image?id=506", "http://video.dot.state.mn.us/video/image?id=505", "http://video.dot.state.mn.us/video/image?id=504", "http://video.dot.state.mn.us/video/image?id=503"}
-	, {"http://video.dot.state.mn.us/video/image?id=902", "http://video.dot.state.mn.us/video/image?id=901"}
-	, {"http://video.dot.state.mn.us/video/image?id=337", "http://video.dot.state.mn.us/video/image?id=336", "http://video.dot.state.mn.us/video/image?id=335", "http://video.dot.state.mn.us/video/image?id=334", "http://video.dot.state.mn.us/video/image?id=333", "http://video.dot.state.mn.us/video/image?id=332", "http://video.dot.state.mn.us/video/image?id=331", "http://video.dot.state.mn.us/video/image?id=330", "http://video.dot.state.mn.us/video/image?id=329", "http://video.dot.state.mn.us/video/image?id=328", "http://video.dot.state.mn.us/video/image?id=327", "http://video.dot.state.mn.us/video/image?id=326", "http://video.dot.state.mn.us/video/image?id=325", "http://video.dot.state.mn.us/video/image?id=324", "http://video.dot.state.mn.us/video/image?id=323", "http://video.dot.state.mn.us/video/image?id=322", "http://video.dot.state.mn.us/video/image?id=321", "http://video.dot.state.mn.us/video/image?id=320", "http://video.dot.state.mn.us/video/image?id=319", "http://video.dot.state.mn.us/video/image?id=318"}
-	};}
+	public static final String[][] crossroadsValues = {{"0", "1", "2", "3"}
+	, {"4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36"}
+	, {"37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75"}
+	, {"76", "77", "78", "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "91"}
+	, {"92", "93", "94", "95", "96", "97", "98", "99", "100", "101", "102", "103", "104", "105", "106", "107", "108", "109", "110", "111", "112", "113", "114", "115", "116", "117", "118", "119", "120", "121", "122", "123", "124", "125", "126", "127", "128", "129", "130", "131", "132", "133", "134"}
+	, {"135", "136", "137", "138", "139", "140", "141", "142", "143", "144", "145", "146", "147", "148", "149", "150", "151", "152", "153", "154", "155", "156", "157", "158", "159"}
+	, {"160", "161", "162", "163", "164", "165", "166", "167", "168", "169", "170", "171", "172", "173", "174", "175", "176", "177", "178", "179", "180", "181", "182", "183", "184", "185", "186", "187", "188", "189", "190", "191", "192", "193", "194", "195", "196", "197", "198", "199", "200", "201", "202", "203", "204", "205", "206", "207", "208", "209", "210", "211", "212", "213", "214", "215", "216", "217", "218", "219", "220", "221", "222", "223", "224", "225", "226", "227", "228"}
+	, {"229", "230", "231", "232", "233", "234", "235", "236", "237", "238", "239", "240", "241", "242", "243", "244"}
+	, {"245", "246", "247", "248", "249", "250", "251", "252", "253", "254", "255", "256", "257", "258", "259", "260"}
+	, {"261"}
+	, {"262", "263", "264", "265", "266", "267", "268", "269"}
+	, {"270", "271", "272", "273", "274", "275", "276", "277", "278"}
+	, {"279"}
+	, {"280", "281", "282", "283", "284", "285", "286", "287", "288", "289", "290", "291"}
+	, {"292"}
+	, {"293", "294", "295", "296"}
+	, {"297"}
+	, {"298", "299", "300", "301", "302", "303", "304", "305", "306", "307", "308", "309", "310", "311"}
+	, {"312", "313", "314", "315", "316", "317", "318", "319", "320", "321"}
+	, {"322", "323"}
+	, {"324", "325", "326", "327", "328", "329", "330", "331", "332", "333", "334", "335", "336", "337", "338", "339", "340", "341", "342", "343"}
+	};
+}	
