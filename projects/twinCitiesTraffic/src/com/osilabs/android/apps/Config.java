@@ -8,13 +8,13 @@ public final class Config {
 	public static final boolean DEBUG_FORCE_NEW_VERSION_CHECK = false; 
 
 	// True will hide the ads
-	public static final boolean NO_ADS = false; 
+	public static final boolean NO_ADS = true; 
 
 	// Used by web content versin checker to know which app is checking in
 	public static final    String APP_CODE = "tct"; // i.e. tct, st, ld ...
 	
 	public static final    String DEFAULT_CAMERA_INDEX = "0";
-	public static final int       DEFAULT_MAP_INDEX = 0; // !!! Can't be above array size-1. Includes favorites, best to set to one of the system traffic maps indexes.
+	public static final int       DEFAULT_MAP_INDEX = 2; // !!! Can't be above array size-1. Includes favorites, best to set to one of the system traffic maps indexes.
 	public static final int       DEFAULT_CALENDAR_INDEX = 0;
 	public static final int       DEFAULT_TAB_INDEX = 0;
 	protected static       String MOBILECONTENT_URL_PREFIX   = "http://osilabs.com/m/mobilecontent/tctraffic";
@@ -27,8 +27,8 @@ public final class Config {
 	public static final int            INDEX_OF_POLICE = 1;
 	
 	// These are the Defaults and they will be changed as prefs change. Set current node to -1 to disable.
-	public static final int[]          RADIOS_DEFAULT_NODE = {24761,           24429};
-	public static       int[]          RADIOS_CURRENT_NODE = {24761,           24429};
+	public static final int[]          RADIOS_DEFAULT_NODE = {19405,           24429};
+	public static       int[]          RADIOS_CURRENT_NODE = {19405,           24429};
 	public static final CharSequence[] RADIOS              = {"Weather Radio", "Police Scanner"};
 
 	// ----------------------------------------------------------
@@ -88,7 +88,7 @@ public final class Config {
     };
 	// This defaults to one of the system configured mapviews in traffic_urls
     // CAUTION!!! - If you move the maps around, this could refer to the wrong index
-	public static final String DEFAULT_MAPVIEW_COORDS = traffic_urls[0];
+	public static final String DEFAULT_MAPVIEW_COORDS = traffic_urls[2]; /// FIXME - this is reduntant to default mapview index
 	public static String CURRENT_MAPVIEW_COORDS = DEFAULT_MAPVIEW_COORDS;
 	public static String MAPVIEW_FAVORITES = "";
 	//
