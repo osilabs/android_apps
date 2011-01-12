@@ -1,81 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-<!--D 22577 Bellevue-Seattle and King Counties Fire and Medic-->
-<!--482 Bureau LaSalle Marshall Putnam and Stark County Fire and EMS-->
-<!--22578 City of Kent Police and King County Fire-->
-<!--484 LaSalle county sheriff fire and EMS-->
-<!--23102 Leland and Earlville police fire and EMS-->
-<!--22580 Seattle police fire and EMS-->
-<!--23934 Southeast King county police and fire-->
-<!--22597 S N and E Snohomish county sheriff Marysville police and East/North county fire-->
-<!--22590 Tacoma police-->
-
 <string-array name="pref_police_radios">
-        <item>Bellevue-Seattle and King Counties Fire and Medic</item>
-        <item>Bureau LaSalle Marshall Putnam and Stark County Fire and EMS</item>
-        <item>City of Kent Police and King County Fire</item>
-        <item>LaSalle county sheriff fire and EMS</item>
-        <item>Leland and Earlville police fire and EMS</item>
-        <item>Seattle police fire and EMS</item>
-        <item>Southeast King county police and fire</item>
-        <item>S N and E Snohomish county sheriff Marysville police and East/North county fire</item>
-        <item>Tacoma police</item>
+        <item>Anka Rmsy Hnpn &amp; Wshtn sheriff &amp; fire</item>
+        <item>Hnpn Scot Crvr Dkta &amp; Anka fire &amp; police</item>
+        <item>Minneapolis St. Paul police fire &amp; EMS</item>
+        <item>St. Paul police &amp; fire &amp; Ramsey sheriff</item>
 </string-array> 
 <string-array name="pref_police_radios_values">
-        <item>22577</item> 
-        <item>482</item> 
-        <item>22578</item> 
-        <item>484</item> 
-        <item>23102</item> 
-        <item>22580</item> 
-        <item>23934</item> 
-        <item>22597</item> 
-        <item>22590</item> 
-</string-array> 
-
+        <item>22115</item> 
+        <item>16004</item> 
+        <item>24429</item> 
+        <item>968</item> 
+</string-array>
 
 <string-array name="pref_weather_radios">
-        <item>Spokane Weather Radio</item>
-        <item>Portland Weather Radio</item>
-        <item>Eugene Weather Radio</item>
+        <item>Minneapolis St. Paul weather radio</item>
+        <item>Clearwater weather radio</item>
+        <item>Saint Cloud weather radio</item>
 </string-array> 
 <string-array name="pref_weather_radios_values">
-        <item>11568</item>
-        <item>22984</item>
-        <item>20034</item>
+        <item>24761</item> 
+        <item>19405</item> 
+        <item>24610</item> 
 </string-array> 
 
 
 
 <string-array name="pref_today_feed">
-	<item>Seattle Weekly Calendar</item>
-	<item>Citysearch For Tacoma</item>
+        <item>City Pages</item>
+        <item>Star Tribune</item>
 </string-array> 
 <string-array name="pref_today_feed_values">
-	<item>0</item> 
-	<item>1</item>
+        <item>0</item> 
+        <item>1</item> 
 </string-array> 
 
 <string-array name="pref_weather_feed">
-	<item>Seattle Weather Bug Text</item>
-	<item>Seattle Weather Bug</item>
-	<item>Seattle Accuweather</item>
-	<item>Seattle Weather.com</item>
-	<item>Tacoma Weather Bug Text</item>
-	<item>Tacoma Weather Bug</item>
-	<item>Tacoma Accuweather</item>
-	<item>Tacoma Weather.com</item>
+	<item>Weather Bug (Text)</item>
+	<item>Weather Bug</item>
+	<item>Accuweather</item>
+	<item>Weather.com</item>
 </string-array> 
 <string-array name="pref_weather_feed_values">
 	<item>0</item> 
 	<item>1</item> 
 	<item>2</item> 
 	<item>3</item> 
-	<item>4</item> 
-	<item>5</item> 
-	<item>6</item> 
-	<item>7</item> 
 </string-array> 
 
 
