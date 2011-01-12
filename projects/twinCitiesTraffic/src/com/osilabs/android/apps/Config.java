@@ -71,9 +71,9 @@ public final class Config {
         "Alternate Map",
     };
     public static final String[] traffic_urls = {
-        "{\"longitude\":\"-122171027\",\"zoom\":\"11\",\"label\":\"Seattle\",\"latitude\":\"47632586\"}",
-        "{\"longitude\":\"-122386624\",\"zoom\":\"11\",\"label\":\"Tacoma\",\"latitude\":\"47313261\"}",
-        "{\"longitude\":\"-122197096\",\"zoom\":\"10\",\"label\":\"Tacoma\",\"latitude\":\"47516769\"}",
+        "{\"longitude\":\"-93253325\",\"zoom\":\"13\",\"label\":\"Mpls\",\"latitude\":\"44988396\"}",
+        "{\"longitude\":\"-93095399\",\"zoom\":\"13\",\"label\":\"Sp\",\"latitude\":\"44950990\"}",
+        "{\"longitude\":\"-93201498\",\"zoom\":\"11\",\"label\":\"Met\",\"latitude\":\"44950747\"}",
     	"image",
     	"image",
     	"image",
