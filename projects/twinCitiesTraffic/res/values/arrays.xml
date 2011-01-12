@@ -18,11 +18,13 @@
         <item>Minneapolis St. Paul weather radio</item>
         <item>Clearwater weather radio</item>
         <item>Saint Cloud weather radio</item>
+        <item>Duluth weather radio</item>
 </string-array> 
 <string-array name="pref_weather_radios_values">
         <item>24761</item> 
         <item>19405</item> 
-        <item>24610</item> 
+        <item>24610</item>
+        <item>25805</item>
 </string-array> 
 
 
