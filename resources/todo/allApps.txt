@@ -3,9 +3,8 @@
 >>> STM >>>
 
 * TCT
-** Update scanner preferences
-** Set mapview coords
-
+** Maps not scrolling
+** link at bottom of city pages feed to city pages doesn't seem to work
 
 * Seattle
 ** BUG in the share email message.  Still has dallas traffic in the QC code URI
@@ -13,6 +12,9 @@
 
 * Dallas
 ** Add the rss for ft worth weekly: http://www.fwweekly.com/index.php?format=feed&type=rss
+** There is now a radio called Dallas Weather Radio
+
+
 <<< STM <<<
 
 
