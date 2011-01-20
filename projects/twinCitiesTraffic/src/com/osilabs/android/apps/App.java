@@ -41,6 +41,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.webkit.WebSettings.TextSize;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -742,7 +743,21 @@ public class App extends MapActivity {
 
 	public void setViewForCurrentTab(int tab_index) {
 		
-		// FIXME - CAn I consolidate setViewForCurrentTab, 
+		// Get webview settings to enable and disable zoom
+    	//wvMain.setInitialScale(120);
+    	WebSettings webSettings = wvMain.getSettings();
+    	webSettings.setSupportZoom(false);
+    	webSettings.setBuiltInZoomControls(false); //???
+    	//webSettings.setUseWideViewPort(false);
+//    	webSettings.setTextSize(TextSize.NORMAL);
+    	//wvMain.startLayoutAnimation();
+    	
+
+    	
+    	
+    	Toast.makeText(this, "tab", Toast.LENGTH_SHORT).show();
+    	    	
+    	// FIXME - CAn I consolidate setViewForCurrentTab, 
 		//  setCurrentMapView, and setCurrentTab. All these 'Set' 
 		//  functions are confusing
 		if(Config.DEBUG>0)Log.d(TAG, "setViewForCurrentTab() tab_index: " + tab_index);
@@ -790,11 +805,26 @@ public class App extends MapActivity {
 						break;
 						
 					case Config.IMAGE:
+						//webSettings.setUseWideViewPort(true);
 					case Config.FEED:
 					case Config.WEB:
+				    	
+				    	// Enable zooming for the map.
+				        webSettings.setBuiltInZoomControls(true);
+				    	webSettings.setSupportZoom(true);
+//				    	webSettings.setUseWideViewPort(true);
+				    	//wvMain.setInitialScale(2);
+				    	//wvMain.zoomOut();
+				    	
+				    	
+				    	
+				    	
+				    	
+
 						// FIXME - rename to wvTraffic
 				    	activateViewType(WEBVIEW);
 						wvMain.loadUrl("javascript: jumpTo("+CURRENT_TAB_INDEX+ ")");
+						wvMain.loadUrl("javascript: zoom()");
 						break;
 				}
 		        
