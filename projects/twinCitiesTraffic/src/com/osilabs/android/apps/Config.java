@@ -8,7 +8,7 @@ public final class Config {
 	public static final boolean DEBUG_FORCE_NEW_VERSION_CHECK = false; 
 
 	// True will hide the ads
-	public static final boolean NO_ADS = true; 
+	public static final boolean NO_ADS = false; 
 
 	// Used by web content versin checker to know which app is checking in
 	public static final    String APP_CODE = "tct"; // i.e. tct, st, ld ...

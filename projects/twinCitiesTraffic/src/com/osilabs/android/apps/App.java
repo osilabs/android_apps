@@ -247,6 +247,8 @@ public class App extends MapActivity {
     	wvAd.setBackgroundColor(Color.BLACK);
         if (Config.NO_ADS) {
         	wvAd.setVisibility(View.GONE);
+        } else {
+        	wvAd.setVisibility(View.VISIBLE);        	
         }
         
     	//
