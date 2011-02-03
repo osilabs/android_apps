@@ -1160,6 +1160,7 @@ public class App extends MapActivity {
 		}
 		public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
 			Toast.makeText(activity, "Could not connect. Please try again when the internet is available.", Toast.LENGTH_SHORT).show();
+			Log.e(TAG, "Webview error " + errorCode + ": " + description + ": " + failingUrl);
 		}
 	}
 
