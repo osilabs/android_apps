@@ -754,8 +754,7 @@ public class App extends MapActivity {
     	
 
     	
-    	
-    	Toast.makeText(this, "tab", Toast.LENGTH_SHORT).show();
+  
     	    	
     	// FIXME - CAn I consolidate setViewForCurrentTab, 
 		//  setCurrentMapView, and setCurrentTab. All these 'Set' 
@@ -824,7 +823,12 @@ public class App extends MapActivity {
 						// FIXME - rename to wvTraffic
 				    	activateViewType(WEBVIEW);
 						wvMain.loadUrl("javascript: jumpTo("+CURRENT_TAB_INDEX+ ")");
-						wvMain.loadUrl("javascript: zoom()");
+//						
+//						// If looking at a map image, set the zoom and scroll
+//						String zoom = MapsTab.getZoomAndScroll();
+//						if (zoom != "") {
+//							wvMain.loadUrl("javascript: zoom('" + zoom + "')");
+//						}
 						break;
 				}
 		        

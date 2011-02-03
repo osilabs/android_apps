@@ -104,18 +104,13 @@ public class MapsTab {
 		App.ivMapsMore.setVisibility(ImageView.VISIBLE);
 		App.tvMapsPop.setVisibility(TextView.VISIBLE);
 	}
-	public static String getWebViewType() {
-		return Config.traffic_urls[getAdjustedIndex()];
-//		// FIXME - Not a good way
-//		String[] as = Config.traffic_urls[getAdjustedIndex()].split("~");
-//		return as[TYPE];
-	}
 	public static String getScrollX() {
 		return "";
 	}
 	public static String getScrollY() {
 		return "";
 	}
+	
 	/**
 	 * The adjusted index takes the CURRENT_INDEX and subtracts
 	 *  out the number of favorites so it can be used with
