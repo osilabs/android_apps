@@ -6,6 +6,7 @@
 ** Remove new version checking
 ** Move nav to bottom
 ** Put in zoom and scroll to maps
+** The G1 insn't showing camera shots.
 
 * TCT
 ** Maps not scrolling
