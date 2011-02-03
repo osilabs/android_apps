@@ -41,7 +41,6 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.webkit.WebSettings.TextSize;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -742,20 +741,6 @@ public class App extends MapActivity {
 	}
 
 	public void setViewForCurrentTab(int tab_index) {
-		
-		// Get webview settings to enable and disable zoom
-    	//wvMain.setInitialScale(120);
-    	WebSettings webSettings = wvMain.getSettings();
-    	webSettings.setSupportZoom(false);
-    	webSettings.setBuiltInZoomControls(false); //???
-    	//webSettings.setUseWideViewPort(false);
-//    	webSettings.setTextSize(TextSize.NORMAL);
-    	//wvMain.startLayoutAnimation();
-    	
-
-    	
-  
-    	    	
     	// FIXME - CAn I consolidate setViewForCurrentTab, 
 		//  setCurrentMapView, and setCurrentTab. All these 'Set' 
 		//  functions are confusing
@@ -804,31 +789,11 @@ public class App extends MapActivity {
 						break;
 						
 					case Config.IMAGE:
-						//webSettings.setUseWideViewPort(true);
 					case Config.FEED:
 					case Config.WEB:
-				    	
-				    	// Enable zooming for the map.
-				        webSettings.setBuiltInZoomControls(true);
-				    	webSettings.setSupportZoom(true);
-//				    	webSettings.setUseWideViewPort(true);
-				    	//wvMain.setInitialScale(2);
-				    	//wvMain.zoomOut();
-				    	
-				    	
-				    	
-				    	
-				    	
-
 						// FIXME - rename to wvTraffic
 				    	activateViewType(WEBVIEW);
 						wvMain.loadUrl("javascript: jumpTo("+CURRENT_TAB_INDEX+ ")");
-//						
-//						// If looking at a map image, set the zoom and scroll
-//						String zoom = MapsTab.getZoomAndScroll();
-//						if (zoom != "") {
-//							wvMain.loadUrl("javascript: zoom('" + zoom + "')");
-//						}
 						break;
 				}
 		        
