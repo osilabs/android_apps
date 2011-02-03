@@ -74,9 +74,9 @@ public final class Config {
         "{\"longitude\":\"-93253325\",\"zoom\":\"13\",\"label\":\"Mpls\",\"latitude\":\"44988396\"}",
         "{\"longitude\":\"-93095399\",\"zoom\":\"13\",\"label\":\"Sp\",\"latitude\":\"44950990\"}",
         "{\"longitude\":\"-93201498\",\"zoom\":\"11\",\"label\":\"Met\",\"latitude\":\"44950747\"}",
-    	"image",
-    	"image",
-    	"image",
+    	"{\"zoom\":\"130%\",\"scrollx\":\"30\",\"scrolly\":\"80\"}",
+    	"{\"zoom\":\"130%\",\"scrollx\":\"40\",\"scrolly\":\"80\"}",
+    	"{\"zoom\":\"160%\",\"scrollx\":\"130\",\"scrolly\":\"220\"}",
     };
     public static final int [] traffic_viewtypes = {
     	MAP,

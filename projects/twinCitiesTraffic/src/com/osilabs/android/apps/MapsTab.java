@@ -71,11 +71,9 @@ public class MapsTab {
 		
 		if (androidViewType == Config.IMAGE) {
 			query_string 
-				= "&traffic=" + Config.traffic_urls[adjustedIndex] + "|" + adjustedIndex
-				+ "&mapscrollx="
-				+ MapsTab.getScrollX()
-				+ "&mapscrolly="
-				+ MapsTab.getScrollY();
+				= "&traffic=" + "image|" + adjustedIndex
+				+ "&zoomscroll="
+				+ URLEncoder.encode(Config.traffic_urls[adjustedIndex]);
 		} else if (androidViewType == Config.FEED) {
 			query_string 
 				= "&traffic=" + Config.traffic_urls[adjustedIndex] + "|" + adjustedIndex;
