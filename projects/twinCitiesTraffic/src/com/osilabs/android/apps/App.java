@@ -1041,8 +1041,15 @@ public class App extends MapActivity {
 		    case R.id.menu_about:
 		        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 		        alertDialog.setTitle(R.string.app_name);
-		        alertDialog.setMessage(getApplicationContext().getResources().getString(R.string.txt_version) + " " + v.versionName());
-		        alertDialog.setButton(this.getResources().getString(R.string.txt_btn_more), new DialogInterface.OnClickListener() {
+		        alertDialog.setMessage(getApplicationContext().getResources().getString(R.string.txt_version) + " " + v.versionName() + "\n\n" + getApplicationContext().getResources().getString(R.string.txt_youlike_rateit) );
+		        alertDialog.setButton(DialogInterface.BUTTON_NEUTRAL, this.getResources().getString(R.string.txt_btn_rateit), new DialogInterface.OnClickListener() {
+		        	public void onClick(DialogInterface dialog, int which) {
+		        		Intent intent = new Intent(Intent.ACTION_VIEW);
+		        		intent.setData(Uri.parse(getApplicationContext().getResources().getString(R.string.market_link)));
+		        		startActivity(intent);
+		            } 
+		        });
+		        alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, this.getResources().getString(R.string.txt_btn_more), new DialogInterface.OnClickListener() {
 		        	public void onClick(DialogInterface dialog, int which) {
 				    	activateViewType(WEBVIEW);
 				    	Favorites.setStarIcon(Favorites.MODE_GONE);

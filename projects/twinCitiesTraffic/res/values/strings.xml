@@ -36,6 +36,8 @@
 	<string name="txt_version">You are running version </string>
 	<string name="txt_btn_ok">Ok</string>
 	<string name="txt_btn_more">More...</string>
+	<string name="txt_btn_rateit">Rate It...</string>
+	<string name="txt_youlike_rateit">Do you like this app? Please show support and rate it on the market!</string>
 	<string name="txt_prefs_saved">Preferences saved</string>
 	<string name="txt_camera_picker_noop">Camera may have moved, please try again</string>
 	<string name="txt_map_popup_title">Traffic</string>
