@@ -439,7 +439,7 @@ public class App extends MapActivity {
 			ja = new JSONArray(Config.MAPVIEW_FAVORITES);
 			for(int i=0; i<ja.length(); i++) {
 				//options[optionsIndex++] = ja.getJSONObject(i).getString("label").toString();
-				sl.add("~ " + ja.getJSONObject(i).getString("label").toString() + " ~");
+				sl.add("~ " + ja.getJSONObject(i).getString("label").toString());
 			}
 		} catch (JSONException e1) {
 			// If we have an exception thrown while trying to render the favorites and the
