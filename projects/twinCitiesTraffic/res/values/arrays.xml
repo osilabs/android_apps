@@ -2,29 +2,29 @@
 <resources>
 
 <string-array name="pref_police_radios">
-        <item>Anka Rmsy Hnpn &amp; Wshtn sheriff &amp; fire</item>
+        <item>Anoka County Fire &amp; Police</item>
         <item>Hnpn Scot Crvr Dkta &amp; Anka fire &amp; police</item>
         <item>Minneapolis St. Paul police fire &amp; EMS</item>
         <item>St. Paul police &amp; fire &amp; Ramsey sheriff</item>
 </string-array> 
 <string-array name="pref_police_radios_values">
-        <item>22115</item> 
+        <item>25816</item> 
         <item>16004</item> 
         <item>24429</item> 
         <item>968</item> 
 </string-array>
 
 <string-array name="pref_weather_radios">
-        <item>Minneapolis St. Paul weather radio</item>
-        <item>Clearwater weather radio</item>
-        <item>Saint Cloud weather radio</item>
-        <item>Duluth weather radio</item>
+        <item>Minneapolis St. Paul Weather Radio</item>
+        <item>Clearwater Weather Radio</item>
+        <item>Saint Cloud Weather Radio</item>
+        <item>Winona Weather Radio</item>
 </string-array> 
 <string-array name="pref_weather_radios_values">
-        <item>24761</item> 
+        <item>26277</item> 
         <item>19405</item> 
-        <item>24610</item>
-        <item>25805</item>
+        <item>25894</item>
+        <item>24295</item>
 </string-array> 
 
 
