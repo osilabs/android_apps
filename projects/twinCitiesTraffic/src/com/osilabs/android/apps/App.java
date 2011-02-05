@@ -1075,6 +1075,12 @@ public class App extends MapActivity {
 		    	wvMain.loadUrl(MOBILECONTENT_URL_FEEDBACK + "?phoneinfo=" + URLEncoder.encode(phoneinfo));
 		    	wvMain.requestFocus(View.FOCUS_DOWN); // Necessary or the input boxes may not take input.
 		        return true;
+		        
+		    case R.id.menu_facebook:
+		    	Intent i = new Intent(Intent.ACTION_VIEW);
+		    	i.setData(Uri.parse(Config.URL_FACEBOOK));
+		    	startActivity(i);
+		    	return true;
 
 		    case R.id.menu_exit:
 		        finish();

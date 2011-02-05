@@ -19,6 +19,7 @@ public final class Config {
 	public static final int       DEFAULT_TAB_INDEX = 0;
 	protected static       String MOBILECONTENT_URL_PREFIX   = "http://osilabs.com/m/mobilecontent/tctraffic";
 	protected static       String MOBILECONTENT_URL_ABOUT    = "http://www.facebook.com/pages/Twin-Cities-Traffic-Camera/154240191294364?v=info";
+	protected static       String URL_FACEBOOK               = "http://www.facebook.com/pages/Twin-Cities-Traffic-Camera/154240191294364?v=info";
 	protected static final String NAMESPACE = "com.osilabs.android.apps";
 
 	// Which radios to offer
