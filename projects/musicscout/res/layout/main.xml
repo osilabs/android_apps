@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="14dip"
+    >
+
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:orientation="vertical"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:layout_weight="1.0"
+	    >
+
+	    <TextView  
+		    style="@style/song"
+	    	android:id="@+id/song"
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content" 
+		    android:layout_marginBottom="13dip"
+		    />
+	    <ImageView
+	    	android:src="@drawable/graphic"  
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content" 
+		    />
+	    <ImageView  
+	    	android:id="@+id/play_button"
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content" 
+		    android:src="@drawable/ic_menu_play_clip"
+		    />
+		    
+		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		    android:orientation="horizontal"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_marginTop="12dip"
+		    >
+			<ImageView
+		    	android:src="@drawable/rate_star_small_on"  
+			    android:layout_width="wrap_content" 
+			    android:layout_height="wrap_content" 
+			    />
+		    <ImageView
+		    	android:src="@drawable/rate_star_small_on"  
+			    android:layout_width="wrap_content" 
+			    android:layout_height="wrap_content" 
+			    />
+		    <ImageView
+		    	android:src="@drawable/rate_star_small_on"  
+			    android:layout_width="wrap_content" 
+			    android:layout_height="wrap_content" 
+			    />
+		    <ImageView
+		    	android:src="@drawable/rate_star_small_half"  
+			    android:layout_width="wrap_content" 
+			    android:layout_height="wrap_content" 
+			    />
+		    <ImageView
+		    	android:src="@drawable/rate_star_small_off"  
+			    android:layout_width="wrap_content" 
+			    android:layout_height="wrap_content" 
+			    />
+		</LinearLayout>
+		    
+
+	    <TextView  
+		    style="@style/review"
+	    	android:id="@+id/review"
+		    android:layout_width="fill_parent" 
+		    android:layout_height="fill_parent"
+		    android:layout_gravity="bottom"
+		    />
+	</LinearLayout>
+	
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:orientation="vertical"
+	    android:layout_width="200dip"
+	    android:layout_height="fill_parent"
+	    android:layout_weight="1.9"
+	    android:background="#315d5a"
+	    android:padding="4dip"
+	    android:layout_gravity="center_vertical"
+	    >
+	    <TextView  
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content"
+		    android:text="Review it"
+		    />
+	    <TextView  
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content"
+		    android:text="Download MP3"
+		    />
+
+	</LinearLayout>
+</LinearLayout>
