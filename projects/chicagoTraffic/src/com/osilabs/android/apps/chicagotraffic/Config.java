@@ -64,28 +64,25 @@ public final class Config {
 
     // Maps
     public static final String[] traffic = {
-		"Minneapolis",
-		"Saint Paul",
-		"Metro",
-        "Color Traffic Map",
-        "Hi-Contrast Traffic Map",
-        "Alternate Map",
+		"North Metro",
+		"Chicago Metro",
+		"South Metro",
+		"Winter Weather",
+		"Winter Weather State",
     };
     public static final String[] traffic_urls = {
-        "{\"longitude\":\"-93253325\",\"zoom\":\"13\",\"label\":\"Mpls\",\"latitude\":\"44988396\"}",
-        "{\"longitude\":\"-93095399\",\"zoom\":\"13\",\"label\":\"Sp\",\"latitude\":\"44950990\"}",
-        "{\"longitude\":\"-93201498\",\"zoom\":\"11\",\"label\":\"Met\",\"latitude\":\"44950747\"}",
+    	"{\"longitude\":\"-87888284\",\"zoom\":\"11\",\"label\":\"North Metro\",\"latitude\":\"42093786\"}",
+		"{\"longitude\":\"-87810976\",\"zoom\":\"10\",\"label\":\"Chicago Metro\",\"latitude\":\"41858849\"}",
+    	"{\"longitude\":\"-87886908\",\"zoom\":\"11\",\"label\":\"South Metro\",\"latitude\":\"41692035\"}",
     	"{\"zoom\":\"130%\",\"scrollx\":\"30\",\"scrolly\":\"80\"}",
-    	"{\"zoom\":\"130%\",\"scrollx\":\"40\",\"scrolly\":\"80\"}",
-    	"{\"zoom\":\"160%\",\"scrollx\":\"130\",\"scrolly\":\"220\"}",
+    	"{\"zoom\":\"130%\",\"scrollx\":\"30\",\"scrolly\":\"80\"}",
     };
     public static final int [] traffic_viewtypes = {
-    	MAP,
-    	MAP,
-    	MAP,
-    	IMAGE,
-    	IMAGE,
-    	IMAGE,
+		MAP,
+		MAP,
+		MAP,
+		IMAGE,
+		IMAGE,
     };
 	// This defaults to one of the system configured mapviews in traffic_urls
     // CAUTION!!! - If you move the maps around, this could refer to the wrong index
@@ -111,10 +108,10 @@ public final class Config {
 	};
 	public static final String[] calendar = {
 		"Weather Report",
-		"Things To Do",		
 		"Food",
-		"Music",
-        "Traffic Incidents",
+		"Music Pics",
+		"Music Calendar",
+		"Things To Do",
 	};
 	//
 	// Calendar tab
