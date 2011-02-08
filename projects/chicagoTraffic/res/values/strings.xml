@@ -1,23 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
+
 	<!--	~~~~~~~~~~~~~ ~~~~~~~~~~~~~ ~~~~~~~~~~~~~ -->
 	<!--	~~~~~~~~~~~~~ -->
 	<!--	CONFIGURE HERE-->
 	<!--	~~~~~~~~~~~~~ -->
-    <string name="app_name">Twin Cities Traffic</string>
-    <string name="city_name">Twin Cities</string>
+    <string name="app_name">Chicago Traffic</string>
+    <string name="city_name">Chicago</string>
     <string name="market_link">market://search?q=pname:com.osilabs.android.apps.chicagotraffic</string>
     <string name="market_link_http">http://market.android.com/search?q=pname:com.osilabs.android.apps.chicagotraffic</string>
-    <string name="pref_police_radios_default">24429</string> <!-- FIXME - These need to go -->
-    <string name="pref_weather_radios_default">26277</string>
+    <string name="pref_police_radios_default">18589</string> <!-- FIXME - These need to go -->
+    <string name="pref_weather_radios_default">18464</string>
     <string name="pref_today_feed_default">0</string>
     <string name="pref_weather_feed_default">0</string>
     <string name="session_camera_1"></string>
     <string name="session_map">0</string>
     <string name="session_calendar">0</string>
+    <string name="pref_police_radios_dialog_title">Set Favorite Police Scanner</string>
+    <string name="pref_weather_radios_dialog_title">Set Favorite Weather Radio</string>
+    <string name="pref_today_feed_dialog_title">Things To Do</string>
+    <string name="pref_weather_feed_dialog_title">Choose Weather Source</string>
 	<!--	~~~~~~~~~~~~~ -->
 	<!--	~~~~~~~~~~~~~ ~~~~~~~~~~~~~ ~~~~~~~~~~~~~ -->
+
+
+
+
+
+
+
+
+
 	
     <string name="txt_sharing_subject_a">Im sharing</string>
     <string name="txt_sharing_subject_b">for Android with you</string>
@@ -43,10 +57,6 @@
 	<string name="txt_map_popup_title">Traffic</string>
 	<string name="txt_calendar_popup_title">Right Now</string>
 
-    <string name="pref_police_radios_dialog_title">Set Favorite Police Scanner</string>
-    <string name="pref_weather_radios_dialog_title">Set Favorite Weather Radio</string>
-    <string name="pref_today_feed_dialog_title">Things To Do</string>
-    <string name="pref_weather_feed_dialog_title">Choose Weather Source</string>
 
     <string name="menu_prefs">Settings</string>
     <string name="menu_refresh">Refresh</string>
@@ -88,4 +98,5 @@
     <string name="pref_weather_feed_summary">Set your favorite</string>
     <string name="pref_weather_feed_title">Weather Report</string>    
     <string name="pref_weather_feed_selected">pref_weather_feed_selected</string>
+
 </resources>
