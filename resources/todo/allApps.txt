@@ -4,12 +4,13 @@
 
 * All traffic apps
 ** Remove new version checking
-** Move nav to bottom
-** Put in zoom and scroll to maps
-** The G1 insn't showing camera shots.
+
+** Use a listview for the menus and use yellow star icons by the favorites.
+*** Using listview: http://www.lacherstorfer.at/haris_blog/2008/03/android-howto-create-spinners.html
+*** Using customized alertdialog: http://developer.android.com/guide/topics/ui/dialogs.html
+
 
 * TCT
-** Maps not scrolling
 ** link at bottom of city pages feed to city pages doesn't seem to work
 
 * Seattle
@@ -24,7 +25,9 @@
 <<< STM <<<
 
 
-
+changes
+* Added Winona Weather Radio.
+* Duluth weather radio stopped broadcasting and had to be removed :( sorry...
 
 
 
