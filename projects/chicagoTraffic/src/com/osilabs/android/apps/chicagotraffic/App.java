@@ -22,9 +22,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.Uri;
@@ -503,12 +500,6 @@ public class App extends MapActivity {
     			
     			// Save current map
     			Session.saveInt(mySharedPreferences, "session_map", MapsTab.CURRENT_INDEX);
-//    	    	//mySharedPreferences
-//    			//	= getSharedPreferences(Config.NAMESPACE, Activity.MODE_PRIVATE);
-//    	    	mySharedPreferences = getSharedPreferences(Config.NAMESPACE + "_preferences", Activity.MODE_PRIVATE);
-//			    SharedPreferences.Editor editor = mySharedPreferences.edit();
-//			    editor.putInt("session_map", MapsTab.CURRENT_INDEX);
-//			    editor.commit();
 			    
 			    // Update the current favorites index.
 			    MapsTab.MenuIndexes.setFavArrayIndex(MapsTab.CURRENT_INDEX);
@@ -527,9 +518,6 @@ public class App extends MapActivity {
 	
 		// Save to shared prefs
 	    Session.saveString(mySharedPreferences, "pref_current_mapview_coords", Config.CURRENT_MAPVIEW_COORDS);
-//	    SharedPreferences.Editor editor = mySharedPreferences.edit();
-//	    editor.putString("pref_current_mapview_coords", Config.CURRENT_MAPVIEW_COORDS);
-//	    editor.commit();
 	    
 	    PREFS_UPDATED = true;
     }
@@ -548,11 +536,6 @@ public class App extends MapActivity {
     			
     			// Save current CALENDAR
     	    	Session.saveInt(mySharedPreferences, "session_calendar", CalendarTab.CURRENT_INDEX);
-//    	    	SharedPreferences prefs 
-//    				= getSharedPreferences(Config.NAMESPACE, Activity.MODE_PRIVATE);
-//			    SharedPreferences.Editor editor = prefs.edit();
-//			    editor.putInt("session_calendar", CalendarTab.CURRENT_INDEX);
-//			    editor.commit(); 
     			
             	reloadViews();
             }
@@ -582,11 +565,6 @@ public class App extends MapActivity {
 				
     			// Set the chosen camera in the persistent settings
 				Session.saveString(mySharedPreferences, "session_camera_1", CamerasTab.CURRENT_CAMERA_INDEX);
-//    	    	SharedPreferences prefs 
-//    				= getSharedPreferences(Config.NAMESPACE, Activity.MODE_PRIVATE);
-//    			    SharedPreferences.Editor editor = prefs.edit();
-//    			    editor.putString("session_camera_1", CamerasTab.CURRENT_CAMERA_URL);
-//    			    editor.commit();
             }
             break;
             
@@ -1017,17 +995,6 @@ public class App extends MapActivity {
 							+ "?install=web"
 				);
 				startActivity(Intent.createChooser(shareintent, "Share"));
-		    	
-//		    	
-//				final Intent shareintent = new Intent(Intent.ACTION_SEND);
-//				shareintent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//				shareintent.setType("text/plain");
-//				shareintent.putExtra(Intent.EXTRA_SUBJECT, this.getResources().getString(R.string.txt_sharing_subject));
-//				shareintent.putExtra(Intent.EXTRA_TEXT, 
-//							this.getResources().getString(R.string.txt_sharing_body_a));
-//				startActivity(Intent.createChooser(shareintent, "Share"));
-		    	
-		    	
 		    	return true;
 
 		    case R.id.menu_help:
