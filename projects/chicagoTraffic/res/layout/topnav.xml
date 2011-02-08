@@ -53,21 +53,17 @@
 	    		android:layout_height="fill_parent"
 				android:layout_gravity="center_vertical"
 	    		>
+							
 				  <ImageView	android:id="@+id/favorites_star"
 				  				android:src="@drawable/favorite_star_off"
-								android:layout_width="wrap_content" 
-								android:layout_height="30dip"
-								android:layout_marginRight="8dip"
-								android:gravity="right"
+								android:layout_width="fill_parent" 
+								android:layout_height="34dip"
+								android:layout_marginRight="2dip"
+								android:layout_marginLeft="2dip"
+								android:layout_marginTop="6dip"
+								android:layout_gravity="center_vertical|right"
 								/>
-
-				  <ImageView	android:id="@+id/navbar_refresh"
-				  				android:src="@drawable/ic_menu_refresh"
-								android:layout_width="wrap_content" 
-								android:layout_height="wrap_content"
-								android:layout_gravity="right|bottom" 
-								android:layout_marginTop="6dip" 
-								/>
+							
 	    	</TableRow>
 		</TableLayout>	
 	</LinearLayout>
@@ -76,15 +72,15 @@
 
 	
 	<TextView 			
-		android:id="@+id/border4"
-		android:layout_width="fill_parent"
-		android:layout_height="1dip" 
-		android:layout_gravity="center_vertical"
-		android:background="#FF222222"/>
-	<TextView 			
 		android:id="@+id/border3"
 		android:layout_width="fill_parent"
 		android:layout_height="1px" 
 		android:layout_gravity="center_vertical"
 		android:background="#FF333333"/>
+	<TextView 			
+		android:id="@+id/border4"
+		android:layout_width="fill_parent"
+		android:layout_height="1dip" 
+		android:layout_gravity="center_vertical"
+		android:background="#FF222222"/>
 </LinearLayout>

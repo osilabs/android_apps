@@ -137,7 +137,7 @@ public class App extends MapActivity {
     
     // My libs
     protected Version v;
-
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         if(Config.DEBUG>0)Log.d(TAG, "onCreate");
@@ -247,6 +247,8 @@ public class App extends MapActivity {
     	wvAd.setBackgroundColor(Color.BLACK);
         if (Config.NO_ADS) {
         	wvAd.setVisibility(View.GONE);
+        } else {
+        	wvAd.setVisibility(View.VISIBLE);        	
         }
         
     	//
@@ -437,7 +439,7 @@ public class App extends MapActivity {
 			ja = new JSONArray(Config.MAPVIEW_FAVORITES);
 			for(int i=0; i<ja.length(); i++) {
 				//options[optionsIndex++] = ja.getJSONObject(i).getString("label").toString();
-				sl.add("~ " + ja.getJSONObject(i).getString("label").toString() + " ~");
+				sl.add("~ " + ja.getJSONObject(i).getString("label").toString());
 			}
 		} catch (JSONException e1) {
 			// If we have an exception thrown while trying to render the favorites and the
@@ -573,13 +575,13 @@ public class App extends MapActivity {
             }
             else {
             	Bundle extras = data.getExtras();
-                CamerasTab.CURRENT_CAMERA_URL = extras.getString("selected_camera");
+                CamerasTab.CURRENT_CAMERA_INDEX = extras.getString("selected_camera");
     			
     			// Reload the webview so it just shows the chosen camera
 				reloadViews();
 				
     			// Set the chosen camera in the persistent settings
-				Session.saveString(mySharedPreferences, "session_camera_1", CamerasTab.CURRENT_CAMERA_URL);
+				Session.saveString(mySharedPreferences, "session_camera_1", CamerasTab.CURRENT_CAMERA_INDEX);
 //    	    	SharedPreferences prefs 
 //    				= getSharedPreferences(Config.NAMESPACE, Activity.MODE_PRIVATE);
 //    			    SharedPreferences.Editor editor = prefs.edit();
@@ -615,7 +617,7 @@ public class App extends MapActivity {
 			    Log.d(TAG, "setCurrentPrefs() Orig CURRENT_TAB_INDEX: " + CURRENT_TAB_INDEX);
 			    Log.d(TAG, "setCurrentPrefs() Orig MapsTab.CURRENT_INDEX: " + MapsTab.CURRENT_INDEX);
 			    Log.d(TAG, "setCurrentPrefs() Orig CalendarTab.CURRENT_INDEX: " + CalendarTab.CURRENT_INDEX);
-			    Log.d(TAG, "setCurrentPrefs() Orig CamerasTab.CURRENT_CAMERA_URL: " + CamerasTab.CURRENT_CAMERA_URL);
+			    Log.d(TAG, "setCurrentPrefs() Orig CamerasTab.CURRENT_CAMERA_URL: " + CamerasTab.CURRENT_CAMERA_INDEX);
 			    Log.d(TAG, "setCurrentPrefs() Orig Config.CURRENT_MAPVIEW_COORDS: " + Config.CURRENT_MAPVIEW_COORDS);
 			    Log.d(TAG, "setCurrentPrefs() Orig Config.MAPVIEW_FAVORITES: " + Config.MAPVIEW_FAVORITES);
 			    Log.d(TAG, "setCurrentPrefs() Orig CalendarTab.CURRENT_WEATHER_FEED_INDEX: " + CalendarTab.CURRENT_WEATHER_FEED_INDEX);
@@ -641,7 +643,7 @@ public class App extends MapActivity {
 			    Log.d(TAG, "setCurrentPrefs() Pull CURRENT_TAB_INDEX: " + CURRENT_TAB_INDEX);
 			    Log.d(TAG, "setCurrentPrefs() Pull MapsTab.CURRENT_INDEX: " + MapsTab.CURRENT_INDEX);
 			    Log.d(TAG, "setCurrentPrefs() Pull CalendarTab.CURRENT_INDEX: " + CalendarTab.CURRENT_INDEX);
-			    Log.d(TAG, "setCurrentPrefs() Pull CamerasTab.CURRENT_CAMERA_URL: " + CamerasTab.CURRENT_CAMERA_URL);
+			    Log.d(TAG, "setCurrentPrefs() Pull CamerasTab.CURRENT_CAMERA_URL: " + CamerasTab.CURRENT_CAMERA_INDEX);
 			    Log.d(TAG, "setCurrentPrefs() Pull Config.CURRENT_MAPVIEW_COORDS: " + Config.CURRENT_MAPVIEW_COORDS);
 			    Log.d(TAG, "setCurrentPrefs() Pull Config.MAPVIEW_FAVORITES: " + Config.MAPVIEW_FAVORITES);
 			    Log.d(TAG, "setCurrentPrefs() Pull CalendarTab.CURRENT_WEATHER_FEED_INDEX: " + CalendarTab.CURRENT_WEATHER_FEED_INDEX);
@@ -663,7 +665,7 @@ public class App extends MapActivity {
 	        CURRENT_TAB_INDEX = mySharedPreferences.getInt("session_current_view", Config.DEFAULT_TAB_INDEX);
 	        MapsTab.CURRENT_INDEX = mySharedPreferences.getInt("session_map", Config.DEFAULT_MAP_INDEX);
 	        CalendarTab.CURRENT_INDEX = mySharedPreferences.getInt("session_calendar", Config.DEFAULT_CALENDAR_INDEX);
-	        CamerasTab.CURRENT_CAMERA_URL = mySharedPreferences.getString("session_camera_1", Config.DEFAULT_CAMERA_URL);
+	        CamerasTab.CURRENT_CAMERA_INDEX = mySharedPreferences.getString("session_camera_1", Config.DEFAULT_CAMERA_INDEX);
 		    Config.CURRENT_MAPVIEW_COORDS = mySharedPreferences.getString("pref_current_mapview_coords", Config.CURRENT_MAPVIEW_COORDS);
 			// todo - This shouldn't be in Config. Move it to App
 			Config.MAPVIEW_FAVORITES = mySharedPreferences.getString("pref_mapview_favorites", "");
@@ -676,7 +678,7 @@ public class App extends MapActivity {
 	        CURRENT_TAB_INDEX = Config.DEFAULT_TAB_INDEX;
 	        MapsTab.CURRENT_INDEX = Config.DEFAULT_MAP_INDEX;
 	        CalendarTab.CURRENT_INDEX = Config.DEFAULT_CALENDAR_INDEX;
-	        CamerasTab.CURRENT_CAMERA_URL = Config.DEFAULT_CAMERA_URL;
+	        CamerasTab.CURRENT_CAMERA_INDEX = Config.DEFAULT_CAMERA_INDEX;
 		    Config.CURRENT_MAPVIEW_COORDS = Config.DEFAULT_MAPVIEW_COORDS;
 			Config.MAPVIEW_FAVORITES = "";
 		}
@@ -741,8 +743,7 @@ public class App extends MapActivity {
 	}
 
 	public void setViewForCurrentTab(int tab_index) {
-		
-		// FIXME - CAn I consolidate setViewForCurrentTab, 
+    	// FIXME - CAn I consolidate setViewForCurrentTab, 
 		//  setCurrentMapView, and setCurrentTab. All these 'Set' 
 		//  functions are confusing
 		if(Config.DEBUG>0)Log.d(TAG, "setViewForCurrentTab() tab_index: " + tab_index);
@@ -871,6 +872,7 @@ public class App extends MapActivity {
 	 */
 	public void refreshTrafficMap() {
 		if (MAP_VIEW_IS_VISIBLE) {
+			Log.d(TAG, "mvTraffic.invalidate");
 	        mvTraffic.invalidate();
 		}
 	}
@@ -923,6 +925,7 @@ public class App extends MapActivity {
 			WEBVIEW_URL
 			+ "?target=" + CURRENT_TAB_INDEX
 			+ versionCheckParams
+			+ "&city_id=" + Config.APP_CODE
 			+ MapsTab.getReloadURLParts()
 			+ CalendarTab.getReloadURLParts()
 			+ CamerasTab.getReloadURLParts();
@@ -998,8 +1001,8 @@ public class App extends MapActivity {
 		    case R.id.menu_share:
 				final Intent shareintent = new Intent(Intent.ACTION_SEND);
 				shareintent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				shareintent.setType("text/html");
-				shareintent.putExtra(Intent.EXTRA_SUBJECT, this.getResources().getString(R.string.txt_sharing_subject));
+				shareintent.setType("text/plain");
+				shareintent.putExtra(Intent.EXTRA_SUBJECT, this.getResources().getString(R.string.txt_sharing_subject_a) + " " + this.getResources().getString(R.string.app_name) + " " + this.getResources().getString(R.string.txt_sharing_subject_b));
 				shareintent.putExtra(Intent.EXTRA_TEXT, 
 							this.getResources().getString(R.string.txt_sharing_body_a) + " "
 							+ this.getResources().getString(R.string.app_name) + " "
@@ -1008,8 +1011,23 @@ public class App extends MapActivity {
 							+ this.getResources().getString(R.string.market_link_http) + "\n\n"
 							+ this.getResources().getString(R.string.txt_sharing_body_d) + "\n\n"
 							+ this.getResources().getString(R.string.txt_sharing_body_e) + "\n\n"
-							+ this.getResources().getString(R.string.app_name));
+							+ this.getResources().getString(R.string.app_name) + "\n\n"
+							+ "QR Code: http://chart.apis.google.com/chart?cht=qr&amp;chs=150x150&amp;chl=http://www.appbrain.com/app/"
+							+ Config.NAMESPACE
+							+ "?install=web"
+				);
 				startActivity(Intent.createChooser(shareintent, "Share"));
+		    	
+//		    	
+//				final Intent shareintent = new Intent(Intent.ACTION_SEND);
+//				shareintent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//				shareintent.setType("text/plain");
+//				shareintent.putExtra(Intent.EXTRA_SUBJECT, this.getResources().getString(R.string.txt_sharing_subject));
+//				shareintent.putExtra(Intent.EXTRA_TEXT, 
+//							this.getResources().getString(R.string.txt_sharing_body_a));
+//				startActivity(Intent.createChooser(shareintent, "Share"));
+		    	
+		    	
 		    	return true;
 
 		    case R.id.menu_help:
@@ -1023,8 +1041,15 @@ public class App extends MapActivity {
 		    case R.id.menu_about:
 		        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 		        alertDialog.setTitle(R.string.app_name);
-		        alertDialog.setMessage(getApplicationContext().getResources().getString(R.string.txt_version) + " " + v.versionName());
-		        alertDialog.setButton(this.getResources().getString(R.string.txt_btn_more), new DialogInterface.OnClickListener() {
+		        alertDialog.setMessage(getApplicationContext().getResources().getString(R.string.txt_version) + " " + v.versionName() + "\n\n" + getApplicationContext().getResources().getString(R.string.txt_youlike_rateit) );
+		        alertDialog.setButton(DialogInterface.BUTTON_NEUTRAL, this.getResources().getString(R.string.txt_btn_rateit), new DialogInterface.OnClickListener() {
+		        	public void onClick(DialogInterface dialog, int which) {
+		        		Intent intent = new Intent(Intent.ACTION_VIEW);
+		        		intent.setData(Uri.parse(getApplicationContext().getResources().getString(R.string.market_link)));
+		        		startActivity(intent);
+		            } 
+		        });
+		        alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, this.getResources().getString(R.string.txt_btn_more), new DialogInterface.OnClickListener() {
 		        	public void onClick(DialogInterface dialog, int which) {
 				    	activateViewType(WEBVIEW);
 				    	Favorites.setStarIcon(Favorites.MODE_GONE);
@@ -1057,6 +1082,12 @@ public class App extends MapActivity {
 		    	wvMain.loadUrl(MOBILECONTENT_URL_FEEDBACK + "?phoneinfo=" + URLEncoder.encode(phoneinfo));
 		    	wvMain.requestFocus(View.FOCUS_DOWN); // Necessary or the input boxes may not take input.
 		        return true;
+		        
+		    case R.id.menu_facebook:
+		    	Intent i = new Intent(Intent.ACTION_VIEW);
+		    	i.setData(Uri.parse(Config.URL_FACEBOOK));
+		    	startActivity(i);
+		    	return true;
 
 		    case R.id.menu_exit:
 		        finish();
@@ -1109,6 +1140,7 @@ public class App extends MapActivity {
 		}
 		public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
 			Toast.makeText(activity, "Could not connect. Please try again when the internet is available.", Toast.LENGTH_SHORT).show();
+			Log.e(TAG, "Webview error " + errorCode + ": " + description + ": " + failingUrl);
 		}
 	}
 

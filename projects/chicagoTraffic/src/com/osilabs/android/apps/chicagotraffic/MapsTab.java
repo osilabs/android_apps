@@ -21,8 +21,6 @@ public class MapsTab {
 	public    static final int    BG_ON  = Color.BLACK;
 	
 	// CONSTS
-//	private   static final int    MAP = 0;
-//	private   static final int    WEB = 1;
 
 	// Indexes for URL stings
 	private   static final int    TYPE    = 0;
@@ -35,21 +33,11 @@ public class MapsTab {
 	// If never set, is set to first map.
 	public    static int    	  CURRENT_INDEX = 0;
 	
-//	// Init will set this to the number of system views. Will be used
-//	//  to determine if a view is above this number and is therefore
-//	//  a favorite of a mapview.
-//	public    static int    	  NUMBER_OF_SYSTEM_VIEWS = 0;
-	
 	public static void init() {
 		App.ivMapsTab.setVisibility(View.VISIBLE);
 		App.ivMapsTab.setPadding(15, 0, 15, 0);
 		App.ivMapsTab.setAlpha(ALPHA_OFF);
 		App.ivMapsTab.setBackgroundColor(BG_OFF);
-		
-		// Set the number of system views this build is using. Any views
-		//  accessed above this number is out of the defined list
-		//  and is a user favorite of a mapview.
-//		NUMBER_OF_SYSTEM_VIEWS = Config.traffic_viewtypes.length;
 		
 		// Init the sizes of the favorites and system map 
 		//  popup menu option arrays.
@@ -69,15 +57,11 @@ public class MapsTab {
 		if(Config.DEBUG>0)Log.d(App.TAG, "MapsTab.Init() complete: Config.MAPVIEW_FAVORITES: " + Config.MAPVIEW_FAVORITES);
 
 	}
-//	public static String getActiveMapURL() {
-//		// Keep from exceeding the size of the array
-//		if (CURRENT_INDEX > (Config.maps.length - 1)) CURRENT_INDEX = 0;
-//		return Config.maps[CURRENT_INDEX];
-//	}
 	public static String getReloadURLParts() {
 		if(Config.DEBUG>0) Log.d(App.TAG, "MapsTab::getReloadURLParts()");
 		
 		int adjustedIndex = getAdjustedIndex();
+
 		if (CURRENT_INDEX > ((Config.traffic_urls.length+MapsTab.MenuIndexes.FAV_SIZE) - 1)) CURRENT_INDEX = 0;
 		
 		int androidViewType = MapsTab.getAndroidViewType();
@@ -87,14 +71,12 @@ public class MapsTab {
 		
 		if (androidViewType == Config.IMAGE) {
 			query_string 
-				= "&traffic=" + URLEncoder.encode(Config.traffic_urls[adjustedIndex])
-				+ "&mapscrollx="
-				+ MapsTab.getScrollX()
-				+ "&mapscrolly="
-				+ MapsTab.getScrollY();
+				= "&traffic=" + "image|" + adjustedIndex
+				+ "&zoomscroll="
+				+ URLEncoder.encode(Config.traffic_urls[adjustedIndex]);
 		} else if (androidViewType == Config.FEED) {
 			query_string 
-				= "&traffic=" + URLEncoder.encode(Config.traffic_urls[adjustedIndex]);
+				= "&traffic=" + Config.traffic_urls[adjustedIndex] + "|" + adjustedIndex;
 		} else {
 			query_string = "&traffic=";		
 		}
@@ -120,19 +102,13 @@ public class MapsTab {
 		App.ivMapsMore.setVisibility(ImageView.VISIBLE);
 		App.tvMapsPop.setVisibility(TextView.VISIBLE);
 	}
-	public static String getWebViewType() {
-		String[] as = Config.traffic_urls[getAdjustedIndex()].split("~");
-		return as[TYPE];
-	}
 	public static String getScrollX() {
-		// FIXME - cache these so they are calc'd all the time
-		String[] as = Config.traffic_urls[getAdjustedIndex()].split("~");
-		return as[SCROLLX];
+		return "";
 	}
 	public static String getScrollY() {
-		String[] as = Config.traffic_urls[getAdjustedIndex()].split("~");
-		return as[SCROLLY];
+		return "";
 	}
+	
 	/**
 	 * The adjusted index takes the CURRENT_INDEX and subtracts
 	 *  out the number of favorites so it can be used with
@@ -165,6 +141,13 @@ public class MapsTab {
 
 		if (viewType == -1) {
 			// Use adjusted index
+			
+			int ai = getAdjustedIndex();
+			if (ai > (Config.traffic_viewtypes.length-1)) {
+				// Shouldn't happen but find and address this if this is ever 
+				//  bigger than the size of the array.
+				Log.e(App.TAG, "arraylen:adjustedindex=" + Config.traffic_viewtypes.length+":"+ai);
+			}
 			viewType = Config.traffic_viewtypes[ getAdjustedIndex() ];
 		}
 		

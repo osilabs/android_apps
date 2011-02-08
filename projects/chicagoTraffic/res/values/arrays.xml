@@ -2,39 +2,47 @@
 <resources>
 
 <string-array name="pref_police_radios">
-	<item>Chicago Police</item>
-	<item>Northern Sub. Fire</item>
+        <item>Anoka County Fire &amp; Police</item>
+        <item>Hnpn Scot Crvr Dkta &amp; Anka fire &amp; police</item>
+        <item>Minneapolis St. Paul police fire &amp; EMS</item>
+        <item>St. Paul police &amp; fire &amp; Ramsey sheriff</item>
 </string-array> 
 <string-array name="pref_police_radios_values">
-	<item>18589</item> 
-	<item>497</item> 
+        <item>25816</item> 
+        <item>16004</item> 
+        <item>24429</item> 
+        <item>968</item> 
 </string-array>
 
 <string-array name="pref_weather_radios">
-	<item>Lockport</item>
-	<item>Odell</item>
+        <item>Minneapolis St. Paul Weather Radio</item>
+        <item>Clearwater Weather Radio</item>
+        <item>Saint Cloud Weather Radio</item>
+        <item>Winona Weather Radio</item>
 </string-array> 
 <string-array name="pref_weather_radios_values">
-	<item>18464</item> 
-	<item>18123</item> 
+        <item>26277</item> 
+        <item>19405</item> 
+        <item>25894</item>
+        <item>24295</item>
 </string-array> 
 
+
+
 <string-array name="pref_today_feed">
-	<item>Chicago Reader</item>
-	<item>Metromix 1</item>
-	<item>Metromix 2</item>
+        <item>City Pages</item>
+        <item>Star Tribune</item>
 </string-array> 
 <string-array name="pref_today_feed_values">
-	<item>0</item> 
-	<item>1</item> 
-	<item>2</item> 
+        <item>0</item> 
+        <item>1</item> 
 </string-array> 
 
 <string-array name="pref_weather_feed">
+	<item>Weather Bug (Text)</item>
 	<item>Weather Bug</item>
 	<item>Accuweather</item>
 	<item>Weather.com</item>
-	<item>Weather Bug Text</item>
 </string-array> 
 <string-array name="pref_weather_feed_values">
 	<item>0</item> 
@@ -54,4 +62,94 @@
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
 
+
+
+<string-array name="campref_mainroads"><item>I-35</item> 
+<item>I-35E</item> 
+<item>I-35W</item> 
+<item>I-394</item> 
+<item>I-494</item> 
+<item>I-694</item> 
+<item>I-94</item> 
+<item>T.H.10</item> 
+<item>T.H.100</item> 
+<item>T.H.110</item> 
+<item>T.H.212</item> 
+<item>T.H.36</item> 
+<item>T.H.5</item> 
+<item>T.H.52</item> 
+<item>T.H.55</item> 
+<item>T.H.61</item> 
+<item>T.H.610</item> 
+<item>T.H.62</item> 
+<item>T.H.77</item> 
+<item>U.S.12</item> 
+<item>U.S.169</item> 
+</string-array> 
+ 
+<string-array name="campref_mainroads_values"><item>I_35</item> 
+<item>I_35E</item> 
+<item>I_35W</item> 
+<item>I_394</item> 
+<item>I_494</item> 
+<item>I_694</item> 
+<item>I_94</item> 
+<item>T_H_10</item> 
+<item>T_H_100</item> 
+<item>T_H_110</item> 
+<item>T_H_212</item> 
+<item>T_H_36</item> 
+<item>T_H_5</item> 
+<item>T_H_52</item> 
+<item>T_H_55</item> 
+<item>T_H_61</item> 
+<item>T_H_610</item> 
+<item>T_H_62</item> 
+<item>T_H_77</item> 
+<item>U_S_12</item> 
+<item>U_S_169</item> 
+</string-array> 
+ 
+<string-array name="campref_crossroads_I_35"><item>Crystal Lake Rd</item><item>Co Rd 46</item><item>Co Rd 50</item><item>Co Rd 60</item></string-array> 
+<string-array name="campref_crossroads_I_35E"><item>Goose Lake Rd</item><item>Co Rd E</item><item>Little Canada Rd</item><item>Roselawn Ave</item><item>Larpenteur Ave</item><item>Maryland Ave</item><item>Cayuga St</item><item>University Ave</item><item>Kellogg Blvd</item><item>Grand Ave</item><item>St. Clair Ave</item><item>Victoria St</item><item>Jefferson Ave</item><item>Randolph Ave</item><item>W. 7th St</item><item>Shepard Rd</item><item>T.H.13</item><item>S of T.H.13</item><item>N of T.H.110</item><item>T.H.110</item><item>Wagon Wheel Tr</item><item>I-494</item><item>Lone Oak Rd</item><item>Yankee Doodle Rd</item><item>Pilot Knob Rd</item><item>Deerwood Dr</item><item>Diffley Rd</item><item>Cliff Rd</item><item>T.H.77</item><item>S of T.H.77</item><item>Co Rd 11</item><item>McAndrews Rd</item><item>Co Rd 42</item></string-array> 
+<string-array name="campref_crossroads_I_35W"><item>Lexington Ave</item><item>95th Ave</item><item>Lake Dr</item><item>T.H.10</item><item>Co Rd I</item><item>Co Rd 10</item><item>T.H.96</item><item>Co Rd E2</item><item>T.H.88</item><item>Co Rd C</item><item>T.H.280</item><item>Industrial Blvd</item><item>Stinson Blvd</item><item>Johnson St</item><item>Hennepin Ave</item><item>4th St</item><item>Washington Ave</item><item>3rd St</item><item>Hiawatha Ave</item><item>Chicago Ave</item><item>26th St</item><item>Lake St</item><item>35th St</item><item>42nd St</item><item>49th St</item><item>58th St</item><item>T.H.62</item><item>Lyndale Ave</item><item>T.H.121</item><item>66th St</item><item>76th St</item><item>86th St</item><item>94th St</item><item>98th St</item><item>110th St</item><item>Cliff Rd</item><item>T.H.13</item><item>Burnsville Pkwy</item><item>Co Rd 42</item></string-array> 
+<string-array name="campref_crossroads_I_394"><item>I-94</item><item>I-94</item><item>Dunwoody Blvd</item><item>Penn Ave</item><item>Wirth Pkwy</item><item>France Ave</item><item>T.H.100</item><item>T.H.100 CD</item><item>Xenia Ave</item><item>Hampshire Ave</item><item>Winnetka Ave</item><item>General Mills Blvd</item><item>U.S.169</item><item>Co Rd 73</item><item>Plymouth Rd</item><item>I-494</item></string-array> 
+<string-array name="campref_crossroads_I_494"><item>Fish Lake Rd</item><item>Bass Lake Rd</item><item>N of 49th Ave</item><item>49th Ave</item><item>Rockford Rd</item><item>T.H.55</item><item>Co Rd 6</item><item>Carlson Pkwy</item><item>Stone Rd</item><item>Minnetonka Blvd</item><item>T.H.7</item><item>Excelsior Blvd</item><item>Baker Rd</item><item>Valley View Rd</item><item>Valley View Rd</item><item>Flying Cloud Dr</item><item>U.S.169</item><item>W Bush Lake Rd</item><item>E Bush Lake Rd</item><item>T.H.100</item><item>France Ave</item><item>Penn Ave</item><item>I-35W</item><item>Lyndale Ave</item><item>Portland Ave</item><item>12th Ave</item><item>T.H.77</item><item>24th Ave</item><item>T.H.5</item><item>Pilot Knob Rd</item><item>I-35E</item><item>Dodd Rd</item><item>Delaware Ave</item><item>60th St</item><item>T.H.110</item><item>Blaine Ave</item><item>W of Concord St</item><item>T.H.52</item><item>Concord Ave</item><item>Bailey Rd</item><item>Carver Ave</item><item>Valley Creek Rd</item><item>Tamarack Rd</item></string-array> 
+<string-array name="campref_crossroads_I_694"><item>10th St</item><item>15th St N</item><item>Stillwater Blvd</item><item>T.H.5</item><item>40th St</item><item>50th St</item><item>T.H.36</item><item>Century Ave</item><item>McKnight Rd</item><item>White Bear Ave</item><item>T.H.61</item><item>Labore Rd</item><item>Edgerton St</item><item>I-35E</item><item>Rice St</item><item>W of Rice St</item><item>Victoria St</item><item>Lexington Ave</item><item>T.H.10</item><item>I-35W</item><item>5th Ave</item><item>Silver Lake Rd</item><item>T.H.65</item><item>Main St</item><item>T.H.252</item></string-array> 
+<string-array name="campref_crossroads_I_94"><item>T.H.95</item><item>Co Rd 21</item><item>St. Croix RS</item><item>Co Rd 71</item><item>Co Rd 15</item><item>Co Rd 17B</item><item>Co Rd 19</item><item>Co Rd 13</item><item>I-494 E Jct</item><item>T.H.120</item><item>McKnight Rd</item><item>White Bear Ave</item><item>T.H.61</item><item>Johnson Pkwy</item><item>Mounds Blvd</item><item>T.H.52</item><item>7th St</item><item>I-35E</item><item>Jackson St</item><item>Wabasha St</item><item>John Ireland Blvd</item><item>Western Ave</item><item>Dale St</item><item>Lexington Ave</item><item>Hamline Ave</item><item>Snelling Ave</item><item>Prior Ave</item><item>Cretin Ave</item><item>T.H.280</item><item>W of T.H.280</item><item>Franklin Ave</item><item>Huron St</item><item>Riverside Ave</item><item>Cedar Ave</item><item>Portland Ave</item><item>T.H.65</item><item>Nicollet Ave</item><item>Hennepin and Lyndale</item><item>T.H.55</item><item>Broadway Ave</item><item>Lowry Ave</item><item>42nd Ave</item><item>49th Ave</item><item>57th Ave</item><item>Humboldt Ave</item><item>Xerxes Ave</item><item>Brooklyn Blvd</item><item>Zane Ave</item><item>Co Rd 81</item><item>Boone Ave</item><item>U.S.169</item><item>Hemlock Ln</item><item>I-494</item><item>Weaver Lake Rd</item><item>Elm Creek</item><item>95th Ave</item><item>101st Ave</item><item>W of 101st Ave</item><item>Brockton Ln</item><item>Co Rd 81 West Jct</item><item>E of T.H.101</item><item>T.H.101</item><item>W of T.H.101</item><item>Co Rd 37</item><item>Co Rd 19</item><item>Co Rd 75</item><item>T.H.25</item><item>T.H.24</item><item>W of T.H.24</item></string-array> 
+<string-array name="campref_crossroads_T_H_10"><item>Main St</item><item>Co Rd 11</item><item>T.H.24</item><item>E of Co Rd J</item><item>Airport Rd</item><item>T.H.65</item><item>University Ave</item><item>Foley Blvd</item><item>W of Egret</item><item>Hanson Blvd</item><item>W of Hanson Blvd</item><item>T.H.242</item><item>Round Lake Blvd</item><item>7th Ave</item><item>U.S.169</item><item>Greenhaven Rd</item></string-array> 
+<string-array name="campref_crossroads_T_H_100"><item>France Ave</item><item>France Ave</item><item>Co Rd 81</item><item>42nd Ave</item><item>36th Ave</item><item>Duluth St</item><item>Duluth St</item><item>T.H.55</item><item>Glenwood Ave</item><item>27th St</item><item>T.H.7</item><item>Excelsior Blvd</item><item>50th St</item><item>Benton Ave</item><item>66th St</item><item>77th St</item></string-array> 
+<string-array name="campref_crossroads_T_H_110"><item>T.H.55</item></string-array> 
+<string-array name="campref_crossroads_T_H_212"><item>Shady Oak Rd</item><item>Valley View Rd</item><item>I-494</item><item>Prarie Center Dr</item><item>Mitchell Rd</item><item>Wallace Rd</item><item>Eden Prairie Rd</item><item>Dell Rd</item></string-array> 
+<string-array name="campref_crossroads_T_H_36"><item>T.H.120</item><item>T.H.61</item><item>Edgerton St</item><item>I-35E</item><item>Rice St</item><item>Dale St</item><item>Lexington Ave</item><item>Snelling Ave</item><item>Cleveland Ave</item></string-array> 
+<string-array name="campref_crossroads_T_H_5"><item>Airport Rd</item></string-array> 
+<string-array name="campref_crossroads_T_H_52"><item>Plato Blvd</item><item>Eaton St</item><item>Concord St</item><item>N of Butler</item><item>Butler Ave</item><item>Thompson Ave</item><item>Southview Blvd</item><item>I-494</item><item>Upper 55th St</item><item>70th St</item><item>80th St</item><item>T.H.55</item></string-array> 
+<string-array name="campref_crossroads_T_H_55"><item>T.H.5</item></string-array> 
+<string-array name="campref_crossroads_T_H_61"><item>I-694</item><item>Co Rd C</item><item>Co Rd E</item><item>Glen Rd</item></string-array> 
+<string-array name="campref_crossroads_T_H_610"><item>T.H.47</item></string-array> 
+<string-array name="campref_crossroads_T_H_62"><item>I-494</item><item>Clearwater Dr</item><item>Shady Oak Rd</item><item>U.S.169</item><item>Gleason Rd</item><item>Tracy Ave</item><item>T.H.100</item><item>France Ave</item><item>Xerxes Ave</item><item>Portland Ave</item><item>Bloomington Ave</item><item>28th Ave</item><item>43rd Ave</item><item>T.H.55</item></string-array> 
+<string-array name="campref_crossroads_T_H_77"><item>66th St</item><item>84th St</item><item>Old Shakopee Rd</item><item>Minnesota River</item><item>T.H.13</item><item>Diffley Rd</item><item>Cliff Rd</item><item>I-35E</item><item>127th St</item><item>Co Rd 38</item></string-array> 
+<string-array name="campref_crossroads_U_S_12"><item>Co Rd 15</item><item>Central Ave</item></string-array> 
+<string-array name="campref_crossroads_U_S_169"><item>77th Ave</item><item>63rd Ave</item><item>Bass Lake Rd</item><item>49th Ave</item><item>Rockford Rd</item><item>36th Ave</item><item>Medicine Lake Rd</item><item>Plymouth Ave</item><item>T.H.55</item><item>Cedar Lake Rd</item><item>Minnetonka Blvd</item><item>T.H.7</item><item>7th St</item><item>Bren Rd</item><item>Valley View Rd</item><item>I-494</item><item>Anderson Lakes S Bridge</item><item>Anderson Lakes Pkwy</item><item>Pioneer Trail</item><item>Old Shakopee Rd</item></string-array> 
+<string-array name="campref_crossroads_I_35_values"><item>0</item><item>1</item><item>2</item><item>3</item></string-array> 
+<string-array name="campref_crossroads_I_35E_values"><item>4</item><item>5</item><item>6</item><item>7</item><item>8</item><item>9</item><item>10</item><item>11</item><item>12</item><item>13</item><item>14</item><item>15</item><item>16</item><item>17</item><item>18</item><item>19</item><item>20</item><item>21</item><item>22</item><item>23</item><item>24</item><item>25</item><item>26</item><item>27</item><item>28</item><item>29</item><item>30</item><item>31</item><item>32</item><item>33</item><item>34</item><item>35</item><item>36</item></string-array> 
+<string-array name="campref_crossroads_I_35W_values"><item>37</item><item>38</item><item>39</item><item>40</item><item>41</item><item>42</item><item>43</item><item>44</item><item>45</item><item>46</item><item>47</item><item>48</item><item>49</item><item>50</item><item>51</item><item>52</item><item>53</item><item>54</item><item>55</item><item>56</item><item>57</item><item>58</item><item>59</item><item>60</item><item>61</item><item>62</item><item>63</item><item>64</item><item>65</item><item>66</item><item>67</item><item>68</item><item>69</item><item>70</item><item>71</item><item>72</item><item>73</item><item>74</item><item>75</item></string-array> 
+<string-array name="campref_crossroads_I_394_values"><item>76</item><item>77</item><item>78</item><item>79</item><item>80</item><item>81</item><item>82</item><item>83</item><item>84</item><item>85</item><item>86</item><item>87</item><item>88</item><item>89</item><item>90</item><item>91</item></string-array> 
+<string-array name="campref_crossroads_I_494_values"><item>92</item><item>93</item><item>94</item><item>95</item><item>96</item><item>97</item><item>98</item><item>99</item><item>100</item><item>101</item><item>102</item><item>103</item><item>104</item><item>105</item><item>106</item><item>107</item><item>108</item><item>109</item><item>110</item><item>111</item><item>112</item><item>113</item><item>114</item><item>115</item><item>116</item><item>117</item><item>118</item><item>119</item><item>120</item><item>121</item><item>122</item><item>123</item><item>124</item><item>125</item><item>126</item><item>127</item><item>128</item><item>129</item><item>130</item><item>131</item><item>132</item><item>133</item><item>134</item></string-array> 
+<string-array name="campref_crossroads_I_694_values"><item>135</item><item>136</item><item>137</item><item>138</item><item>139</item><item>140</item><item>141</item><item>142</item><item>143</item><item>144</item><item>145</item><item>146</item><item>147</item><item>148</item><item>149</item><item>150</item><item>151</item><item>152</item><item>153</item><item>154</item><item>155</item><item>156</item><item>157</item><item>158</item><item>159</item></string-array> 
+<string-array name="campref_crossroads_I_94_values"><item>160</item><item>161</item><item>162</item><item>163</item><item>164</item><item>165</item><item>166</item><item>167</item><item>168</item><item>169</item><item>170</item><item>171</item><item>172</item><item>173</item><item>174</item><item>175</item><item>176</item><item>177</item><item>178</item><item>179</item><item>180</item><item>181</item><item>182</item><item>183</item><item>184</item><item>185</item><item>186</item><item>187</item><item>188</item><item>189</item><item>190</item><item>191</item><item>192</item><item>193</item><item>194</item><item>195</item><item>196</item><item>197</item><item>198</item><item>199</item><item>200</item><item>201</item><item>202</item><item>203</item><item>204</item><item>205</item><item>206</item><item>207</item><item>208</item><item>209</item><item>210</item><item>211</item><item>212</item><item>213</item><item>214</item><item>215</item><item>216</item><item>217</item><item>218</item><item>219</item><item>220</item><item>221</item><item>222</item><item>223</item><item>224</item><item>225</item><item>226</item><item>227</item><item>228</item></string-array> 
+<string-array name="campref_crossroads_T_H_10_values"><item>229</item><item>230</item><item>231</item><item>232</item><item>233</item><item>234</item><item>235</item><item>236</item><item>237</item><item>238</item><item>239</item><item>240</item><item>241</item><item>242</item><item>243</item><item>244</item></string-array> 
+<string-array name="campref_crossroads_T_H_100_values"><item>245</item><item>246</item><item>247</item><item>248</item><item>249</item><item>250</item><item>251</item><item>252</item><item>253</item><item>254</item><item>255</item><item>256</item><item>257</item><item>258</item><item>259</item><item>260</item></string-array> 
+<string-array name="campref_crossroads_T_H_110_values"><item>261</item></string-array> 
+<string-array name="campref_crossroads_T_H_212_values"><item>262</item><item>263</item><item>264</item><item>265</item><item>266</item><item>267</item><item>268</item><item>269</item></string-array> 
+<string-array name="campref_crossroads_T_H_36_values"><item>270</item><item>271</item><item>272</item><item>273</item><item>274</item><item>275</item><item>276</item><item>277</item><item>278</item></string-array> 
+<string-array name="campref_crossroads_T_H_5_values"><item>279</item></string-array> 
+<string-array name="campref_crossroads_T_H_52_values"><item>280</item><item>281</item><item>282</item><item>283</item><item>284</item><item>285</item><item>286</item><item>287</item><item>288</item><item>289</item><item>290</item><item>291</item></string-array> 
+<string-array name="campref_crossroads_T_H_55_values"><item>292</item></string-array> 
+<string-array name="campref_crossroads_T_H_61_values"><item>293</item><item>294</item><item>295</item><item>296</item></string-array> 
+<string-array name="campref_crossroads_T_H_610_values"><item>297</item></string-array> 
+<string-array name="campref_crossroads_T_H_62_values"><item>298</item><item>299</item><item>300</item><item>301</item><item>302</item><item>303</item><item>304</item><item>305</item><item>306</item><item>307</item><item>308</item><item>309</item><item>310</item><item>311</item></string-array> 
+<string-array name="campref_crossroads_T_H_77_values"><item>312</item><item>313</item><item>314</item><item>315</item><item>316</item><item>317</item><item>318</item><item>319</item><item>320</item><item>321</item></string-array> 
+<string-array name="campref_crossroads_U_S_12_values"><item>322</item><item>323</item></string-array> 
+<string-array name="campref_crossroads_U_S_169_values"><item>324</item><item>325</item><item>326</item><item>327</item><item>328</item><item>329</item><item>330</item><item>331</item><item>332</item><item>333</item><item>334</item><item>335</item><item>336</item><item>337</item><item>338</item><item>339</item><item>340</item><item>341</item><item>342</item><item>343</item></string-array> 
 </resources>

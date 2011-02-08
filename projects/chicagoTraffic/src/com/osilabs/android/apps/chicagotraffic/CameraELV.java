@@ -57,16 +57,10 @@ public class CameraELV extends ExpandableListActivity implements OnChildClickLis
     public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, 
     	int childPosition, long id) { 
     	
-    	// Get mainroad
-    	String[] mainroads = {};
-    	if (Config.mainroads.length > 0) {
-    		// FIXME - make this just use the config.mainroads array.
-    		//mainroads = getResources().getStringArray(R.array.campref_mainroads_values);
-    		mainroads = Config.mainroads;
-    	}
+    	if(Config.DEBUG>0)Log.d("** osilabs **", "CameraELV::onChildClick groupPos=" + groupPosition + ", childPos=" + childPosition);
     	
         // Get crossroad camera id
-        int getRes = getResources().getIdentifier("campref_crossroads_" + mainroads[groupPosition] + "_values" , "array", getPackageName());
+        int getRes = getResources().getIdentifier("campref_crossroads_" + Config.mainroadsValues[groupPosition] + "_values" , "array", getPackageName());
         String[] crossroads = getResources().getStringArray(getRes);
 
 //    	Toast.makeText(this, "onChildClick."
