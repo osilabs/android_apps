@@ -2,7 +2,7 @@ package com.osilabs.android.apps.chicagotraffic;
 
 public final class Config {
 	// Tell classes to dump to logcat
-	public static final int     DEBUG = 0;
+	public static final int     DEBUG = 1;
 	
 	// This can also be accomplished by recompiling. Also by stopping the app
 	public static final boolean DEBUG_FORCE_NEW_VERSION_CHECK = false; 
