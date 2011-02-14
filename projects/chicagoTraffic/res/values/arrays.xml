@@ -13,10 +13,12 @@
 <string-array name="pref_weather_radios">
 	<item>Lockport</item>
 	<item>Odell</item>
+	<item>Kankakee</item>
 </string-array> 
 <string-array name="pref_weather_radios_values">
-	<item>18464</item> 
+	<item>26458</item> 
 	<item>18123</item> 
+	<item>26175</item> 
 </string-array> 
 
 <string-array name="pref_today_feed">

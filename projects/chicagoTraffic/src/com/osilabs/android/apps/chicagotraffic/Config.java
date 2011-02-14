@@ -28,8 +28,8 @@ public final class Config {
 	public static final int            INDEX_OF_POLICE = 1;
 	
 	// These are the Defaults and they will be changed as prefs change. Set current node to -1 to disable.
-	public static final int[]          RADIOS_DEFAULT_NODE = {18464,           18589};
-	public static       int[]          RADIOS_CURRENT_NODE = {18464,           18589};
+	public static final int[]          RADIOS_DEFAULT_NODE = {26458,           18589};
+	public static       int[]          RADIOS_CURRENT_NODE = {26458,           18589};
 	public static final CharSequence[] RADIOS              = {"Weather Radio", "Police Scanner"};
 
 	// ----------------------------------------------------------
@@ -86,7 +86,7 @@ public final class Config {
     };
 	// This defaults to one of the system configured mapviews in traffic_urls
     // CAUTION!!! - If you move the maps around, this could refer to the wrong index
-	public static final String DEFAULT_MAPVIEW_COORDS = traffic_urls[2]; /// FIXME - this is reduntant to default mapview index
+	public static final String DEFAULT_MAPVIEW_COORDS = traffic_urls[1]; /// FIXME - this is reduntant to default mapview index
 	public static String CURRENT_MAPVIEW_COORDS = DEFAULT_MAPVIEW_COORDS;
 	public static String MAPVIEW_FAVORITES = "";
 	//

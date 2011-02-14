@@ -8,10 +8,10 @@
 	<!--	~~~~~~~~~~~~~ -->
     <string name="app_name">Chicago Traffic</string>
     <string name="city_name">Chicago</string>
-    <string name="market_link">market://search?q=pname:com.osilabs.android.apps.chicagotraffic</string>
+    <string name="market_link">market://details?id=com.osilabs.android.apps.chicagotraffic</string>
     <string name="market_link_http">http://market.android.com/search?q=pname:com.osilabs.android.apps.chicagotraffic</string>
     <string name="pref_police_radios_default">18589</string> <!-- FIXME - These need to go -->
-    <string name="pref_weather_radios_default">18464</string>
+    <string name="pref_weather_radios_default">26458</string>
     <string name="pref_today_feed_default">0</string>
     <string name="pref_weather_feed_default">0</string>
     <string name="session_camera_1"></string>
