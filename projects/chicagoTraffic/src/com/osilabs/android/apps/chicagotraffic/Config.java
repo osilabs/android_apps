@@ -109,7 +109,7 @@ public final class Config {
 	public static final String[] calendar = {
 		"Weather Report",
 		"Food",
-		"Music Pics",
+		"Music Picks",
 		"Music Calendar",
 		"Things To Do",
 	};
