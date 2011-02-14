@@ -3,6 +3,7 @@
 >>> STM >>>
 
 * All traffic apps
+** Make it easier to give stars under Rate It. should link directly to the page that has stars.
 ** Remove new version checking
 
 ** Use a listview for the menus and use yellow star icons by the favorites.
@@ -28,6 +29,13 @@
 changes
 * Added Winona Weather Radio.
 * Duluth weather radio stopped broadcasting and had to be removed :( sorry...
+
+
+Weather 
+-------
+Kankakee Weather Radio (just south of chicago) - 26175
+Will county = Lockport - 26458
+Livinginston county - aka Odell - 18123
 
 
 
