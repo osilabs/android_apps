@@ -14,7 +14,7 @@ public final class Config {
 	public static final    String APP_CODE = "ct"; // i.e. tct, st, ld ...
 	
 	public static final    String DEFAULT_CAMERA_INDEX = "0";
-	public static final int       DEFAULT_MAP_INDEX = 2; // !!! Can't be above array size-1. Includes favorites, best to set to one of the system traffic maps indexes.
+	public static final int       DEFAULT_MAP_INDEX = 1; // !!! Can't be above array size-1. Includes favorites, best to set to one of the system traffic maps indexes.
 	public static final int       DEFAULT_CALENDAR_INDEX = 0;
 	public static final int       DEFAULT_TAB_INDEX = 0;
 	protected static       String MOBILECONTENT_URL_PREFIX   = "http://osilabs.com/m/mobilecontent/chicagotraffic";
