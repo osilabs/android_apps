@@ -32,6 +32,13 @@
 		    android:src="@drawable/ic_menu_play_clip"
 		    />
 		    
+	    <TextView  
+		    style="@style/duration"
+	    	android:id="@+id/duration"
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content"
+		    />
+		    
 		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 		    android:orientation="horizontal"
 		    android:layout_width="wrap_content"

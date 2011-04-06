@@ -1,22 +1,3 @@
-//package com.osilabs.android.apps.musicscout.prototype;
-//
-//import android.app.Activity;
-//import android.os.Bundle;
-//
-//public class App extends Activity {
-//    /** Called when the activity is first created. */
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.main);
-//    }
-//}
-//
-//
-//
-
-
-
 
 
 
@@ -51,6 +32,7 @@ public class App extends Activity {
     private ImageView ivPlayButton;
     private TextView tvReview;
     private TextView tvSong;
+    private TextView tvDuration;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,8 +43,6 @@ public class App extends Activity {
 //        Bundle extras = getIntent().getExtras();
         //playAudio(extras.getInt(MEDIA));
        
-        mMediaPlayer = null;
-
         tvSong = (TextView) findViewById(R.id.song);
         tvSong.setText(Config.BAND_NAME + " - " + Config.BAND_SONG);
 
@@ -71,16 +51,24 @@ public class App extends Activity {
         
         ivPlayButton= (ImageView) findViewById(R.id.play_button);
         ivPlayButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                	
-                	playAudio(RESOURCES_AUDIO);
-                }
+            @Override
+            public void onClick(View v) {
+            	
+            	playAudio(RESOURCES_AUDIO);
+            }
         });
 
-        
     }
 
+    public void onStart() {
+    	super.onStart();
+    	
+        mMediaPlayer = null;
+    	mMediaPlayer = MediaPlayer.create(this, R.raw.track1);
+        tvDuration = (TextView) findViewById(R.id.duration);
+        tvDuration.setText(Integer.toString(mMediaPlayer.getDuration()));   
+    }
+    
     private void playAudio(Integer media) {
         try {
             switch (media) {
@@ -107,12 +95,10 @@ public class App extends Activity {
 //                    break;
                 case RESOURCES_AUDIO:
                 	
-                	
-                    if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
+                    if (mMediaPlayer.isPlaying()) {
                         mMediaPlayer.stop();
-                        mMediaPlayer.reset(); // Set to un initialized
+                        //mMediaPlayer.reset(); // Set to un initialized
                     } else {
-                    	mMediaPlayer = MediaPlayer.create(this, R.raw.track1);
                         mMediaPlayer.start();
                 	}
             }
