@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.ads.*;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
@@ -99,7 +100,8 @@ public class App extends MapActivity {
 	protected static boolean ABOUT_IS_VISIBLE    = false;
 	
 	protected static Spinner spViewChoices;
-	protected static WebView wvAd;
+	//protected static WebView wvAd;
+	protected static AdView admobView;
 	protected static WebView wvMain;
 	protected static SharedPreferences mySharedPreferences;
 
@@ -236,21 +238,13 @@ public class App extends MapActivity {
     	wvMain.setVerticalScrollBarEnabled(true);
     	wvMain.setVerticalFadingEdgeEnabled(true);
     	wvMain.setBackgroundColor(R.color.backgroundGray);
-
-		//
-		// Ad banner Web View
-		//
-		wvAd = (WebView) findViewById(R.id.adWebView);
-        WebSettings awebSettings = wvAd.getSettings();
-        awebSettings.setJavaScriptEnabled(true);
-        awebSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
-    	wvAd.setBackgroundColor(Color.BLACK);
-        if (Config.NO_ADS) {
-        	wvAd.setVisibility(View.GONE);
-        } else {
-        	wvAd.setVisibility(View.VISIBLE);        	
-        }
         
+    	//
+    	// Admob banner
+    	//
+        admobView = (AdView) findViewById(R.id.admobView);
+        admobView.loadAd(new AdRequest());
+
     	//
     	// Main Map View
     	//
@@ -933,9 +927,6 @@ public class App extends MapActivity {
 		// Refresh main content webview
 		wvMain.loadUrl(reloadString);
 		if(Config.DEBUG>0) Log.d(TAG, "reloadViews() " + reloadString);
-		
-		// Refresh banner webview
-		wvAd.loadUrl(AD_BANNER_URL);
 	}
 
 	public void activateViewType(int v) {

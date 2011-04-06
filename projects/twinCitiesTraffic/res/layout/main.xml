@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout 
 	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:ads="http://schemas.android.com/apk/res/com.osilabs.android.apps"
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
 
 	<!--  ad banner -->
-	<WebView 
-		android:id="@+id/adWebView" 
-		android:layout_width="fill_parent"
-		android:layout_height="180dip"
-		android:layout_weight=".5"
-		android:layout_gravity="top"
-		android:scrollbars="none"
-		android:visibility="gone" />
+	<com.google.ads.AdView android:id="@+id/admobView"
+	                       android:layout_width="wrap_content"
+	                       android:layout_height="wrap_content"
+	                       ads:adUnitId="a14d9bd9488f9d7"
+	                       ads:adSize="BANNER" />
 
 	<include 
 		layout="@layout/topnav" 
