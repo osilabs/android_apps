@@ -12,3 +12,5 @@ resources/images/menu_icons/LICENSE
 resources/images/icons_from_android.git.kernel.org/
 resources/screenshots/
 .metadata
+projects/musicscout/gen/
+projects/musicscoutTest/gen/
