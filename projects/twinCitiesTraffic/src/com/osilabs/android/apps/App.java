@@ -243,7 +243,9 @@ public class App extends MapActivity {
     	// Admob banner
     	//
         admobView = (AdView) findViewById(R.id.admobView);
-        admobView.loadAd(new AdRequest());
+        if (!Config.NO_ADS) {
+        	admobView.loadAd(new AdRequest());
+        }
 
     	//
     	// Main Map View
