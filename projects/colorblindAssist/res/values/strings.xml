@@ -2,7 +2,7 @@
 <resources>
     <string name="hello">Color Eye</string>
     <string name="color_value">Calibrating...</string>
-    <string name="app_name"><b>Color</b> Eye</string>
+    <string name="app_name"><b>Color</b> Blind Assist</string>
     <string name="sample_title">Your drop</string>
     <string name="sample_button">More...</string>
     <string name="drop_color_chosen_message">
