@@ -219,6 +219,11 @@ public class ColorblindAssist extends Activity {
 				Paint pInverseColor = new Paint();
 				pInverseColor.setColor(inverseColor);
 				
+				// For the RGB Meter texts
+				Paint meterLabelPaint = new Paint();
+				meterLabelPaint.setTextSize(40);
+				meterLabelPaint.setColor(Color.GRAY);
+				
 				Paint paint = new Paint();
 				paint.setStyle(Paint.Style.STROKE);
 				paint.setColor(inverseColor);
@@ -234,9 +239,6 @@ public class ColorblindAssist extends Activity {
 				int meter_width= 125;
 				int meter_gap  = 8;
 				
-				// For the RGB texts
-				int textsize = 40;
-				pInverseColor.setTextSize(textsize);
 				//canvas.drawText(d.colorname, hud_bl_x+5, 0 + hud_bl_y - hud_height + textsize, pInverseColor);
 				
 				// Red Bar
@@ -246,8 +248,7 @@ public class ColorblindAssist extends Activity {
 				canvas.drawRect(hud_bl_x,               0 + hud_bl_y - r_height, 
 								hud_bl_x + meter_width, 0 + hud_bl_y, 
 								paint);
-				paint.setColor(Color.BLACK);
-				canvas.drawText("R", hud_bl_x+5, hud_bl_y - d.R, pInverseColor);
+				canvas.drawText("R", hud_bl_x+5, hud_bl_y - d.R, meterLabelPaint);
 
 				// Green Bar
 				hud_bl_x += meter_width+meter_gap; // Shift right for the next bar
@@ -256,8 +257,7 @@ public class ColorblindAssist extends Activity {
 				canvas.drawRect(hud_bl_x,               0 + hud_bl_y - g_height,
 								hud_bl_x + meter_width, 0 + hud_bl_y, 
 								paint);
-				paint.setColor(Color.BLACK);
-				canvas.drawText("G", hud_bl_x+5, hud_bl_y - d.G, pInverseColor);
+				canvas.drawText("G", hud_bl_x+5, hud_bl_y - d.G, meterLabelPaint);
 				
 				// Blue Bar
 				hud_bl_x += meter_width+meter_gap; // Shift right for the next bar
@@ -266,8 +266,7 @@ public class ColorblindAssist extends Activity {
 				canvas.drawRect(hud_bl_x,               0 + hud_bl_y - b_height, 
 								hud_bl_x + meter_width, 0 + hud_bl_y, 
 								paint);
-				paint.setColor(Color.BLACK);
-				canvas.drawText("B", hud_bl_x+5, hud_bl_y - d.B, pInverseColor);
+				canvas.drawText("B", hud_bl_x+5, hud_bl_y - d.B, meterLabelPaint);
 
 
 				// crosshairs
