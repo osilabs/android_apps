@@ -48,11 +48,13 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.WindowManager;
 //import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
@@ -108,6 +110,11 @@ public class ColorblindAssist extends Activity {
 	private DrawOnTop mDraw;
     private PowerManager.WakeLock wl;
 	private ColorDrop d;
+	
+	// Sub title, need height for calc HUD size
+	private TextView vSubTitle;
+	public int subTitleHeight;
+	
 
     @Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -137,6 +144,10 @@ public class ColorblindAssist extends Activity {
 
 		preview = new Preview(this);
 		((FrameLayout) findViewById(R.id.preview)).addView(preview);
+
+		vSubTitle = (TextView) findViewById(R.id.bl_display);
+		subTitleHeight = vSubTitle.getHeight();
+		
 		
 //		captureButton = (Button) findViewById(R.id.capture_button);
 //		captureButton.setOnClickListener(new OnClickListener() {
@@ -174,8 +185,24 @@ public class ColorblindAssist extends Activity {
 //		});
 		
 		preview.onCreate();
+		
+//		// DEBUG - See phone screen size - This basically returns the resolution and doesn't account for titles and such
+//		Context ctx = getApplicationContext();
+//		Display display = ((WindowManager)ctx.getSystemService(ctx.WINDOW_SERVICE)).getDefaultDisplay();
+//		int width = display.getWidth();
+//		int height = display.getHeight();
+//		// Driod: 854,480
+//		Toast.makeText(getApplicationContext(), "Window Width:"+Integer.toString(width)+",Height:"+Integer.toString(height), Toast.LENGTH_LONG).show();
+
 	}
 
+    
+
+	@Override
+	public void onStart() {
+		super.onPause();
+	}
+	
 	@Override
 	public void onPause() {
 		//Log.d(TAG, "onPause'd activity");
@@ -225,20 +252,22 @@ public class ColorblindAssist extends Activity {
 			//  resizing or orientation changes.
 			//
 			
-			int w = preview.getWidth();
-			int h = preview.getHeight();
-			
-			int line_len = (w/20); //30;
+			// Droid: w=427, h=404
+			int preview_w = preview.getWidth();
+			int preview_h = preview.getHeight();
+	    	//Toast.makeText(getApplicationContext(), "Width:"+Integer.toString(preview_w)+",Height:"+Integer.toString(preview_h), Toast.LENGTH_LONG).show();
+
+			int line_len = (preview_w/20); //30;
 			int corner_padding = 20;
 			int circle_radius = 10;
 
-			int center_x = (int) w / 2;
-			int center_y = (int) h / 2;
+			int center_x = (int) preview_w / 2;
+			int center_y = (int) preview_h / 2;
 
 			try{
 				int inverseColor = Color.rgb(255 - d.R, 255 - d.G, 255 - d.B);
 				
-				// Text
+				// Inverse color paint
 				Paint pInverseColor = new Paint();
 				pInverseColor.setColor(inverseColor);
 				
@@ -247,20 +276,27 @@ public class ColorblindAssist extends Activity {
 				meterLabelPaint.setTextSize(40);
 				meterLabelPaint.setColor(Color.GRAY);
 				
+				// Reusable paint
 				Paint paint = new Paint();
 				paint.setStyle(Paint.Style.STROKE);
 				paint.setColor(inverseColor);
-				canvas.drawText("osilabs.com", 15, h - 8, paint);
+				canvas.drawText("osilabs.com", 15, preview_h - 8, paint);
 				
 				canvas.drawCircle(center_x, center_y, circle_radius, paint);
 				
+				// Set paddings
+				int meter_edge_gap = 10;
+				int meter_gap = 8;
+				int meters_off_bottom_gap = 4;
+				
+				// Calculate meter widths
+				int meter_width = (preview_w - (meter_edge_gap*2) - (meter_gap*2)) / 3;
+				
 				// The HUD is the heads up display and has the meters in it.
-				int hud_width  = 322;
-				int hud_height = 333;
-				int hud_bl_x   = 400; // bottom left x and y
-				int hud_bl_y   = 395; 
-				int meter_width= 125;
-				int meter_gap  = 8;
+				int hud_width  = preview_w;
+				int hud_height = (preview_h/2);
+				int hud_bl_x   = preview_w + 0; // bottom left x
+				int hud_bl_y   = preview_h - meters_off_bottom_gap; // bottom left y
 				
 				//canvas.drawText(d.colorname, hud_bl_x+5, 0 + hud_bl_y - hud_height + textsize, pInverseColor);
 				
@@ -271,7 +307,7 @@ public class ColorblindAssist extends Activity {
 				canvas.drawRect(hud_bl_x,               0 + hud_bl_y - r_height, 
 								hud_bl_x + meter_width, 0 + hud_bl_y, 
 								paint);
-				canvas.drawText("R", hud_bl_x+5, hud_bl_y - d.R, meterLabelPaint);
+				canvas.drawText("R", hud_bl_x+5, hud_bl_y - (d.R/2), meterLabelPaint);
 
 				// Green Bar
 				hud_bl_x += meter_width+meter_gap; // Shift right for the next bar
@@ -280,7 +316,7 @@ public class ColorblindAssist extends Activity {
 				canvas.drawRect(hud_bl_x,               0 + hud_bl_y - g_height,
 								hud_bl_x + meter_width, 0 + hud_bl_y, 
 								paint);
-				canvas.drawText("G", hud_bl_x+5, hud_bl_y - d.G, meterLabelPaint);
+				canvas.drawText("G", hud_bl_x+5, hud_bl_y - (d.G/2), meterLabelPaint);
 				
 				// Blue Bar
 				hud_bl_x += meter_width+meter_gap; // Shift right for the next bar
@@ -289,7 +325,7 @@ public class ColorblindAssist extends Activity {
 				canvas.drawRect(hud_bl_x,               0 + hud_bl_y - b_height, 
 								hud_bl_x + meter_width, 0 + hud_bl_y, 
 								paint);
-				canvas.drawText("B", hud_bl_x+5, hud_bl_y - d.B, meterLabelPaint);
+				canvas.drawText("B", hud_bl_x+5, hud_bl_y - (d.B/2), meterLabelPaint);
 
 
 				// crosshairs
@@ -308,18 +344,18 @@ public class ColorblindAssist extends Activity {
 						+ corner_padding + line_len, 0 + corner_padding, paint); // top-left
 				canvas.drawLine(0 + corner_padding, 0 + corner_padding,
 						0 + corner_padding, 0 + corner_padding + line_len, paint); // top-left
-				canvas.drawLine(w - corner_padding, 0 + corner_padding, w
+				canvas.drawLine(preview_w - corner_padding, 0 + corner_padding, preview_w
 						- corner_padding - line_len, 0 + corner_padding, paint); // top-right
-				canvas.drawLine(w - corner_padding, 0 + corner_padding, w
+				canvas.drawLine(preview_w - corner_padding, 0 + corner_padding, preview_w
 						- corner_padding, 0 + corner_padding + line_len, paint); // top-right
-				canvas.drawLine(w - corner_padding, h - corner_padding, w
-						- corner_padding, h - corner_padding - line_len, paint); // bottom-left
-				canvas.drawLine(w - corner_padding, h - corner_padding, w
-						- corner_padding - line_len, h - corner_padding, paint); // bottom-left
-				canvas.drawLine(0 + corner_padding, h - corner_padding, 0
-						+ corner_padding + line_len, h - corner_padding, paint); // bottom-right
-				canvas.drawLine(0 + corner_padding, h - corner_padding,
-						0 + corner_padding, h - corner_padding - line_len, paint); // bottom-right
+				canvas.drawLine(preview_w - corner_padding, preview_h - corner_padding, preview_w
+						- corner_padding, preview_h - corner_padding - line_len, paint); // bottom-left
+				canvas.drawLine(preview_w - corner_padding, preview_h - corner_padding, preview_w
+						- corner_padding - line_len, preview_h - corner_padding, paint); // bottom-left
+				canvas.drawLine(0 + corner_padding, preview_h - corner_padding, 0
+						+ corner_padding + line_len, preview_h - corner_padding, paint); // bottom-right
+				canvas.drawLine(0 + corner_padding, preview_h - corner_padding,
+						0 + corner_padding, preview_h - corner_padding - line_len, paint); // bottom-right
 			} catch (Exception e) {
 				// FIXME - put toast errors if this happens
 				//Log.d(TAG, "YuvImage error:" + e.getMessage());
