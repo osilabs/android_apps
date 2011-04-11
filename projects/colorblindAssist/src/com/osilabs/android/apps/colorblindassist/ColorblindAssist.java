@@ -560,7 +560,10 @@ public class ColorblindAssist extends Activity {
 //				//captureButton.setBackgroundColor(Color.rgb(200,200,230));
 //				//captureButton.setError("error x14d");
 //				captureButton.setHapticFeedbackEnabled(true);
+				
 				TextView bl_tv = (TextView) findViewById(R.id.color_value_display);
+				bl_tv.setTextSize(70);
+				bl_tv.setTextColor(Color.WHITE);
 				bl_tv.setText(" " + d.colorname );
 			}
 		}
