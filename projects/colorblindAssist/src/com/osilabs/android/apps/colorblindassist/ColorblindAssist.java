@@ -2,14 +2,11 @@
  * ColorBlind Assist
  * 
  * Terminology:
- * * Meter - Each box or r g and b the move in real time to display the level of the color
- * 
+ * METER - Each box or r g and b the move in real time to display the level of the color
+ * HUD   - Heads up Display box with meters, color output, etc...
  * ----------------------------------------------------------------------------
- * FIXME - The rgb rectangles arent all the way to the edge of the screen and RED overlaps viewing area.
  * FIXME - Detect cameras and don't allow to run if don't have cameras.
- * FIXME - Fix hardcoded coordinates for placing graphs
  * FIXME - Fix freeze when you leave then comeback.
- * FIXME - When you start, the word 'Calibtating...' is too big.
  * ----------------------------------------------------------------------------
  * TODO - Rename to Super ColorVision, or ColorVisionAssist
  * TODO - Move color bars to bottom of screen
@@ -21,6 +18,7 @@
  * TODO - left and right handedness options.
  * ----------------------------------------------------------------------------
  * OPTIMIZE - Create all the paint in onCreate. Do any static calculations there too.
+ * OPTIMIZE - color_value_display is finding and setting values with each frame.
  * ----------------------------------------------------------------------------
  */
 
