@@ -31,7 +31,7 @@ import java.io.IOException;
 import com.osilabs.android.apps.colorblindassist.R;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
+//import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -41,8 +41,8 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.RectF;
+//import android.graphics.Rect;
+//import android.graphics.RectF;
 import android.hardware.Camera;
 import android.hardware.Camera.PreviewCallback;
 import android.hardware.Camera.ShutterCallback;
@@ -55,7 +55,7 @@ import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.view.View.OnClickListener;
+//import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -100,13 +100,13 @@ public class ColorblindAssist extends Activity {
 	
 	// In my testing, a good length/width for a byte[]
 	//  size of 497664 is 576x864
-	private int yuv_w = 0; 
+	private int yuv_w = 0;
 	private int yuv_h = 0;
 	
     String version = "0.1";
 
 	private Preview preview;
-	private Button captureButton;
+	//private Button captureButton;
 	private DrawOnTop mDraw;
     private PowerManager.WakeLock wl;
 	private ColorDrop d;
