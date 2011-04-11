@@ -1,3 +1,30 @@
+/**
+ * ColorBlind Assist
+ * 
+ * Terminology:
+ * * Meter - Each box or r g and b the move in real time to display the level of the color
+ * 
+ * ----------------------------------------------------------------------------
+ * FIXME - The rgb rectangles arent all the way to the edge of the screen and RED overlaps viewing area.
+ * FIXME - Detect cameras and don't allow to run if don't have cameras.
+ * FIXME - Fix hardcoded coordinates for placing graphs
+ * FIXME - Fix freeze when you leave then comeback.
+ * FIXME - When you start, the word 'Calibtating...' is too big.
+ * ----------------------------------------------------------------------------
+ * TODO - Rename to Super ColorVision, or ColorVisionAssist
+ * TODO - Move color bars to bottom of screen
+ * TODO - Tweak the color so they are more right-ish.
+ * TODO - Unit tests for colors
+ * TODO - Choose different threashold modes. course = only r g and b diffs, fine uses more colors.
+ * TODO - Choose different colorblindness orientations. Red/green, pink/blue.
+ * TODO - Vertical orientation option
+ * TODO - left and right handedness options.
+ * ----------------------------------------------------------------------------
+ * OPTIMIZE - Create all the paint in onCreate. Do any static calculations there too.
+ * ----------------------------------------------------------------------------
+ */
+
+
 package com.osilabs.android.apps.colorblindassist;
 
 import java.io.IOException;
@@ -196,9 +223,7 @@ public class ColorblindAssist extends Activity {
 		protected void onDraw(Canvas canvas) {
 			//Log.w(TAG, "OnDraw'd");
 			//
-			// FIXME - this is redrawing the decorations with every frame,
-			//  should only redraw after a framebuffer has been processed.
-			// Er .. May need to recalculate w each frame in case of
+			// FIXME - May need to recalculate w each frame in case of
 			//  resizing or orientation changes.
 			//
 			
