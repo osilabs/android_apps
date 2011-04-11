@@ -239,34 +239,34 @@ public class ImageProcessing {
 		if ( (Math.abs(d.R-d.G) < 15) && (Math.abs(d.R-d.B) < 15) ) {
 			return "gray";
 		}
-		
-		// PURPLE
-		// Purple is g < r < b or g < b < r
-		if ( ((d.G < d.R) && (d.R < d.B)) || ((d.G < d.B) && (d.B < d.R)) ) {
-			return "purple";
-		}
-		
-		// YELLOW
-		// r and g are close, blue is much lower. r must be high.
-		if ( ((d.R-d.G) < 30) && ((d.G-d.B) > 80) && (d.R > 190) ) {
-			return "yellow";
-		}
-		
-		// orange
-		// stairstep r > g > b, diff r:g = diff g:b +- n
-		// && r > b
-		if ((((d.R-d.G) - (d.G-d.B)) < 20) && d.R > d.B) {
-			return "orange";
-		}
-		
-//		// Look for purple - R and B are high, G is low
-//		// R::B diff is low
-//		if (Math.abs(d.R-d.B) <= 10) {
-//			// R::G diff is high
-//			if ((d.R-d.G) > 20) {
-//				return "purple";
-//			}
+//		
+//		// PURPLE
+//		// Purple is g < r < b or g < b < r
+//		if ( ((d.G < d.R) && (d.R < d.B)) || ((d.G < d.B) && (d.B < d.R)) ) {
+//			return "purple";
 //		}
+//		
+//		// YELLOW
+//		// r and g are close, blue is much lower. r must be high.
+//		if ( ((d.R-d.G) < 30) && ((d.G-d.B) > 80) && (d.R > 190) ) {
+//			return "yellow";
+//		}
+//		
+//		// orange
+//		// stairstep r > g > b, diff r:g = diff g:b +- n
+//		// && r > b
+//		if ((((d.R-d.G) - (d.G-d.B)) < 20) && d.R > d.B) {
+//			return "orange";
+//		}
+//		
+////		// Look for purple - R and B are high, G is low
+////		// R::B diff is low
+////		if (Math.abs(d.R-d.B) <= 10) {
+////			// R::G diff is high
+////			if ((d.R-d.G) > 20) {
+////				return "purple";
+////			}
+////		}
 
 		// From base color, look for neighboring colors
 		switch(c) {
