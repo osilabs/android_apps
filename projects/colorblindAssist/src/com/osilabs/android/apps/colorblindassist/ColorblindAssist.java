@@ -5,8 +5,11 @@
  * METER - Each box or r g and b the move in real time to display the level of the color
  * HUD   - Heads up Display box with meters, color output, etc...
  * ----------------------------------------------------------------------------
+ * // Next Version
+ * - About screen
+ * - LD icon
+ * - Work on accuracy of colors
  * FIXME - Detect cameras and don't allow to run if don't have cameras.
- * FIXME - Fix freeze when you leave then comeback.
  * ----------------------------------------------------------------------------
  * TODO - Rename to Super ColorVision, or ColorVisionAssist
  * TODO - Move color bars to bottom of screen
@@ -26,12 +29,10 @@
 package com.osilabs.android.apps.colorblindassist;
 
 import java.io.IOException;
-import java.util.List;
 
 import com.osilabs.android.apps.colorblindassist.R;
 import android.app.Activity;
 import android.app.AlertDialog;
-//import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -41,8 +42,6 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-//import android.graphics.Rect;
-//import android.graphics.RectF;
 import android.hardware.Camera;
 import android.hardware.Camera.PreviewCallback;
 import android.hardware.Camera.ShutterCallback;
@@ -51,16 +50,13 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.PowerManager;
-import android.view.Display;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.view.WindowManager;
-//import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -73,10 +69,6 @@ public class ColorblindAssist extends Activity {
 	private static final int AVAILABLE = 1;
 	private static final int YES = 0;
 	private static final int NO = 1;
-//	private static final int _RED = 0;
-//	private static final int _GRN = 1;
-//	private static final int _BLU = 2;
-//	private static final int _ALP = 3; // alpha
 	private static final int MENU_PREFS = 0;
 	private static final int MENU_ABOUT = 1;
 	private static final int MENU_QUIT = 2;
@@ -86,18 +78,6 @@ public class ColorblindAssist extends Activity {
 	private static int IS_PAUSING = NO;
     private static boolean SHOWING_PREVIEW = false; 
 
-//	// RGB values are set as they become available.
-//	private static final int RGB_ELEMENTS = 4;
-//	private static int[] RGBs = new int[RGB_ELEMENTS];
-//	//private static int RGBint = 0;
-//	private static String HEXVAL = "000000";
-//	private static String RGBVAL = "0,0,0";
-//	
-//	// Will be allocated based on byte[] size, will grow
-//	//  if needed.
-//	private static int[] decodeBuf;
-//	private static int BUFALLOCSIZE = 0;
-	
 	// View properties
 	private int view_w = 0;
 	private int view_h = 0;
@@ -110,7 +90,6 @@ public class ColorblindAssist extends Activity {
     String version = "0.1";
 
 	private Preview preview;
-	//private Button captureButton;
 	private DrawOnTop mDraw;
     private PowerManager.WakeLock wl;
 	private ColorDrop d;
@@ -138,12 +117,6 @@ public class ColorblindAssist extends Activity {
 		// Prevent screen dimming
         PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);  
         wl = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");  
-	  
-//		// Default to black
-//		RGBs[_RED] = 0;
-//		RGBs[_GRN] = 0;
-//		RGBs[_BLU] = 0;
-//		RGBs[_ALP] = 0;
 
 		mDraw = new DrawOnTop(this);
 
@@ -160,54 +133,8 @@ public class ColorblindAssist extends Activity {
 		subTitleHeight = vSubTitle.getHeight();
 		
 		
-//		captureButton = (Button) findViewById(R.id.capture_button);
-//		captureButton.setOnClickListener(new OnClickListener() {
-//			public void onClick(View v) {
-//                //set up dialog
-//                final Dialog dialog = new Dialog(v.getContext());
-//                dialog.setContentView(R.layout.drop);
-//                dialog.setTitle("Your drop is #" + d.hexval);
-//                dialog.setCancelable(true);
-//
-//                //there are a lot of settings, for dialog, check them all out!
-//                //set up text
-//                TextView drop = (TextView) dialog.findViewById(R.id.drop_textview);
-//                drop.setBackgroundColor(Color.rgb(d.R, d.G, d.B));
-//                
-////                //set up text
-////                TextView text = (TextView) dialog.findViewById(R.id.TextView01);
-////                text.setText(R.string.drop_color_chosen_message);
-// 
-//                //set up image view
-////                ImageView img = (ImageView) dialog.findViewById(R.id.ImageView01);
-////                img.setImageResource(R.drawable.icon);
-// 
-//                //set up button
-//                Button button = (Button) dialog.findViewById(R.id.Button01);
-//                button.setOnClickListener(new OnClickListener() {
-//                	@Override
-//                    public void onClick(View vc) {
-//                		dialog.cancel();
-//                    }
-//                });
-//                //now that the dialog is set up, it's time to show it    
-//                dialog.show();
-//			}
-//		});
-		
 		preview.onCreate();
-		
-//		// DEBUG - See phone screen size - This basically returns the resolution and doesn't account for titles and such
-//		Context ctx = getApplicationContext();
-//		Display display = ((WindowManager)ctx.getSystemService(ctx.WINDOW_SERVICE)).getDefaultDisplay();
-//		int width = display.getWidth();
-//		int height = display.getHeight();
-//		// Driod: 854,480
-//		Toast.makeText(getApplicationContext(), "Window Width:"+Integer.toString(width)+",Height:"+Integer.toString(height), Toast.LENGTH_LONG).show();
-
 	}
-
-    
 
 	@Override
 	public void onStart() {
@@ -227,7 +154,6 @@ public class ColorblindAssist extends Activity {
 	public void onResume() {
 		//Log.d(TAG, "onResumed'd");
 		super.onResume();
-		//IS_PAUSING = NO;
 		wl.acquire();
 		preview.onResume();
 	}
@@ -259,10 +185,6 @@ public class ColorblindAssist extends Activity {
 		@Override
 		protected void onDraw(Canvas canvas) {
 			//Log.w(TAG, "OnDraw'd");
-			//
-			// FIXME - May need to recalculate w each frame in case of
-			//  resizing or orientation changes.
-			//
 			
 			// Droid: w=427, h=404
 			int preview_w = preview.getWidth();
@@ -309,8 +231,6 @@ public class ColorblindAssist extends Activity {
 				int hud_height = (preview_h/2);
 				int hud_bl_x   = preview_w + 0; // bottom left x
 				int hud_bl_y   = preview_h - meters_off_bottom_gap; // bottom left y
-				
-				//canvas.drawText(d.colorname, hud_bl_x+5, 0 + hud_bl_y - hud_height + textsize, pInverseColor);
 				
 				// Red Bar
 				int r_height = ((((d.R*100)/255)*hud_height)/100);
@@ -382,12 +302,7 @@ public class ColorblindAssist extends Activity {
 	// Frame previewer
 	//
 	private class Preview extends SurfaceView implements SurfaceHolder.Callback {
-
-		//SurfaceHolder mHolder;
-		//public Camera camera;
-		
 		Size mPreviewSize;
-		//List<Size> mSupportedPreviewSizes;
 
 		Preview(Context context) {
 			super(context);
@@ -406,9 +321,6 @@ public class ColorblindAssist extends Activity {
 	    //@Override
 		public void onCreate() {
 	    	//Log.d(TAG, "Preview onCreated'd");
-	    	
-	    	// Coming out of pause
-			//IS_PAUSING = NO;
 	    }
 
 		public void onPause() {
@@ -440,9 +352,7 @@ public class ColorblindAssist extends Activity {
 			// Open the default i.e. the first rear facing camera.
 			mCamera = Camera.open();
 			if (mCamera != null) {
-				//mSupportedPreviewSizes = camera.getParameters().getSupportedPreviewSizes();
 			    requestLayout();
-			    //SHOWING_PREVIEW = true;
 			    mCamera.startPreview();
 			} 
 			
@@ -454,9 +364,7 @@ public class ColorblindAssist extends Activity {
 		public void surfaceCreated(SurfaceHolder holder) {
 			//Log.d(TAG, "surfaceCreated'd");
 
-			// The Surface has been created, acquire the camera and tell it
-			// where to draw.
-			//mCamera = Camera.open();
+			// The Surface has been created, tell the camera where to draw.
 			try {
 				mCamera.setPreviewDisplay(holder);
 				mCamera.setPreviewCallback(new PreviewCallback() {
@@ -464,6 +372,7 @@ public class ColorblindAssist extends Activity {
 					// FIXME - Take these callbacks out of inline. Read
 					//          somewhere this was an efficiency problem
 					//
+
 					// Called for each frame previewed
 					public void onPreviewFrame(byte[] data, Camera camera) {
 						//Log.w(TAG, "onPreviewFrame'd");
@@ -472,8 +381,7 @@ public class ColorblindAssist extends Activity {
 						//  to grow if necessary. No max cap.
 						int size = data.length;
 						if (data.length > d.bufallocsize) {
-							// Buffer is not big enough for data
-							// allocate more spacs.
+							// Buffer is not big enough for data allocate more spacs.
 							//Log.v(TAG, "Allocating bufer for size: " + Integer.toString(size));
 							d.decodeBuf = new int[size];
 							d.bufallocsize = size;
@@ -524,30 +432,11 @@ public class ColorblindAssist extends Activity {
 					view_w = s.width;
 					view_h = s.height;
 				
-	//				// getsupportedpreviewsizes needs v5
-	//				if (Build.VERSION.SDK_INT >= 5) {
-	//		
-	//					List<Camera.Size> ls = p.getSupportedPreviewSizes();
-	//					for (Iterator it = ls.iterator(); it.hasNext();) {
-	//						Camera.Size sz = (Camera.Size) it.next();
-	//						//Log.d(TAG, "prv sz:" + Integer.toString(sz.width) + ","
-	//								+ Integer.toString(sz.height));
-	//					}
-	//		
-	//					ls = p.getSupportedPictureSizes();
-	//					for (Iterator it = ls.iterator(); it.hasNext();) {
-	//						Camera.Size sz = (Camera.Size) it.next();
-	//						//Log.d(TAG, "pic sz:" + Integer.toString(sz.width) + ","
-	//								+ Integer.toString(sz.height));
-	//					}
-	//				}
-
 					SHOWING_PREVIEW = true;
 					mCamera.startPreview();
                 }
 			} catch (Exception e) {
-				// FIXME - put toast errors if this happens
-				//Log.d(TAG, "YuvImage error:" + e.getMessage());
+				Log.e(TAG, "YuvImage error:" + e.getMessage());
 				e.printStackTrace();
 			}			
 		}
@@ -633,15 +522,7 @@ public class ColorblindAssist extends Activity {
 	
 				// Set drop color
 				TextView tv = (TextView) findViewById(R.id.preview_text);
-				//tv.setText("| " + d.colorname);
-				//tv.setBackgroundColor(iRGB[0]);
 				tv.setBackgroundColor(Color.BLACK);
-
-//				// Set capture button color
-//				captureButton = (Button) findViewById(R.id.capture_button);
-//				//captureButton.setBackgroundColor(Color.rgb(200,200,230));
-//				//captureButton.setError("error x14d");
-//				captureButton.setHapticFeedbackEnabled(true);
 				
 				TextView bl_tv = (TextView) findViewById(R.id.color_value_display);
 				bl_tv.setTextSize(70);
