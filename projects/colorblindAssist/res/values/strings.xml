@@ -3,13 +3,5 @@
     <string name="hello">Color Eye</string>
     <string name="color_value">Calibrating...</string>
     <string name="app_name"><b>Color</b> Blind Assist</string>
-    <string name="sample_title">Your drop</string>
     <string name="sample_button">More...</string>
-    <string name="drop_color_chosen_message">
-    	Your drop.\n
-    	Hope you like it.\n 
-    	Please consider donating.\n
-    	http://www.osilabs.com/m/mobilecontent/colorblindassist.
-    </string>
-    
 </resources>
