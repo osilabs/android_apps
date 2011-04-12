@@ -575,6 +575,7 @@ public class ColorblindAssist extends Activity {
 				
 		        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 		        alertDialog.setTitle(R.string.app_name);
+		        alertDialog.setIcon(R.drawable.ic_launcher);
 		        alertDialog.setMessage("You are running version " + version);
 		        alertDialog.setButton(this.getString(R.string.sample_button),
 		        		new DialogInterface.OnClickListener() {
