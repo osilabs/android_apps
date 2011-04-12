@@ -19,6 +19,8 @@
  * TODO - Choose different colorblindness orientations. Red/green, pink/blue.
  * TODO - Vertical orientation option
  * TODO - left and right handedness options.
+ * TODO - Camera shutter button pauses meters
+ * TODO - Bat saver mode stops processing frames if it doesn't detect movement for 30 seconds.
  * ----------------------------------------------------------------------------
  * OPTIMIZE - Create all the paint in onCreate. Do any static calculations there too.
  * OPTIMIZE - color_value_display is finding and setting values with each frame.
