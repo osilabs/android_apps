@@ -26,6 +26,8 @@
 package com.osilabs.android.apps.colorblindassist;
 
 import java.io.IOException;
+import java.util.List;
+
 import com.osilabs.android.apps.colorblindassist.R;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -44,6 +46,7 @@ import android.graphics.Paint;
 import android.hardware.Camera;
 import android.hardware.Camera.PreviewCallback;
 import android.hardware.Camera.ShutterCallback;
+import android.hardware.Camera.Size;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -81,7 +84,8 @@ public class ColorblindAssist extends Activity {
 	
 	private static int FRAMEBUFFER_IS = AVAILABLE;
 	private static int IS_PAUSING = NO;
-	
+    private static boolean SHOWING_PREVIEW = false; 
+
 //	// RGB values are set as they become available.
 //	private static final int RGB_ELEMENTS = 4;
 //	private static int[] RGBs = new int[RGB_ELEMENTS];
@@ -115,12 +119,19 @@ public class ColorblindAssist extends Activity {
 	private TextView vSubTitle;
 	public int subTitleHeight;
 	
+    private SurfaceView mPreview;
+    private SurfaceHolder mHolder;
+    private Camera mCamera;
 
     @Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		//Log.d(TAG, "onCreate'd");
+
+		mPreview = null;
+        mHolder = null;
+        mCamera = null;
 
 		d = new ColorDrop();
 		
@@ -215,9 +226,10 @@ public class ColorblindAssist extends Activity {
 	@Override
 	public void onResume() {
 		//Log.d(TAG, "onResumed'd");
-		IS_PAUSING = NO;
 		super.onResume();
+		//IS_PAUSING = NO;
 		wl.acquire();
+		preview.onResume();
 	}
 
 	public void onRestoreInstanceState() {
@@ -371,8 +383,11 @@ public class ColorblindAssist extends Activity {
 	//
 	private class Preview extends SurfaceView implements SurfaceHolder.Callback {
 
-		SurfaceHolder mHolder;
-		public Camera camera;
+		//SurfaceHolder mHolder;
+		//public Camera camera;
+		
+		Size mPreviewSize;
+		//List<Size> mSupportedPreviewSizes;
 
 		Preview(Context context) {
 			super(context);
@@ -384,8 +399,6 @@ public class ColorblindAssist extends Activity {
 				mHolder.addCallback(this);
 				mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 			} catch (Exception e) {
-				// FIXME - put toast errors if this happens
-				//Log.d(TAG, "YuvImage error:" + e.getMessage());
 				e.printStackTrace();
 			}
 		}
@@ -395,8 +408,47 @@ public class ColorblindAssist extends Activity {
 	    	//Log.d(TAG, "Preview onCreated'd");
 	    	
 	    	// Coming out of pause
-			IS_PAUSING = NO;
+			//IS_PAUSING = NO;
 	    }
+
+		public void onPause() {
+			//Log.d(TAG, "onPause'd - preview class");
+			
+			IS_PAUSING = YES;
+			
+			// Surface will be destroyed when we return, so stop the preview.
+			// Because the CameraDevice object is not a shared resource, it's
+			// very important to release it when the activity is paused.
+			if (mCamera != null) {
+				mCamera.setPreviewCallback(null);
+				mCamera.stopPreview();
+				SHOWING_PREVIEW = false;
+				mCamera.release();
+				mCamera = null;
+			}
+			
+			//Log.d(TAG, "CAMERA RELEASED HERE");
+			
+			// Fixed bug with powering off then coming back to a blank screen by
+			//  calling surfaceDestroyed/surfaceCreated from onPause/onResume.
+			this.surfaceDestroyed(mHolder);
+		}
+		
+		public void onResume() {
+			IS_PAUSING = NO;
+
+			// Open the default i.e. the first rear facing camera.
+			mCamera = Camera.open();
+			if (mCamera != null) {
+				//mSupportedPreviewSizes = camera.getParameters().getSupportedPreviewSizes();
+			    requestLayout();
+			    //SHOWING_PREVIEW = true;
+			    mCamera.startPreview();
+			} 
+			
+			// Need this for killing power then coming back.
+			this.surfaceCreated(mHolder);
+		}
 
 		// Called once the holder is ready
 		public void surfaceCreated(SurfaceHolder holder) {
@@ -404,10 +456,10 @@ public class ColorblindAssist extends Activity {
 
 			// The Surface has been created, acquire the camera and tell it
 			// where to draw.
-			camera = Camera.open();
+			//mCamera = Camera.open();
 			try {
-				camera.setPreviewDisplay(holder);
-				camera.setPreviewCallback(new PreviewCallback() {
+				mCamera.setPreviewDisplay(holder);
+				mCamera.setPreviewCallback(new PreviewCallback() {
 					//
 					// FIXME - Take these callbacks out of inline. Read
 					//          somewhere this was an efficiency problem
@@ -445,8 +497,8 @@ public class ColorblindAssist extends Activity {
 					}
 				});
 			} catch (IOException e) {
-	            camera.release();
-	            camera = null;
+				mCamera.release();
+				mCamera = null;
 				e.printStackTrace();
 			}
 		}
@@ -455,32 +507,44 @@ public class ColorblindAssist extends Activity {
 		public void surfaceChanged(SurfaceHolder holder, int format, int w, int h) {
 			//Log.d(TAG, "surfaceChange'd");
 			try{
-				Camera.Parameters p = camera.getParameters();
-				Camera.Size s = p.getPreviewSize();
-				//p.setPictureFormat(ImageFormat.RGB_565);
-				//camera.setParameters(p);
-				view_w = s.width;
-				view_h = s.height;
 				
-//				// getsupportedpreviewsizes needs v5
-//				if (Build.VERSION.SDK_INT >= 5) {
-//		
-//					List<Camera.Size> ls = p.getSupportedPreviewSizes();
-//					for (Iterator it = ls.iterator(); it.hasNext();) {
-//						Camera.Size sz = (Camera.Size) it.next();
-//						//Log.d(TAG, "prv sz:" + Integer.toString(sz.width) + ","
-//								+ Integer.toString(sz.height));
-//					}
-//		
-//					ls = p.getSupportedPictureSizes();
-//					for (Iterator it = ls.iterator(); it.hasNext();) {
-//						Camera.Size sz = (Camera.Size) it.next();
-//						//Log.d(TAG, "pic sz:" + Integer.toString(sz.width) + ","
-//								+ Integer.toString(sz.height));
-//					}
-//				}
-//				
-				camera.startPreview();
+                // I found this on http://pastebin.com/06FunF5k and thought it may
+                //  be a benefit. 
+                if (SHOWING_PREVIEW) {
+                        SHOWING_PREVIEW = false;
+                        mCamera.stopPreview();
+                }
+
+                
+                if (IS_PAUSING == NO) {
+					Camera.Parameters p = mCamera.getParameters();
+					Camera.Size s = p.getPreviewSize();
+					//p.setPictureFormat(ImageFormat.RGB_565);
+					//camera.setParameters(p);
+					view_w = s.width;
+					view_h = s.height;
+				
+	//				// getsupportedpreviewsizes needs v5
+	//				if (Build.VERSION.SDK_INT >= 5) {
+	//		
+	//					List<Camera.Size> ls = p.getSupportedPreviewSizes();
+	//					for (Iterator it = ls.iterator(); it.hasNext();) {
+	//						Camera.Size sz = (Camera.Size) it.next();
+	//						//Log.d(TAG, "prv sz:" + Integer.toString(sz.width) + ","
+	//								+ Integer.toString(sz.height));
+	//					}
+	//		
+	//					ls = p.getSupportedPictureSizes();
+	//					for (Iterator it = ls.iterator(); it.hasNext();) {
+	//						Camera.Size sz = (Camera.Size) it.next();
+	//						//Log.d(TAG, "pic sz:" + Integer.toString(sz.width) + ","
+	//								+ Integer.toString(sz.height));
+	//					}
+	//				}
+
+					SHOWING_PREVIEW = true;
+					mCamera.startPreview();
+                }
 			} catch (Exception e) {
 				// FIXME - put toast errors if this happens
 				//Log.d(TAG, "YuvImage error:" + e.getMessage());
@@ -496,28 +560,12 @@ public class ColorblindAssist extends Activity {
 			// Surface will be destroyed when we return, so stop the preview.
 			// Because the CameraDevice object is not a shared resource, it's
 			// very important to release it when the activity is paused.
-			if (camera != null) {
-				camera.stopPreview();
+			if (mCamera != null) {
+				SHOWING_PREVIEW = false;
+				mCamera.stopPreview();
 			}
 
 			//Log.d(TAG, "surfaceDestroyed'd finish");
-		}
-
-		public void onPause() {
-			//Log.d(TAG, "onPause'd - preview class");
-			
-			// Surface will be destroyed when we return, so stop the preview.
-			// Because the CameraDevice object is not a shared resource, it's
-			// very important to release it when the activity is paused.
-			
-			if (camera != null) {
-				camera.setPreviewCallback(null);
-				camera.stopPreview();
-				camera.release();
-				camera = null;
-			}
-			
-			//Log.d(TAG, "CAMERA RELEASED HERE");
 		}
 	}
 
