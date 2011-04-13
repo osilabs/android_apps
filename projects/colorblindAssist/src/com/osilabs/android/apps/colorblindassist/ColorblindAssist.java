@@ -32,7 +32,6 @@ package com.osilabs.android.apps.colorblindassist;
 
 import java.io.IOException;
 
-import com.osilabs.android.apps.colorblindassist.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -54,6 +53,7 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -67,13 +67,15 @@ public class ColorblindAssist extends Activity {
 	//
 	// CONSTS
 	//
+	protected static final String MOBILECONTENT_URL_HELP     = "http://osilabs.com/m/mobilecontent/help/cba.php";
+
 	private static final int BUSY = 0;
 	private static final int AVAILABLE = 1;
 	private static final int YES = 0;
 	private static final int NO = 1;
-	private static final int MENU_PREFS = 0;
-	private static final int MENU_ABOUT = 1;
-	private static final int MENU_QUIT = 2;
+//	private static final int MENU_PREFS = 0;
+//	private static final int MENU_ABOUT = 1;
+//	private static final int MENU_QUIT = 2;
 	private static final String TAG = "<<< ** osilabs.com ** >>> ";
 	
 	private static int FRAMEBUFFER_IS = AVAILABLE;
@@ -544,9 +546,14 @@ public class ColorblindAssist extends Activity {
 	
 	/* Creates the menu items */
 	public boolean onCreateOptionsMenu(Menu menu) {
-	    //menu.add(0, MENU_PREFS, 0, "Preferences");
-	    menu.add(0, MENU_ABOUT, 0, "About");
-	    menu.add(0, MENU_QUIT, 0, "Quit");
+//	    //menu.add(0, MENU_PREFS, 0, "Preferences");
+//	    menu.add(0, MENU_ABOUT, 0, "About");
+//	    menu.add(0, MENU_QUIT, 0, "Quit");
+//	    
+//	    return true;
+//	    
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.options, menu);
 	    
 	    return true;
 	}
@@ -555,14 +562,12 @@ public class ColorblindAssist extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {
 		        
-		    case MENU_PREFS:
-		    	Toast.makeText(getApplicationContext(), "Prefs", Toast.LENGTH_SHORT).show();
-		    	//Intent intent = new Intent()
-		    	//	.setClass(this, com.osilabs.android.apps.Prefs.class);
-		    	//this.startActivityForResult(intent, 0);
+		    case R.id.menu_help:
+        		Intent mIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(MOBILECONTENT_URL_HELP));
+				startActivity(mIntent); 
 		    	return true;
 
-			case MENU_ABOUT:
+			case R.id.menu_about:
 		        //
 		        // Set locals with manifest variables
 		        //
@@ -590,10 +595,26 @@ public class ColorblindAssist extends Activity {
 		        alertDialog.setIcon(R.drawable.icon);
 		        alertDialog.show();
 		    	return true;
-
-		    case MENU_QUIT:
-		        finish();
-		        return true;
+		    	
+		    case R.id.menu_share:
+//				final Intent shareintent = new Intent(Intent.ACTION_SEND);
+//				shareintent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//				shareintent.setType("text/plain");
+//				shareintent.putExtra(Intent.EXTRA_SUBJECT, this.getResources().getString(R.string.txt_sharing_subject_a) + " " + this.getResources().getString(R.string.app_name) + " " + this.getResources().getString(R.string.txt_sharing_subject_b));
+//				shareintent.putExtra(Intent.EXTRA_TEXT, 
+//							this.getResources().getString(R.string.txt_sharing_body_a) + " "
+//							+ this.getResources().getString(R.string.app_name) + " "
+//							+ this.getResources().getString(R.string.txt_sharing_body_b) + "\n\n"
+//							+ this.getResources().getString(R.string.txt_sharing_body_c) + "\n\n"
+//							+ this.getResources().getString(R.string.market_link_http) + "\n\n"
+//							+ this.getResources().getString(R.string.txt_sharing_body_d) + "\n\n"
+//							+ this.getResources().getString(R.string.txt_sharing_body_e) + "\n\n"
+//							+ this.getResources().getString(R.string.app_name) + "\n\n"
+//							+ "QR Code: http://chart.apis.google.com/chart?cht=qr&amp;chs=150x150&amp;chl=http://www.appbrain.com/app/"
+//							+ Config.NAMESPACE
+//							+ "?install=web"
+//				);
+//				startActivity(Intent.createChooser(shareintent, "Share"));
 	    }
 	    return false;
 	}

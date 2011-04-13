@@ -4,4 +4,8 @@
     <string name="color_value">Calibrating...</string>
     <string name="app_name"><b>Color</b> Blind Assist</string>
     <string name="sample_button">More...</string>
+    
+    <string name="menu_share">Share</string>
+    <string name="menu_help">Help</string>
+    <string name="menu_about">About</string>
 </resources>
