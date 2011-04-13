@@ -21,7 +21,8 @@
 				android:id="@+id/bl_display"/>
 				
 			<TextView android:layout_width="fill_parent"
-				android:layout_height="wrap_content" 
+                android:layout_height="fill_parent" 
+                android:gravity="top|center_horizontal"
 				android:text="@string/color_value"
 				android:textSize="20dip"
 				android:textColor="#222222" 

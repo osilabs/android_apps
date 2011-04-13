@@ -531,7 +531,7 @@ public class ColorblindAssist extends Activity {
 				TextView bl_tv = (TextView) findViewById(R.id.color_value_display);
 				bl_tv.setTextSize(70);
 				bl_tv.setTextColor(Color.WHITE);
-				bl_tv.setText(" " + d.colorname );
+				bl_tv.setText(d.colorname );
 			}
 		}
 

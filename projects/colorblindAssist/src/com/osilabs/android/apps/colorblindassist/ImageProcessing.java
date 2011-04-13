@@ -2,6 +2,10 @@ package com.osilabs.android.apps.colorblindassist;
 import java.lang.Math;
 
 public class ImageProcessing {
+	
+	public static int dotPosition=3;
+	public static int dotPositionModifier=1;
+
 	// decode Y, U, and V values on the YUV 420 buffer described as YCbCr_422_SP
 	// by Android David Manpearl 081201
 	public static void decodeYUV(int[] out, byte[] fg, int width, int height)
@@ -197,7 +201,7 @@ public class ImageProcessing {
 	
 	public static String getColorNameFromRGB(ColorDrop d) {
 		// Turn R, G, and B into a string indicating the color
-		
+
 		// 0=red, 1=green, 2=blue
 		int c = 0;
 		
@@ -228,33 +232,39 @@ public class ImageProcessing {
 		// WHITE
 		if ((d.R+d.G+d.B) > 650) {
 			//return "white";
-			return "";
+			// return ".     ";
+			return ImageProcessing.getDotPosition();
 		}
 
 		// BLACK
 		if ((d.R+d.G+d.B) < 80) {
-			return "";
+			//return " .    ";
 			//return "black";
+			return ImageProcessing.getDotPosition();
 		}
 
 		// GRAY
 		if ( (Math.abs(d.R-d.G) < 15) && (Math.abs(d.R-d.B) < 15) ) {
 			//return "gray";
-			return "";
+			//return "  .   ";
+			return ImageProcessing.getDotPosition();
+
 		}
 		
 		// PURPLE
 		// Purple is g < r < b or g < b < r
 		if ( ((d.G < d.R) && (d.R < d.B)) || ((d.G < d.B) && (d.B < d.R)) ) {
 			//return "purple";
-			return "";
+			//return "   .  ";
+			return ImageProcessing.getDotPosition();
 		}
 		
 		// YELLOW
 		// r and g are close, blue is much lower. r must be high.
 		if ( ((d.R-d.G) < 30) && ((d.G-d.B) > 80) && (d.R > 190) ) {
 			//return "yellow";
-			return "";
+			//return "    . ";
+			return ImageProcessing.getDotPosition();
 		}
 		
 		// orange
@@ -262,8 +272,11 @@ public class ImageProcessing {
 		// && r > b
 		if ((((d.R-d.G) - (d.G-d.B)) < 20) && d.R > d.B) {
 			//return "orange";
-			return "";
+			//return "     .";
+			return ImageProcessing.getDotPosition();
 		}
+		
+		
 //		
 ////		// Look for purple - R and B are high, G is low
 ////		// R::B diff is low
@@ -290,7 +303,24 @@ public class ImageProcessing {
 		return baseC;
 	}
 
+	private static String getDotPosition() {
+		int dots = 6;
+		String dotstring = "";
+		
+		if (ImageProcessing.dotPosition <= 1) {
+			ImageProcessing.dotPositionModifier = 1;
+		} else if (ImageProcessing.dotPosition >= dots) {
+			ImageProcessing.dotPositionModifier = -1;
+		}
+		
+		ImageProcessing.dotPosition += ImageProcessing.dotPositionModifier;
 	
+		for (int i = 1; i <= dots; i++) {
+			dotstring += (i == ImageProcessing.dotPosition) ? "." : " ";
+		}
+		
+		return dotstring;
+	}
 	
 	public float hue_2_rgb(float v1, float v2, float vh) {
 		if (vh < 0) {
