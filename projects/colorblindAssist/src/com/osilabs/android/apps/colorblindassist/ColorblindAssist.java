@@ -592,7 +592,6 @@ public class ColorblindAssist extends Activity {
         				startActivity(mIntent); 
 		            } 
 		        });
-		        alertDialog.setIcon(R.drawable.icon);
 		        alertDialog.show();
 		    	return true;
 		    	
