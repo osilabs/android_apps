@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="com.osilabs.android.apps.colorblindAssist.test"
+      package="com.osilabs.android.apps.cba.test"
       android:versionCode="1"
       android:versionName="1.0">
     <application android:icon="@drawable/icon" android:label="@string/app_name">
@@ -8,5 +8,5 @@
     <uses-library android:name="android.test.runner" />
     </application>
     <uses-sdk android:minSdkVersion="4" />
-    <instrumentation android:targetPackage="com.osilabs.android.apps.colorblindAssist" android:name="android.test.InstrumentationTestRunner" />
+    <instrumentation android:targetPackage="com.osilabs.android.apps.cba" android:name="android.test.InstrumentationTestRunner" />
 </manifest> 
