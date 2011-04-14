@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Color Eye</string>
     <string name="color_value">Calibrating...</string>
-    <string name="app_name"><b>Color</b>Blind Assist</string>
+    <string name="app_name"><b>Color</b>BlindAssist</string>
     <string name="sample_button">More...</string>
     
     <string name="menu_share">Share</string>
