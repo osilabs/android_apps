@@ -9,6 +9,7 @@
  * - About screen
  * - LD icon
  * - Work on accuracy of colors
+ * - Shift meters to center
  * FIXME - Detect cameras and don't allow to run if don't have cameras.
  * ----------------------------------------------------------------------------
  * TODO - Rename to Super ColorVision, or ColorVisionAssist
@@ -28,7 +29,7 @@
  */
 
 
-package com.osilabs.android.apps.colorblindassist;
+package com.osilabs.android.apps.cba;
 
 import java.io.IOException;
 
@@ -67,15 +68,15 @@ public class ColorblindAssist extends Activity {
 	//
 	// CONSTS
 	//
-	protected static final String MOBILECONTENT_URL_HELP     = "http://osilabs.com/m/mobilecontent/help/cba.php";
+	protected static final String MOBILECONTENT_URL_HELP  = "http://osilabs.com/m/apps/help/cba.php";
+	protected static final String NAMESPACE               = "com.osilabs.android.apps.cba";
+	protected static final String MARKET_URL              = "market://search?q=pname:com.osilabs.android.apps.cba";
+	protected static final String MARKET_URL_HTTP         = "https://market.android.com/details?id=com.osilabs.android.apps.cba";
 
 	private static final int BUSY = 0;
 	private static final int AVAILABLE = 1;
 	private static final int YES = 0;
 	private static final int NO = 1;
-//	private static final int MENU_PREFS = 0;
-//	private static final int MENU_ABOUT = 1;
-//	private static final int MENU_QUIT = 2;
 	private static final String TAG = "<<< ** osilabs.com ** >>> ";
 	
 	private static int FRAMEBUFFER_IS = AVAILABLE;
@@ -544,6 +545,8 @@ public class ColorblindAssist extends Activity {
 //		}
 	}
 	
+	
+	
 	/* Creates the menu items */
 	public boolean onCreateOptionsMenu(Menu menu) {
 //	    //menu.add(0, MENU_PREFS, 0, "Preferences");
@@ -556,6 +559,7 @@ public class ColorblindAssist extends Activity {
 	    inflater.inflate(R.menu.options, menu);
 	    
 	    return true;
+	    
 	}
 
 	/* Handles item selections */
@@ -583,37 +587,37 @@ public class ColorblindAssist extends Activity {
 		        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 		        alertDialog.setTitle(R.string.app_name);
 		        alertDialog.setIcon(R.drawable.ic_launcher);
-		        alertDialog.setMessage("You are running version " + version);
-		        alertDialog.setButton(this.getString(R.string.sample_button),
-		        		new DialogInterface.OnClickListener() {
-		        	public void onClick(DialogInterface dialog, int which) {
-		        		Intent mIntent = new Intent(Intent.ACTION_VIEW, 
-		        				Uri.parse("http://osilabs.com/m/mobilecontent/colorblindassist/about.php#" + version)); 
-        				startActivity(mIntent); 
-		            } 
-		        });
+		        alertDialog.setMessage("You are running version " + version + "\n\nosilabs.com LLC");
+//		        alertDialog.setButton(this.getString(R.string.sample_button),
+//		        		new DialogInterface.OnClickListener() {
+//		        	public void onClick(DialogInterface dialog, int which) {
+//		        		Intent mIntent = new Intent(Intent.ACTION_VIEW, 
+//		        				Uri.parse("http://osilabs.com/m/mobilecontent/colorblindassist/about.php#" + version)); 
+//        				startActivity(mIntent); 
+//		            } 
+//		        });
 		        alertDialog.show();
 		    	return true;
 		    	
 		    case R.id.menu_share:
-//				final Intent shareintent = new Intent(Intent.ACTION_SEND);
-//				shareintent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//				shareintent.setType("text/plain");
-//				shareintent.putExtra(Intent.EXTRA_SUBJECT, this.getResources().getString(R.string.txt_sharing_subject_a) + " " + this.getResources().getString(R.string.app_name) + " " + this.getResources().getString(R.string.txt_sharing_subject_b));
-//				shareintent.putExtra(Intent.EXTRA_TEXT, 
-//							this.getResources().getString(R.string.txt_sharing_body_a) + " "
-//							+ this.getResources().getString(R.string.app_name) + " "
-//							+ this.getResources().getString(R.string.txt_sharing_body_b) + "\n\n"
-//							+ this.getResources().getString(R.string.txt_sharing_body_c) + "\n\n"
-//							+ this.getResources().getString(R.string.market_link_http) + "\n\n"
-//							+ this.getResources().getString(R.string.txt_sharing_body_d) + "\n\n"
-//							+ this.getResources().getString(R.string.txt_sharing_body_e) + "\n\n"
-//							+ this.getResources().getString(R.string.app_name) + "\n\n"
-//							+ "QR Code: http://chart.apis.google.com/chart?cht=qr&amp;chs=150x150&amp;chl=http://www.appbrain.com/app/"
-//							+ Config.NAMESPACE
-//							+ "?install=web"
-//				);
-//				startActivity(Intent.createChooser(shareintent, "Share"));
+		    	String appname = this.getResources().getString(R.string.app_name);
+		    	
+				final Intent shareintent = new Intent(Intent.ACTION_SEND);
+				shareintent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				shareintent.setType("text/plain");
+				shareintent.putExtra(Intent.EXTRA_SUBJECT, "I like  " + appname + " for Android!");
+				shareintent.putExtra(Intent.EXTRA_TEXT,
+						"I am sharing " + appname + " for Android with you. A free app!\n\n"
+						
+						+ "From your mobile device or computer:\n"
+						+ " " + MARKET_URL_HTTP + "\n\n"
+						
+						+ "If the link does not work for you or you do not use Android Market, please search your market for:\n"
+						+ " " + appname + "\n\n"
+						
+						+ "Thanks!"
+				);
+				startActivity(Intent.createChooser(shareintent, "Share"));
 	    }
 	    return false;
 	}

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.osilabs.android.apps.colorblindassist;
+package com.osilabs.android.apps.cba;
 
 public class ColorDrop {
 	public int R = 0;

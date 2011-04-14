@@ -1,7 +1,10 @@
-package com.osilabs.android.apps.colorblindassist;
+package com.osilabs.android.apps.cba;
 import java.lang.Math;
 
 public class ImageProcessing {
+	
+	public static int BEHAVIOR_FREE = 1;
+	public static int BEHAVIOR_PRO  = 1;
 	
 	public static int dotPosition=3;
 	public static int dotPositionModifier=1;
@@ -200,106 +203,71 @@ public class ImageProcessing {
 	}
 	
 	public static String getColorNameFromRGB(ColorDrop d) {
-		// Turn R, G, and B into a string indicating the color
-
-		// 0=red, 1=green, 2=blue
-		int c = 0;
-		
-		// -------------------------------------------------------------
-		// Algorithm
-		//
-		// 1. Determine if red, green, or blue. If no other colors are
-		//     set after this point, the color will end up falling
-		//     back on one of these three colors.
-		// 2. Figure out if black, gray, or white.
-		// 3. Look for alternates: purple, yellow, pink, brown, orange.
-		// -------------------------------------------------------------
-		
+		return ImageProcessing.getColorNameFromRGB(d, ImageProcessing.BEHAVIOR_FREE);
+	}
+	
+	/**
+	 * Turn a ColorDrop object into a string of which color it represents
+	 * 
+	 *	Algorithm
+	 *	1. Determine if red, green, or blue. If no other colors are
+	 *	     set after this point, the color will end up falling
+	 *	     back on one of these three colors.
+	 *	2. Figure out if black, gray, or white.
+	 *	3. Look for alternates: purple, yellow, pink, brown, orange.
+	 *
+	 * @param d ColorDrop object
+	 * @param behavior free or pro version behavior
+	 * @return string of color value
+	 */
+	public static String getColorNameFromRGB(ColorDrop d, int behavior) {
 		// Calculate Max and base color
 		int max = d.R;
-		String baseC = "red";
+		String baseC = "Red";
 		if (d.G>d.R) {
 			max = d.G;
-			baseC = "green";
-			c = 1;
+			baseC = "Green";
 		}
 		if (d.B>max) {
 			max = d.B;
-			baseC = "blue";
-			c = 2;
+			baseC = "Blue";
 		}
 
 		// WHITE
 		if ((d.R+d.G+d.B) > 650) {
-			//return "white";
-			// return ".     ";
-			return ImageProcessing.getDotPosition();
+			return (behavior == ImageProcessing.BEHAVIOR_PRO) ? "White" : ImageProcessing.getDotPosition();
 		}
 
 		// BLACK
-		if ((d.R+d.G+d.B) < 80) {
-			//return " .    ";
-			//return "black";
-			return ImageProcessing.getDotPosition();
+		if ((d.R+d.G+d.B) < 42) {
+			return (behavior == ImageProcessing.BEHAVIOR_PRO) ? "Black" : ImageProcessing.getDotPosition();
 		}
 
 		// GRAY
 		if ( (Math.abs(d.R-d.G) < 15) && (Math.abs(d.R-d.B) < 15) ) {
-			//return "gray";
-			//return "  .   ";
-			return ImageProcessing.getDotPosition();
-
+			return (behavior == ImageProcessing.BEHAVIOR_PRO) ? "Gray" : ImageProcessing.getDotPosition();
 		}
 		
 		// PURPLE
 		// Purple is g < r < b or g < b < r
 		if ( ((d.G < d.R) && (d.R < d.B)) || ((d.G < d.B) && (d.B < d.R)) ) {
-			//return "purple";
-			//return "   .  ";
-			return ImageProcessing.getDotPosition();
+			return (behavior == ImageProcessing.BEHAVIOR_PRO) ? "Purple" : ImageProcessing.getDotPosition();
 		}
 		
 		// YELLOW
 		// r and g are close, blue is much lower. r must be high.
 		if ( ((d.R-d.G) < 30) && ((d.G-d.B) > 80) && (d.R > 190) ) {
-			//return "yellow";
-			//return "    . ";
-			return ImageProcessing.getDotPosition();
+			return (behavior == ImageProcessing.BEHAVIOR_PRO) ? "Yellow" : ImageProcessing.getDotPosition();
 		}
 		
 		// orange
 		// stairstep r > g > b, diff r:g = diff g:b +- n
 		// && r > b
 		if ((((d.R-d.G) - (d.G-d.B)) < 20) && d.R > d.B) {
-			//return "orange";
-			//return "     .";
-			return ImageProcessing.getDotPosition();
+			return (behavior == ImageProcessing.BEHAVIOR_PRO) ? "Orange" : ImageProcessing.getDotPosition();			
 		}
-		
-		
-//		
-////		// Look for purple - R and B are high, G is low
-////		// R::B diff is low
-////		if (Math.abs(d.R-d.B) <= 10) {
-////			// R::G diff is high
-////			if ((d.R-d.G) > 20) {
-////				return "purple";
-////			}
-////		}
 
-		// From base color, look for neighboring colors
-		switch(c) {
-		case 0:	
-			// red
-			
-			break;
-		case 1:	
-			// green
-			break;
-		case 2:	
-			// blue
-			break;
-		};
+		// If didn't find anything better, we have r, g, or b.
 		return baseC;
 	}
 
