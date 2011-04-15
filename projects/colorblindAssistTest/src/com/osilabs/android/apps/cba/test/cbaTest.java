@@ -38,7 +38,29 @@ public class cbaTest extends ActivityInstrumentationTestCase2<ColorblindAssist> 
         //assertEquals(resourceString, (String)mView.getText());
         assertEquals(resourceString, "ColorBlindAssist");
     }
-    
+    public void testReds() {
+    	this.rgbCheck("187,74,39", "Red");
+    	this.rgbCheck("104,51,34", "Red");
+    	this.rgbCheck("210,134,110", "Red");
+    	this.rgbCheck("219,31,64", "Red");
+    	this.rgbCheck("137,43,60", "Red");
+    }
+    public void testGreens() {
+    	this.rgbCheck("93,107,47", "Green");
+    	this.rgbCheck("47,107,86", "Green");
+    	this.rgbCheck("170,223,162", "Green");
+    	this.rgbCheck("36,78,30", "Green");
+    }
+    public void testBlues() {
+    	this.rgbCheck("30,37,78", "Blue");
+    	this.rgbCheck("30,60,78", "Blue");
+    }
+    public void testPurples() {
+    	this.rgbCheck("173,100,215", "Purple");
+    }
+    public void rgbCheck(String rgb, String expected) {
+    	d.setRGB(rgb);assertEquals("Color: " + rgb, expected, ImageProcessing.getColorNameFromRGB(d));    	
+    }
     public void testMinimums() {
     	// Test minimum threasholds. i.e. 0.42.0 is minimum for green
     	for (int i=42; i<=255; i++) {
@@ -59,7 +81,7 @@ public class cbaTest extends ActivityInstrumentationTestCase2<ColorblindAssist> 
     	assertEquals("Green Value:" + Integer.toString(value), "Green", color);    	
     }
     public void blue(String color, int value) {
-    	assertEquals("Blue Value:" + Integer.toString(value), "Blue", color);    	
+    	assertEquals("Blue Value:" + Integer.toString(value), "Blue", color);
     }
 
 }
