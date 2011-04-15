@@ -12,7 +12,8 @@ public class cbaTest extends ActivityInstrumentationTestCase2<ColorblindAssist> 
 	private ColorblindAssist mActivity;
     private TextView mView;
     private String resourceString;
-    
+    private ColorDrop d;
+
 	public cbaTest() {
 		super("com.osilabs.android.apps.cba", ColorblindAssist.class);
 		// TODO Auto-generated constructor stub
@@ -21,6 +22,9 @@ public class cbaTest extends ActivityInstrumentationTestCase2<ColorblindAssist> 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
+        
+    	d = new ColorDrop();
+        
         mActivity = this.getActivity();
         mView = (TextView) mActivity.findViewById(com.osilabs.android.apps.cba.R.id.color_value_display);
         resourceString = mActivity.getString(com.osilabs.android.apps.cba.R.string.app_name);
@@ -36,8 +40,6 @@ public class cbaTest extends ActivityInstrumentationTestCase2<ColorblindAssist> 
     }
     
     public void testMinimums() {
-    	ColorDrop d = new ColorDrop();
-    
     	// Test minimum threasholds. i.e. 0.42.0 is minimum for green
     	for (int i=42; i<=255; i++) {
     		d.R=i; d.G=0; d.B=0; 
