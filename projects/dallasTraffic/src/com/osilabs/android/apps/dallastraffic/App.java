@@ -13,6 +13,7 @@ import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
+
 import com.osilabs.android.lib.Session;
 import com.osilabs.android.lib.Version;
 
