@@ -1,5 +1,8 @@
 package com.osilabs.android.apps.dallastraffic;
 
+import com.osilabs.android.apps.libtrafficapp.*;
+import com.Leadbolt.AdController;
+
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +46,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -100,9 +104,13 @@ public class App extends MapActivity {
 	protected static boolean ABOUT_IS_VISIBLE    = false;
 	
 	protected static Spinner spViewChoices;
-	protected static WebView wvAd;
+	//protected static WebView wvAd;
+	protected static WebView wvLeadbolt;
 	protected static WebView wvMain;
 	protected static SharedPreferences mySharedPreferences;
+	
+	// LeadBolt ads
+	private AdController leadboltController;
 
 	//
 	// Navbar components
@@ -238,6 +246,7 @@ public class App extends MapActivity {
     	wvMain.setVerticalFadingEdgeEnabled(true);
     	wvMain.setBackgroundColor(R.color.backgroundGray);
 
+    	/*
 		//
 		// Ad banner Web View
 		//
@@ -249,7 +258,8 @@ public class App extends MapActivity {
         if (Config.NO_ADS) {
         	wvAd.setVisibility(View.GONE);
         }
-        
+        */
+    	
     	//
     	// Main Map View
     	//
@@ -355,6 +365,11 @@ public class App extends MapActivity {
 		});
 
 		//if(Config.DEBUG>0)Log.d(App.TAG, "onCreate() complete: " + MapsTab.MenuIndexes.debug());
+	    
+	    // LeadBolt
+	    wvLeadbolt = (WebView) findViewById(R.id.leadboltView);
+	    wvLeadbolt.getSettings().setJavaScriptEnabled(true);
+	    wvLeadbolt.loadUrl("http://osilabs.com/tests/leadbolt.html");
     }
     @Override
     public void onStart() {
@@ -409,6 +424,11 @@ public class App extends MapActivity {
     @Override
     public void onResume() {
     	super.onResume();
+    }
+    @Override
+    public void onDestroy() {
+    	leadboltController.destroyAd();
+    	super.onDestroy();
     }
     
     //
@@ -935,7 +955,7 @@ public class App extends MapActivity {
 		if(Config.DEBUG>0) Log.d(TAG, "reloadViews() " + reloadString);
 		
 		// Refresh banner webview
-		wvAd.loadUrl(AD_BANNER_URL);
+		//wvAd.loadUrl(AD_BANNER_URL);
 	}
 
 	public void activateViewType(int v) {
