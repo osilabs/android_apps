@@ -36,13 +36,13 @@
 			android:layout_height="fill_parent" android:visibility="gone" />
 
 		<!-- debug key -->
-		<!-- 0WgwZVAoUfH3ScZyVGmByjGtZKSWaZFrGO1c4Mg -->
+		<!-- 0WgwZVAoUfH1WK2hnfQAFO9cNTOl9AWgn6FWxXw -->
 		<!-- Prod key -->
 		<!-- 0WgwZVAoUfH3ueNOnHUNfUSYzDdEUtbgLc4rbaw -->
 		<com.google.android.maps.MapView
 			android:id="@+id/mainMapView" android:layout_width="fill_parent"
 			android:layout_height="fill_parent" android:clickable="true"
-			android:apiKey="0WgwZVAoUfH3ueNOnHUNfUSYzDdEUtbgLc4rbaw"
+			android:apiKey="0WgwZVAoUfH1WK2hnfQAFO9cNTOl9AWgn6FWxXw"
 			android:visibility="gone" />
 
 	</FrameLayout>
