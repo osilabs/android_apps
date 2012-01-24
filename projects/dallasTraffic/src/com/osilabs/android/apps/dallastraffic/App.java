@@ -338,18 +338,21 @@ public class App extends MapActivity {
 	    ivRadios.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				AlertDialog alert = new AlertDialog.Builder(v.getContext())
+            	ScannerRadio.launchScanner( 1, me.getApplicationContext());
+            	/*
+            	AlertDialog alert = new AlertDialog.Builder(v.getContext())
                 .setTitle(R.string.radios_dialog_title)
                 .setItems(Config.RADIOS, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
     		    		// Check prefs for changed radios.
     					//setCurrentRadios();
 
-                    	ScannerRadio.launchScanner( Config.RADIOS_CURRENT_NODE[which]);
+                    	ScannerRadio.launchScanner( Config.RADIOS_CURRENT_NODE[which], me.getApplicationContext());
                     }
                 }).create();
 				
 				alert.show();
+				*/
 			}
 		});
 
@@ -452,7 +455,7 @@ public class App extends MapActivity {
 		
 		List<String> sl = new ArrayList<String>();
 
-		// TODO - move these into the Favorites class
+		// TODO - move these into the javaFavorites class
 		JSONArray ja = null;
 		try {
 			ja = new JSONArray(Config.MAPVIEW_FAVORITES);
@@ -641,8 +644,8 @@ public class App extends MapActivity {
 			    Log.d(TAG, "setCurrentPrefs() Orig Config.MAPVIEW_FAVORITES: " + Config.MAPVIEW_FAVORITES);
 			    Log.d(TAG, "setCurrentPrefs() Orig CalendarTab.CURRENT_WEATHER_FEED_INDEX: " + CalendarTab.CURRENT_WEATHER_FEED_INDEX);
 			    Log.d(TAG, "setCurrentPrefs() Orig CalendarTab.CURRENT_TODAY_FEED_INDEX: " + CalendarTab.CURRENT_TODAY_FEED_INDEX);
-			    Log.d(TAG, "setCurrentPrefs() Orig Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER]: " + Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER]);
-			    Log.d(TAG, "setCurrentPrefs() Orig Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE]: " + Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE]);
+			    //Log.d(TAG, "setCurrentPrefs() Orig Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER]: " + Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER]);
+			    //Log.d(TAG, "setCurrentPrefs() Orig Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE]: " + Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE]);
 		    }
 		    
 		    // Unset the flag indicating prefs need to be re-read
@@ -667,8 +670,8 @@ public class App extends MapActivity {
 			    Log.d(TAG, "setCurrentPrefs() Pull Config.MAPVIEW_FAVORITES: " + Config.MAPVIEW_FAVORITES);
 			    Log.d(TAG, "setCurrentPrefs() Pull CalendarTab.CURRENT_WEATHER_FEED_INDEX: " + CalendarTab.CURRENT_WEATHER_FEED_INDEX);
 			    Log.d(TAG, "setCurrentPrefs() Pull CalendarTab.CURRENT_TODAY_FEED_INDEX: " + CalendarTab.CURRENT_TODAY_FEED_INDEX);
-			    Log.d(TAG, "setCurrentPrefs() Pull Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER]: " + Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER]);
-			    Log.d(TAG, "setCurrentPrefs() Pull Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE]: " + Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE]);
+			    //Log.d(TAG, "setCurrentPrefs() Pull Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER]: " + Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER]);
+			    //Log.d(TAG, "setCurrentPrefs() Pull Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE]: " + Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE]);
     		}
     	}
     }
@@ -708,6 +711,7 @@ public class App extends MapActivity {
 	    	// If this namespace path doesn't end in '_preferences' this won't work.
 	    	SharedPreferences userPrefs = getSharedPreferences(Config.NAMESPACE + "_preferences", Activity.MODE_PRIVATE);
 	    	
+	    	/*
 	        // Get weather radio
 	    	String wr_saved = this.getResources().getString(R.string.pref_weather_radios_selected);
 	    	Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER] = Integer.parseInt(userPrefs
@@ -717,7 +721,8 @@ public class App extends MapActivity {
 	        String pr_saved = this.getResources().getString(R.string.pref_police_radios_selected);
 	    	Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE] = Integer.parseInt(userPrefs
 	          .getString(pr_saved, Integer.toString(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE])));
-
+	    	 */
+	    	
 	    	// today feed
 	    	String tf_saved = this.getResources().getString(R.string.pref_today_feed_selected);
 	    	CalendarTab.CURRENT_TODAY_FEED_INDEX = Integer.parseInt(userPrefs
@@ -999,13 +1004,20 @@ public class App extends MapActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		
 		switch (item.getItemId()) {
-			case R.id.menu_scanner_police:
+
+		    case R.id.menu_radios:
+				ScannerRadio.launchScanner(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE], me.getApplicationContext());
+		    	return true;
+
+	    	/*
+		    case R.id.menu_scanner_police:
 				ScannerRadio.launchScanner(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_POLICE]);
 		    	return true;
 	
 			case R.id.menu_scanner_weather:
 				ScannerRadio.launchScanner(Config.RADIOS_CURRENT_NODE[Config.INDEX_OF_WEATHER]);
 		    	return true;
+		    */
 				
 			case R.id.menu_refresh:
 				refreshViews();

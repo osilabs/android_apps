@@ -1,4 +1,4 @@
-package com.osilabs.android.apps.dallastraffic;
+package com.osilabs.android.apps.libtrafficapp;
 
 import java.util.List;
 
@@ -32,19 +32,20 @@ public class ScannerRadio {
 	    return list.size() > 0;
 	}
 	
-	public static void launchScanner(int which_scanner) {
-		if(Config.DEBUG>0)Log.d("** osilabs.com **", "Scanner node: " + Integer.toString(which_scanner));
+	public static void launchScanner(int which_scanner, Context ctx) {
+		//if(Config.DEBUG>0)Log.d("** osilabs.com **", "Scanner node: " + Integer.toString(which_scanner));
+		final Context final_ctx = ctx;
 		
-		boolean scannerAvailable = isIntentAvailable(App.me,
+		boolean scannerAvailable = isIntentAvailable(ctx,
 				SCANNER_RADIO_NAMESPACE + ".intent.action." + SCANNER_RADIO_ACTION);
 
 		if (scannerAvailable) {
 			Intent intent = new Intent(SCANNER_RADIO_NAMESPACE + ".intent.action." + SCANNER_RADIO_ACTION);
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			intent.putExtra("node", which_scanner);
-			App.me.startActivity(intent);
+			ctx.startActivity(intent);
 		} else {
-		    AlertDialog scannerAlert = new AlertDialog.Builder(App.me).create();
+		    AlertDialog scannerAlert = new AlertDialog.Builder(ctx).create();
 	        scannerAlert.setTitle(R.string.app_name);
 	        scannerAlert.setMessage("To use this feature, install the \"Scanner Radio\" app from the market");
 	        scannerAlert.setIcon(R.drawable.ic_launcher); 
@@ -54,7 +55,7 @@ public class ScannerRadio {
 	    					Intent.ACTION_VIEW,
 	    					Uri.parse("market://details?id=com.scannerradio"));
 	    			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-	    			App.me.startActivity(intent);
+	    			final_ctx.startActivity(intent);
 	            } 
 	        });
 	        scannerAlert.show();

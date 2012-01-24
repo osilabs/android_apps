@@ -15,12 +15,17 @@
     <item android:id="@+id/menu_exit"
           android:icon="@drawable/ic_menu_x"
           android:title="@string/menu_exit" />
+    <item android:id="@+id/menu_radios"
+          android:icon="@drawable/ic_weather"
+          android:title="@string/menu_radios" />
+    <!--
     <item android:id="@+id/menu_scanner_weather"
           android:icon="@drawable/ic_weather"
           android:title="@string/menu_scanner_weather" />
     <item android:id="@+id/menu_scanner_police"
           android:icon="@drawable/ic_menu_notifications"
           android:title="@string/menu_scanner_police" />
+    -->
     <item android:id="@+id/menu_about"
           android:icon="@drawable/ic_menu_info"
           android:title="@string/menu_about" />
