@@ -372,7 +372,7 @@ public class App extends MapActivity {
 	    // LeadBolt
 	    wvLeadbolt = (WebView) findViewById(R.id.leadboltView);
 	    wvLeadbolt.getSettings().setJavaScriptEnabled(true);
-	    wvLeadbolt.loadUrl("http://osilabs.com/tests/leadbolt.html");
+	    wvLeadbolt.loadUrl("http://osilabs.com/m/mobliecontent/ads/leadbolt/1.html");
     }
     @Override
     public void onStart() {
