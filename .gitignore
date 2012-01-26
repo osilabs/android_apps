@@ -4,7 +4,10 @@
 *~
 *.dex
 *.ap_
-*/R.java
+R.java
+*.jar
+projects/colorblindAssist/gen/
+projects/dallasTraffic/gen/
 projects/twinCitiesTraffic/gen/
 projects/twinCitiesTraffic/assets/
 resources/images/champi_icons/
@@ -14,3 +17,8 @@ resources/screenshots/
 .metadata
 projects/musicscout/gen/
 projects/musicscoutTest/gen/
+project.properties
+/gen/
+projects/colorblindAssistTest/gen/
+lint.xml
+projects/testjunk
