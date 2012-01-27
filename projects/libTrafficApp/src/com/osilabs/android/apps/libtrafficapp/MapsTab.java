@@ -1,4 +1,4 @@
-package com.osilabs.android.apps.dallastraffic;
+package com.osilabs.android.apps.libtrafficapp;
 
 import java.net.URLEncoder;
 

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.osilabs.android.apps.dallastraffic;
+package com.osilabs.android.apps.libtrafficapp;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;

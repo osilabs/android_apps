@@ -1,4 +1,4 @@
-package com.osilabs.android.apps.dallastraffic;
+package com.osilabs.android.apps.libtrafficapp;
 
 import android.app.ExpandableListActivity;
 import android.content.Intent;
@@ -21,7 +21,7 @@ import android.widget.Toast;
 import android.widget.ExpandableListView.ExpandableListContextMenuInfo;
 import android.widget.ExpandableListView.OnChildClickListener;
 
-public class CameraELV extends ExpandableListActivity implements OnChildClickListener {
+public class CamerasELV extends ExpandableListActivity implements OnChildClickListener {
     ExpandableListAdapter mAdapter;
 
     // ------------------------------------------------------------
@@ -140,7 +140,7 @@ public class CameraELV extends ExpandableListActivity implements OnChildClickLis
             // Layout parameters for the ExpandableListView
             AbsListView.LayoutParams lp = new AbsListView.LayoutParams(
                     ViewGroup.LayoutParams.FILL_PARENT, 64);
-            TextView textView = new TextView(CameraELV.this);
+            TextView textView = new TextView(CamerasELV.this);
             textView.setLayoutParams(lp);
             if( ismainroads ) {
             	textView.setTextSize(20);
