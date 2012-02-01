@@ -1,5 +1,7 @@
 package com.osilabs.android.lib;
 
+import com.osilabs.android.apps.libtrafficapp.Config;
+
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;

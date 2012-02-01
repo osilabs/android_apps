@@ -1,7 +1,6 @@
 package com.osilabs.android.apps.dallastraffic;
 
 import com.google.android.maps.MapActivity;
-import com.osilabs.android.apps.dallastraffic.Config;
 
 public class App extends MapActivity {
 	@Override
