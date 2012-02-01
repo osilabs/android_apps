@@ -19,7 +19,7 @@ public final class Config {
 	public static final int       DEFAULT_TAB_INDEX = 0;
 	protected static       String MOBILECONTENT_URL_PREFIX   = "http://osilabs.com/m/mobilecontent/dallastraffic";
 	protected static       String MOBILECONTENT_URL_ABOUT    = "http://osilabs.com/m/mobilecontent/about/shared_about.php";
-	protected static final String NAMESPACE = "com.osilabs.android.apps.dallastraffic";
+	public static final String NAMESPACE = "com.osilabs.android.apps.dallastraffic";
 
 	// Which radios to offer
 	// Use './adb logcat |grep node' to see the scanner ids

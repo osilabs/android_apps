@@ -19,7 +19,7 @@ public class Version {
 		
 		// Read in manifest
 		try {
-			pInfo = app.getPackageManager().getPackageInfo(namespace, PackageManager.GET_META_DATA);
+			pInfo = app.getPackageManager().getPackageInfo(Config.NAMESPACE, PackageManager.GET_META_DATA);
 		} catch (NameNotFoundException e) {
 			e.printStackTrace();
 		}
