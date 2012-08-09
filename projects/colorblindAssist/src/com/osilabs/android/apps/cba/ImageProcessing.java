@@ -202,11 +202,7 @@ public class ImageProcessing {
 				+ (int) r_opposite;
 
 	}
-	
-	public static String getColorNameFromRGB(ColorDrop d) {
-		return ImageProcessing.getColorNameFromRGB(d, ImageProcessing.BEHAVIOR_FREE);
-	}
-	
+
 	/**
 	 * Turn a ColorDrop object into a string of which color it represents
 	 * 
@@ -233,7 +229,7 @@ public class ImageProcessing {
 			max = d.B;
 			baseC = "Blue";
 		}
-
+		
 		// WHITE
 		if ((d.R+d.G+d.B) > 650) {
 			return (behavior == ImageProcessing.BEHAVIOR_PRO) ? "White" : ImageProcessing.getDotPosition();
