@@ -68,10 +68,11 @@ public class ColorblindAssist extends Activity {
 	//
 	// CONSTS
 	//
-	protected static final String MOBILECONTENT_URL_HELP  = "http://osilabs.com/m/apps/help/cba.php";
-	protected static final String NAMESPACE               = "com.osilabs.android.apps.cba";
-	protected static final String MARKET_URL              = "market://search?q=pname:com.osilabs.android.apps.cba";
-	protected static final String MARKET_URL_HTTP         = "https://market.android.com/details?id=com.osilabs.android.apps.cba";
+	protected static final int     PRO_BEHAVIOR            = 0; // 1=pro, 0=normal
+	protected static final String  MOBILECONTENT_URL_HELP  = "http://osilabs.com/m/apps/help/cba.php";
+	protected static final String  NAMESPACE               = "com.osilabs.android.apps.cba";
+	protected static final String  MARKET_URL              = "market://search?q=pname:com.osilabs.android.apps.cba";
+	protected static final String  MARKET_URL_HTTP         = "https://market.android.com/details?id=com.osilabs.android.apps.cba";
 
 	private static final int BUSY = 0;
 	private static final int AVAILABLE = 1;
@@ -518,7 +519,7 @@ public class ColorblindAssist extends Activity {
 				//d.hexval = Integer.toHexString(iRGB[0]).substring(2).toUpperCase();
 				
 				// Set color
-				d.colorname = ImageProcessing.getColorNameFromRGB(d);
+				d.colorname = ImageProcessing.getColorNameFromRGB(d, PRO_BEHAVIOR);
 				d.hexval = "";
 
 				// Make display string for previewer

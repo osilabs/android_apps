@@ -3,7 +3,7 @@ import java.lang.Math;
 
 public class ImageProcessing {
 	
-	public static int BEHAVIOR_FREE = 1;
+	public static int BEHAVIOR_FREE = 0;
 	public static int BEHAVIOR_PRO  = 1;
 	
 	public static int dotPosition=3;
