@@ -72,6 +72,7 @@ public class ImageProcessing {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private int averageRGB(int[] outbuf, int[] region) {
 		int xRED = 0;
 		int xGRN = 0;

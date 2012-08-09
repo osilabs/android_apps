@@ -448,7 +448,7 @@ public class ColorblindAssist extends Activity {
 		}
 		
 		// Called when the holder is destroyed
-		@Override
+		//@Override
 		public void surfaceDestroyed(SurfaceHolder holder) {
 			//Log.d(TAG, "surfaceDestroyed'd start");
 
