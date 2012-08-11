@@ -8,6 +8,8 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.widget.TextView;
 
 public class cbaTest extends ActivityInstrumentationTestCase2<ColorblindAssist> {
+	public static int BEHAVIOR_FREE = 0;
+	public static int BEHAVIOR_PRO  = 1;
     
 	private ColorblindAssist mActivity;
     private TextView mView;
@@ -59,20 +61,20 @@ public class cbaTest extends ActivityInstrumentationTestCase2<ColorblindAssist> 
     	this.rgbCheck("173,100,215", "Purple");
     }
     public void rgbCheck(String rgb, String expected) {
-    	d.setRGB(rgb);assertEquals("Color: " + rgb, expected, ImageProcessing.getColorNameFromRGB(d));    	
+    	d.setRGB(rgb);assertEquals("Color: " + rgb, expected, ImageProcessing.getColorNameFromRGB(d, this.BEHAVIOR_PRO));
     }
     public void testMinimums() {
-    	// Test minimum threasholds. i.e. 0.42.0 is minimum for green
-    	for (int i=42; i<=255; i++) {
-    		d.R=i; d.G=0; d.B=0; 
-    		this.red( ImageProcessing.getColorNameFromRGB(d), d.R );
+        // Test minimum threasholds. i.e. 0.42.0 is minimum for green
+        for (int i=42; i<=255; i++) {
+            d.R=i; d.G=0; d.B=0;
+            this.red( ImageProcessing.getColorNameFromRGB(d, this.BEHAVIOR_PRO), d.R );
 
-    		d.R=0; d.G=i; d.B=0; 
-    		this.green( ImageProcessing.getColorNameFromRGB(d), d.G );
+            d.R=0; d.G=i; d.B=0;
+            this.green( ImageProcessing.getColorNameFromRGB(d, this.BEHAVIOR_PRO), d.G );
 
-    		d.R=0; d.G=0; d.B=i; 
-    		this.blue( ImageProcessing.getColorNameFromRGB(d), d.B );
-    	}
+            d.R=0; d.G=0; d.B=i;
+            this.blue( ImageProcessing.getColorNameFromRGB(d, this.BEHAVIOR_PRO), d.B );
+        }
     }
     public void red(String color, int value) {
     	assertEquals("Red Value:" + Integer.toString(value), "Red", color);    	
