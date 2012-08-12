@@ -14,6 +14,15 @@
   </application>
 
   <uses-sdk android:minSdkVersion="8" />
+
   <uses-permission android:name="android.permission.CAMERA" />
   <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+  <!--  Adding camera features to your manifest causes Google Play to prevent your
+        application from being installed to devices that do not include a camera
+        or do not support the camera features you specify
+  -->
+  <uses-feature android:name="android.hardware.camera" android:required="true" />
+
+
 </manifest> 
