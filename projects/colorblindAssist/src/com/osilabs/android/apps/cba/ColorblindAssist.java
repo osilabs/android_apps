@@ -64,6 +64,9 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.osilabs.android.lib.osicolor.ColorDrop;
+import com.osilabs.android.lib.osicolor.OsiColor;
+
 public class ColorblindAssist extends Activity {
 	//
 	// CONSTS
@@ -483,7 +486,7 @@ public class ColorblindAssist extends Activity {
 
 			int center = (int) ((view_w * view_h) / 2) + (view_w / 2);
 			try {
-				ImageProcessing.decodeYUV(d.decodeBuf, yuvs[0], view_w, view_h);
+				OsiColor.decodeYUV(d.decodeBuf, yuvs[0], view_w, view_h);
 			} catch (Exception e) {
 				//Log.e(TAG, "decodeYUV error: " + e.getMessage());
 				e.printStackTrace();
